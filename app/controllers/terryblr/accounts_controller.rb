@@ -1,15 +1,13 @@
-module Terryblr
-  class AccountsController < ApplicationController
-    
-    unloadable
+class Terryblr::AccountsController < ApplicationController
 
-    def create
-      puts "Do nothing"
-    end
+  unloadable
 
-    def new
-      @account = Account.new
-    end
-
+  def new
+    @account = Account.new
   end
+
+  def create
+    puts "Do nothing"
+  end
+
 end
