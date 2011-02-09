@@ -1,22 +1,22 @@
-require 'rails/generators'
-require 'rails/generators/migration'
+require 'rails/generators/active_record'
 
-class TerryblrGenerator < Rails::Generators::Base
-  include Rails::Generators::Migration
+module Terryblr
+  module Generators
+    class TerryblrGenerator < ActiveRecord::Generators::Base
+      namespace "terryblr"
 
-  def self.source_root
-    @source_root ||= File.join(File.dirname(__FILE__), 'templates')
-  end
+      def self.source_root
+        @source_root ||= File.join(File.dirname(__FILE__), 'templates')
+      end
 
-  def self.next_migration_number(dirname)
-    if ActiveRecord::Base.timestamped_migrations
-      Time.now.utc.strftime("%Y%m%d%H%M%S")
-    else
-      "%.3d" % (current_migration_number(dirname) + 1)
+      def run_devise_install
+        generate("devise:install") 
+        generate(:devise, name)
+      end
+
+      def create_migration_file
+        migration_template 'migration.rb', "db/migrate/add_is_admin_to_#{table_name}.rb"
+      end
     end
-  end
-
-  def create_migration_file
-    migration_template 'migration.rb', 'db/migrate/create_accounts.rb'
   end
 end

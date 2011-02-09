@@ -1,14 +1,9 @@
-class CreateAccounts < ActiveRecord::Migration
+class AddIsAdminTo<%= table_name.camelize %> < ActiveRecord::Migration
   def self.up
-    create_table :accounts do |t|
-      t.string :uname
-      t.string :fake
-
-      t.timestamps
-    end
+    add_column :<%= table_name %>, :is_admin, :boolean, :default => false, :null => false
   end
 
   def self.down
-    drop_table :accounts
+    remove_column :<%= table_name %>, :is_admin
   end
 end
