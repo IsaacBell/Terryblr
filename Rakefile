@@ -28,24 +28,3 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
 end
 
 task :default => :spec
-
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "terryblr"
-  gem.version = Terryblr::VERSION.dup
-  gem.summary = "CMS Engine for Rails 3"
-  gem.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"]
-  
-  # gem.homepage = "http://github.com/XXX/terryblr"
-  # gem.license = "88"
-  # gem.description = %Q{TODO: longer description of your gem}
-  # gem.email = ""
-  # gem.authors = []
-  
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
-end
-Jeweler::RubygemsDotOrgTasks.new
