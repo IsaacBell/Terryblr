@@ -1,9 +1,13 @@
 source "http://rubygems.org"
 
+gemspec
+
 gem "rails", "~> 3.0"
 gem "capybara", "~> 0.4"
 gem "webrat"
 gem "sqlite3-ruby", :require => "sqlite3"
+
+gem "devise"
 
 if RUBY_VERSION < '1.9'
   gem "ruby-debug"
