@@ -8,6 +8,7 @@ gem "webrat"
 gem "sqlite3-ruby", :require => "sqlite3"
 
 gem "devise"
+gem "memcached"
 
 if RUBY_VERSION < '1.9'
   gem "ruby-debug"
