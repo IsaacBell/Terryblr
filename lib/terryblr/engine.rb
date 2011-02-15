@@ -1,9 +1,8 @@
 require "rails"
 
 require "terryblr/memcached_system"
-require "terryblr/models/base"
-require "terryblr/models/page"
-
+require "terryblr/base/base"
+require "terryblr/base/aasmstates"
 
 module Terryblr
   class Engine < Rails::Engine

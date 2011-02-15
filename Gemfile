@@ -9,6 +9,7 @@ gem "sqlite3-ruby", :require => "sqlite3"
 
 gem "devise"
 gem "memcached"
+gem "aasm"
 
 if RUBY_VERSION < '1.9'
   gem "ruby-debug"
