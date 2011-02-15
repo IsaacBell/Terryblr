@@ -28,3 +28,5 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
 end
 
 task :default => :spec
+
+Terryblr::Application.load_tasks

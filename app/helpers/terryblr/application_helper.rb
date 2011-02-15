@@ -16,14 +16,14 @@ module Terryblr::ApplicationHelper
           # <script src="http://www.facebook.com/connect.php/js/FB.SharePro/" type="text/javascript"></script>
           link_to("")
         end
-        
+
         # Tumblr
-      
+
         # Google Buzz
       end
     end
   end
-  
+
   def facebook_meta_tags
 
     return "<!-- No info for FB headers -->" unless page_object
@@ -64,19 +64,17 @@ module Terryblr::ApplicationHelper
 
     @page_title ? @page_title : page_object.title
   end
-  
+
   def page_description
     return "" if page_object.nil?
     truncate_words(strip_tags(page_object.body.to_s), :length => 20, :omission => "...")
   end
-  
+
   def page_object
     @page_object ||= @post || @page || @object || nil
     @page_object ||= @posts.first if @posts
     @page_object
   end
-  
-  
 
   def photos_post_body(object)
     obj_type = object.class.to_s.downcase.to_sym
@@ -88,9 +86,9 @@ module Terryblr::ApplicationHelper
     detail_path = send("#{obj_type}_path",object.to_param, object.slug)
     detail_page = current_page?(detail_path)
     flash_dom = object.dom_id("flash_slideshow")
-    
+
     content_tag(:div, :class => "photos-slideshow") do
-      
+
       content_tag(:div, :class => detail_page ? "slideshow" : "") do
         photos = detail_page ? object.photos : [object.photos.first]
         photos.map do |f|
@@ -98,7 +96,7 @@ module Terryblr::ApplicationHelper
           link_to image_tag(f.image.url(:medium), :size => f.size(:medium)), send("#{obj_type}_path",f.photoable.to_param,object.slug, :anchor => f.dom_id), :style => "display:#{display}"
         end.join
       end +
-      
+
       # Only show thumbs on details page
       if object.photos.size > 1
         content_tag(:div, :class => "slideshow_controls") do
@@ -106,7 +104,7 @@ module Terryblr::ApplicationHelper
             link_to image_tag(p.image.url(:thumb)), detail_path
           end.join
         end
-        
+
         # # Full screen player
         # link_to_function("Play in Full-screen", "$('##{flash_dom}').flash('enterFullScreenDisplayState');") +
         # content_tag(:div, "", :id => flash_dom) +
@@ -119,9 +117,9 @@ module Terryblr::ApplicationHelper
         #       }
         #   }).hide()
         # }) + 
-        
+
         object.body
-        
+
       end.to_s
     end
   end
@@ -139,7 +137,7 @@ module Terryblr::ApplicationHelper
       end.join("\n")
     end
   end
-  
+
   def message_for_item(message, item = nil)
     if item.is_a?(Array)
       message % link_to(*item)
@@ -151,18 +149,18 @@ module Terryblr::ApplicationHelper
   def session_key
     @session_key ||= ActionController::Base.session_options[:key]
   end
-  
+
   def link_current_block
     @link_current_block ||= Proc.new { |name| content_tag(:span, name); }
   end
-  
+
   def body_classes
     con = params[:controller].split('/').last.strip
     act = params[:action].strip
     id  = @object ? @object.to_param : nil
     "#{con} #{con}-#{act} #{id} #{@body_classes.to_s}"
   end
-  
+
   def truncate_words(txt, ops = {})
     ops.reverse_merge({
       :length => 100, 
@@ -224,7 +222,7 @@ module Terryblr::ApplicationHelper
     else
       "#{action}_#{record_name}_path"
     end
-    
+
     options = case action.to_sym
     when :destroy
       {:confirm => 'Are you sure?', :method => :delete}
@@ -232,10 +230,8 @@ module Terryblr::ApplicationHelper
       {:confirm => 'Are you sure?', :method => :put }
     end
     options ||= {}
-    
+
     link_to action.capitalize, send(url, record), {:class => action}.merge(options).merge(final_options)
   end
-
-
 
 end

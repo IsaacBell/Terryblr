@@ -20,6 +20,5 @@ class Terryblr::PagesController < Terryblr::PublicController
   def page_chain
     Terryblr::Page
   end
-  
 
 end
