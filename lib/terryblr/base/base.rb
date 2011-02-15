@@ -11,7 +11,7 @@ module Terryblr
     self.instance_eval do
       # Prevent the table name from being called 'bases'
       def table_name
-        self.name.split('::').last.tableize
+        @table_name ||= self.name.split('::').last.tableize
       end
     end
 
