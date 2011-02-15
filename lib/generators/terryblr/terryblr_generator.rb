@@ -2,13 +2,11 @@ require 'rails/generators'
 require 'rails/generators/migration'
 require 'rails/generators/active_record/migration'
 
-
 module Terryblr
   module Generators
     class TerryblrGenerator < Rails::Generators::Base
       namespace "terryblr"
       include Rails::Generators::Migration
-      
 
       def self.source_root
         @source_root ||= File.join(File.dirname(__FILE__), 'templates')
@@ -29,7 +27,11 @@ module Terryblr
       end
 
       def create_migration_file
-        migration_template 'create_pages.rb', "db/migrate/create_pages.rb"
+        migration_template 'create_pages.rb', 'db/migrate/create_pages.rb'
+      end
+
+      def create_configuration_file
+        copy_file 'config/initializers/terryblr.rb', 'config/initializers/terryblr.rb'
       end
     end
   end

@@ -49,12 +49,14 @@ module Terryblr
       #
       # Scopes
       # 
-      named_scope :roots, :conditions => {:parent_id => nil}
+      scope :roots, :where => {:parent_id => nil}
 
       #
       # Callbacks
       #
-      def before_validation
+      before_validation :set_slug
+
+      def set_slug
         # Set slug if not set or changed
         self.slug = title.to_s.parameterize if !slug? or (!new_record? && title_changed?)
       end
