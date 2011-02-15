@@ -9,7 +9,7 @@ module Terryblr
       include Rails::Generators::Migration
 
       def self.source_root
-        @source_root ||= File.join(File.dirname(__FILE__), 'templates')
+        @source_root ||= File.join(File.dirname(__FILE__), '..', 'templates')
       end
 
       # Implement the required interface for Rails::Generators::Migration.
@@ -31,7 +31,7 @@ module Terryblr
       end
 
       def create_configuration_file
-        copy_file 'config/initializers/terryblr.rb', 'config/initializers/terryblr.rb'
+        copy_file 'initializer.rb', 'config/initializers/terryblr.rb'
       end
     end
   end

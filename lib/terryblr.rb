@@ -2,9 +2,7 @@ require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(
 
 [ 'terryblr/configuration',
   'terryblr/memcached_system',
-  'terryblr/models/base',
-  'terryblr/models/page',
-  '../app/models/terryblr/page'
+  'terryblr/base/base',
 ].each do |path|
   require File.expand_path(path, File.dirname(__FILE__))
 end

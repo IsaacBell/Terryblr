@@ -48,6 +48,5 @@ module Terryblr
     rescue Memcached::ServerIsMarkedDead => exc
       return nil
     end
-
   end
 end
