@@ -43,7 +43,7 @@ module Terryblr
       self.updated_at = Time.now if respond_to?(:updated_at)
     end
 
-    def create_timestamp
+    def create_timestamps
       self.created_at = Time.now if respond_to?(:created_at)
     end
 
