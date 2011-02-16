@@ -1,0 +1,3 @@
+Autotest.add_hook :initialize do |at|
+  %w{.git vendor spec/dummy/log spec/dummy/db}.each {|exception| at.add_exception(exception)}
+end
