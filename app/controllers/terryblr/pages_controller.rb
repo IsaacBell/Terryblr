@@ -16,7 +16,7 @@ class Terryblr::PagesController < Terryblr::PublicController
                         page_chain.find_by_slug(params[:id]) || 
                         (raise ActiveRecord::RecordNotFound)
   end
-  
+
   def page_chain
     Terryblr::Page
   end

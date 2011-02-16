@@ -23,7 +23,7 @@ module Terryblr
       end
 
       def install_dependencies
-        plugin 'resource_controller', :git => 'git://github.com/anupamc/resource_controller.git'
+        plugin 'resource_controller', :git => 'git://github.com/jeremyvdw/resource_controller.git'
       end
 
       def create_migration_file

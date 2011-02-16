@@ -6,7 +6,6 @@ class Terryblr::ApplicationController < ResourceController::Base
   include Terryblr::MemcachedSystem
   helper 'terryblr/application'
   helper_method :current_user_session, :current_user
-  filter_parameter_logging :password, :password_confirmation
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 

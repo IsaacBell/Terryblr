@@ -27,12 +27,14 @@ class Terryblr::Page < Terryblr::Base
   #
   # Scopes
   # 
-  named_scope :roots, :conditions => {:parent_id => nil}
+  scope :roots, :conditions => { :parent_id => nil }
 
   #
   # Callbacks
   #
-  def before_validation
+  before_validation :update_slug
+  
+  def update_slug
     # Set slug if not set or changed
     self.slug = title.to_s.parameterize if !slug? or (!new_record? && title_changed?)
   end
@@ -41,7 +43,6 @@ class Terryblr::Page < Terryblr::Base
   # Class Methods
   #
   class << self
-
   end
 
   #
@@ -79,8 +80,7 @@ class Terryblr::Page < Terryblr::Base
   private
 
   def do_publish
-    self.published_at = Time.now.in_time_zone
-    save
+    update_attribute :published_at, Time.now.in_time_zone
   end
 
   def parent_of(page = self)

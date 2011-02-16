@@ -1,11 +1,7 @@
 require 'spec_helper'
 
 describe "Terryblr" do
-  it "should get new account at /terryblr/accounts/new" do
-    { :get => '/terryblr/accounts/new' }.should route_to(:controller => "terryblr/accounts", :action => "new")
-  end
-
-  it "should create account" do
-    { :post => '/terryblr/accounts' }.should route_to(:controller => "terryblr/accounts", :action => "create")
+  it "should show pages" do
+    { :get => '/terryblr/pages' }.should route_to(:controller => "terryblr/pages", :action => "show")
   end
 end
