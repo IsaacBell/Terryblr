@@ -60,6 +60,7 @@ module Terryblr
             when :published_at
               self.write_attribute(:state, "published")
             else
+puts "self => #{self.inspect}"
               self.write_attribute(:state, value) if self.class.aasm_states.map(&:name).include?(value.to_s.to_sym)
             end
           end
