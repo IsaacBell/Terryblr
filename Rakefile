@@ -29,4 +29,4 @@ end
 
 task :default => :spec
 
-Terryblr::Application.load_tasks
+# Terryblr::Application.load_tasks
