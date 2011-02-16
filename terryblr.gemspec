@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.add_dependency "aasm"
   s.add_dependency "will_paginate"
   s.add_dependency "haml"
+  s.add_dependency "settingslogic"
+  s.add_dependency "formtastic"
 
 
   s.add_development_dependency "rspec"

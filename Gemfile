@@ -5,6 +5,8 @@ gemspec
 
 gem "will_paginate", :require => "will_paginate"
 gem "haml"
+gem "settingslogic"
+gem "formtastic"
 
 group :test do
   gem "factory_girl_rails"
