@@ -1,0 +1,131 @@
+common: &common
+  app_name: Terry Richardson
+  admin_email: info@terryrichardson.com
+  ganalytics:
+    code: UA-XXXXXXX-XX
+    email: terryblr@gmail.com
+    password: weloveterry69
+    profile_id: 25211350
+  domain: terryrichardson.rails
+  tumblr:
+    blog: terrysdiary
+    email: diary@terryrichardson.com
+    pass: bowery1
+  vimeo:
+    consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
+    consumer_secret: fcfb4b9bb66e992b
+    user_token: ba3498c474b6e926f838219a2ff1acf0
+    user_secret: d499ad238dcff4061ea90522dbbeedff8cecd2ff
+  facebook:
+    # GoTo:
+    # http://graph.facebook.com/oauth/authorize?client_id=632c768327fd8d5ec7a55b2364424abe&redirect_uri=http://kanonvodka.rails
+    # -> Get code param and save as the token
+    # GoTo:
+    #   https://graph.facebook.com/oauth/access_token?client_id=632c768327fd8d5ec7a55b2364424abe&redirect_uri=http://kanonvodka.rails/&client_secret=ad83f27037cc74cb3c242557276753a1&code=e56edc612fdf770e2a35a610-666591162%7CxYP-8UFDcOKMeeZsWAcd7ybXhrk.
+    # -> Put resulting access_token into user_token val below
+    # -> Create a OAuth access_token object with: access_token = OAuth2::AccessToken.new(client, Settings.facebook.user_token)
+    # -> Get your page's access_token with: access_token.get("/me/accounts")
+    # -> Put the page's access_token into page_token below
+    secret_key: ad83f27037cc74cb3c242557276753a1
+    api_key: 632c768327fd8d5ec7a55b2364424abe
+    code: e56edc612fdf770e2a35a610-666591162%7CxYP-8UFDcOKMeeZsWAcd7ybXhrk.
+    user_token: 137055902989083|e56edc612fdf770e2a35a610-666591162|61Vu_kbLAejg0v3Vq1I5a-GgAgU.
+    page_token: 137055902989083|e56edc612fdf770e2a35a610-666591162|100914013285388|yz-wMScNjGPZ51nzigrl-fFCHXM.
+    page_id: 100914013285388
+    app_id: 110195482348474
+  twitter:
+    consumer_key: 96nlw6FwgUYvio0AN4vlXg
+    consumer_secret: iePJS0kG67mkT7Y7BXN1cJUHOICCOhTBx7gQZe3mI
+    # oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret, :sign_in => true)
+    # oauth.set_callback_url(app.root_url(:host => Settings.domain))
+    # rtoken  = oauth.request_token.token
+    # rsecret = oauth.request_token.secret
+    # oauth.request_token.authorize_url 
+    # -- Go to above URL and sign-in/approve the app and retrieve the verifier param from the return-to-app URL
+    # oauth_verifier = "0aRHi5UAGWoxfyaa0iMnUYNC3nUXF5gIIzjtxyauc58"
+    # oauth.authorize_from_request(rtoken, rsecret, oauth_verifier)
+    # oauth.access_token.token -> use below
+    # oauth.access_token.secret -> use below
+    app_user_token: 636223-Yg5JxRA8qSCAEagDwrmhmaaiK7YwnN6ijByDQrgzyjE
+    app_user_secret: oVJQeDQtzvlXwccSmt2Tci4j3EPnvOofEMMAxf3Xnfw
+    login: terryblr
+  bitly:
+    login: jacksonlaycock
+    key: R_c8a7f8051740494c879df5865cd04b4b
+  vimeo:
+    consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
+    consumer_secret: fcfb4b9bb66e992b
+    user_token: ba3498c474b6e926f838219a2ff1acf0
+    user_secret: d499ad238dcff4061ea90522dbbeedff8cecd2ff
+  bitly:
+    login: jacksonlaycock
+    key: R_c8a7f8051740494c879df5865cd04b4b
+  tags: 
+    posts:
+      groups: [tags location]
+      tags: []
+      location: [blog, featured]
+  photo_dimensions:
+    thumb: ["100x100#", :jpg]
+    small: ["156x156#", :jpg]
+    splash: ["920x460#", :jpg]
+    list: ["515x515>", :jpg]
+    medium: ["800x600>", :jpg]
+    full: ["2000x2000>", :jpg]
+
+development:
+  <<: *common
+
+test:
+  <<: *common
+
+staging:
+  <<: *common
+  ganalytics:
+    code: UA-XXXXXXX-XX
+  domain: terry.lovethe88.com
+  vimeo:
+    key: b54e1791dc294c6ead7cf6f4c7fa9d23
+    secret: fcfb4b9bb66e992b
+
+production:
+  <<: *common
+  ganalytics:
+    code: UA-12859057-1
+    profile_id: 25211478
+  domain: terryrichardson.com
+  vimeo:
+    key: b54e1791dc294c6ead7cf6f4c7fa9d23
+    secret: fcfb4b9bb66e992b
+  twitter:
+    consumer_key: JHq3Fti6SVvBOhEeLl3Dg
+    consumer_secret: gvAVYWjUrFy1mpXoADLoPZmKFiEJjhvOvCUlr0cBzSo
+    # oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret, :sign_in => true)
+    # oauth.set_callback_url(app.root_url(:host => Settings.domain))
+    # rtoken  = oauth.request_token.token
+    # rsecret = oauth.request_token.secret
+    # oauth.request_token.authorize_url 
+    # -- Go to above URL and sign-in/approve the app and retrieve the verifier param from the return-to-app URL
+    # oauth_verifier = "0aRHi5UAGWoxfyaa0iMnUYNC3nUXF5gIIzjtxyauc58"
+    # oauth.authorize_from_request(rtoken, rsecret, oauth_verifier)
+    # oauth.access_token.token -> use below
+    # oauth.access_token.secret -> use below
+    app_user_token: 114012228-ckEBx61yLR8IHisgxnKxnctFu4GYao0vGExOWWo7
+    app_user_secret: RuzCNzdO1V60UA6naQwTYnftLJxVqG243J2wDkxGtg
+  facebook:
+    # GoTo:
+    # http://graph.facebook.com/oauth/authorize?client_id=632c768327fd8d5ec7a55b2364424abe&redirect_uri=http://kanonvodka.rails
+    # -> Get code param and save as the token
+    # GoTo:
+    #   https://graph.facebook.com/oauth/access_token?client_id=632c768327fd8d5ec7a55b2364424abe&redirect_uri=http://kanonvodka.rails/&client_secret=ad83f27037cc74cb3c242557276753a1&code=e56edc612fdf770e2a35a610-666591162%7CxYP-8UFDcOKMeeZsWAcd7ybXhrk.
+    # -> Put resulting access_token into user_token val below
+    # -> Create a OAuth access_token object with: access_token = OAuth2::AccessToken.new(client, Settings.facebook.user_token)
+    # -> Get your page's access_token with: access_token.get("/me/accounts")
+    # -> Put the page's access_token into page_token below
+    secret_key: ad83f27037cc74cb3c242557276753a1
+    api_key: 632c768327fd8d5ec7a55b2364424abe
+    code: e56edc612fdf770e2a35a610-666591162%7CxYP-8UFDcOKMeeZsWAcd7ybXhrk.
+    user_token: 137055902989083|e56edc612fdf770e2a35a610-666591162|61Vu_kbLAejg0v3Vq1I5a-GgAgU.
+    page_token: 137055902989083|e56edc612fdf770e2a35a610-666591162|100914013285388|yz-wMScNjGPZ51nzigrl-fFCHXM.
+    page_id: 100914013285388
+    app_id: 110195482348474
