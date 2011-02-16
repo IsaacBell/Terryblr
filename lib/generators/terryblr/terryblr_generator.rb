@@ -33,6 +33,7 @@ module Terryblr
 
       def create_configuration_file
         copy_file 'initializer.rb', 'config/initializers/terryblr.rb'
+        copy_file 'settings.yml', 'config/settings.yml'
       end
     end
   end
