@@ -3,6 +3,9 @@
 source "http://rubygems.org"
 gemspec
 
+gem "will_paginate", :require => "will_paginate"
+gem "haml"
+
 group :test do
   gem "factory_girl_rails"
   gem "autotest"

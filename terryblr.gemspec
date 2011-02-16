@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
   s.add_dependency "devise"
   s.add_dependency "memcached"
   s.add_dependency "aasm"
+  s.add_dependency "will_paginate"
+  s.add_dependency "haml"
 
 
   s.add_development_dependency "rspec"
