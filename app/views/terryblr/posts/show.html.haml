@@ -1,0 +1,8 @@
+%ul.posts-stream
+  =render :partial => "list", :locals => { :posts => [@object] }
+
+.clear
+  
+%h3 Comments
+
+%p= link_to "Back to Archives", posts_path
