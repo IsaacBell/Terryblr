@@ -55,13 +55,12 @@ module Terryblr
           def state=(value)
             case value.to_s.to_sym
             when :publish_now
-              self.write_attribute(:state, "published")
+              self[:state] = "published"
               self.published_at = Time.now.in_time_zone
             when :published_at
-              self.write_attribute(:state, "published")
+              self[:state] = "published"
             else
-puts "self => #{self.inspect}"
-              self.write_attribute(:state, value) if self.class.aasm_states.map(&:name).include?(value.to_s.to_sym)
+              self[:state] = value if self.class.aasm_states.map(&:name).include?(value.to_s.to_sym)
             end
           end
 
