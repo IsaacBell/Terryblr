@@ -2,7 +2,7 @@
 %html
   %head
     %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
-    %title #{Settings.app_name}#{": #{@page_title}" if @page_title}
+    %title #{Terryblr::Settings.app_name}#{": #{@page_title}" if @page_title}
     = facebook_meta_tags
     = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery.cycle.min', 'jquery.flash.min', 'jquery.cookie.min', 'jrails', 'public', :cache => true, :recursive => true
     = stylesheet_link_tag 'public_grid', 'public', :cache => true, :recursive => true
@@ -16,17 +16,18 @@
           = link_to "Your Cart", cart_path
           
         #search_form
-          - semantic_form_for(Post.new, search_path, :html => { :method => :get, :class => "auto-hide-text"}) do |f| 
+          - semantic_form_for(Terryblr::Post.new, search_path, :html => { :method => :get, :class => "auto-hide-text"}) do |f| 
             =text_field_tag "search", (params[:search] || "SEARCH"), :class => "text"
             =submit_tag "Go!>>"
 
-        %h1{:id => 'logo'}=link_to Settings.app_name, root_path
+        %h1{:id => 'logo'}=link_to Terryblr::Settings.app_name, root_path
 
         #nav
           #date=Time.now.in_time_zone.strftime("<strong>%A</strong>, %B %d, %Y")
           %ul
             %li.home=link_to_unless_current "Home", root_path
-            %li.diary=link_to_unless_current "Diary", tagged_posts_path(Settings.common_tags.first)
+            - if defined?(Terryblr::Settings.common_tags)
+              %li.diary=link_to_unless_current "Diary", tagged_posts_path(Terryblr::Settings.common_tags.first)
             %li.store=link_to_unless_current "Store", store_path
 
       #body.clear
@@ -39,7 +40,7 @@
       / Google analytics
       %script{ :type => "text/javascript" }
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '#{Settings.ganalytics.code}']);
+        _gaq.push(['_setAccount', '#{Terryblr::Settings.ganalytics.code}']);
         _gaq.push(['_trackPageview']);
 
         (function() {
