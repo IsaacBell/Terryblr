@@ -18,7 +18,7 @@ module Terryblr
     #
     # Behaviours / Mixins
     #
-    include Terryblr::Base::AasmStates
+    #include Terryblr::Base::AasmStates
 
     # acts_as_taggable
     # acts_as_taggable_on Settings.tags[self.table_name]['groups'] if defined?(Settings.tags[self.table_name]['groups'])
