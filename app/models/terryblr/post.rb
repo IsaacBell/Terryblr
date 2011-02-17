@@ -21,16 +21,13 @@ class Terryblr::Post < Terryblr::Base
   #
   # Behaviours
   #
+  include Terryblr::Base::AasmStates
+
   #XXX attr_accessor :url, :tw_me, :fb_me, :tumblr_me
   #XXX include Terryblr::Taggable
   #XXX acts_as_commentable
   #XXX accepts_nested_attributes_for :photos, :allow_destroy => true
   #XXX accepts_nested_attributes_for :videos, :allow_destroy => true, :reject_if => Proc.new{|v| v["url"].blank? }
-
-  #
-  # States
-  #
-  include Terryblr::Base::AasmStates
 
   #
   # Validations

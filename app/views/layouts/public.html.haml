@@ -19,7 +19,7 @@
         %h1{:id => 'logo'}=link_to Terryblr::Settings.app_name, root_path
 
         #nav
-          #date=Time.now.in_time_zone.strftime("<strong>%A</strong>, %B %d, %Y")
+          #date=raw Time.now.in_time_zone.strftime("<strong>%A</strong>, %B %d, %Y")
           %ul
             %li.home=link_to_unless_current "Home", root_path
             - if defined?(Terryblr::Settings.common_tags)

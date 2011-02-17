@@ -7,6 +7,7 @@ gem "will_paginate", :require => "will_paginate"
 gem "haml"
 gem "settingslogic"
 gem "formtastic"
+gem "unicode_utils"
 
 group :test do
   gem "ruby-debug19"
