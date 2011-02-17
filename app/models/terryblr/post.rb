@@ -23,16 +23,15 @@ class Terryblr::Post < Terryblr::Base
   #
   include Terryblr::Base::AasmStates
 
-  #XXX attr_accessor :url, :tw_me, :fb_me, :tumblr_me
-  #XXX include Terryblr::Taggable
+  attr_accessor :url, :tw_me, :fb_me, :tumblr_me
+  include Terryblr::Base::Taggable
   #XXX acts_as_commentable
-  #XXX accepts_nested_attributes_for :photos, :allow_destroy => true
-  #XXX accepts_nested_attributes_for :videos, :allow_destroy => true, :reject_if => Proc.new{|v| v["url"].blank? }
+  accepts_nested_attributes_for :photos, :allow_destroy => true
+  accepts_nested_attributes_for :videos, :allow_destroy => true, :reject_if => Proc.new{|v| v["url"].blank? }
 
   #
   # Validations
   #
-  #XXX include Terryblr::Validation
   validates_presence_of :post_type, :unless => :pending? 
   validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
   validates_length_of :social_msg, :within => 0..140, :if => :social_msg?

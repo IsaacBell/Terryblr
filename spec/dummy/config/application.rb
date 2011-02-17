@@ -12,6 +12,7 @@ require "haml"
 require "will_paginate"
 require "formtastic"
 require "terryblr"
+require "acts-as-taggable-on"
 require "makandra_resource_controller"
 
 module Dummy

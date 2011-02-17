@@ -13,7 +13,7 @@ class Terryblr::Page < Terryblr::Base
   #
   # Behaviours
   #
-  #XXX include Terryblr::Taggable
+  include Terryblr::Base::Taggable
   include Terryblr::Base::AasmStates
   
   accepts_nested_attributes_for :messages
