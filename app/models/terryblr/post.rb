@@ -18,7 +18,6 @@ class Terryblr::Post < Terryblr::Base
   belongs_to :fb_delayed_job, :class_name => "Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "Delayed::Job"
 
-
   #
   # Behaviours
   #
@@ -55,13 +54,12 @@ class Terryblr::Post < Terryblr::Base
     end
   end
 
-
   #
   # Scopes
   #
   default_scope :order => "posts.published_at desc, posts.id desc"
 
-  named_scope :by_month, lambda {|*args|
+  scope :by_month, lambda {|*args|
     # Needs to be sep variable or AR will cache the first time and it'll never change
     now = Time.now.in_time_zone
     { 
@@ -71,13 +69,13 @@ class Terryblr::Post < Terryblr::Base
     }
   }
 
-  named_scope :by_year, lambda { |year|
+  scope :by_year, lambda { |year|
     # Needs to be sep variable or AR will cache the first time and it'll never change
     now = Time.now.in_time_zone
     { :conditions => ["EXTRACT(YEAR from posts.published_at) = ? and posts.published_at <= ?",  year.to_i, now] }
   }
 
-  named_scope :popular_photos, lambda {
+  scope :popular_photos, lambda {
     now = Time.now.in_time_zone
     { 
       :joins => "INNER JOIN photos ON photos.photoable_type = 'Post' AND photos.photoable_id = posts.id",
@@ -90,15 +88,21 @@ class Terryblr::Post < Terryblr::Base
   }
 
   @@post_types.each do |type|
-    named_scope type.pluralize, :conditions => {:post_type => type.to_s}
+    scope type.pluralize, :conditions => {:post_type => type.to_s}
   end
 
   #
   # Callbacks
   #
-  def after_initialize
-    self.display_type ||= @@display_types.first
+  after_initialize :set_display_type
+  after_initialize :setup_social_network
+  after_initialize :set_diary
 
+  def set_display_type
+    self.display_type ||= @@display_types.first
+  end
+
+  def setup_social_network
     # Setup social network callback flags
     begin
       self.tw_me      ||= (pending? or tw_delayed_job_id?) unless twitter_id?
@@ -106,27 +110,33 @@ class Terryblr::Post < Terryblr::Base
       self.tumblr_me  ||= (pending? or tumblr_delayed_job_id?) unless tumblr_id?
     rescue
     end
+  end
 
+  def set_diary
     # Set diary as default location
     if pending? or new_record? and respond_to?(:location_list) and location_list.empty?
       location_list << Settings.tags.posts.location.first
     end
-
   end
 
-  def before_save
+  before_save :fix_tiny_mce
+  before_save :push_publication
+  before_save :push_to_social
+
+  def fix_tiny_mce
     # Fix broken paths from TinyMCE
     self.body = body.gsub(%r{src=\"(.*)/system/images/}, "src=\"/system/images/") if body?
-
-    # If have just been saved as published then do do_publish to post to twitter/fb etc
-    do_publish if (state_changed? and published?) or (!state_changed? and published_at_changed?)
-
-    # Post to social networks
-    social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
-
-    super
   end
 
+  def push_publication
+    # If have just been saved as published then do do_publish to post to twitter/fb etc
+    do_publish if (state_changed? and published?) or (!state_changed? and published_at_changed?)
+  end
+
+  def push_to_social
+    # Post to social networks
+    social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
+  end
 
   #
   # Class Methods
@@ -164,7 +174,6 @@ class Terryblr::Post < Terryblr::Base
   #
   # Instance Methods
   #
-
   def to_param
     # Used for urls like /posts/:id/:slug
     id.to_s
@@ -198,7 +207,6 @@ class Terryblr::Post < Terryblr::Base
     @related_posts += Post.live.all(:conditions => ["posts.id not in (?)", @related_posts.map(&:id)+[id]], :limit => max - @related_posts.size) if @related_posts.size < max rescue []
     @related_posts
   end
-
 
   def update_twitter_id(twitter_id)
     self.twitter_id = twitter_id
@@ -244,7 +252,6 @@ class Terryblr::Post < Terryblr::Base
   private
 
   def do_publish(msg = nil)
-
     now = Time.now.in_time_zone
 
     unless published_at?
@@ -262,16 +269,13 @@ class Terryblr::Post < Terryblr::Base
 
       # No Delayed Job id set or is failed? Then create one.
       if !self.send("#{assoc}_id?") or (self.send(assoc) and self.send(assoc).failed_at?)
-
         # Create new instance of class that will post to the soc network
         dj = Delayed::Job.enqueue("#{prefix.capitalize}PostPublisherJob".constantize.new(self.id), 0, self.published_at)
         self.send("#{assoc}=", dj)
 
         # If already got a delayed job awaiting, then update the exec date
       elsif self.send(assoc) and self.send(assoc).run_at != self.published_at
-
         self.send(assoc).update_attribute(:run_at, self.published_at)
-
       end
     end
   end

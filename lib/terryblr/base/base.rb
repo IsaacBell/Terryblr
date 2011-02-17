@@ -18,7 +18,7 @@ module Terryblr
     #
     # Behaviours / Mixins
     #
-    #include Terryblr::Base::AasmStates
+    include Terryblr::Base::AasmStates
 
     # acts_as_taggable
     # acts_as_taggable_on Settings.tags[self.table_name]['groups'] if defined?(Settings.tags[self.table_name]['groups'])
@@ -34,18 +34,7 @@ module Terryblr
     #
     # Callbacks
     #
-    before_save   :update_timestamps
-    before_create :create_timestamps
     before_validation :update_slug
-
-    def update_timestamps
-      self.created_at = Time.now if respond_to?(:created_at) and self.created_at.nil?
-      self.updated_at = Time.now if respond_to?(:updated_at)
-    end
-
-    def create_timestamps
-      self.created_at = Time.now if respond_to?(:created_at)
-    end
 
     def update_slug
       # Set slug if not set

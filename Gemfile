@@ -9,6 +9,8 @@ gem "settingslogic"
 gem "formtastic"
 
 group :test do
+  gem "ruby-debug19"
+  gem "database_cleaner"
   gem "factory_girl_rails"
   gem "autotest"
 end

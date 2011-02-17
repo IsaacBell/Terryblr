@@ -1,5 +1,4 @@
 class Terryblr::PostsController < Terryblr::PublicController
-
   before_filter :date, :only => [:index]
   before_filter :object, :only => [:gallery_params, :show, :next, :previous]
   before_filter :featured_pics, :only => [:show]
@@ -33,7 +32,7 @@ class Terryblr::PostsController < Terryblr::PublicController
       }
     end
   end
-  
+
   def archives
     @page_title = 'Archives'
     respond_to do |wants|
@@ -57,19 +56,19 @@ class Terryblr::PostsController < Terryblr::PublicController
       }
     end
   end
-  
+
   def next
     post = object.next || object
     redirect_to post_path(post, post.slug)
   end
-  
+
   def previous
     post = object.previous || object
     redirect_to post_path(post, post.slug)
   end
-  
+
   private
-  
+
   def object
     @post = @object ||= posts_chain.find_by_id(params[:id])        || 
                         posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
@@ -77,11 +76,11 @@ class Terryblr::PostsController < Terryblr::PublicController
                         posts_chain.find_by_tumblr_id(params[:id]) || # Needed to keep permalinks alive
                         (raise ActiveRecord::RecordNotFound)
   end
-  
+
   def featured_pics
     @featured_pics ||= Feature.live.tagged_with('sidebar')
   end
-  
+
   def collection
     @posts = @collection ||= case self.action_name 
     when 'index'
@@ -113,18 +112,17 @@ class Terryblr::PostsController < Terryblr::PublicController
         :page => params[:page],
         :conditions => conditions,
         :order => "#{col} desc, created_at desc")
-      
+
     else
       []
     end
   end
-  
+
   def date
     @date ||= "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
   end
-  
+
   def posts_chain
     Post.live
   end
-
 end

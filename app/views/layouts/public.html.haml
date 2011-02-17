@@ -11,12 +11,8 @@
   %body
     .container
       #header
-
-        #cart_items
-          = link_to "Your Cart", cart_path
-          
         #search_form
-          - semantic_form_for(Terryblr::Post.new, search_path, :html => { :method => :get, :class => "auto-hide-text"}) do |f| 
+          = semantic_form_for(Terryblr::Post.new, :url => search_path, :html => { :method => :get, :class => "auto-hide-text"}) do |f| 
             =text_field_tag "search", (params[:search] || "SEARCH"), :class => "text"
             =submit_tag "Go!>>"
 
@@ -28,7 +24,6 @@
             %li.home=link_to_unless_current "Home", root_path
             - if defined?(Terryblr::Settings.common_tags)
               %li.diary=link_to_unless_current "Diary", tagged_posts_path(Terryblr::Settings.common_tags.first)
-            %li.store=link_to_unless_current "Store", store_path
 
       #body.clear
         = flash_messages
@@ -36,7 +31,7 @@
         = yield
 
       #footer
-      
+
       / Google analytics
       %script{ :type => "text/javascript" }
         var _gaq = _gaq || [];

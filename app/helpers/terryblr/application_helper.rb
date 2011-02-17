@@ -28,7 +28,7 @@ module Terryblr::ApplicationHelper
 
     return "<!-- No info for FB headers -->" unless page_object
 
-    title = Settings.app_name + " - #{page_title}"
+    title = Terryblr::Settings.app_name + " - #{page_title}"
 
     str  = tag(:meta, :name => "title", :content => title) + "\n"
     str += tag(:meta, :name => "description", :content => page_description)
