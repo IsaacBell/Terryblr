@@ -12,6 +12,7 @@ require "haml"
 require "will_paginate"
 require "formtastic"
 require "terryblr"
+require "makandra_resource_controller"
 
 module Dummy
   class Application < Rails::Application
