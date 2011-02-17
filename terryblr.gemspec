@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency "makandra_resource_controller"
   s.add_dependency "acts-as-taggable-on"
   #XXX s.add_dependency "acts_as_commentable"
+  s.add_dependency "settingslogic"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rcov", ">= 0"

@@ -29,6 +29,8 @@ module Terryblr
       def create_migration_file
         migration_template 'create_posts.rb', 'db/migrate/create_posts.rb'
         migration_template 'create_pages.rb', 'db/migrate/create_pages.rb'
+        migration_template 'create_likes.rb', 'db/migrate/create_likes.rb'
+        migration_template 'create_comments.rb', 'db/migrate/create_comments.rb'
       end
 
       def create_configuration_file
