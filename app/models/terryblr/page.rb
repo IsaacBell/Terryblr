@@ -14,7 +14,8 @@ class Terryblr::Page < Terryblr::Base
   # Behaviours
   #
   #XXX include Terryblr::Taggable
-  #XXX include Terryblr::AasmStates
+  include Terryblr::Base::AasmStates
+  
   accepts_nested_attributes_for :messages
   accepts_nested_attributes_for :photos, :allow_destroy => true
 
