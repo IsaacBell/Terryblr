@@ -8,6 +8,13 @@ end
 
 require 'rake'
 require 'rake/rdoctask'
+
+require File.expand_path('../spec/dummy/config/application', __FILE__)
+Dummy::Application.load_tasks
+namespace :dummy do
+  Dummy::Application.load_tasks
+end
+
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'Terryblr'
@@ -34,18 +41,8 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
 end
 
 
-namespace :dummy do
-  require File.expand_path('../spec/dummy/config/application', __FILE__)
-  Dummy::Application.load_tasks
-end
-
-namespace :db do
-  namespace :test do task :load => ["dummy:db:test:load"] do end end
-  namespace :schema do task :load => ["dummy:db:schema:load"] do end end
-end
-
 load 'lib/tasks/cucumber.rake'
 
-task :default => [:spec, :features]
+task :default => [:spec, :cucumber]
 
 # Terryblr::Application.load_tasks
