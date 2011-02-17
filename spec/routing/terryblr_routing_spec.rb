@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Terryblr" do
-
   it "should show homepage" do
     { :get => '/' }.should route_to(:controller => "terryblr/home", :action => "index")
   end
