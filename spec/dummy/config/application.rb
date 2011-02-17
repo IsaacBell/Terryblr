@@ -7,6 +7,10 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 
 Bundler.require
+require "settingslogic"
+require "haml"
+require "will_paginate"
+require "formtastic"
 require "terryblr"
 
 module Dummy
