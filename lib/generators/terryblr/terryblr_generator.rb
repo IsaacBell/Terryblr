@@ -22,10 +22,6 @@ module Terryblr
         end
       end
 
-      def install_dependencies
-        plugin 'resource_controller', :git => 'git://github.com/makandra/resource_controller.git'
-      end
-
       def create_migration_file
         migration_template 'create_posts.rb', 'db/migrate/create_posts.rb'
         migration_template 'create_pages.rb', 'db/migrate/create_pages.rb'
