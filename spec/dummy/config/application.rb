@@ -6,14 +6,10 @@ require "action_controller/railtie"
 require "action_view/railtie"
 require "action_mailer/railtie"
 
-Bundler.require
-require "settingslogic"
-require "haml"
-require "will_paginate"
-require "formtastic"
+autoload "ResourceController", "makandra_resource_controller"
+
+Bundler.setup
 require "terryblr"
-require "acts-as-taggable-on"
-require "makandra_resource_controller"
 
 module Dummy
   class Application < Rails::Application
