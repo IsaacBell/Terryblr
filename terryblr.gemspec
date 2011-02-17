@@ -25,15 +25,27 @@ Gem::Specification.new do |s|
   s.add_dependency "haml"
   s.add_dependency "settingslogic"
   s.add_dependency "formtastic"
+  s.add_dependency "will_paginate"
+  s.add_dependency "haml"
+  s.add_dependency "settingslogic"
+  s.add_dependency "formtastic"
 
 
-  s.add_development_dependency "rspec"
   s.add_development_dependency "bundler"
   s.add_development_dependency "rcov", ">= 0"
+  s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails", "~> 2.5"
   s.add_development_dependency "sqlite3-ruby"
   s.add_development_dependency "capybara", "~> 0.4"
   s.add_development_dependency "webrat"
+  s.add_development_dependency "cucumber"
+  s.add_development_dependency "cucumber-rails"
+  s.add_development_dependency "autotest"
+  s.add_development_dependency "autotest-rails"
+  s.add_development_dependency "ruby-debug19"
+  s.add_development_dependency "database_cleaner"
+  s.add_development_dependency "factory_girl_rails"
+  
 
   s.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"] + ["LICENSE", "README.rdoc"]
 end
