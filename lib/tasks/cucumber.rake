@@ -13,8 +13,16 @@ begin
   namespace :cucumber do
     Cucumber::Rake::Task.new({:ok => 'dummy:db:test:prepare'}, 'Run features that should pass') do |t|
       t.binary = nil # If nil, the gem's binary is used.
-      t.fork = true # You may get faster startup if you set this to false
+      t.fork = false # You may get faster startup if you set this to false
       t.profile = 'default'
+    end
+
+    Cucumber::Rake::Task.new({:html => 'dummy:db:test:prepare'}, 'Run all the features, output html') do |t|
+      mkdir_p 'tmp/cucumber' unless File.exists? 'tmp/cucumber'
+      t.binary = nil # If nil, the gem's binary is used.
+      t.fork = false # You may get faster startup if you set this to false
+      t.profile = 'html'
+      # t.cucumber_opts = '--format html --out tmp/cucumber/index.html'
     end
 
     Cucumber::Rake::Task.new({:wip => 'dummy:db:test:prepare'}, 'Run features that are being worked on') do |t|

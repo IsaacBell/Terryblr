@@ -23,7 +23,7 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
 end
 
 RSpec::Core::RakeTask.new(:spec_html) do |spec|
-  mkdir_p 'tmp/spec'
+  mkdir_p 'tmp/spec' unless File.exists? 'tmp/spec'
   spec.pattern = FileList['spec/**/*_spec.rb'] - FileList['spec/dummy/vendor/plugins/resource_controller/generators/**/*_spec.rb']
   spec.rspec_opts = '--format html --out tmp/spec/index.html'
 end
