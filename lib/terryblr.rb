@@ -1,3 +1,8 @@
+require 'haml'
+require 'formtastic'
+require 'settingslogic'
+require 'will_paginate'
+
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 
 [ 'terryblr/configuration',
