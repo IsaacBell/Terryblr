@@ -10,6 +10,7 @@ autoload "ResourceController", "makandra_resource_controller"
 
 Bundler.setup
 require "terryblr"
+require "acts-as-taggable-on"
 
 module Dummy
   class Application < Rails::Application
