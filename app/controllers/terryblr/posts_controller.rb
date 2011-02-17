@@ -5,11 +5,11 @@ class Terryblr::PostsController < Terryblr::PublicController
   before_filter :collection, :only => [:index, :tagged, :archives]
   before_filter :require_user, :only => [:preview]
   skip_before_filter :set_expires, :only => [:preview]
-  
+
   index {
     wants.rss {}
   }
-  
+
   show {
     before {
       @page_title = object.title rescue nil
