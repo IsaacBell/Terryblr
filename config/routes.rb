@@ -4,6 +4,18 @@ Rails.application.routes.draw do
   match '/admin', :to => "terryblr/admin#index"
   namespace :admin do
     resources :posts
+    resources :comments
+    resources :orders
+    resources :products
+    resources :pages
+    resources :users do
+      collection do
+        get :admins
+      end
+    end
+    match "/admin/feature", :to => "todoadmin#index", :as => :new_content
+    match "/admin/search", :to => "terryblr/admin#search", :as => :search
+    match "/logout", :to => "todoadmin#index"
   end
   
   # Posts (be carefull, order matters!)
