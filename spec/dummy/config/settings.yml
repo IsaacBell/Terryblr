@@ -1,6 +1,7 @@
 common: &common
   app_name: Terry Richardson
   admin_email: info@terryrichardson.com
+  authentication: AuthenticationHelper
   ganalytics:
     code: UA-XXXXXXX-XX
     email: terryblr@gmail.com
@@ -62,7 +63,7 @@ common: &common
     key: R_c8a7f8051740494c879df5865cd04b4b
   tags: 
     posts:
-      groups: [tags location]
+      groups: [tags, location]
       tags: []
       location: [blog, featured]
   photo_dimensions:
