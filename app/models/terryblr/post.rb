@@ -111,7 +111,7 @@ class Terryblr::Post < Terryblr::Base
   def set_diary
     # Set diary as default location
     if pending? or new_record? and respond_to?(:location_list) and location_list.empty?
-      location_list << Settings.tags.posts.location.first
+      location_list << Terryblr::Settings.tags.posts.location.first
     end
   end
 
