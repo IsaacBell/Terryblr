@@ -30,6 +30,8 @@ Gem::Specification.new do |s|
   s.add_dependency "acts_as_commentable"
   s.add_dependency "cannikin-gattica"
   s.add_dependency "tweetstream"
+  s.add_dependency "money"
+  s.add_dependency "jammit"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rcov", ">= 0"
