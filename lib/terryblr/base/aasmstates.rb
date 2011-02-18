@@ -30,17 +30,16 @@ module Terryblr
           # Scopes
           #
           aasm_states.map(&:name).each do |state|
-            scope state, :conditions => {:state => state.to_s}
+            scope state, where(:state => state.to_s)
           end
 
           scope :by_state, lambda { |state|
-            { :conditions => {:state => state} }
+            where(:state => state.to_s)
           }
 
           scope :live, lambda {
             # Needs to be sep variable or AR will cache the first time and it'll never change
-            now = Time.now.in_time_zone
-            { :conditions => ["#{table_name}.state = 'published' and #{table_name}.published_at < ?", now] }
+            where("#{table_name}.state = 'published' and #{table_name}.published_at < ?", Time.zone.now)
           }
 
           def states_for_select
@@ -56,7 +55,7 @@ module Terryblr
             case value.to_s.to_sym
             when :publish_now
               self[:state] = "published"
-              self.published_at = Time.now.in_time_zone
+              self.published_at = Time.zone.now
             when :published_at
               self[:state] = "published"
             else

@@ -17,18 +17,20 @@ class Terryblr::Comment < Terryblr::Base
   #
   validates_presence_of :comment
 
+  def validate_on_create
+    errors.add_to_base("Unfortunately this comment is considered spam by Akismet. It will show up once it has been approved by the administrator.") if spam?
+  end
+
   #
   # Scopes
   #
-  default_scope :order => 'created_at ASC'
-  scope :moderated, :conditions => "moderated_at is not null"
-  scope :approved,  :conditions => "moderated_at is null"
+  default_scope order('created_at ASC')
+  scope :moderated, where("moderated_at is not null")
+  scope :approved,  where("moderated_at is null")
 
-  def validate_on_create
-    if spam?
-      errors.add_to_base("Unfortunately this comment is considered spam by Akismet. It will show up once it has been approved by the administrator.")
-    end
-  end
+  #
+  # Callbacks
+  #
 
   #
   # Class Methods
@@ -83,5 +85,4 @@ class Terryblr::Comment < Terryblr::Base
     update_attribute(:moderated_at, nil)
     Akismetor.submit_ham(akismet_attributes)
   end
-
 end

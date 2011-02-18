@@ -27,8 +27,8 @@ class Terryblr::Page < Terryblr::Base
 
   #
   # Scopes
-  # 
-  scope :roots, :conditions => { :parent_id => nil }
+  #
+  scope :roots, where(:parent_id => nil)
 
   #
   # Callbacks
@@ -87,5 +87,4 @@ class Terryblr::Page < Terryblr::Base
   def parent_of(page = self)
     page.parent_id? ? self.class.find(page.parent_id) : nil
   end
-
 end

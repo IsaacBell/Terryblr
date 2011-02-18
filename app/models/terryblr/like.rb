@@ -18,7 +18,7 @@ class Terryblr::Like < Terryblr::Base
   #
   # Scopes
   #
-  default_scope :order => 'created_at ASC'
+  default_scope order('created_at ASC')
 
   #
   # Class Methods

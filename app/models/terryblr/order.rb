@@ -40,7 +40,6 @@ class Terryblr::Order < Terryblr::Base
   aasm_event :fail do
     transitions :from => [:pending, :failed], :to => :failed
   end
-  
 
   #
   # Associatons
@@ -56,47 +55,37 @@ class Terryblr::Order < Terryblr::Base
   validates_numericality_of :discount_cents, :greater_than_or_equal_to => 0
   validates_numericality_of :final_amount_cents, :greater_than_or_equal_to => 0
   validates_presence_of :user, :email, :first_name, :last_name, :zip, :currency, :country, :street, :city, :province, :ip_address
-  
+
   def validate
     errors.add(:amount, "must be greater than 0") if amount.zero?
     errors.add(:products, "cannot be empty.") if line_items.empty?
   end
-  
+
   #
   # Scopes
   #
-  default_scope :order => 'created_at DESC'
+  default_scope order('created_at DESC')
 
-  named_scope :by_month, lambda { |month|
-    { :conditions => ["MONTH(created_at) = ?",  month.to_i] }
+  scope :by_month, lambda { |month|
+    where("MONTH(created_at) = ?", month.to_i)
   }
 
-  named_scope :by_year, lambda { |year|
-    { :conditions => ["YEAR(created_at) = ?",  year.to_i] }
+  scope :by_year, lambda { |year|
+    where("YEAR(created_at) = ?", year.to_i)
   }
-
 
   #
   # Callbacks
   #
-  def after_create
-    do_gateway_payment && reduce_qty
-  end
-  
-  
-  def before_validation_on_create
-    # Calc update amount totals
-    total_amounts
-  end
-  
+  after_create :do_gateway_payment
+  after_create :reduce_qty
+  before_validation :total_amounts, :on => :create
 
   #
   # Class Methods
   #
   class << self
-    
     def build_order_for_user(user)
-
       # Get address info if user has previous orders
       attrs = {}
       if old_order = user.orders.first
@@ -105,46 +94,42 @@ class Terryblr::Order < Terryblr::Base
 
       # Build new object
       new(attrs.update({
-        :user => user,
+        :user       => user,
         :first_name => user.first_name,
-        :last_name => user.last_name,  
+        :last_name  => user.last_name,
         :line_items => user.cart_items,
-        :amount =>  Money.new(user.cart_items.sum(:price_cents)),
+        :amount     => Money.new(user.cart_items.sum(:price_cents)),
         :ip_address => user.current_login_ip
       }))
     end
-    
-    
   end
 
   #
   # Instance Methods
   #
-  
   def full_name
     [first_name, last_name].join(' ')
   end
-  
+
   def number
     # TODO: Format this as something more user friendly
-    [id,created_at].map(&:to_i).join('-')
+    [id, created_at].map(&:to_i).join('-')
   end
-  
-  
+
   def address
     %w(street city province zip country).map{|f| self.send(f) }.compact.join("\n")
   end
-  
+
   def total_amounts
     # Set price
-    self.amount = line_items.to_a.sum{|i| i.total_price }
-    
+    self.amount = line_items.to_a.sum{ |i| i.total_price }
+
     # Set final amount to be paid
     self.final_amount = amount - discount
   end
 
   private
-  
+
   def reduce_qty
     sold_outs = []
     line_items.each do |l|
@@ -155,23 +140,22 @@ class Terryblr::Order < Terryblr::Base
         end
       end
     end
-    
+
     # Mail admin if sold out
     Notifier.deliver_sold_out_warning(sold_outs) if !sold_outs.empty?
   end
-  
-  def do_gateway_payment
 
+  def do_gateway_payment
     # we set the serials first to raise error before payment
     auth = gateway.authorize(final_amount, credit_card, purchase_options)
-    
+
     raise auth.message unless auth.success?
-    
+
     # Authorization is zero if account is globally in test mode, you cannot capture:
     unless auth.authorization == "0"
       capture = gateway.capture(price, capture.authorization) #, purchase_options) 
     end
-    
+
     update_attribute(:gateway_data, capture)
 
     capture.success? ? complete! : fail!
@@ -230,6 +214,5 @@ class Terryblr::Order < Terryblr::Base
         :login => Settings.paypal.login,
         :password => Settings.paypal.password})
     end
-  end  
-  
+  end
 end

@@ -21,10 +21,11 @@ class Terryblr::Post < Terryblr::Base
   #
   # Behaviours
   #
+  include Terryblr::Base::Taggable
   include Terryblr::Base::AasmStates
 
   attr_accessor :url, :tw_me, :fb_me, :tumblr_me
-  include Terryblr::Base::Taggable
+
   #XXX acts_as_commentable
   accepts_nested_attributes_for :photos, :allow_destroy => true
   accepts_nested_attributes_for :videos, :allow_destroy => true, :reject_if => Proc.new{|v| v["url"].blank? }
@@ -53,38 +54,33 @@ class Terryblr::Post < Terryblr::Base
   #
   # Scopes
   #
-  default_scope :order => "posts.published_at desc, posts.id desc"
+  default_scope order("posts.published_at desc, posts.id desc")
 
   scope :by_month, lambda {|*args|
     # Needs to be sep variable or AR will cache the first time and it'll never change
     now = Time.now.in_time_zone
-    { 
-      :select => "distinct(EXTRACT(DAY from posts.published_at)), posts.*",
-      :conditions => ["EXTRACT(MONTH from posts.published_at) = ? and EXTRACT(YEAR from posts.published_at) = ? and posts.published_at <= ?",  args.flatten[0].to_i, now.year, now],
-      :order => "posts.published_at asc"
-    }
+    select("distinct(EXTRACT(DAY from posts.published_at)), posts.*").
+    where("EXTRACT(MONTH from posts.published_at) = ? and EXTRACT(YEAR from posts.published_at) = ? and posts.published_at <= ?",  args.flatten[0].to_i, now.year, now).
+    order("posts.published_at asc")
   }
 
   scope :by_year, lambda { |year|
     # Needs to be sep variable or AR will cache the first time and it'll never change
-    now = Time.now.in_time_zone
-    { :conditions => ["EXTRACT(YEAR from posts.published_at) = ? and posts.published_at <= ?",  year.to_i, now] }
+    where("EXTRACT(YEAR from posts.published_at) = ? and posts.published_at <= ?",  year.to_i, Time.zone.now)
   }
 
   scope :popular_photos, lambda {
-    now = Time.now.in_time_zone
-    { 
-      :joins => "INNER JOIN photos ON photos.photoable_type = 'Post' AND photos.photoable_id = posts.id",
-      :select => "posts.*, ((comments_count*2)+likes_count) as final_count",
-      :conditions => ["posts.state = 'published' AND posts.published_at < ? AND posts.published_at < ?", now-1.week, now],
-      :order => "final_count desc, published_at desc",
-      :group => "posts.id",
-      :limit => 6
-    }
+    now = Time.zone.now
+    joins("INNER JOIN photos ON photos.photoable_type = 'Post' AND photos.photoable_id = posts.id").
+    select("posts.*, ((comments_count*2)+likes_count) as final_count").
+    where("posts.state = 'published' AND posts.published_at < ? AND posts.published_at < ?", now-1.week, now).
+    order("final_count desc, published_at desc").
+    group("posts.id").
+    limit(6)
   }
 
   @@post_types.each do |type|
-    scope type.pluralize, :conditions => {:post_type => type.to_s}
+    scope type.pluralize, where(:post_type => type.to_s)
   end
 
   #
