@@ -3,10 +3,10 @@
 %html
   %head
     %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
-    %title #{Settings.app_name}: Admin
+    %title #{Terryblr::Settings.app_name}: Admin
     = yield :pre_head
-    = include_javascripts :admin
-    = include_stylesheets :admin
+    //XXX = include_javascripts :admin
+    //XXX = include_stylesheets :admin
     = yield :head
   %body
     .container
