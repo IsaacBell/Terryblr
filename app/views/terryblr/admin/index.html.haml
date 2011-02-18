@@ -28,10 +28,10 @@
       = link_to pluralize(Terryblr::Comment.count, 'Comment'), admin_comments_path
     %li.orders-count
       = image_tag "admin/dashboard_controls_drafts.png"
-      = link_to pluralize(Order.count, 'Order'), admin_orders_path
+      = link_to pluralize(Terryblr::Order.count, 'Order'), admin_orders_path
     %li.orders-count
       = image_tag "admin/dashboard_controls_activity.png"
-      = link_to Money.new(Order.sum(:final_amount_cents)).format+' Sales', admin_products_path
+      = link_to Money.new(Terryblr::Order.sum(:final_amount_cents)).format+' Sales', admin_products_path
     %li.comments-count
       = image_tag "admin/dashboard_controls_activity.png"
       = link_to 'Stats', ""
