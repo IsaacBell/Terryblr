@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root :to => 'terryblr/home#index'
   
+  match '/admin', :to => "terryblr/admin#index"
+  namespace :admin do
+    resources :posts
+  end
+  
   # Posts (be carefull, order matters!)
   match '/posts/tagged/:tag', :to => 'terryblr/posts#tagged', :as => 'tagged_posts'
   match '/posts/archives', :to => 'terryblr/posts#archives', :as => 'archive_posts'

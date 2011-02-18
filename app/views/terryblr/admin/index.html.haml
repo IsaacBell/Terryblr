@@ -1,0 +1,42 @@
+- today = Date.today
+- @date ||= today
+- content_for :header do
+  javascript_include_tag 'raphael-min.js'
+  
+- content_for :sidebar do
+  %h2
+    //XXX - link_to edit_admin_user_path(current_user) do
+    //XXX  = current_user.full_name
+    //XXX  %span Edit
+
+  %ul.summary
+    %li.divider
+    %li.home
+      = image_tag "admin/dashboard_controls_open.png"
+      =link_to Terryblr::Settings.domain, root_path
+    %li.posts-count
+      = image_tag "admin/dashboard_controls_posts.png"
+      = link_to pluralize(Terryblr::Post.published.count, 'Post'), admin_posts_path
+    %li.drafts-count
+      = image_tag "admin/dashboard_controls_drafts.png"
+      = link_to pluralize(Terryblr::Post.drafted.count, 'Drafts'), admin_posts_path(:state => "drafted")
+    %li.queued-count
+      = image_tag "admin/dashboard_controls_queue.png"
+      = link_to "#{Terryblr::Post.queued.count} Queued", admin_posts_path(:state => "queued")
+    %li.comments-count
+      = image_tag "admin/dashboard_controls_drafts.png"
+      = link_to pluralize(Terryblr::Comment.count, 'Comment'), admin_comments_path
+    %li.orders-count
+      = image_tag "admin/dashboard_controls_drafts.png"
+      = link_to pluralize(Order.count, 'Order'), admin_orders_path
+    %li.orders-count
+      = image_tag "admin/dashboard_controls_activity.png"
+      = link_to Money.new(Order.sum(:final_amount_cents)).format+' Sales', admin_products_path
+    %li.comments-count
+      = image_tag "admin/dashboard_controls_activity.png"
+      = link_to 'Stats', ""
+    %li.divider
+
+= render :partial => "content_nav"
+
+#dashboard

@@ -1,0 +1,44 @@
+- %w(visitors tweets fb_page_views fb_page_likes).each do |rep_title|
+  - if rep_title=='tweets'
+    .chart{:class => 'tweet-reach'}
+      %h3 
+        Tweet Reach: 
+        %span= number_with_delimiter(@tweet_reach)
+    .chart{:class => 'tweet-exposure'}
+      %h3 
+        Tweet Exposure:
+        %span= number_with_delimiter(@tweet_exposure)
+    .clear
+
+  - if rep_title=='fb_page_views'
+    - if @fb_page_views
+      .chart{:class => 'fb-page-views'}
+        %h3 
+          FB Page Total Views: 
+          %span= number_with_delimiter(@fb_page_views.data.first.values[3].sum{|h| h['value'].to_i})
+    - if @fb_page_likes
+      .chart{:class => 'fb-page-likes'}
+        %h3 
+          FB Page Total Likes: 
+          %span= number_with_delimiter(@fb_page_likes.data.first.values[3].sum{|h| h['value'].to_i})
+    .clear
+  
+  .chart{:class => rep_title}
+    %h3= rep_title.humanize.capitalize_words
+    .graph_canvas{:id => "#{rep_title}_graph"}
+    %table.graph_data{:id => "#{rep_title}_data"}
+      %thead
+        %tr
+          %th Value
+          %th #
+      = render :partial => "terryblr/admin/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}
+
+- %w(top_referrers top_landing_pages).each do |rep_title|
+  .chart{:class => rep_title}
+    %h3= rep_title.humanize.capitalize_words
+    %table{:id => "#{rep_title}_data"}
+      %thead
+        %tr
+          %th Value
+          %th #
+      = render :partial => "terryblr/admin/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}

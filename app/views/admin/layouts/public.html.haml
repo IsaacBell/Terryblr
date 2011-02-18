@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+%html
+  %head
+    %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
+    %title #{Terryblr::Settings.app_name}#{": #{@page_title}" if @page_title}
+    = facebook_meta_tags
+    = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery.cycle.min', 'jquery.flash.min', 'jquery.cookie.min', 'jrails', 'public', :cache => true, :recursive => true
+    = stylesheet_link_tag 'public_grid', 'public', :cache => true, :recursive => true
+    =# yield :head
+    
+  %body
+    .container
+      #header
+        #search_form
+          = semantic_form_for(Terryblr::Post.new, :url => search_path, :html => { :method => :get, :class => "auto-hide-text"}) do |f| 
+            =text_field_tag "search", (params[:search] || "SEARCH"), :class => "text"
+            =submit_tag "Go!>>"
+
+        %h1{:id => 'logo'}=link_to Terryblr::Settings.app_name, root_path
+
+        #nav
+          #date=raw Time.now.in_time_zone.strftime("<strong>%A</strong>, %B %d, %Y")
+          %ul
+            %li.home=link_to_unless_current "Home", root_path
+            - if defined?(Terryblr::Settings.common_tags)
+              %li.diary=link_to_unless_current "Diary", tagged_posts_path(Terryblr::Settings.common_tags.first)
+
+      #body.clear
+        = flash_messages
+
+        = yield
+
+      #footer
+
+      / Google analytics
+      %script{ :type => "text/javascript" }
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '#{Terryblr::Settings.ganalytics.code}']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+        })();

@@ -1,0 +1,42 @@
+- @show_as_dash ||= false
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+%html
+  %head
+    %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
+    %title #{Settings.app_name}: Admin
+    = yield :pre_head
+    = include_javascripts :admin
+    = include_stylesheets :admin
+    = yield :head
+  %body
+    .container
+      #header
+        #nav
+          %ul
+            %li= link_to_unless_current "Dashboard", admin_path
+            %li= link_to_unless_current "Archives", admin_posts_path
+            %li= link_to_unless_current "Users", admins_admin_users_path
+            %li= link_to_unless_current "Logout", admin_logout_path
+
+            %li
+              - semantic_form_for Post.new, :url => admin_search_path, :html => {:method => :get, :class => "auto-hide-text", :id => "admin_search"} do |f|
+                =link_to_function image_tag("admin/search_icon.png")
+                =text_field_tag "search", (params[:search] || "Search...")
+
+        %h1= link_to_unless_current "terryblr", admin_path
+
+      #body{:class => @show_as_dash ? "dashboard" : ""}
+        =image_tag "admin/content_top_edit_form.png", :id => "content_top_edit_form"
+        #content{:class => @content_for_sidebar ? "span-17" : "span-23 last"}
+          #flash_messages= flash_messages
+          = yield
+
+        / Show Sidebar if there is something to include
+        - if @content_for_sidebar
+          #sidebar{:class => "span-6 last"}
+            = yield :sidebar
+
+        .clear
+
+      #footer
+      
