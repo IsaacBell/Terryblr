@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root :to => 'terryblr/home#index'
   
-  match '/admin', :to => "terryblr/admin#index"
+  match '/admin', :to => "terryblr/admin#index", :as => 'admin'
+  match "/admin/feature", :to => "todoadmin#index", :as => :new_content
+  match "/admin/search", :to => "terryblr/admin#search", :as => :search
   namespace :admin do
     resources :posts
     resources :comments
@@ -13,11 +15,18 @@ Rails.application.routes.draw do
         get :admins
       end
     end
-    match "/admin/feature", :to => "todoadmin#index", :as => :new_content
-    match "/admin/search", :to => "terryblr/admin#search", :as => :search
     match "/logout", :to => "todoadmin#index"
   end
-  
+
+  match '/store', :to => 'terryblr/products#show', :as => 'store'
+  match '/store/products/tagged/:tag', :to => 'terryblr/products#tagged', :as => 'store_tagged_products'
+  resource :cart, :only => [:show], :member => { :checkout => :any }, :path_prefix => '/store', :controller => 'terryblr/cart'
+  match '/products/:id/:slug', :to => 'terryblr/products#show', :as => 'product'
+  resources :products, :member => { :gallery_params => :any, :next => :get, :previous => :get }, :path_prefix => '/store', :controller => 'terryblr/products' do
+    resource :cart, :only => [:create, :update, :destroy], :controller => 'terryblr/cart'
+  end
+  resources :orders, :only => [:index, :show], :path_prefix => '/store', :controller => 'terryblr/orders'
+
   # Posts (be carefull, order matters!)
   match '/posts/tagged/:tag', :to => 'terryblr/posts#tagged', :as => 'tagged_posts'
   match '/posts/archives', :to => 'terryblr/posts#archives', :as => 'archive_posts'
@@ -36,7 +45,7 @@ Rails.application.routes.draw do
   # Error Pages
   match '/500', :to => 'terryblr/home#error', :as => 'error'
   match '/404', :to => 'terryblr/home#not_found', :as => 'not_found'
-  
+
   # Pages (MUST be last)
   match '/:page_slug', :to => 'terryblr/pages#show', :as => 'page'
 end

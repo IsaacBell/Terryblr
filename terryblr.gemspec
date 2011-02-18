@@ -32,6 +32,8 @@ Gem::Specification.new do |s|
   s.add_dependency "tweetstream"
   s.add_dependency "money"
   s.add_dependency "jammit"
+  s.add_dependency "settingslogic"
+  s.add_dependency "jquery-rails"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rcov", ">= 0"

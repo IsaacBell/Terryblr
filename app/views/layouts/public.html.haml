@@ -4,10 +4,9 @@
     %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
     %title #{Terryblr::Settings.app_name}#{": #{@page_title}" if @page_title}
     = facebook_meta_tags
-    = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery.cycle.min', 'jquery.flash.min', 'jquery.cookie.min', 'jrails', 'public', :cache => true, :recursive => true
-    = stylesheet_link_tag 'public_grid', 'public', :cache => true, :recursive => true
-    =# yield :head
-    
+    = javascript_include_tag :terryblr, 'jquery.cycle.min', 'jquery.flash.min', 'jquery.cookie.min', :cache => true, :recursive => true
+    = stylesheet_link_tag 'public_grid', :cache => true, :recursive => true
+    = yield :head
   %body
     .container
       #header
@@ -37,7 +36,6 @@
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '#{Terryblr::Settings.ganalytics.code}']);
         _gaq.push(['_trackPageview']);
-
         (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';

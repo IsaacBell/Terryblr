@@ -2,8 +2,7 @@ require 'unicode_utils'
 
 module Terryblr
   module I18nHelpers
-    def self.included( recipient )
-      # puts "Terryblr::I18nHelpers included !!"
+    def self.included(recipient)
       recipient.class_eval do
         def terryblr_translate *args
           options = args.extract_options!

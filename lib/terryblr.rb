@@ -32,3 +32,6 @@ module Terryblr
     
   end
 end
+
+# TODO: Automatically deploy JS specific files either by executing 'rails generate jquery:install --ui' or by copying them
+ActionView::Helpers::AssetTagHelper.register_javascript_expansion :terryblr => %w(jquery.min jquery-ui.min rails terryblr)

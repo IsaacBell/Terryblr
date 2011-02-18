@@ -25,8 +25,7 @@ module Terryblr::ApplicationHelper
   end
 
   def facebook_meta_tags
-
-    return "<!-- No info for FB headers -->" unless page_object
+    return unless page_object
 
     title = Terryblr::Settings.app_name + " - #{page_title}"
 
