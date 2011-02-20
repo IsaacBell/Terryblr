@@ -146,7 +146,7 @@ module Terryblr::ApplicationHelper
   end
 
   def session_key
-    @session_key ||= ActionController::Base.session_options[:key]
+    @session_key ||= Rails.application.config.session_options[:key]
   end
 
   def link_current_block
