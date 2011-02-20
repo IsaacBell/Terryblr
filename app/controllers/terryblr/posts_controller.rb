@@ -23,7 +23,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   }
 
   def preview
-    @object = Post.find(params[:id])
+    @object = Terryblr::Post.find(params[:id])
     @object.published_at = Time.now.in_time_zone
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
@@ -123,6 +123,6 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def posts_chain
-    Post.live
+    Terryblr::Post.live
   end
 end
