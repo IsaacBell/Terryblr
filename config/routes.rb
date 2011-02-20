@@ -2,10 +2,18 @@ Rails.application.routes.draw do
   root :to => 'terryblr/home#index'
   
   match '/admin', :to => "terryblr/admin#index", :as => 'admin'
-  match "/admin/feature", :to => "todoadmin#index", :as => :new_content
-  match "/admin/search", :to => "terryblr/admin#search", :as => :search
+  match "/admin/search", :to => "terryblr/admin#search", :as => :admin_search
   namespace :admin do
-    resources :posts
+    resources :posts, :controller => "terryblr/posts" do
+      collection do
+        get :filter
+        post :filter
+      end
+      resources :comments, :except => [:new, :create], :controller => "terryblr/comments"
+      resources :links, :controller => "terryblr/links"
+      resources :videos, :controller => "terryblr/videos"
+      resources :photos, :controller => "terryblr/photos"
+    end
     resources :comments
     resources :orders
     resources :products
@@ -16,6 +24,12 @@ Rails.application.routes.draw do
       end
     end
     match "/logout", :to => "todoadmin#index"
+
+    %w(page product user).each do |p|
+      match "new/#{p}", :to => "terryblr/#{p.pluralize}#new"
+    end
+    match "new/feature", :to => "todoadmin#index", :as => :new_content
+    match "new/:type", :to => "terryblr/posts#new", :as => :new_content
   end
 
   match '/store', :to => 'terryblr/products#show', :as => 'store'
