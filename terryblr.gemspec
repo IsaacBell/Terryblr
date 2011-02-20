@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency "jammit"
   s.add_dependency "settingslogic"
   s.add_dependency "jquery-rails"
+  s.add_dependency "paperclip"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rcov", ">= 0"

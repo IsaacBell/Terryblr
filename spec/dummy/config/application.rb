@@ -12,6 +12,7 @@ Bundler.setup
 require "terryblr"
 require "acts-as-taggable-on"
 require "money"
+require "paperclip"
 
 module Dummy
   class Application < Rails::Application
