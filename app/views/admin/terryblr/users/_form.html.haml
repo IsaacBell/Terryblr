@@ -1,0 +1,17 @@
+- form.inputs do 
+  = form.input :first_name, :label => 'First name' 
+  = form.input :last_name, :label => 'Last name' 
+  = form.input :email, :label => 'Email' 
+  = form.input :password, :label => 'Password' 
+  = form.input :password_confirmation, :label => 'Password Confirmation'
+
+- form.buttons do
+  = form.commit_button "Save User"
+  %li.cancel
+    - if @object.new_record?
+      = link_to "Cancel", admin_users_path, :class => "cancel"
+    - else
+      = link_to "Back", admin_users_path, :class => "cancel"
+  %li.delete
+    = link_to "Delete", admin_user_path(@object.id), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless @object.new_record? or @object.id < 3
+  

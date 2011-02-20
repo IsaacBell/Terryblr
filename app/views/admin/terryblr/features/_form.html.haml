@@ -1,0 +1,60 @@
+= render :partial => 'admin/edit_head_content'
+  
+- semantic_form_for @object, :url => (@object.new_record? ? admin_features_path : admin_feature_path(@object)) do |f|
+  
+  #form_content{:class => "span-17"}
+    %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
+    = f.semantic_errors
+    - f.inputs do
+      = f.input :title, :input_html => { :class => "title" }
+      %li.photos-upload
+        %label Photo
+        =multi_file_uploader(:url => admin_feature_photo_path((@object.new_record? ? '-' : @object), :format => :js), :css_parent_class => "photos-upload")
+        .clear
+      %li.photos-choose
+        %label Existing Post
+        = hidden_field :feature, :post_id
+        = link_to_function "Choose", remote_function(:url => admin_posts_path(:format => :js), :method => :get, :success => "$('#feature_post_browser').toggle(); ")
+        .clear
+      %li.photo
+        #feature_photo.media-list
+          %ul#feature_photo_ul
+            - if @object.photo
+              = photo_for_assoc(@object.photo, @object, "photos_list")
+            - elsif @object.post && @object.video
+              = image_tag @object.video.thumb_url
+        
+        #feature_post_browser{:style => 'display:none;'}
+          .close= link_to_function 'close', "$('#feature_post_browser').hide();$(this).find('.archives').remove()"
+          %label Choose a Post:
+          #pagination
+          
+      = f.input :caption, :label => 'Caption', :as => 'text', :input_html => { :style => "height:10em;" }
+      = f.input :url, :label => 'URL', :input_html => { :class => "title" }
+
+    - f.buttons do
+      = f.commit_button "Save #{@object.class.to_s}"
+      %li.cancel
+        = link_to "Back", admin_features_path, :class => "cancel"
+      %li.delete
+        = link_to "Delete", admin_feature_path(@object), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless @object.new_record?
+
+  #form_sidebar{:class => "sidebar span-6 last"}
+    - f.inputs do
+      = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
+      - selected = (@object.pending? || @object.published?) ? (@object.published_at? ? :published_at : :published_now) : @object.state.to_sym
+
+      - @object.published_at = (@object.published_at || Time.now).in_time_zone # Needed to show time in user's TZ
+      - label = @object.published_at.past? ? "Published on: " : "Will be published on:"
+
+      = f.input :state, :as => "select", :collection => @object.states_for_select, :selected => selected, :include_blank => false, :wrapper_html => { :class => "post-states" }
+      = f.input :published_at, :label => label, :as => "string", :wrapper_html => { :class => "date-picker", :style => "display:#{selected==:published_at ? 'block' : 'none'}"} 
+
+      - if defined?(Settings.tags.posts.features)
+        %li{:class => "features-tag-group tag-picker"}
+          %label Location
+          %ul
+            - Settings.tags.posts.features.each do |tag|
+              %li.machine_tag.feature_tag{:class => @object.tag_list.include?(tag) ? "selected" : "" }
+                = radio_button_tag 'feature[tag_list][]', tag, @object.tag_list.include?(tag)
+                = tag.humanize.titleize

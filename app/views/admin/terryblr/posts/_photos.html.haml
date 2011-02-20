@@ -1,0 +1,29 @@
+- semantic_form_for @post, :url => admin_post_path(@post) do |f|
+  
+  #form_content{:class => "span-17"}
+    %h2 #{params[:action].to_s.capitalize} #{@type.to_s.capitalize}
+    = error_messages_for_post
+    = f.semantic_errors
+    - f.inputs do
+      = f.input :title, :label => 'Title', :input_html => { :class => "title" }
+      %li.photos-upload
+        %label Photos
+        =multi_file_uploader(:url => admin_post_photos_path(@post, :format => :js), :css_parent_class => "photos-upload")
+        %p.inline-hints.clear Upload, then reorder and caption photos
+      %li.photos-display-type
+        %label Gallery Display
+        - Post.display_types.each do |dt|
+          %span{:class => "#{dt} #{'selected' if @post.display_type==dt}"}
+            = radio_button :post, :display_type, dt, :title => dt.humanize.titleize
+            = image_tag "admin/photos-display-type-#{dt}.png", :alt => dt.humanize.titleize
+            = dt.humanize.titleize
+        %p.inline-hints.clear Show photos as a slideshow gallery or stacked above each other.
+      %li.clear
+        = edit_photos_for_assoc(@post)
+      = f.input :body, :label => 'Body', :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
+
+    = render :partial => 'form_buttons', :locals => {:f => f}
+
+  =render :partial => 'form_sidebar', :locals => {:f => f}
+  
+  .clear

@@ -1,0 +1,73 @@
+= render :partial => 'admin/edit_head_content'
+  
+- semantic_form_for @object, :url => (@object.new_record? ? admin_products_path : admin_product_path(@object)) do |f|
+  = f.semantic_errors
+  #form_content{:class => "span-17"}
+    %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
+    = error_messages_for :product, :object => @object
+    - f.inputs do
+      = f.input :title, :label => 'Title', :input_html => { :class => "title" }, :required => true
+      %li.photos-upload
+        %label Photos
+        =multi_file_uploader(:url => admin_product_photos_path(@object, :format => :js), :css_parent_class => "photos-upload")
+        .clear
+        = edit_photos_for_assoc(@object)
+        %p.inline-hints.clear Upload, reorder and caption photos
+      = f.input :body, :label => 'Body', :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
+
+    - f.buttons do
+      = f.commit_button "Save #{@object.class.to_s}"
+      %li.cancel
+        = link_to "Back", admin_products_path, :class => "cancel"
+
+  #form_sidebar{:class => "sidebar span-6 last"}
+    - f.inputs do
+      = f.input :state, :as => "select", :collection => @object.states_for_select, :selected => @object.state, :include_blank => false, :wrapper_html => { :class => "post-states" }, :hint => "Currently: '#{@object.state.to_s.capitalize}'"
+      = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
+      = f.input :published_at, :label => 'Publish on', :as => "string", :wrapper_html => { :class => "date-picker", :style => (@object.publish_on_date? ? "" : "display:none") }
+      = f.input :price, :as => 'price', :hint => "Eg: $10.00", :wrapper_html => { :class => "price-input string" }, :required => true
+      %li.product-sizes.string
+        %label Sizes
+        %table
+          %thead
+            %th
+            %th Name
+            %th Qty
+            %th
+          %tfoot
+            %tr
+              %td
+              %td=text_field_tag "product[sizes_attributes][][name]", "", :class => "size_name"
+              %td=text_field_tag "product[sizes_attributes][][qty]", "", :class => "size_qty"
+              %td=link_to_function "+", ""
+          %tbody
+            -@object.sizes.each do |s|
+              %tr{:id => s.dom_id, :class => "size_fields clear"}
+                %td
+                %td=text_field_tag "product[sizes_attributes][][name]", s.name, :class => "size_name"
+                %td=text_field_tag "product[sizes_attributes][][qty]", s.qty, :class => "size_qty"
+                %td
+                  =hidden_field_tag "product[sizes_attributes][][id]", s.id
+                  =link_to_function "-", "$(this).parents('tr').remove()"
+            %tr{:id => "blank", :class => "size_fields clear", :style => "display:none"}
+              %td
+              %td=text_field_tag "product[sizes_attributes][][name]", "", :class => "size_name"
+              %td=text_field_tag "product[sizes_attributes][][qty]", "", :class => "size_qty"
+              %td
+                =hidden_field_tag "product[sizes_attributes][][id]", ""
+                =link_to_function "-", "$(this).parents('tr').remove()"
+      - if defined?(Settings.common_tags)
+        %li.common-tags
+          %label Common Tags
+          %ul
+            - Settings.common_tags.each do |tag|
+              %li.jq_tags_token
+                = tag
+                = link_to_function "+", "$('.tag-picker input.jq_tags_editor_input').attr('value','#{tag}').blur()"
+      = f.input :tag_list, :label => 'Tags', :as => "text", :wrapper_html => { :class => "tag-picker" }
+      = f.input :slug, :label => 'Custom URL', :as => "underline", :prefix => "/products/", :hint => "Leave blank to create automatically", :wrapper_html => { :class => "underlined-input" }
+
+  .clear
+
+
+

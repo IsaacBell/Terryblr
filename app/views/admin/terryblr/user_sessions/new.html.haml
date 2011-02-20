@@ -1,0 +1,10 @@
+%h2 Please Login
+
+- semantic_form_for @user_session, :url => admin_user_sessions_path do |form|
+  #form_content{:class => "span-10"}
+    - form.inputs do
+      = form.input :email, :label => "Email", :input_html => { :class => "title" }
+      = form.input :password, :input_html => { :class => "title" }
+  
+    - form.buttons do
+      = form.commit_button "Login"

@@ -1,0 +1,13 @@
+- f.buttons do
+  = f.commit_button "Save"
+  %li.commit
+    - if @post.live? and @post.valid?
+      = link_to "View", post_path(@post, @post.slug), :class => "preview", :target => "_blank"
+    - elsif @post.pending?
+      = link_to_function "Preview", "alert('Please add some content first')", :class => "preview", :target => "_blank"
+    - else
+      = link_to "Preview", preview_post_path(@post), :class => "preview", :target => "_blank"
+  %li.cancel
+    = link_to "Cancel", admin_posts_path, :class => "cancel"
+  %li.delete
+    = link_to "Delete", admin_post_path(@post), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"

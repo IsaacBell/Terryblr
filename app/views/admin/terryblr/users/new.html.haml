@@ -1,0 +1,6 @@
+%h2 New Admin
+
+- semantic_form_for @user, :url => admin_users_path do |form|
+  #form_content{:class => "span-17"}
+    = error_messages_for :user
+    = render :partial => "form", :locals => { :form => form }
