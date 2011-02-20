@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218152954) do
+ActiveRecord::Schema.define(:version => 20110220163951) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -85,6 +85,21 @@ ActiveRecord::Schema.define(:version => 20110218152954) do
   add_index "pages", ["post_id"], :name => "index_pages_on_post_id"
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["votes_count"], :name => "index_pages_on_votes_count"
+
+  create_table "photos", :force => true do |t|
+    t.string   "photoable_type"
+    t.integer  "photoable_id"
+    t.string   "caption"
+    t.string   "url"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "sizes",              :limit => 3000
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "display_order",                      :default => 0
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "post_type"

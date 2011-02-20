@@ -23,6 +23,7 @@ module Terryblr
       end
 
       def create_migration_file
+        migration_template 'create_photos.rb', 'db/migrate/create_photos.rb'
         migration_template 'create_orders.rb', 'db/migrate/create_orders.rb'
         migration_template 'create_posts.rb', 'db/migrate/create_posts.rb'
         migration_template 'create_pages.rb', 'db/migrate/create_pages.rb'
