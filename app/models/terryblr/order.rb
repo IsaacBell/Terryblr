@@ -4,12 +4,6 @@ class Terryblr::Order < Terryblr::Base
   # Constants
   #
   BILLING_COLS = %w(zip country street city province).freeze
-  CC_TYPES = {
-    :visa => "Visa",
-    :master => "Mastercard",
-    :american_express => "American Express",
-    :discover => "Discover"
-  }.freeze
 
   #
   # Behaviours
@@ -54,12 +48,7 @@ class Terryblr::Order < Terryblr::Base
   validates_numericality_of :amount_cents, :greater_than => 0
   validates_numericality_of :discount_cents, :greater_than_or_equal_to => 0
   validates_numericality_of :final_amount_cents, :greater_than_or_equal_to => 0
-  validates_presence_of :user, :email, :first_name, :last_name, :zip, :currency, :country, :street, :city, :province, :ip_address
-
-  def validate
-    errors.add(:amount, "must be greater than 0") if amount.zero?
-    errors.add(:products, "cannot be empty.") if line_items.empty?
-  end
+  validates_presence_of :user, :email, :first_name, :last_name, :zip, :currency, :country, :street, :city, :province, :ip_address, :products
 
   #
   # Scopes
@@ -200,7 +189,7 @@ class Terryblr::Order < Terryblr::Base
   def validate_card
     unless credit_card.valid?
       credit_card.errors.full_messages.each do |message|
-        errors.add_to_base message
+        errors.add(:base, message)
       end
     end
   end

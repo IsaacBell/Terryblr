@@ -16,7 +16,7 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
       redirect_to edit_admin_product_path(object)
     }
   }
-  
+
   update {
     before {
       # Set display_order
@@ -24,10 +24,10 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
         i = 0
         params[:product][:sizes_attributes].each{|s| s[:display_order] = (i+=1) }
       end
-      
+
       # Set product price
       params[:product][:price] = params[:product][:price].to_money
-      
+
       # Mark as destroyed if not included in the list
       object.sizes.each {|s| 
         unless params[:product][:sizes_attributes].map(&:id).include?(s.id)
@@ -37,6 +37,5 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
     }
   }
   
-  private  
-
+  private
 end

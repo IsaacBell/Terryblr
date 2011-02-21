@@ -6,15 +6,15 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     # Features belong to the photo and not the otherway
     if photoable.is_a?(Feature)
       feature = photoable
-      
+
       # Delete any others photos unless they belong to posts
       feature.photo.destroy if feature.photo and feature.photo.photoable.nil?
-      
+
       @object.features << feature
     else
       @object.photoable = photoable
     end
-    
+
     respond_to do |wants|
       if @object.save
         wants.js {
@@ -48,7 +48,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       end
     end
   end
-  
+
   def reorder
     if params[:photos_list].is_a?(Array)
       i = 0
@@ -60,7 +60,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       render :nothing => true, :status => :error
     end
   end
-  
+
   destroy {
     wants.js {
       render :update do |page|
@@ -77,9 +77,9 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       end
     }
   }
-  
+
   private
-  
+
   def photoable
     @photoable ||= if params[:post_id]
       Post.find_by_slug(params[:post_id]) || Post.find_by_id(params[:post_id].to_i) || Post.new
@@ -91,10 +91,9 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       Feature.find_by_id(params[:feature_id].to_i) || Feature.new
     end
   end
-  
+
   def object
     @object ||= end_of_association_chain.find_by_id(params[:id])
   end
-  
 
 end

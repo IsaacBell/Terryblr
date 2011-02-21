@@ -16,9 +16,10 @@ class Terryblr::Comment < Terryblr::Base
   # Validations
   #
   validates_presence_of :comment
+  validate :spam_filter, :on => :create
 
-  def validate_on_create
-    errors.add_to_base("Unfortunately this comment is considered spam by Akismet. It will show up once it has been approved by the administrator.") if spam?
+  def spam_filter
+    errors.add(:base, "Unfortunately this comment is considered spam by Akismet. It will show up once it has been approved by the administrator.") if spam?
   end
 
   #

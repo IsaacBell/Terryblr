@@ -16,7 +16,14 @@ class Terryblr::Video < Terryblr::Base
   #
   # Validations
   #
-  def before_validation_on_create
+  before_validation :upload_video, :on => :create
+  after_save :update_post
+
+  def update_post
+    post.soft_touch(:updated_at, false) if post
+  end
+
+  def upload_video
     # upload to vimeo
     send_to_vimeo if upload and File.exists?(upload)
 
@@ -34,12 +41,12 @@ class Terryblr::Video < Terryblr::Base
         # Get url from embed code
         param = doc.at("param[@name=movie]")
         self.url = param.attributes['value']
-        
+
         # Guess image url if from youtube
         if self.url =~ %r{^http://www.youtube.com/v/([0-9A-Za-z\-\_]+)\&.*$}
           self.thumb_url = "http://i1.ytimg.com/vi/#{$1}/default.jpg"
         end
-      else 
+      else
         OEmbed.transform(url) do |r, url|
           r.from?(:youtube) { |resp| 
             self.width     = resp["width"].to_i 
@@ -69,10 +76,6 @@ class Terryblr::Video < Terryblr::Base
       end
     end
   end
-  
-  def after_save
-    post.soft_touch(:updated_at, false) if post
-  end
 
   #
   # Scopes
@@ -90,12 +93,12 @@ class Terryblr::Video < Terryblr::Base
   def embedable?(target = :embed)
     send("#{target}?") and !send(target).strip.match(%r{^<\w+}).nil?
   end
-  
+
   def embed(*args)
     html = read_attribute(:embed)
     dims = args.first if args.is_a?(Array)
     return html if !dims.is_a?(Hash) or html.blank?
-    
+
     # Process embed for provided dimensions
     doc = Hpricot(html)
     %w(iframe object embed).each do |tag|
@@ -118,8 +121,7 @@ class Terryblr::Video < Terryblr::Base
     end
     doc.to_s
   end
-  
-  
+
   def embed_url(options = {})
     @embed_url ||= if embedable?
       # Parse for URL
@@ -130,7 +132,6 @@ class Terryblr::Video < Terryblr::Base
       elsif (tag = Hpricot(embed).at("iframe[@src]"))
         tag.attributes['src']
       end
-
     elsif vimeo_id?
       params = {
         :clip_id => vimeo_id,
@@ -141,15 +142,12 @@ class Terryblr::Video < Terryblr::Base
         :full_screen => 1, 
         :color => "ffffff"
       }.update(options)
-
       "http://vimeo.com/moogaloop.swf?#{params.to_query}"
-
     else
       url
-
     end
   end
-  
+
   def flash_vars
     @flash_vars ||= if vimeo_id?
       {:clip_id => vimeo_id, :server => 'vimeo.com', :fullscreen => 1, :show_title => 1, :show_byline => 1, :show_portrait => 1, :color => '00ADEF'}.to_json
@@ -157,24 +155,24 @@ class Terryblr::Video < Terryblr::Base
       {}.to_json
     end
   end
-  
+
   def send_to_vimeo
     return unless upload.respond_to?(:path) and File.exists?(upload.path)
-    
+
     # @vimeo.confirm("ticket_id", "json_manifest")
     quota = vimeo_upload.get_quota
-    
+
     # Check size of upload
     if upload.size > quota['user']['upload_space']['free'].to_i
       return errors.add(:upload, "exceeds remaining Viemo quota")
     end
-    
+
     ticket = vimeo_upload.get_ticket
-    
+
     resp = vimeo_upload.upload(Settings.vimeo.user_token, upload.path, ticket['ticket']['id'], ticket['ticket']['endpoint'])
     conf = vimeo_upload.confirm(ticket['ticket']['id'])
     self.vimeo_id = conf['ticket']['video_id']
-    
+
     # Set video's attributes
     if vimeo_id?
       begin
@@ -187,21 +185,19 @@ class Terryblr::Video < Terryblr::Base
       rescue Exception => exc
         logger.error { "Unable to set video attributes: #{exc}\nResp: #{resp.inspect}\nConf:#{conf}" }
       end
-      
       self.upload = nil
     else
       logger.error { "Unable to save Vimeo video!\nResp: #{resp.inspect}\nConf:#{conf}" }
     end
-    
     return vimeo_id?
   end
-  
+
   private
-  
+
   def vimeo_upload
     @vimeo_upload ||= Vimeo::Advanced::Upload.new(Settings.vimeo.consumer_key, Settings.vimeo.consumer_secret, :token => Settings.vimeo.user_token, :secret => Settings.vimeo.user_secret)
   end
-  
+
   def vimeo_video
     @video_upload ||= Vimeo::Advanced::Video.new(Settings.vimeo.consumer_key, Settings.vimeo.consumer_secret, :token => Settings.vimeo.user_token, :secret => Settings.vimeo.user_secret)
   end

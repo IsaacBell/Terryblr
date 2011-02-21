@@ -23,13 +23,13 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       }
     end
   end
-  
+
   new_action {
     before {
       # Create post!
       object.attributes= object.class.new.attributes.symbolize_keys.update(
-        :state => "pending", 
-        :post_type => params[:type], 
+        :state => "pending",
+        :post_type => params[:type],
         :published_at => nil,
         :twitter_id => nil
       )
@@ -51,7 +51,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       render :action => "edit"
     }
   }
-  
+
   update {
     wants.html {
       if params[:post] and params[:post][:state]=="publish_now"
@@ -59,7 +59,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       end
       redirect_to admin_posts_path
     }
-  }  
+  }
 
   show {
     wants.html {
@@ -71,14 +71,14 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     wants.html {
       redirect_to admin_path
     }
-  }  
-    
+  }
+
   private
-  
+
   def model_name
     'Terryblr::Post'
   end
-  
+
   def set_type
     @type = object.post_type
   end
@@ -95,7 +95,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     else
       Terryblr::Post.published
     end
-    
+
     col = :published_at
     conditions = if params[:month] and params[:year]
       @date = Date.parse("#{params[:year]}-#{params[:month]}-1")
@@ -103,11 +103,10 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     else
       []
     end
-    
+
     @posts ||= scope.paginate(
       :page => params[:page],
       :conditions => conditions,
       :order => "#{col} desc, created_at desc")
   end
-  
 end

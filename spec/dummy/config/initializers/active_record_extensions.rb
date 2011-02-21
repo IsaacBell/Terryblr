@@ -1,8 +1,8 @@
 require 'digest/md5'
 
 module ActiveRecord
+
   class Base
-    
     def to_param
       return slug.to_s if self.respond_to?(:slug) and !slug.blank?
       return "#{id}-#{name.to_s.parameterize}" if self.respond_to?(:name) and self.name?
@@ -15,9 +15,8 @@ module ActiveRecord
       prefix ||= self.class.name
       prefix != :bare ? "#{prefix.to_s.parameterize('_')}_#{display_id}" : display_id
     end
-
   end
-  
+
   module Timestamp
     def soft_touch(attribute = nil, validate = true)
       current_time = current_time_from_proper_timezone
@@ -35,19 +34,16 @@ module ActiveRecord
 
   module Validations
     module ClassMethods
-
       def validates_url_format_of(*attr_names)
         configuration = { :on => :save, :with => /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix }
         configuration.update(attr_names.extract_options!)
         validates_each(attr_names,configuration) do |record, attr_name, value|
           next if value.blank?
           begin
-
             if value !~ configuration[:with]
               record.errors.add(attr_name, 'is not a valid url format.')
               next
             end
-            
             uri = URI.parse(value)
             unless uri.class == URI::HTTP or uri.class == URI::HTTPS
               record.errors.add(attr_name, 'must be an HTTP or HTTPS protocol format')
@@ -58,18 +54,15 @@ module ActiveRecord
         end
       end
     end
-
   end
 
   module Timestamp
-    
-    private 
-      
+    private
       def current_time_from_proper_timezone
         self.class.default_timezone == :utc ? Time.now.utc : Time.now.in_time_zone
       end
   end
-  
+
   #XXX class XmlSerializer < ActiveRecord::Serialization::Serializer
   #XXX   def add_procs
   #XXX     if procs = options.delete(:procs)

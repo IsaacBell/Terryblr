@@ -15,7 +15,7 @@ class Terryblr::Page < Terryblr::Base
   #
   include Terryblr::Base::Taggable
   include Terryblr::Base::AasmStates
-  
+
   accepts_nested_attributes_for :messages
   accepts_nested_attributes_for :photos, :allow_destroy => true
 
@@ -34,7 +34,7 @@ class Terryblr::Page < Terryblr::Base
   # Callbacks
   #
   before_validation :update_slug
-  
+
   def update_slug
     # Set slug if not set or changed
     self.slug = title.to_s.parameterize if !slug? or (!new_record? && title_changed?)

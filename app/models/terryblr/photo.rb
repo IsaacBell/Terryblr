@@ -50,29 +50,33 @@ class Terryblr::Photo < Terryblr::Base
   #
   # Instance Methods
   #
-  def before_validation
+  before_validation :fetch_remote_image
+  before_create :add_to_queue
+  after_save :update_associated_models
+  
+  def fetch_remote_image
     # If there is a URL then download it and use
     self.image = do_download_remote_image if url_changed?
   end
-  
-  def before_create
+
+  def add_to_queue
     # Set the display order to be last
     self.display_order = Photo.count(:conditions => {:photoable_id => self.photoable_id, :photoable_type => self.photoable_type})
   end
-  
-  def after_save
+
+  def update_associated_models
     # Update assoc'd models
     photoable.soft_touch(:updated_at, false) if photoable and !photoable.new_record?
     features.update_all({:updated_at => Time.now.in_time_zone})
   end
-    
+
   def size(thumb)
     sizes[thumb.to_sym]
   rescue => exception
     logger.error { "Error getting image sizes: #{exception}" }
     {}
   end
-  
+
   # Overload Paperclip so that images are only resaved when it changes - uses too much memory otherwise
   def save_attached_files
     super if image_file_size_changed?
@@ -93,7 +97,9 @@ class Terryblr::Photo < Terryblr::Base
       }
     end
   end
-  
+
+  private
+
   def do_download_remote_image
     io = open(URI.parse(url))
     def io.original_filename; base_uri.path.split('/').last; end
