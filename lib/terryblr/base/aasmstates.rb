@@ -1,10 +1,8 @@
 module Terryblr
   class Base < ActiveRecord::Base
     module AasmStates
-
       def self.included(recipient)
         recipient.class_eval do
-
           require 'aasm'
           include ::AASM
           aasm_column :state

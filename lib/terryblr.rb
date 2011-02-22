@@ -2,6 +2,7 @@ require 'haml'
 require 'formtastic'
 require 'settingslogic'
 require 'will_paginate'
+require 'acts_as_commentable'
 
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 
