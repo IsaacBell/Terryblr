@@ -2,6 +2,8 @@ require 'rails/generators'
 require 'rails/generators/migration'
 require 'rails/generators/active_record/migration'
 
+# TODO: add a command to run: script/rails generate acts_as_taggable_on:migration
+
 module Terryblr
   module Generators
     class TerryblrGenerator < Rails::Generators::Base
@@ -28,8 +30,12 @@ module Terryblr
         migration_template 'create_orders.rb', 'db/migrate/create_orders.rb'
         migration_template 'create_posts.rb', 'db/migrate/create_posts.rb'
         migration_template 'create_pages.rb', 'db/migrate/create_pages.rb'
+        migration_template 'create_messages.rb', 'db/migrate/create_messages.rb'
         migration_template 'create_likes.rb', 'db/migrate/create_likes.rb'
         migration_template 'create_comments.rb', 'db/migrate/create_comments.rb'
+        migration_template 'create_features.rb', 'db/migrate/create_features.rb'
+        migration_template 'create_products.rb', 'db/migrate/create_products.rb'
+        migration_template 'create_line_items.rb', 'db/migrate/create_line_items.rb'
       end
 
       def create_configuration_file

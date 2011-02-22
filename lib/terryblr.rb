@@ -3,6 +3,7 @@ require 'formtastic'
 require 'settingslogic'
 require 'will_paginate'
 require 'acts_as_commentable'
+require 'validates_email_format_of'
 
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 

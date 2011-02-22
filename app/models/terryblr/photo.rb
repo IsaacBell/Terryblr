@@ -27,7 +27,7 @@ class Terryblr::Photo < Terryblr::Base
   # Associatons
   #
   belongs_to :photoable, :polymorphic => true
-  has_many :features 
+  has_many :features, :class_name => "Terryblr::Feature"
 
   #
   # Validations

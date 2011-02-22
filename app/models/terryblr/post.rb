@@ -10,7 +10,7 @@ class Terryblr::Post < Terryblr::Base
   # Associatons
   #
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
-  has_many :videos, :order => "display_order", :dependent => :destroy
+  has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
   has_many :likes, :as => :likeable
   has_many :comments, :as => :commentable
   has_many :votes, :as => :votable

@@ -3,9 +3,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   unloadable
 
   # Authentication module should provide a require_user method
-  include Terryblr::Settings.authentication.to_s.constantize
+#  include Terryblr::Settings.authentication.to_s.constantize
 
-  before_filter :authenticate
+#  before_filter :authenticate
   before_filter :set_date, :only => [:index, :filter]
   before_filter :set_expires, :only => [:analytics]
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
@@ -13,18 +13,17 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   after_filter :set_last_modified
 
   layout 'admin'
-  
+
   index {
     before {
       @show_as_dash = true
     }
     wants.html {}
   }
-  
+
   def analytics
-    
     @since = 1.month.ago.to_date
-    
+
     # Visitors
     gs = Gattica.new({:email => Terryblr::Settings.ganalytics.email, :password => Terryblr::Settings.ganalytics.password, :profile_id => Terryblr::Settings.ganalytics.profile_id})
     @reports = {
@@ -64,8 +63,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
       }
     end
   end
-  
-  
+
   def search
     @query = params[:search].to_s.strip
     like_q = "%#{@query}%"
@@ -79,15 +77,15 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     }
     respond_to do |wants|
       wants.html {
-       render :action => "admin/search" 
+       render :action => "admin/search"
       }
     end
   end
-  
+
   def object_url
     send("#{url_name}_path", object)
   end
-  
+
   def collection_url
     send("#{url_name.pluralize}_path")
   end
@@ -97,9 +95,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     ctrl_parts.delete("terryblr")
     ctrl_parts.join('_').singularize
   end
-  
+
   private
-  
+
   def model_name
     ctrl_name = params[:controller].split('/').last.strip
     if ctrl_name=='admin'
@@ -122,7 +120,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   def build_object
     @object ||= (new_obj = end_of_association_chain.pending.first) ? (new_obj.attributes = object_params; new_obj) : end_of_association_chain.new(object_params)
   end
-  
+
   def collection
     conditions = "state = '#{params[:state] || 'published'}'"
     unless params[:search].blank?
@@ -139,7 +137,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
       Date.today
     end
   end
-  
+
   def tw_client
     if @tw_client.nil?
       oauth = Twitter::OAuth.new(Terryblr::Settings.twitter.consumer_key, Terryblr::Settings.twitter.consumer_secret)
@@ -148,12 +146,12 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     end
     @tw_client
   end
-  
+
   def set_expires
     expires_in (last_modified+6.hours), :private => false, :public => true
     fresh_when(:etag => last_modified.utc.to_i, :last_modified => last_modified.utc, :public => true)
   end
-  
+
   def last_modified
     case controller_name
     when 'admin'
