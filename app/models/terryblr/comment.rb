@@ -1,6 +1,6 @@
 class Terryblr::Comment < Terryblr::Base
 
-  #include ActsAsCommentable::Comment
+  acts_as_commentable
 
   #
   # Constants
@@ -47,8 +47,7 @@ class Terryblr::Comment < Terryblr::Base
   end
 
   def moderate!
-    moderated_at = Time.now.in_time_zone
-    save!
+    update_attributes!(:moderated_at => Time.zone.now)
   end
 
   def request=(request)

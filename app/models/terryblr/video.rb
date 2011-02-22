@@ -8,14 +8,15 @@ class Terryblr::Video < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :post
-  validates_presence_of :vimeo_id, :unless => :url?
-  validates_presence_of :url, :unless => :vimeo_id?
-  validates_format_of :url, :with => /^http:\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix, :if => :url?
+  belongs_to :post, :class_name => "Terryblr::Post"
 
   #
   # Validations
   #
+  validates_presence_of :vimeo_id, :unless => :url?
+  validates_presence_of :url, :unless => :vimeo_id?
+  validates_format_of :url, :with => /^http:\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix, :if => :url?
+
   before_validation :upload_video, :on => :create
   after_save :update_post
 

@@ -2,6 +2,8 @@ require 'rails/generators'
 require 'rails/generators/migration'
 require 'rails/generators/active_record/migration'
 
+# TODO: add a command to run: script/rails generate acts_as_taggable_on:migration
+
 module Terryblr
   module Generators
     class TerryblrGenerator < Rails::Generators::Base
@@ -23,7 +25,8 @@ module Terryblr
       end
 
       def create_migration_file
-        %w(create_videos create_photos create_orders create_posts create_pages create_likes create_comments).each do |f|
+        %w(create_videos create_photos create_orders create_posts create_pages create_likes create_comments
+           create_messages create_features create_products create_line_items).each do |f|
           src = "#{f}.rb"
           dst = "db/migrate/#{src}"
           migration_template src, dst

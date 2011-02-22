@@ -10,7 +10,7 @@ class Terryblr::Post < Terryblr::Base
   # Associatons
   #
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
-  has_many :videos, :order => "display_order", :dependent => :destroy
+  has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
   has_many :likes, :as => :likeable
   has_many :comments, :as => :commentable
   has_many :votes, :as => :votable
@@ -23,6 +23,7 @@ class Terryblr::Post < Terryblr::Base
   #
   include Terryblr::Base::Taggable
   include Terryblr::Base::AasmStates
+  include Terryblr::Base::Validation
 
   attr_accessor :url, :tw_me, :fb_me, :tumblr_me
 
@@ -56,9 +57,9 @@ class Terryblr::Post < Terryblr::Base
   #
   default_scope order("posts.published_at desc, posts.id desc")
 
-  scope :by_month, lambda {|*args|
+  scope :by_month, lambda { |*args|
     # Needs to be sep variable or AR will cache the first time and it'll never change
-    now = Time.now.in_time_zone
+    now = Time.zone.now
     select("distinct(EXTRACT(DAY from posts.published_at)), posts.*").
     where("EXTRACT(MONTH from posts.published_at) = ? and EXTRACT(YEAR from posts.published_at) = ? and posts.published_at <= ?",  args.flatten[0].to_i, now.year, now).
     order("posts.published_at asc")

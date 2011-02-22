@@ -1,7 +1,6 @@
 common: &common
   app_name: Terry Richardson
   admin_email: info@terryrichardson.com
-  authentication: AuthenticationHelper
   ganalytics:
     code: UA-XXXXXXX-XX
     email: terryblr@gmail.com

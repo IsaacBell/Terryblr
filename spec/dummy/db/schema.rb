@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110221115852) do
+ActiveRecord::Schema.define(:version => 20110222151446) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -27,6 +27,20 @@ ActiveRecord::Schema.define(:version => 20110221115852) do
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "features", :force => true do |t|
+    t.string   "title"
+    t.integer  "photo_id"
+    t.integer  "display_order", :default => 0
+    t.string   "state"
+    t.string   "caption"
+    t.string   "url"
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "features", ["photo_id"], :name => "index_features_on_photo_id"
+
   create_table "likes", :force => true do |t|
     t.integer  "likeable_id"
     t.string   "likeable_type"
@@ -38,6 +52,41 @@ ActiveRecord::Schema.define(:version => 20110221115852) do
   add_index "likes", ["likeable_id"], :name => "index_likes_on_likeable_id"
   add_index "likes", ["likeable_type"], :name => "index_likes_on_likeable_type"
   add_index "likes", ["user_id"], :name => "index_likes_on_user_id"
+
+  create_table "line_items", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "order_id"
+    t.integer  "user_id"
+    t.string   "size"
+    t.integer  "price_cents",    :default => 0
+    t.string   "price_currency"
+    t.integer  "qty",            :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"
+  add_index "line_items", ["product_id"], :name => "index_line_items_on_product_id"
+  add_index "line_items", ["user_id"], :name => "index_line_items_on_user_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "name"
+    t.string   "subject"
+    t.string   "email"
+    t.string   "body",               :limit => 3000
+    t.string   "messagable_type"
+    t.integer  "messagable_id"
+    t.integer  "user_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["messagable_id"], :name => "index_messages_on_messagable_id"
+  add_index "messages", ["messagable_type"], :name => "index_messages_on_messagable_type"
 
   create_table "orders", :force => true do |t|
     t.string   "state"
@@ -132,6 +181,25 @@ ActiveRecord::Schema.define(:version => 20110221115852) do
   add_index "posts", ["tumblr_delayed_job_id"], :name => "index_posts_on_tumblr_delayed_job_id"
   add_index "posts", ["twitter_id"], :name => "index_posts_on_twitter_id"
   add_index "posts", ["votes_count"], :name => "index_posts_on_votes_count"
+
+  create_table "products", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.string   "body",           :limit => 3000
+    t.integer  "price_cents",                    :default => 0
+    t.string   "price_currency"
+    t.string   "state"
+    t.datetime "published_at"
+    t.integer  "comments_count",                 :default => 0
+    t.integer  "likes_count",                    :default => 0
+    t.integer  "votes_count",                    :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["comments_count"], :name => "index_products_on_comments_count"
+  add_index "products", ["likes_count"], :name => "index_products_on_likes_count"
+  add_index "products", ["votes_count"], :name => "index_products_on_votes_count"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
