@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Terryblr::Comment do
+describe Comment do
 
   describe "Akismet spam feature" do
     before do
-      @comment = Terryblr::Comment.new(Factory.attributes_for(:comment))
+      @comment = Comment.new(Factory.attributes_for(:comment))
     end
 
     it "should be dropped if considered as spam" do

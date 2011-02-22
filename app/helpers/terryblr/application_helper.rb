@@ -27,7 +27,7 @@ module Terryblr::ApplicationHelper
   def facebook_meta_tags
     return unless page_object
 
-    title = Terryblr::Settings.app_name + " - #{page_title}"
+    title = Settings.app_name + " - #{page_title}"
 
     str  = tag(:meta, :name => "title", :content => title) + "\n"
     str += tag(:meta, :name => "description", :content => page_description)

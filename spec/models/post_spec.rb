@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Terryblr::Post do
+describe Post do
 end

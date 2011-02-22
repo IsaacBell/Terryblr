@@ -3,7 +3,7 @@
 - content_for :sidebar do
   %ul.summary
     %li.divider
-    %li= pluralize Terryblr::Post.published.count, 'Post'
+    %li= pluralize Post.published.count, 'Post'
     %li= link_to "Published", url_for(params.merge(:state => 'published'))
     %li= link_to "Drafts", url_for(params.merge(:state => 'drafted', :month => @date.month, :year => @date.year))
     %li= link_to "Queued", url_for(params.merge(:state => 'queued', :month => @date.month, :year => @date.year))

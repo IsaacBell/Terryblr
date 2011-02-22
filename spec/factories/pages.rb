@@ -1,4 +1,4 @@
-Factory.define :page, :class => Terryblr::Page do |page|
+Factory.define :page, :class => Page do |page|
   page.sequence(:title)     { |n| "Factory page #{n}" }
   page.body                 "<h1>I'm a simple body</h1>"
   page.published_at         Time.now

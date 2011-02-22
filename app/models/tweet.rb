@@ -1,4 +1,4 @@
-class Terryblr::Tweet < Terryblr::Base
+class Tweet < Terryblr::Base
 
   #
   # Constants

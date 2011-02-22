@@ -1,4 +1,4 @@
-class Terryblr::Comment < Terryblr::Base
+class Comment < Terryblr::Base
 
   acts_as_commentable
 

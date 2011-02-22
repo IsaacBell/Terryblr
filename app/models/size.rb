@@ -1,4 +1,4 @@
-class Terryblr::Size < Terryblr::Base
+class Size < Terryblr::Base
 
   #
   # Constants
@@ -7,7 +7,7 @@ class Terryblr::Size < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :product, :class_name => "Terryblr::Product"
+  belongs_to :product
 
   #
   # Validations

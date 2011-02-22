@@ -75,7 +75,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   private
 
   def model_name
-    'Terryblr::Post'
+    'Post'
   end
 
   def set_type
@@ -85,9 +85,9 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   def collection
     scope = case params[:state]
     when "drafted"
-      Terryblr::Post.drafted.all
+      Post.drafted.all
     else
-      Terryblr::Post.published
+      Post.published
     end
 
     col = :published_at

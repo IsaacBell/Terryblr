@@ -1,4 +1,4 @@
-class Terryblr::Link < Terryblr::Base
+class Tag < Terryblr::Base
 
   #
   # Constants
@@ -7,13 +7,11 @@ class Terryblr::Link < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :post, :class_name => "Terryblr::Post"
 
   #
   # Validations
   #
-  validates_presence_of :url
-  validates_url_format_of :url
+  validates_presence_of :name
 
   #
   # Scopes

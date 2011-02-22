@@ -1,4 +1,4 @@
-class Terryblr::Photo < Terryblr::Base
+class Photo < Terryblr::Base
 
   #
   # Constants
@@ -11,12 +11,12 @@ class Terryblr::Photo < Terryblr::Base
   
   # Regen thumbs with rake paperclip:refresh CLASS=Photo or .reprocess!
   has_attached_file :image,
-    :styles => Terryblr::Settings.photo_dimensions.dup.symbolize_keys,
-    :storage => Terryblr::Settings.key?('s3') ? :s3 : :filesystem,
+    :styles => Settings.photo_dimensions.dup.symbolize_keys,
+    :storage => Settings.key?('s3') ? :s3 : :filesystem,
     :convert_options => { :all=> "-density 72 " },
-    :path => Terryblr::Settings.key?('s3') ? ":attachment/:id/:style.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
-    :s3_credentials => (Terryblr::Settings.s3.symbolize_keys rescue nil),
-    :bucket => [Terryblr::Settings.app_name, Rails.env].join('-').parameterize.to_s,
+    :path => Settings.key?('s3') ? ":attachment/:id/:style.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
+    :s3_credentials => (Settings.s3.symbolize_keys rescue nil),
+    :bucket => [Settings.app_name, Rails.env].join('-').parameterize.to_s,
     :log_command => Rails.env.development?
 
   #
@@ -27,7 +27,7 @@ class Terryblr::Photo < Terryblr::Base
   # Associatons
   #
   belongs_to :photoable, :polymorphic => true
-  has_many :features, :class_name => "Terryblr::Feature"
+  has_many :features
 
   #
   # Validations

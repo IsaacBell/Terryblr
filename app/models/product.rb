@@ -1,4 +1,4 @@
-class Terryblr::Product < Terryblr::Base
+class Product < Terryblr::Base
 
   #
   # Constants
@@ -8,9 +8,9 @@ class Terryblr::Product < Terryblr::Base
   # Associatons
   #
   has_many :photos, :as => :photoable, :order => "display_order"
-  has_many :line_items, :class_name => "Terryblr::LineItem"
-  has_many :orders, :through => :line_items, :class_name => "Terryblr::Order"
-  has_many :sizes, :order => "display_order", :class_name => "Terryblr::Size"
+  has_many :line_items
+  has_many :orders, :through => :line_items
+  has_many :sizes, :order => "display_order"
   
   #
   # Behaviours

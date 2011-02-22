@@ -1,4 +1,4 @@
-class Terryblr::Feature < Terryblr::Base
+class Feature < Terryblr::Base
 
   #
   # Behaviours

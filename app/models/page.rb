@@ -1,4 +1,4 @@
-class Terryblr::Page < Terryblr::Base
+class Page < Terryblr::Base
   
   #
   # Constants

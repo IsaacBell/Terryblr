@@ -1,4 +1,4 @@
-class Terryblr::Like < Terryblr::Base
+class Like < Terryblr::Base
 
   #
   # Constants

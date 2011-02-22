@@ -1,4 +1,4 @@
-class Terryblr::Post < Terryblr::Base
+class Post < Terryblr::Base
 
   #
   # Constants
@@ -10,7 +10,7 @@ class Terryblr::Post < Terryblr::Base
   # Associatons
   #
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
-  has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
+  has_many :videos, :order => "display_order", :dependent => :destroy
   has_many :likes, :as => :likeable
   has_many :comments, :as => :commentable
   has_many :votes, :as => :votable
@@ -108,7 +108,7 @@ class Terryblr::Post < Terryblr::Base
   def set_diary
     # Set diary as default location
     if pending? or new_record? and respond_to?(:location_list) and location_list.empty?
-      location_list << Terryblr::Settings.tags.posts.location.first
+      location_list << Settings.tags.posts.location.first
     end
   end
 
@@ -128,7 +128,7 @@ class Terryblr::Post < Terryblr::Base
 
   def push_to_social
     # Post to social networks
-    social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
+    #XXX social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
   end
 
   #

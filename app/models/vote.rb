@@ -1,4 +1,4 @@
-class Terryblr::Vote < Terryblr::Base
+class Vote < Terryblr::Base
 
   #
   # Constants

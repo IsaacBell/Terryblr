@@ -1,4 +1,4 @@
-class Terryblr::Video < Terryblr::Base
+class Video < Terryblr::Base
 
   #
   # Constants
@@ -8,7 +8,7 @@ class Terryblr::Video < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :post, :class_name => "Terryblr::Post"
+  belongs_to :post
 
   #
   # Validations

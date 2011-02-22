@@ -3,7 +3,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   unloadable
 
   # Authentication module should provide a require_user method
-#  include Terryblr::Settings.authentication.to_s.constantize
+#  include Settings.authentication.to_s.constantize
 
 #  before_filter :authenticate
   before_filter :set_date, :only => [:index, :filter]
@@ -25,7 +25,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     @since = 1.month.ago.to_date
 
     # Visitors
-    gs = Gattica.new({:email => Terryblr::Settings.ganalytics.email, :password => Terryblr::Settings.ganalytics.password, :profile_id => Terryblr::Settings.ganalytics.profile_id})
+    gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
     @reports = {
       :visitors => {
         :dimensions => %w(day),
@@ -71,9 +71,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     tag    = Tag.find_by_name(@query)
     joins  = nil
     @results = {
-      :posts    => Terryblr::Post.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
-      :products => Terryblr::Product.all(:conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
-      :pages    => Terryblr::Page.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1)
+      :posts    => Post.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
+      :products => Product.all(:conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
+      :pages    => Page.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1)
     }
     respond_to do |wants|
       wants.html {
@@ -101,7 +101,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   def model_name
     ctrl_name = params[:controller].split('/').last.strip
     if ctrl_name=='admin'
-      'Terryblr::Post'
+      'Post'
     else
       ctrl_name.singularize.camelize
     end
@@ -140,8 +140,8 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   def tw_client
     if @tw_client.nil?
-      oauth = Twitter::OAuth.new(Terryblr::Settings.twitter.consumer_key, Terryblr::Settings.twitter.consumer_secret)
-      oauth.authorize_from_access(Terryblr::Settings.twitter.app_user_token, Terryblr::Settings.twitter.app_user_secret)
+      oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret)
+      oauth.authorize_from_access(Settings.twitter.app_user_token, Settings.twitter.app_user_secret)
       @tw_client = Twitter::Base.new(oauth)
     end
     @tw_client

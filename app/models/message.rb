@@ -1,4 +1,4 @@
-class Terryblr::Message < Terryblr::Base
+class Message < Terryblr::Base
 
   #
   # Constants

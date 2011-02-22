@@ -1,4 +1,4 @@
-class Terryblr::Order < Terryblr::Base
+class Order < Terryblr::Base
 
   #
   # Constants
@@ -39,8 +39,8 @@ class Terryblr::Order < Terryblr::Base
   # Associatons
   #
   belongs_to :user
-  has_many :line_items, :class_name => "Terryblr::LineItem"
-  has_many :products, :through => :line_items, :class_name => "Terryblr::Product"
+  has_many :line_items
+  has_many :products, :through => :line_items
 
   #
   # Validations
