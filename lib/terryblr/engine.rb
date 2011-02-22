@@ -8,5 +8,10 @@ require "terryblr/base/taggable"
 
 module Terryblr
   class Engine < Rails::Engine
+    paths["db/migrate"] = 'db/migrate'
+
+    rake_tasks do
+      load 'terryblr/railties/tasks.rake'
+    end
   end
 end
