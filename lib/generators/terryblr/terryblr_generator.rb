@@ -23,19 +23,43 @@ module Terryblr
       end
 
       def create_migration_file
-        migration_template 'create_videos.rb', 'db/migrate/create_videos.rb'
-        migration_template 'create_photos.rb', 'db/migrate/create_photos.rb'
-        migration_template 'create_orders.rb', 'db/migrate/create_orders.rb'
-        migration_template 'create_posts.rb', 'db/migrate/create_posts.rb'
-        migration_template 'create_pages.rb', 'db/migrate/create_pages.rb'
-        migration_template 'create_likes.rb', 'db/migrate/create_likes.rb'
-        migration_template 'create_comments.rb', 'db/migrate/create_comments.rb'
+        %w(create_videos create_photos create_orders create_posts create_pages create_likes create_comments).each do |f|
+          src = "#{f}.rb"
+          dst = "db/migrate/#{src}"
+          migration_template src, dst
+        end
       end
 
       def create_configuration_file
         copy_file 'initializer.rb', 'config/initializers/terryblr.rb'
         copy_file 'settings.yml', 'config/settings.yml'
+        
+        # Static assets
+        copy_dir_contents 'public', 'public'
       end
+      
+      private
+      
+      def copy_dir_contents(source_dir, target_dir)
+        base_dir = File.join(File.dirname(__FILE__), '../templates', source_dir)
+        raise "Base dir not found: #{base_dir}" unless Dir.exists?(base_dir)
+        Dir.new(base_dir).each do |file|
+          next if %w(. .. .DS_Store).include?(file)
+          
+          base_path = File.join(base_dir, file)
+          source_path = File.join(source_dir, file)
+          target_path = File.join(target_dir, file)
+          
+          if File.directory?(base_path)
+            # Recurse into dir
+            copy_dir_contents(source_path, File.join(target_dir, file))
+          else
+            # Copy files
+            copy_file base_path, target_path
+          end
+        end
+      end
+      
     end
   end
 end

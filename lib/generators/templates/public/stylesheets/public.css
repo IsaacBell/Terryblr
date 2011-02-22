@@ -1,0 +1,134 @@
+/* -----------------------------------------------------------------------
+
+
+The 88
+Preplay Sports Public Website
+Lachlan Laycock
+
+* Copyright (c) 2010-Present.
+
+----------------------------------------------------------------------- */
+
+/*
+ * Structure / Common
+ */
+
+body {
+}
+
+.left {
+  float:left;
+}
+
+.right {
+  float:right;
+}
+
+.clear {
+  clear:both;
+}
+
+
+/*
+ * Header
+ */
+
+#logo {
+  clear:both;
+}
+
+#nav {
+  float:left;
+  margin-bottom:2em;
+}
+
+#user_connect {
+  float:right;
+}
+
+#header ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+#header ul li {
+  float:left;
+  margin-right:1em;
+}
+
+/*
+ * Home
+ */
+ 
+
+/*
+ * Games
+ */
+
+
+
+/*
+ * Leaderboards
+ */
+
+
+/*
+ * User Dashboard
+ */
+
+#sub_nav {
+  clear:both;
+  height:2em;
+}
+
+#sub_nav ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+#sub_nav ul li {
+  float:left;
+  margin-right:1em;
+}
+
+
+/*
+ * User Friends
+ */
+ 
+ 
+/*
+ * User Stats
+ */
+
+
+/*
+ * User Standings
+ */
+
+
+/*
+ * Footer
+ */
+
+#footer {
+  padding-top:2em;
+}
+
+.footer-section {
+  float:left;
+  width:25%;
+}
+
+.footer-section ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+#credits {
+  padding-top:2em;
+  text-align:center;
+}
