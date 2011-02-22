@@ -1,7 +1,6 @@
 class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   before_filter :set_type, :only => [:edit, :update]
-  before_filter :set_url, :only => [:create, :update]
   before_filter :collection, :only => [:index, :filter]
 
   index {
@@ -81,11 +80,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def set_type
     @type = object.post_type
-  end
-
-  def set_url
-    # Used for posting to Twitter/FB
-    object.url = post_url(object, object.slug.to_s)
   end
 
   def collection
