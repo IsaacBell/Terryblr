@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110222151446) do
+ActiveRecord::Schema.define(:version => 20110222165053) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -68,6 +68,17 @@ ActiveRecord::Schema.define(:version => 20110222151446) do
   add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"
   add_index "line_items", ["product_id"], :name => "index_line_items_on_product_id"
   add_index "line_items", ["user_id"], :name => "index_line_items_on_user_id"
+
+  create_table "links", :force => true do |t|
+    t.integer  "post_id"
+    t.string   "caption"
+    t.string   "url"
+    t.integer  "display_order", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "links", ["post_id"], :name => "index_links_on_post_id"
 
   create_table "messages", :force => true do |t|
     t.string   "name"
@@ -201,22 +212,20 @@ ActiveRecord::Schema.define(:version => 20110222151446) do
   add_index "products", ["likes_count"], :name => "index_products_on_likes_count"
   add_index "products", ["votes_count"], :name => "index_products_on_votes_count"
 
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context"
+  create_table "tweets", :force => true do |t|
+    t.datetime "tweeted_at"
+    t.string   "text"
+    t.integer  "twitter_id",        :limit => 20
+    t.string   "from_user"
+    t.string   "profile_image_url"
+    t.string   "to_user"
+    t.integer  "reach",                           :default => 0
     t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
-  create_table "tags", :force => true do |t|
-    t.string "name"
-  end
+  add_index "tweets", ["tweeted_at"], :name => "index_tweets_on_tweeted_at"
+  add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id", :unique => true
 
   create_table "videos", :force => true do |t|
     t.integer  "post_id"
@@ -233,5 +242,20 @@ ActiveRecord::Schema.define(:version => 20110222151446) do
   end
 
   add_index "videos", ["post_id"], :name => "index_videos_on_post_id"
+
+  create_table "votes", :force => true do |t|
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.integer  "value"
+    t.integer  "user_id"
+    t.string   "ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["ip"], :name => "index_votes_on_ip"
+  add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
+  add_index "votes", ["votable_id"], :name => "index_votes_on_votable_id"
+  add_index "votes", ["votable_type"], :name => "index_votes_on_votable_type"
 
 end

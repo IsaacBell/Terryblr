@@ -25,9 +25,8 @@ module Terryblr
       end
 
       def create_migration_file
-        %w(create_videos create_photos create_orders create_posts create_pages create_likes create_comments
-           create_messages create_features create_products create_line_items).each do |f|
-          src = "#{f}.rb"
+        %w(videos photos orders posts pages likes comments messages features products line_items links votes tweets).each do |f|
+          src = "create_#{f}.rb"
           dst = "db/migrate/#{src}"
           migration_template src, dst
         end
