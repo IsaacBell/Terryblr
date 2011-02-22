@@ -23,6 +23,7 @@ class Terryblr::Post < Terryblr::Base
   #
   include Terryblr::Base::Taggable
   include Terryblr::Base::AasmStates
+  include Terryblr::Base::Validation
 
   attr_accessor :url, :tw_me, :fb_me, :tumblr_me
 
