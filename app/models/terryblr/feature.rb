@@ -5,6 +5,7 @@ class Terryblr::Feature < Terryblr::Base
   #
   include Terryblr::Base::Taggable
   include Terryblr::Base::AasmStates
+  include Terryblr::Base::Validation
 
   #
   # Associatons
