@@ -2,8 +2,6 @@ require 'rails/generators'
 require 'rails/generators/migration'
 require 'rails/generators/active_record/migration'
 
-# TODO: add a command to run: script/rails generate acts_as_taggable_on:migration
-
 module Terryblr
   module Generators
     class TerryblrGenerator < Rails::Generators::Base

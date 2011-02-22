@@ -20,9 +20,11 @@ class Terryblr::Tweet < Terryblr::Base
       days = select("count(id) as twitter_id, sum(reach) as reach, DATE(tweeted_at) as tweeted_at").
         where("tweeted_at > ?", since).
         group("DATE(tweeted_at)").map { |t|
-          :tweets => t.twitter_id,
-          :reach => t.reach,
-          :date => t.tweeted_at.to_date
+          {
+            :tweets => t.twitter_id,
+            :reach => t.reach,
+            :date => t.tweeted_at.to_date
+          }
         }
     end
 
