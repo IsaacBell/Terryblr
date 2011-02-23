@@ -67,7 +67,7 @@ class Photo < Terryblr::Base
   def update_associated_models
     # Update assoc'd models
     photoable.soft_touch(:updated_at, false) if photoable and !photoable.new_record?
-    features.update_all({:updated_at => Time.now.in_time_zone})
+    features.update_all({:updated_at => Time.zone.now})
   end
 
   def size(thumb)

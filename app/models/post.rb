@@ -247,7 +247,7 @@ class Post < Terryblr::Base
   private
 
   def do_publish(msg = nil)
-    now = Time.now.in_time_zone
+    now = Time.zone.now
 
     unless published_at?
       self.published_at = now

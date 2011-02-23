@@ -24,7 +24,7 @@ class Terryblr::PostsController < Terryblr::PublicController
 
   def preview
     @object = Post.find(params[:id])
-    @object.published_at = Time.now.in_time_zone
+    @object.published_at = Time.zone.now
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
       wants.html {

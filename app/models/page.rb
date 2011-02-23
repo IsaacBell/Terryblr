@@ -81,7 +81,7 @@ class Page < Terryblr::Base
   private
 
   def do_publish
-    update_attribute :published_at, Time.now.in_time_zone
+    update_attribute :published_at, Time.zone.now
   end
 
   def parent_of(page = self)
