@@ -66,7 +66,7 @@ class Photo < Terryblr::Base
 
   def update_associated_models
     # Update assoc'd models
-    photoable.soft_touch(:updated_at, false) if photoable and !photoable.new_record?
+    photoable.touch(:updated_at, false) if photoable and !photoable.new_record?
     features.update_all({:updated_at => Time.zone.now})
   end
 

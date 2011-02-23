@@ -17,28 +17,6 @@ module ActiveRecord
     end
   end
 
-  module Timestamp
-    def soft_touch(attribute = nil, validate = true)
-      current_time = current_time_from_proper_timezone
-
-      if attribute
-        write_attribute(attribute, current_time)
-      else
-        write_attribute('updated_at', current_time) if respond_to?(:updated_at)
-        write_attribute('updated_on', current_time) if respond_to?(:updated_on)
-      end
-
-      save(:validate => validate)
-    end
-  end
-
-  module Timestamp
-    private
-      def current_time_from_proper_timezone
-        self.class.default_timezone == :utc ? Time.now.utc : Time.zone.now
-      end
-  end
-
   #XXX class XmlSerializer < ActiveRecord::Serialization::Serializer
   #XXX   def add_procs
   #XXX     if procs = options.delete(:procs)

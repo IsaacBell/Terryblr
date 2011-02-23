@@ -21,7 +21,7 @@ class Video < Terryblr::Base
   after_save :update_post
 
   def update_post
-    post.soft_touch(:updated_at, false) if post
+    post.touch(:updated_at, false) if post
   end
 
   def upload_video
