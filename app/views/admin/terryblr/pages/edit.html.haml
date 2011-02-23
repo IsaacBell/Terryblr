@@ -5,13 +5,13 @@
   #form_content{:class => "span-17"}
     %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
     = f.semantic_errors
-    - f.inputs do
+    = f.inputs do
       = f.input :title, :label => 'Title', :input_html => { :class => "title" }, :required => true
       %li.add-inline-photo
         = add_inline_photo(admin_page_photos_path(@object))
       = f.input :body, :label => 'Body', :as => 'text', :wrapper_html => { :class => "rich-text" }, :input_html => { :style => "height:25em;" }, :required => true
 
-    - f.buttons do
+    = f.buttons do
       = f.commit_button "Save #{@object.class.to_s}"
       %li.commit
         - if @object.live?
@@ -22,7 +22,7 @@
         = link_to "Delete", admin_page_path(@object), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"
 
   #form_sidebar{:class => "sidebar span-6 last"}
-    - f.inputs do
+    = f.inputs do
       = f.input :state, :as => "select", :collection => @object.states_for_select, :selected => @object.state, :include_blank => false, :wrapper_html => { :class => "post-states" }
       = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
       = f.input :published_at, :label => 'Publish on', :as => "string", :wrapper_html => { :class => "date-picker" }
