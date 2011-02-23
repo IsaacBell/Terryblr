@@ -26,7 +26,7 @@ class Photo < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :photoable, :polymorphic => true
+  belongs_to :photoable, :polymorphic => true, :touch => true
   has_many :features
 
   #
@@ -66,7 +66,6 @@ class Photo < Terryblr::Base
 
   def update_associated_models
     # Update assoc'd models
-    photoable.touch(:updated_at, false) if photoable and !photoable.new_record?
     features.update_all({:updated_at => Time.zone.now})
   end
 

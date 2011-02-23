@@ -8,7 +8,7 @@ class Video < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :post
+  belongs_to :post, :touch => true
 
   #
   # Validations
@@ -18,11 +18,6 @@ class Video < Terryblr::Base
   validates_format_of :url, :with => /^http:\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix, :if => :url?
 
   before_validation :upload_video, :on => :create
-  after_save :update_post
-
-  def update_post
-    post.touch(:updated_at, false) if post
-  end
 
   def upload_video
     # upload to vimeo
@@ -136,7 +131,7 @@ class Video < Terryblr::Base
     elsif vimeo_id?
       params = {
         :clip_id => vimeo_id,
-        :server => "vimeo.com",  
+        :server => "vimeo.com",
         :show_title => 0, 
         :show_byline => 0, 
         :show_portrait => 0, 
