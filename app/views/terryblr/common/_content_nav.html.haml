@@ -1,0 +1,8 @@
+#content_nav
+  %ul
+    - %w(post photos video).each do |content_type|
+      %li{:class => content_type}= link_to content_type.capitalize, admin_new_content_path(content_type)
+    %li.features= link_to "Features", admin_features_path
+    %li.archives= link_to "Archives", admin_posts_path
+    %li.pages= link_to "Pages", admin_pages_path
+
