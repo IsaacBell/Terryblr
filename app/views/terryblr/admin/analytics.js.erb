@@ -1,0 +1,2 @@
+$("#dashboard").html("<%= escape_javascript(render(:partial => 'analytics')) %>");
+if(typeof(displayAnalyticsGraph)=='function') { displayAnalyticsGraph(); }

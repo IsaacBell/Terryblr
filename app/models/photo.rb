@@ -3,12 +3,12 @@ class Photo < Terryblr::Base
   #
   # Constants
   #
-  
+
   #
   # Behaviours
   #
   serialize :sizes
-  
+
   # Regen thumbs with rake paperclip:refresh CLASS=Photo or .reprocess!
   has_attached_file :image,
     :styles => Settings.photo_dimensions.dup.symbolize_keys,
@@ -26,7 +26,7 @@ class Photo < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :photoable, :polymorphic => true
+  belongs_to :photoable, :polymorphic => true, :touch => true
   has_many :features
 
   #
@@ -53,7 +53,7 @@ class Photo < Terryblr::Base
   before_validation :fetch_remote_image
   before_create :add_to_queue
   after_save :update_associated_models
-  
+
   def fetch_remote_image
     # If there is a URL then download it and use
     self.image = do_download_remote_image if url_changed?
@@ -66,7 +66,6 @@ class Photo < Terryblr::Base
 
   def update_associated_models
     # Update assoc'd models
-    photoable.touch(:updated_at, false) if photoable and !photoable.new_record?
     features.update_all({:updated_at => Time.zone.now})
   end
 
