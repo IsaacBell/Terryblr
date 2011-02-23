@@ -17,7 +17,7 @@ module Admin::Terryblr::PostsHelper
             height = 124
             embed = video.embedable?
             content_tag(:li, :id => video.dom_id(list_id)) do
-              link_to_remote(image_tag("admin/remove.png"), :url => admin_video_path(video, :format => :js), :method => :delete, :confirm => "Are you absolutely sure?") +
+              link_to(image_tag("admin/remove.png"), admin_video_path(video, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
               content_tag(:div, (embed ? video.embed(:width => width, :height => height) : video.url), :id => video.dom_id) +
               (embed ? "" : javascript_tag(%Q{
                 $('##{video.dom_id}').flash({ src: '#{video.embed_url}', width: #{width}, height: #{height} });

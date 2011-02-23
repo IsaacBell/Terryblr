@@ -16,4 +16,4 @@
     - next_date = @date + 1.month
     .next= link_to "Next", url_for(params.merge(:month => next_date.month, :year => next_date.year))
   - elsif records.size==records.per_page
-    .more= link_to_remote "More", :url => url_for(params.merge(:page => records.current_page+1, :format => "js")), :method => :get
+    .more= link_to "More", url_for(params.merge(:page => records.current_page+1, :format => "js")), :remote => true, :method => :get
