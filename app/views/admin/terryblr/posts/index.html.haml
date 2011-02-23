@@ -1,3 +1,5 @@
+= render :partial => "terryblr/admin/content_nav" 
+
 - today = Date.today
 - @date ||= today
 - content_for :sidebar do
@@ -6,17 +8,6 @@
     %li= pluralize Post.published.count, 'Post'
     %li= link_to "Published", url_for(params.merge(:state => 'published'))
     %li= link_to "Drafts", url_for(params.merge(:state => 'drafted', :month => @date.month, :year => @date.year))
-    %li= link_to "Queued", url_for(params.merge(:state => 'queued', :month => @date.month, :year => @date.year))
-    %li= link_to_function "Stats", ""
-    %li.divider
-    %li= link_to "Posts", admin_posts_path
-    %li= link_to_function "#TERRYTALK", ""
-    %li= link_to_function "#TERRY SHOOTS", ""
-    %li.divider
-    %li Sort By:
-    %li= link_to_function "Date", ""
-    %li= link_to_function "Comments", ""
-    %li= link_to_function "Likes", ""
     - if params[:state].blank?
       %li.divider
       %li Filter:
@@ -31,5 +22,3 @@
   Archives: #{pluralize @posts.size, 'Posts'}
 
 = render :partial => 'admin/common/archives'
-
-        

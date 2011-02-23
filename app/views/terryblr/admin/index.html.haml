@@ -1,13 +1,16 @@
 - today = Date.today
 - @date ||= today
-- content_for :header do
-  javascript_include_tag 'raphael-min.js'
+- content_for :pre_head do
+  // Must be loaded before jQuery
+  = javascript_include_tag 'raphael-min.js', 'raphael.path.methods.js', 'raphael.pie.js'
+- content_for :head do
+  = javascript_include_tag 'raphael.analytics.js'
   
 - content_for :sidebar do
   %h2
-    //XXX - link_to edit_admin_user_path(current_user) do
-    //XXX  = current_user.full_name
-    //XXX  %span Edit
+    / - link_to edit_admin_user_path(current_user) do
+    /   = current_user.full_name
+    /   %span Edit
 
   %ul.summary
     %li.divider
@@ -20,23 +23,10 @@
     %li.drafts-count
       = image_tag "admin/dashboard_controls_drafts.png"
       = link_to pluralize(Post.drafted.count, 'Drafts'), admin_posts_path(:state => "drafted")
-    %li.queued-count
-      = image_tag "admin/dashboard_controls_queue.png"
-      = link_to "#{Post.queued.count} Queued", admin_posts_path(:state => "queued")
-    %li.comments-count
-      = image_tag "admin/dashboard_controls_drafts.png"
-      = link_to pluralize(Comment.count, 'Comment'), admin_comments_path
-    %li.orders-count
-      = image_tag "admin/dashboard_controls_drafts.png"
-      = link_to pluralize(Order.count, 'Order'), admin_orders_path
-    %li.orders-count
-      = image_tag "admin/dashboard_controls_activity.png"
-      = link_to Money.new(Order.sum(:final_amount_cents)).format+' Sales', admin_products_path
-    %li.comments-count
-      = image_tag "admin/dashboard_controls_activity.png"
-      = link_to 'Stats', ""
     %li.divider
 
-= render :partial => "content_nav"
+= render :partial => "terryblr/admin/content_nav"
 
 #dashboard
+  %p.loading #{image_tag("admin/dashboard-indicator.gif")} Loading Analytics...
+  = javascript_tag "$.get('#{admin_analytics_path(:format => "js")}')"

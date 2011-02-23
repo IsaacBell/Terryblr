@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
   match "/admin", :to => "terryblr/admin#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin#search", :as => :admin_search
+  match '/admin/analytics.:format', :to => "terryblr/admin#analytics", :as => :admin_analytics
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
       resources :videos, :controller => "terryblr/videos"
       resources :photos, :controller => "terryblr/photos"
     end
+    resources :features
     resources :comments
     resources :orders
     resources :products
