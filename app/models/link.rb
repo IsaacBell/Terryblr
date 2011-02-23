@@ -12,8 +12,7 @@ class Link < Terryblr::Base
   #
   # Validations
   #
-  validates_presence_of :url
-  validates_url_format_of :url
+  validates :url, :presence => true, :url => true, :if => :url?
 
   #
   # Scopes
