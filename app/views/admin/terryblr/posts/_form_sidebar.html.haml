@@ -1,5 +1,5 @@
 #form_sidebar{:class => "sidebar span-6 last"}
-  - f.inputs do
+  = f.inputs do
     = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
     - selected = (@post.pending? || @post.published?) ? (@post.published_at? ? :published_at : :publish_now) : @post.state.to_sym
     

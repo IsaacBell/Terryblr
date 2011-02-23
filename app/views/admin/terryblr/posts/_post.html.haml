@@ -1,10 +1,10 @@
-- semantic_form_for @post, :url => (@post.new_record? ? admin_posts_path : admin_post_path(@post.id)) do |f|
+= semantic_form_for @post, :url => (@post.new_record? ? admin_posts_path : admin_post_path(@post.id)) do |f|
   
   #form_content{:class => "span-17"}
     %h2 #{params[:action].to_s.capitalize} #{@type.to_s.capitalize}
     = error_messages_for_post
     = f.semantic_errors
-    - f.inputs do
+    = f.inputs do
       = f.input :title, :label => 'Title', :input_html => { :class => "title" }
       %li.add-inline-photo
         = add_inline_photo(admin_post_photos_path(@post))

@@ -38,7 +38,9 @@ class Post < Terryblr::Base
   validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
   validates_length_of :social_msg, :within => 0..140, :if => :social_msg?
 
-  def validate
+  validate :state_status
+
+  def state_status
     # Validations depending on post-type
     unless pending?
       case state.to_sym
