@@ -14,6 +14,7 @@ require "acts-as-taggable-on"
 require "money"
 require "paperclip"
 require "dynamic_form"
+require "gattica"
 
 module Dummy
   class Application < Rails::Application
