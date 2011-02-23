@@ -32,30 +32,6 @@ module ActiveRecord
     end
   end
 
-  module Validations
-    module ClassMethods
-      def validates_url_format_of(*attr_names)
-        configuration = { :on => :save, :with => /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix }
-        configuration.update(attr_names.extract_options!)
-        validates_each(attr_names,configuration) do |record, attr_name, value|
-          next if value.blank?
-          begin
-            if value !~ configuration[:with]
-              record.errors.add(attr_name, 'is not a valid url format.')
-              next
-            end
-            uri = URI.parse(value)
-            unless uri.class == URI::HTTP or uri.class == URI::HTTPS
-              record.errors.add(attr_name, 'must be an HTTP or HTTPS protocol format')
-            end
-          rescue URI::InvalidURIError
-            record.errors.add(attr_name, 'is not a valid url.')
-          end
-        end
-      end
-    end
-  end
-
   module Timestamp
     private
       def current_time_from_proper_timezone

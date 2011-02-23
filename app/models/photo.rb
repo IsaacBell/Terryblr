@@ -34,7 +34,7 @@ class Photo < Terryblr::Base
   #
   validates_presence_of :image_file_name, :unless => :url? 
   validates_presence_of :url, :unless => :image_file_name?
-  validates_url_format_of :url, :if => :url?
+  validates :url, :presence => true, :url => true, :if => :url?
 
   #
   # Scopes

@@ -2,6 +2,11 @@ module Terryblr
   class Base < ActiveRecord::Base
 
     #
+    # Includes
+    #
+    include ActiveModel::Validations
+
+    #
     # Class definitions
     #
     self.abstract_class = false
