@@ -1,38 +1,38 @@
 embed_assets: on
 
 javascripts: 
-  public:
-  - jquery.min
-  - jquery-ui.custom.min
-  - jquery.cycle.min
-  - jquery.jcarousel.min
-  - jquery.flash.min
-  - jquery.countdown.min
-  - jquery.cookie.min
-  - jrails
-  - public
-  admin:
-  - jquery.min
-  - jquery-ui.min
-  - jquery.swfupload
-  - jquery.flash.min
-  - jrails
-  - admin
-  admin_edit:
-  - jtags
-  - tiny_mce/jquery.tinymce
-  - swfupload/swfupload
-  - jquery.swfupload
-  - jquery.iphone-checkboxes.min
+- public:
+  - public/javascripts/jquery.min.js
+  - public/javascripts/jquery-ui.custom.min.js
+  - public/javascripts/jquery.cycle.min.js
+  - public/javascripts/jquery.jcarousel.min.js
+  - public/javascripts/jquery.flash.min.js
+  - public/javascripts/jquery.countdown.min.js
+  - public/javascripts/jquery.cookie.min.js
+  - public/javascripts/jrails.js
+  - public/javascripts/public.js
+- admin:
+  - public/javascripts/jquery.min.js
+  - public/javascripts/jquery-ui.min.js
+  - public/javascripts/jquery.swfupload.js
+  - public/javascripts/jquery.flash.min.js
+  - public/javascripts/jrails.js
+  - public/javascripts/admin.js
+- admin_edit:
+  - public/javascripts/jtags.js
+  - public/javascripts/tiny_mce/jquery.tinymce.js
+  - public/javascripts/swfupload/swfupload.js
+  - public/javascripts/jquery.swfupload.js
+  - public/javascripts/jquery.iphone-checkboxes.min.js
 
 stylesheets:
-  public: 
-  - public_grid
-  - public
-  admin:
-  - admin_grid
-  - formtastic
-  - jquery-ui
-  - admin
-  admin_edit:
-  - iphone-checkboxes
+- public: 
+  - public/stylesheets/public_grid.css
+  - public/stylesheets/public.css
+- admin:
+  - public/stylesheets/admin_grid.css
+  - public/stylesheets/formtastic.css
+  - public/stylesheets/jquery-ui.css
+  - public/stylesheets/admin.css
+- admin_edit:
+  - public/stylesheets/iphone-checkboxes.css
