@@ -35,7 +35,7 @@ module Terryblr
       def create_configuration_file
         copy_file 'initializer.rb', 'config/initializers/terryblr.rb'
         copy_file 'settings.yml', 'config/settings.yml'
-        
+        copy_file 'assets.yml', 'config/assets.yml'
         # Static assets
         copy_dir_contents 'public', 'public'
       end

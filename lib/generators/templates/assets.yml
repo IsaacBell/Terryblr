@@ -1,0 +1,38 @@
+embed_assets: on
+
+javascripts: 
+  public:
+  - jquery.min
+  - jquery-ui.custom.min
+  - jquery.cycle.min
+  - jquery.jcarousel.min
+  - jquery.flash.min
+  - jquery.countdown.min
+  - jquery.cookie.min
+  - jrails
+  - public
+  admin:
+  - jquery.min
+  - jquery-ui.min
+  - jquery.swfupload
+  - jquery.flash.min
+  - jrails
+  - admin
+  admin_edit:
+  - jtags
+  - tiny_mce/jquery.tinymce
+  - swfupload/swfupload
+  - jquery.swfupload
+  - jquery.iphone-checkboxes.min
+
+stylesheets:
+  public: 
+  - public_grid
+  - public
+  admin:
+  - admin_grid
+  - formtastic
+  - jquery-ui
+  - admin
+  admin_edit:
+  - iphone-checkboxes

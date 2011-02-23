@@ -83,7 +83,7 @@ module Terryblr::AdminHelper
         });
     ")
   end
-  
+
   def add_inline_photo(url)
     css_flash = "add_photo_flash"
     css_link = ".add-inline-photo a"
@@ -188,7 +188,7 @@ module Terryblr::AdminHelper
       end
     end
   end
-  
+
   def edit_photos_sortable(list_id = "photos_list")
     sortable_element("#{list_id}_ul", 
       :url => reorder_admin_photos_path(:format => :js), 
@@ -196,7 +196,7 @@ module Terryblr::AdminHelper
       :onUpdate => "function() { $('##{list_id}_ul input[id$=display_order]').each(function(i, el){ el.value = i }) }"
     )
   end
-  
+
   def calendar_day(day, posts)
     content_tag(:span, day.mday, :class => "mday #{'future' if day>Date.today}") +
     if (p = posts.detect{|b| b.published_at.mday==day.mday })
@@ -205,7 +205,7 @@ module Terryblr::AdminHelper
       ""
     end
   end
-  
+
   def sidebar_new_content_link
     name = @controller.controller_name.split('/').last
     content_type = case name
@@ -218,10 +218,9 @@ module Terryblr::AdminHelper
     else
       name.to_s.singularize
     end
-      
     link_to "New #{content_type.capitalize}", admin_new_content_path(content_type) if content_type
   end
-  
+
   def ga_visitors_graph(results)
     content_tag(:div, "", :id => "ga_visitors", :class => "graph") +
     javascript_tag("
@@ -230,5 +229,4 @@ module Terryblr::AdminHelper
     })
     ")
   end
-  
 end

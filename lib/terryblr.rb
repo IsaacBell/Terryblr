@@ -4,6 +4,7 @@ require 'settingslogic'
 require 'will_paginate'
 require 'acts_as_commentable'
 require 'validates_email_format_of'
+require 'jammit'
 
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 
@@ -34,6 +35,3 @@ module Terryblr
     
   end
 end
-
-# TODO: Automatically deploy JS specific files either by executing 'rails generate jquery:install --ui' or by copying them
-ActionView::Helpers::AssetTagHelper.register_javascript_expansion :terryblr => %w(jquery.min jquery-ui.min rails terryblr)

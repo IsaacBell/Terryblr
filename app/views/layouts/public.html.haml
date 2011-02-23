@@ -4,7 +4,9 @@
     %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
     %title #{Settings.app_name}#{": #{@page_title}" if @page_title}
     = facebook_meta_tags
-    = javascript_include_tag :terryblr, 'jquery.cycle.min', 'jquery.flash.min', 'jquery.cookie.min', :cache => true, :recursive => true
+    = include_javascripts :public
+    = javascript_include_tag 'jquery.cycle.min', 'jquery.flash.min', 'jquery.cookie.min', :cache => true, :recursive => true
+    = include_stylesheets :public
     = stylesheet_link_tag 'public_grid', :cache => true, :recursive => true
     = yield :head
   %body

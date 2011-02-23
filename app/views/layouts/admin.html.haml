@@ -5,8 +5,8 @@
     %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
     %title #{Settings.app_name}: Admin
     = yield :pre_head
-    //XXX = include_javascripts :admin
-    //XXX = include_stylesheets :admin
+    = include_javascripts :admin
+    = include_stylesheets :admin
     = yield :head
   %body
     .container
@@ -39,4 +39,3 @@
         .clear
 
       #footer
-      
