@@ -4,7 +4,7 @@
     %h2 #{params[:action].to_s.capitalize} #{@type.to_s.capitalize}
     = error_messages_for_post
     = f.semantic_errors
-    - f.inputs do
+    = f.inputs do
       = f.input :title, :label => 'Title', :input_html => { :class => "title" }
       %li.photos-upload
         %label Photos
