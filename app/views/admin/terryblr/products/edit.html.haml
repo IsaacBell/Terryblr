@@ -1,6 +1,6 @@
 = render :partial => 'admin/edit_head_content'
   
-- semantic_form_for @object, :url => (@object.new_record? ? admin_products_path : admin_product_path(@object)) do |f|
+= semantic_form_for @object, :url => (@object.new_record? ? admin_products_path : admin_product_path(@object)) do |f|
   = f.semantic_errors
   #form_content{:class => "span-17"}
     %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
