@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do
-        get :filter
+        get  :filter
         post :filter
       end
       resources :comments, :except => [:new, :create], :controller => "terryblr/comments"
@@ -15,8 +15,21 @@ Rails.application.routes.draw do
       resources :videos, :controller => "terryblr/videos"
       resources :photos, :controller => "terryblr/photos"
     end
-    resources :features
+    resources :features, :controller => "terryblr/features" do
+      collection do
+        get  :filter
+        post :filter
+        post :reorder
+      end
+      resource :photo, :controller => "terryblr/photo"
+    end
     resources :comments
+    resources :videos, :only => [:index, :destroy], :controller => "terryblr/videos" do
+      post :reorder, :on => :collection
+    end
+    resources :photos, :only => [:index, :destroy], :controller => "terryblr/photos" do
+      post :reorder, :on => :collection
+    end
     resources :orders
     resources :products
     resources :pages
