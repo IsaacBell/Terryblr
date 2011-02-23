@@ -22,7 +22,7 @@
           FB Page Total Likes: 
           %span= number_with_delimiter(@fb_page_likes.data.first.values[3].sum{|h| h['value'].to_i})
     .clear
-  
+
   .chart{:class => rep_title}
     %h3= rep_title.humanize.capitalize_words
     .graph_canvas{:id => "#{rep_title}_graph"}

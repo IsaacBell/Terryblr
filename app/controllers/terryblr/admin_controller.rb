@@ -7,9 +7,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
 #  before_filter :authenticate
   before_filter :set_date, :only => [:index, :filter]
-  before_filter :set_expires, :only => [:analytics]
+#XXX  before_filter :set_expires, :only => [:analytics]
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
-  around_filter :cache, :only => [:analytics]
+#XXX  around_filter :cache, :only => [:analytics]
   after_filter :set_last_modified
 
   layout 'admin'
@@ -45,23 +45,12 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     @reports.each do |k, v|
       v[:results] = gs.get(v.update({ :start_date => @since.to_s, :end_date => Date.today.to_s}))
     end
-    
+
     # Twitter mentions
     # Group by the date of the tweet
     @tweets = Tweet.analytics(@since)
     @tweet_exposure = Tweet.exposure(@since)
     @tweet_reach = Tweet.reach(@since)
-
-    respond_to do |wants|
-      wants.js {
-        render :update do |page|
-          page.replace_html "dashboard", :partial => "analytics"
-          %w(displayAnalyticsGraph).each do |func|
-            page << "if(typeof(#{func})=='function') { #{func}() }"
-          end
-        end
-      }
-    end
   end
 
   def search
@@ -106,7 +95,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
       ctrl_name.singularize.camelize
     end
   end
-  
+
   def route_name
     ctrl_parts = params[:controller].split('/')
     ctrl_parts.delete("terryblr")

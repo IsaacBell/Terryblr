@@ -5,14 +5,14 @@ describe Video do
     before do
       @post = Factory(:post)
     end
-    
+
     it "should update associated post on create" do
       video = Factory.build(:video, :post => @post)
       video.stub(:upload_video).and_return(true)
       @post.should_receive(:touch)
       video.save
     end
-  
+
     it "should update associated post on update" do
       video = Factory.build(:video)
       video.stub(:upload_video).and_return(true)
