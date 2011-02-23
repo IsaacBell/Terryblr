@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.0"
   s.add_dependency "memcached"
   s.add_dependency "aasm"
-  s.add_dependency "will_paginate", "3.0.pre"
+  s.add_dependency "will_paginate", "3.0.pre2"
   s.add_dependency "haml"
   s.add_dependency "settingslogic"
   s.add_dependency "formtastic"
