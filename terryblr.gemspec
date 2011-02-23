@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency "acts-as-taggable-on"
   s.add_dependency "acts_as_commentable"
   s.add_dependency "validates_email_format_of"
-  s.add_dependency "cannikin-gattica"
+  s.add_dependency "gattica"
   s.add_dependency "tweetstream"
   s.add_dependency "money"
   s.add_dependency "jammit"

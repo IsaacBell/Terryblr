@@ -62,9 +62,10 @@ common: &common
     key: R_c8a7f8051740494c879df5865cd04b4b
   tags: 
     posts:
-      groups: [tags, location]
+      groups: [] #XXX [tags, location]
       tags: []
       location: [blog, featured]
+      features: []
   photo_dimensions:
     thumb: ["100x100#", :jpg]
     small: ["156x156#", :jpg]

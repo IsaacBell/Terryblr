@@ -35,7 +35,7 @@ module ActiveRecord
   module Timestamp
     private
       def current_time_from_proper_timezone
-        self.class.default_timezone == :utc ? Time.now.utc : Time.now.in_time_zone
+        self.class.default_timezone == :utc ? Time.now.utc : Time.zone.now
       end
   end
 

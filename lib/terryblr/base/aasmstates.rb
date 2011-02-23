@@ -62,7 +62,7 @@ module Terryblr
           end
 
           def live?
-            self.published? and self.published_at? and self.published_at < Time.now.in_time_zone
+            self.published? and self.published_at? and self.published_at < Time.zone.now
           end
 
           def publish_on_date?

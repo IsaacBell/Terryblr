@@ -1,6 +1,6 @@
 %h2 Edit #{@user.full_name}
 
-- semantic_form_for @user, :url => admin_user_path(@user) do |form|
+= semantic_form_for @user, :url => admin_user_path(@user) do |form|
   #form_content{:class => "span-17"}
     = error_messages_for :user
     = render :partial => "form", :locals => { :form => form }

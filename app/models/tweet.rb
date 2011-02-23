@@ -29,7 +29,7 @@ class Tweet < Terryblr::Base
     end
 
     def exposure(since = 1.month.ago)
-      sum(:reach).where("tweeted_at > ?", since)
+      where("tweeted_at > ?", since).sum(:reach)
     end
 
     def reach(since = 1.month.ago)

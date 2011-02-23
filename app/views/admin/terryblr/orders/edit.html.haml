@@ -1,6 +1,6 @@
 = render :partial => 'admin/edit_head_content'
   
-- semantic_form_for @order, :url => admin_order_path(@order) do |f|
+= semantic_form_for @order, :url => admin_order_path(@order) do |f|
   
   #form_content{:class => "span-17 order-form form"}
     %h2 Order ##{@order.number} by #{@order.full_name} for #{@order.final_amount.format}
