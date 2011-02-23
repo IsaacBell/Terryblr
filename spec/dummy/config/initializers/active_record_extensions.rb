@@ -28,7 +28,7 @@ module ActiveRecord
         write_attribute('updated_on', current_time) if respond_to?(:updated_on)
       end
 
-      save(validate)
+      save(:validate => validate)
     end
   end
 
