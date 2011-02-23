@@ -30,9 +30,12 @@ Rails.application.routes.draw do
     resources :photos, :only => [:index, :destroy], :controller => "terryblr/photos" do
       post :reorder, :on => :collection
     end
+    resources :pages, :controller => "terryblr/pages" do
+      resources :messages, :only => [:index, :show, :delete], :controller => "terryblr/messages"
+      resources :photos, :controller => "terryblr/photos"
+    end
     resources :orders
     resources :products
-    resources :pages
     resources :users do
       collection do
         get :admins
