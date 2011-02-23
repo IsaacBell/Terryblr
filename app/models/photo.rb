@@ -101,6 +101,7 @@ class Photo < Terryblr::Base
   private
 
   def do_download_remote_image
+    require 'open-uri'
     io = open(URI.parse(url))
     def io.original_filename; base_uri.path.split('/').last; end
     io.original_filename.blank? ? nil : io

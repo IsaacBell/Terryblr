@@ -1,6 +1,6 @@
 class CreatePhotos < ActiveRecord::Migration
   def self.up
-    create_table :photos do |t|
+    create_table :photos, :force => true do |t|
       t.string :photoable_type
       t.integer :photoable_id
       t.string :caption

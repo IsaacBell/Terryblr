@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency "paperclip"
   s.add_dependency "delayed_job"
   s.add_dependency "dynamic_form"
+  s.add_dependency "htmlentities"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rcov", ">= 0"

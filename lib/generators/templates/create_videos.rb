@@ -1,6 +1,6 @@
 class CreateVideos < ActiveRecord::Migration
   def self.up
-    create_table :videos do |t|
+    create_table :videos, :force => true do |t|
       t.integer :post_id
       t.string :caption
       t.string :url, :limit => 3000

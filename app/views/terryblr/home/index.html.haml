@@ -17,8 +17,8 @@
 
   .red-line
 
-  - if defined?(Terryblr::Settings.common_tags)
-    #posts_nav= Terryblr::Settings.common_tags.map{|t| link_to t.humanize, tagged_posts_path(t) }.join("&nbsp; / &nbsp;")
+  - if defined?(Settings.common_tags)
+    #posts_nav= Settings.common_tags.map{|t| link_to t.humanize, tagged_posts_path(t) }.join("&nbsp; / &nbsp;")
 
   %ul.posts-stream
     =render :partial => "terryblr/posts/list"

@@ -1,6 +1,6 @@
 class CreateSizes < ActiveRecord::Migration
   def self.up
-    create_table :sizes do |t|
+    create_table :sizes, :force => true do |t|
       t.integer :product_id
       t.string :name
       t.integer :qty

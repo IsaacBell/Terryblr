@@ -1,6 +1,6 @@
 class CreatePosts < ActiveRecord::Migration
   def self.up
-    create_table :posts do |t|
+    create_table :posts, :force => true do |t|
       t.string :post_type
       t.string :title
       t.string :body, :limit => 3000

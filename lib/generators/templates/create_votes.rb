@@ -1,6 +1,6 @@
 class CreateVotes < ActiveRecord::Migration
   def self.up
-    create_table :votes do |t|
+    create_table :votes, :force => true do |t|
       t.string :votable_type
       t.integer :votable_id
       t.integer :value
