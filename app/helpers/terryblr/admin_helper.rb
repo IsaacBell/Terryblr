@@ -168,7 +168,7 @@ module Terryblr::AdminHelper
     attr_name  = 'photos_attributes]['
     
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
-      link_to_remote(image_tag("admin/remove.png"), :url => admin_photo_path(photo, :format => :js), :method => :delete, :confirm => "Are you absolutely sure?") +
+      link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
       image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
       text_area_tag("#{object.class.to_s.downcase}[#{attr_name}][caption]", photo.caption) +
       hidden_field_tag("#{object.class.to_s.downcase}[#{attr_name}][id]", photo.id) +
