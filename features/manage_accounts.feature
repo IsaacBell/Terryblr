@@ -1,36 +1,27 @@
 Feature: Manage accounts
-  In order to [goal]
-  [stakeholder]
-  wants [behaviour]
+  In order to manage its collaborators
+  An administrative user
+  wants to add, edit and rename their user accounts
   
-  @wip
+  Background:
+    Given the following accounts:
+      | email                 | firstname | lastname         | password |
+      | terry@lovethe88.com   | Terry     | Richardson       | Sekret   |
+      | contact@lovethe88.com | The88     |                  | Sekret   |
+    # Then dump_users
+    And I am authenticated as "terry@lovethe88.com" with "Sekret"
+  
   Scenario: Register new account
     Given I am on the new account page
-    And I press "Create"
+    When I fill in the following:
+      | First name            | Bob            |
+      | Last name             | The Builder    |
+      | Email                 | bob@yahoo.com  |
+      | Password              | bob123456      |
+      | Password Confirmation | bob123456      |
+    And I press "Save User"
+    Then I should see "Edit Bob The Builder"
 
-  # Rails generates Delete links that use Javascript to pop up a confirmation
-  # dialog and then do a HTTP POST request (emulated DELETE request).
-  #
-  # Capybara must use Culerity/Celerity or Selenium2 (webdriver) when pages rely
-  # on Javascript events. Only Culerity/Celerity supports clicking on confirmation
-  # dialogs.
-  #
-  # Since Culerity/Celerity and Selenium2 has some overhead, Cucumber-Rails will
-  # detect the presence of Javascript behind Delete links and issue a DELETE request 
-  # instead of a GET request.
-  #
-  # You can turn this emulation off by tagging your scenario with @no-js-emulation.
-  # Turning on browser testing with @selenium, @culerity, @celerity or @javascript
-  # will also turn off the emulation. (See the Capybara documentation for 
-  # details about those tags). If any of the browser tags are present, Cucumber-Rails
-  # will also turn off transactions and clean the database with DatabaseCleaner 
-  # after the scenario has finished. This is to prevent data from leaking into 
-  # the next scenario.
-  #
-  # Another way to avoid Cucumber-Rails' javascript emulation without using any
-  # of the tags above is to modify your views to use <button> instead. You can
-  # see how in http://github.com/jnicklas/capybara/issues#issue/12
-  #
   @wip
   Scenario: Delete account
     Given the following accounts:
@@ -45,3 +36,25 @@ Feature: Manage accounts
       ||
       ||
       ||
+  @wip
+  Scenario Outline: Creating a new account
+      Given I am not authenticated
+      When I go to register # define this path mapping in features/support/paths.rb, usually as '/users/sign_up'
+      And I fill in "user_email" with "<email>"
+      And I fill in "user_password" with "<password>"
+      And I fill in "user_password_confirmation" with "<password>"
+      And I press "Sign up"
+      Then I should see "logged in as <email>" # your work!
+
+      Examples:
+        | email           | password   |
+        | testing@man.net | secretpass |
+        | foo@bar.com     | fr33z3     |
+
+  @wip
+  Scenario: Willing to edit my account
+      Given I am a new, authenticated user # beyond this step, your work!
+      When I want to edit my account
+      Then I should see the account initialization form
+      And I should see "Your account has not been initialized yet. Do it now!"
+      # And more view checking stuff
