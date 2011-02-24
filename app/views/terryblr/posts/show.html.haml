@@ -3,6 +3,8 @@
 
 .clear
   
-%h3 Comments
+#page_nav
+  = link_to "< previous", previous_post_path(@object), :class => "left" if @object.previous
+  = link_to "next >", next_post_path(@object), :class => "right" if @object.next
 
-%p= link_to "Back to Archives", posts_path
+.clear

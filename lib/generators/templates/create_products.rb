@@ -3,7 +3,7 @@ class CreateProducts < ActiveRecord::Migration
     create_table :products, :force => true do |t|
       t.string :title
       t.string :slug
-      t.string :body, :limit => 3000
+      t.text :body
       t.integer :price_cents, :default => 0
       t.string :price_currency
       t.string :state

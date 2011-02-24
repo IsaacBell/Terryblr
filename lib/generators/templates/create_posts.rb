@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration
     create_table :posts, :force => true do |t|
       t.string :post_type
       t.string :title
-      t.string :body, :limit => 3000
+      t.text :body
       t.string :slug
       t.datetime :published_at
       t.string :state

@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "delayed_job"
   s.add_dependency "dynamic_form"
   s.add_dependency "formtastic"
-  s.add_dependency "hpricot"
   s.add_dependency "gattica"
   s.add_dependency "haml"
   s.add_dependency "jammit"

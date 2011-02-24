@@ -139,11 +139,11 @@ class Post < Terryblr::Base
   class << self
 
     def next(post)
-      self.live.first(:conditions => ["published_at > ? and id != ?", post.published_at, post.id], :order => "published_at asc, id desc")
+      self.live.where("published_at > ? and id != ?", post.published_at, post.id).order("published_at asc, id desc").first
     end
 
     def previous(post)
-      self.live.first(:conditions => ["published_at < ? and id != ?", post.published_at, post.id], :order => "published_at desc, id desc")
+      self.live.where("published_at < ? and id != ?", post.published_at, post.id).order("published_at desc, id desc").first
     end
 
     def next_month(month = Date.today.month)

@@ -46,7 +46,8 @@ namespace :terryblr do
           :photos => photos,
           :post_type => "photos",
           :state => "published",
-          :published_at => post.css('published').text
+          :published_at => post.css('published').text,
+          :display_type => "photos"
         }
 
         # Create Post with photo

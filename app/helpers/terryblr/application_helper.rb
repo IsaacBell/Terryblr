@@ -1,29 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module Terryblr::ApplicationHelper
 
-  def share_item(object)
-    content_tag(:div, :class => "share-post") do
-      content_tag(:ul) do
-        # Twitter
-        # <iframe width="90" scrolling="no" height="20" frameborder="0" src="http://api.tweetmeme.com/widget.js?url=http://techcrunch.com/2010/04/01/social-network-hi5-raises-23-million-in-funding/&amp;style=compact&amp;source=TechCrunch&amp;service=bit.ly"></iframe>
-        content_tag(:li, :class => "twitter") do
-          content_tag(:iframe, "", :width => "90", :scrolling => "no", :height => "20", :frameborder => "0", :src => "http://api.tweetmeme.com/widget.js?url=#{request.url}&amp;style=compact&amp;source=#{Settings.app_name}&amp;service=bit.ly")
-        end
-
-        # Facebook
-        content_tag(:li, :class => "facebook") do
-          # <a style="text-decoration: none;" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Ftechcrunch.com%2F2010%2F04%2F01%2Fsocial-network-hi5-raises-23-million-in-funding%2F&amp;t=Social%20Network%20hi5%20Raises%20%243%20Million%20In%20Debt%20From%20Mohr%20Davidow&amp;src=sp" name="fb_share" id="fb_share" share_url="http://techcrunch.com/2010/04/01/social-network-hi5-raises-23-million-in-funding/" class="snap_nopreview"><span class="fb_share_size_Small "><span class="FBConnectButton FBConnectButton_Small" style="cursor: pointer;"><span class="FBConnectButton_Text">Share</span></span><span class="fb_share_count_nub_right "></span><span class="fb_share_count  fb_share_count_right"><span class="fb_share_count_inner">7</span></span></span></a>
-          # <script src="http://www.facebook.com/connect.php/js/FB.SharePro/" type="text/javascript"></script>
-          link_to("")
-        end
-
-        # Tumblr
-
-        # Google Buzz
-      end
-    end
-  end
-
   def facebook_meta_tags
     return unless page_object
 
@@ -120,7 +97,7 @@ module Terryblr::ApplicationHelper
               content_tag(:li) do 
                 link_to(image_tag(p.image.url(:thumb), :size => "95x95"), send("#{obj_type}_path", object, object.slug, :anchor => p.dom_id), :class => (p==thumb_photos.last ? "last" : ""))
               end
-            end.join
+            end.join.html_safe
           end
         end
       end.to_s

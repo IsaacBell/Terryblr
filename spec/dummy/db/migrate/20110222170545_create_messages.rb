@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration
       t.string :name
       t.string :subject
       t.string :email
-      t.string :body, :limit => 3000
+      t.text :body
       t.string :messagable_type
       t.integer :messagable_id
       t.integer :user_id

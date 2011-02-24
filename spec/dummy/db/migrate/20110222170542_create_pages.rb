@@ -2,7 +2,7 @@ class CreatePages < ActiveRecord::Migration
   def self.up
     create_table :pages do |t|
       t.string :title
-      t.string :body, :limit => 3000
+      t.text :body
       t.string :slug
       t.datetime :published_at
       t.string :state
