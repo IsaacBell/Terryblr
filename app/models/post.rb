@@ -11,12 +11,12 @@ class Post < Terryblr::Base
   #
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
   has_many :videos, :order => "display_order", :dependent => :destroy
-  has_many :likes, :as => :likeable
-  has_many :comments, :as => :commentable
-  has_many :votes, :as => :votable
   belongs_to :tw_delayed_job, :class_name => "Delayed::Job"
   belongs_to :fb_delayed_job, :class_name => "Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "Delayed::Job"
+  # has_many :likes, :as => :likeable
+  # has_many :comments, :as => :commentable
+  # has_many :votes, :as => :votable
 
   #
   # Behaviours
@@ -130,7 +130,7 @@ class Post < Terryblr::Base
 
   def push_to_social
     # Post to social networks
-    #XXX social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
+    social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
   end
 
   #

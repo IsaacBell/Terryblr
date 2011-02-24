@@ -18,12 +18,10 @@ module Terryblr::PostsHelper
     else
       post_body(post)
     end +
-
+    
     # Tags
-    content_tag(:div, post.tag_list.map{|t| link_to("##{t}", tagged_posts_path(t)) }.join(', '), :class => "post-tags") +
+    post_action_links(post)
 
-    # Share this
-    share_item(post)
   end
 
   def post_body(post)
@@ -57,4 +55,17 @@ module Terryblr::PostsHelper
     str += post_body(post)
     str
   end
+  
+  def post_action_links(post)
+    content_tag(:div, :class => "post-links clear") do 
+      content_tag(:ul) do 
+        lnks = [
+          link_to("+ Share", post_url(post, post.slug), :class => "share", :title => "#{Settings.app_name} - #{post.title}"),
+          post.tag_list.map{|t| link_to(t.titleize, tagged_posts_path(t), :class => "tag") }
+        ].flatten
+        lnks.map{|lnk| content_tag(:li, lnk) }.join.html_safe
+      end
+    end
+  end
+
 end

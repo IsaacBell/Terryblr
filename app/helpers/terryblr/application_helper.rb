@@ -74,53 +74,60 @@ module Terryblr::ApplicationHelper
     @page_object ||= @posts.first if @posts
     @page_object
   end
+  
+  def detail_page?
+    case controller.controller_name.to_sym
+    when :contributors
+      false
+    else
+      (controller.action_name=='show')
+    end
+  end
 
   def photos_post_body(object)
-    obj_type = object.class.to_s.downcase.to_sym
+    obj_type = object.class.to_s.downcase.split('::').last
 
     # Rejection cases
-    return unless [:post, :product, :page].include?(obj_type)
+    return unless %w(post product page).include?(obj_type.to_s)
     return if object.photos.empty?
-
+    
     detail_path = send("#{obj_type}_path",object.to_param, object.slug)
-    detail_page = current_page?(detail_path)
-    flash_dom = object.dom_id("flash_slideshow")
+    image_size = detail_page? ? :medium : :list
+    thumb_panes = detail_page? ? 6 : 4
+    thumb_photos = object.photos[(detail_page? ? 0 : 1)..(detail_page? ? object.photos.count : thumb_panes+1)]
+    is_gallery = (object.respond_to?(:display_type) and object.display_type? and object.display_type.gallery?)
 
     content_tag(:div, :class => "photos-slideshow") do
-
-      content_tag(:div, :class => detail_page ? "slideshow" : "") do
-        photos = detail_page ? object.photos : [object.photos.first]
+      content_tag(:div, :class => (detail_page? && is_gallery) ? "slideshow" : "stacked-photos") do
+        photos = detail_page? ? object.photos : [object.photos.first]
         photos.map do |f|
-          display = (f==object.photos.first) ? "block" : "none"
-          link_to image_tag(f.image.url(:medium), :size => f.size(:medium)), send("#{obj_type}_path",f.photoable.to_param,object.slug, :anchor => f.dom_id), :style => "display:#{display}"
-        end.join
+          display = (f==object.photos.first || !is_gallery) ? "block" : "none"
+          dom_id = f.dom_id
+          # Make link
+          content_tag(:div, :id => dom_id, :class => "slide", :style => "display:#{display}") do
+            s = f.size(image_size) rescue {}
+            link_to(image_tag(f.image.url(image_size), :size => [s[:width], s[:height]].join('x')), send("#{obj_type}_path",object.to_param, object.slug, :anchor => dom_id), :name => dom_id) +
+            content_tag(:p, (f.caption? ? f.caption : " "), :class => "photo-caption")
+          end
+        end.join.html_safe
       end +
-
+      
       # Only show thumbs on details page
-      if object.photos.size > 1
-        content_tag(:div, :class => "slideshow_controls") do
-          object.photos.map do |p|
-            link_to image_tag(p.image.url(:thumb)), detail_path
-          end.join
+      if thumb_photos.size > 1 && (!detail_page? || is_gallery)
+        content_tag(:div, :class => "slideshow-controls") do
+          content_tag(:ul, :class => "slideshow-controls-container #{'carousel' if detail_page? && thumb_photos.size > thumb_panes}") do
+            thumb_photos.map do |p|
+              content_tag(:li) do 
+                link_to(image_tag(p.image.url(:thumb), :size => "95x95"), send("#{obj_type}_path", object, object.slug, :anchor => p.dom_id), :class => (p==thumb_photos.last ? "last" : ""))
+              end
+            end.join
+          end
         end
-
-        # # Full screen player
-        # link_to_function("Play in Full-screen", "$('##{flash_dom}').flash('enterFullScreenDisplayState');") +
-        # content_tag(:div, "", :id => flash_dom) +
-        # javascript_tag(%Q{
-        #   $('##{flash_dom}').flash({
-        #       src: '/flash/slideshowpro.swf', width: 0, height: 0,
-        #       flashvars: {
-        #         paramXMLPath: "#{send("gallery_params_#{obj_type}_path",object, :format => 'xml')}",
-        #         xmlfiletype: "Default"
-        #       }
-        #   }).hide()
-        # }) + 
-
-        object.body
-
       end.to_s
-    end
+
+    end +
+    content_tag(:div, "", :class => "clear") +
+    post_body(object).html_safe
   end
 
   #

@@ -1,7 +1,7 @@
 -posts ||= @posts || @collection
 -posts.each do |post|
   %li{:id => post.dom_id}
-    = post_item post
+    = post_item(post)
     .red-line
 
 -if posts.respond_to?(:per_page) and posts.size == posts.per_page

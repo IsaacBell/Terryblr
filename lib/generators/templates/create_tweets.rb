@@ -6,8 +6,6 @@ class CreateTweets < ActiveRecord::Migration
       if Rails.database.mysql?
         t.column :twitter_id, 'BIGINT UNSIGNED'
         t.integer :twitter_id, :limit => 20
-      elsif Rails.database.postgresql?
-        t.bigint :twitter_id
       else
         t.integer :twitter_id, :limit => 20
       end
