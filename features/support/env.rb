@@ -6,6 +6,13 @@
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path(File.dirname(__FILE__) + '/../../spec/dummy/config/environment')
+module Jammit
+  remove_const :PUBLIC_ROOT
+  remove_const :ASSET_ROOT
+  PUBLIC_ROOT = File.expand_path("../../../spec/dummy/public", __FILE__)
+  ASSET_ROOT = File.expand_path("../../../spec/dummy", __FILE__)
+end
+Jammit.load_configuration(File.expand_path("../../../spec/dummy/config/assets.yml",  __FILE__))
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/rspec'
