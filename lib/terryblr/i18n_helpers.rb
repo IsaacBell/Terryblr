@@ -7,13 +7,13 @@ module Terryblr
         def terryblr_translate *args
           options = args.extract_options!
           scope_ = options.fetch(:scope, [])
-          puts "ttt: #{args[0]}, scope_: #{scope_.inspect}"
+          # puts "ttt: #{args[0]}, scope_: #{scope_.inspect}"
           if args[0].to_s.starts_with?('.') && scope_.include?('terryblr')
-            puts "already correctly scoped"
+            # puts "already correctly scoped"
             args << options
             I18n.translate(*args)
           else
-            puts "re-scoping"
+            # puts "re-scoping"
             raise "NotImplemented" unless scope_.empty?
             options[:scope] = 'terryblr'
             args << options
