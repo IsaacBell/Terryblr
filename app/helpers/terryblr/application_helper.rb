@@ -112,12 +112,12 @@ module Terryblr::ApplicationHelper
   #
   def flash_messages
     return unless messages = flash.keys.select{|k| [:notice, :message, :warning, :error].include?(k)}
-    content_tag :div, :id => "flash" do
+    content_tag(:div, :id => "flash") do
       messages.map do |type|
         content_tag :div, :id => "flash-#{type.to_s}", :class => "flash #{type.to_s}" do
           content_tag :span, message_for_item(flash[type], flash["#{type}_item".to_sym])
         end
-      end.join("\n")
+      end.join("\n").html_safe
     end
   end
 
