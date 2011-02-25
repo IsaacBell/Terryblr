@@ -15,7 +15,7 @@
       %li.string.optional.video-url
         %label{:for => "post_videos_attributes__url"} Video Url
         = text_field_tag "video_url"
-        = link_to "Save", {admin_post_videos_path(@post, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)"}, {:id => "save_video_btn", :remote => true}
+        = link_to "Save", admin_post_videos_path(@post, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
         %p.inline-hints Paste in a URL to a vimeo or youtube video
       %li.video-list
         = edit_videos_for_assoc(@post)
