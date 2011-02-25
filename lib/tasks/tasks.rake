@@ -36,18 +36,20 @@ namespace :terryblr do
           photos << Photo.create!(:url => url)
         end
 
-        full_title = post.css('title').text #place and date
-
+        title = post.css('title').text #place and date
+        url = post.at_css("link[rel='alternate'][type='text/html']")['href'] rescue nil
+        
         options = {
           :slug => fetch_slug(post),
-          :body => fetch_date(full_title),
-          :title => fetch_location(full_title),
+          :body => fetch_date(title),
+          :title => fetch_location(title),
           :tag_list => parse_tags(post),
           :photos => photos,
           :post_type => "photos",
           :state => "published",
           :published_at => post.css('published').text,
-          :display_type => "photos"
+          :display_type => "photos",
+          :import_url => url
         }
 
         # Create Post with photo
@@ -389,5 +391,5 @@ namespace :terryblr do
     end
 
   end
-  
+
 end

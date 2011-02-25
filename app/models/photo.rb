@@ -14,7 +14,7 @@ class Photo < Terryblr::Base
     :styles => Settings.photo_dimensions.dup.symbolize_keys,
     :storage => Settings.key?('s3') ? :s3 : :filesystem,
     :convert_options => { :all=> "-density 72 " },
-    :path => Settings.key?('s3') ? ":attachment/:id/:style.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
+    :path => Settings.key?('s3') ? ":attachment/:id/:style/:basename.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
     :s3_credentials => (Settings.s3.symbolize_keys rescue nil),
     :bucket => [Settings.app_name, Rails.env].join('-').parameterize.to_s,
     :log_command => Rails.env.development?

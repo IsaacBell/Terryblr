@@ -17,10 +17,11 @@ class CreatePosts < ActiveRecord::Migration
       t.string :display_type
       t.integer :tw_delayed_job_id
       t.integer :fb_delayed_job_id
+      t.integer :tumblr_delayed_job_id
       t.string :social_msg, :limit => 140
       t.integer :linkable_id
       t.string :linkable_type
-      t.integer :tumblr_delayed_job_id
+      t.string :import_url
     end
     add_index :posts, :slug
     add_index :posts, :likes_count
