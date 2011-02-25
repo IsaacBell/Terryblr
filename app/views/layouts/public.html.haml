@@ -26,7 +26,7 @@
               %li.diary=link_to_unless_current "Diary", tagged_posts_path(Settings.common_tags.first)
 
       #body.clear
-        = flash_messages
+        = raw(flash_messages)
 
         = yield
 
