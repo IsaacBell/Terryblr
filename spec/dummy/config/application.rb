@@ -10,13 +10,6 @@ autoload "ResourceController", "makandra_resource_controller"
 
 Bundler.setup
 require "terryblr"
-require "acts-as-taggable-on"
-require "money"
-require "paperclip"
-require "dynamic_form"
-require "gattica"
-require "devise"
-require "cancan"
 
 module Dummy
   class Application < Rails::Application
