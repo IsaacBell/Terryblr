@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "acts-as-taggable-on"
   s.add_dependency "acts_as_commentable"
   s.add_dependency "delayed_job"
+  s.add_dependency "devise"
   s.add_dependency "dynamic_form"
   s.add_dependency "formtastic"
   s.add_dependency "gattica"
@@ -39,6 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency "unicode_utils"
   s.add_dependency "validates_email_format_of"
   s.add_dependency "will_paginate", "3.0.pre2"
+  s.add_dependency "cancan"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "ruby-debug19"
@@ -55,6 +57,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ruby-debug19"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "factory_girl_rails"
+  s.add_development_dependency "ruby_parser"
+  s.add_development_dependency "launchy"
 
   s.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"] + ["LICENSE", "README.rdoc"]
 end

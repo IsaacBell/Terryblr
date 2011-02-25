@@ -1,47 +1,35 @@
 Feature: Manage accounts
-  In order to [goal]
-  [stakeholder]
-  wants [behaviour]
+  In order to manage its collaborators
+  An administrative user
+  wants to add, edit and rename their user accounts
   
-  @wip
-  Scenario: Register new account
-    Given I am on the new account page
-    And I press "Create"
-
-  # Rails generates Delete links that use Javascript to pop up a confirmation
-  # dialog and then do a HTTP POST request (emulated DELETE request).
-  #
-  # Capybara must use Culerity/Celerity or Selenium2 (webdriver) when pages rely
-  # on Javascript events. Only Culerity/Celerity supports clicking on confirmation
-  # dialogs.
-  #
-  # Since Culerity/Celerity and Selenium2 has some overhead, Cucumber-Rails will
-  # detect the presence of Javascript behind Delete links and issue a DELETE request 
-  # instead of a GET request.
-  #
-  # You can turn this emulation off by tagging your scenario with @no-js-emulation.
-  # Turning on browser testing with @selenium, @culerity, @celerity or @javascript
-  # will also turn off the emulation. (See the Capybara documentation for 
-  # details about those tags). If any of the browser tags are present, Cucumber-Rails
-  # will also turn off transactions and clean the database with DatabaseCleaner 
-  # after the scenario has finished. This is to prevent data from leaking into 
-  # the next scenario.
-  #
-  # Another way to avoid Cucumber-Rails' javascript emulation without using any
-  # of the tags above is to modify your views to use <button> instead. You can
-  # see how in http://github.com/jnicklas/capybara/issues#issue/12
-  #
-  @wip
-  Scenario: Delete account
+  Background:
     Given the following accounts:
-      ||
-      ||
-      ||
-      ||
-      ||
-    When I delete the 3rd account
-    Then I should see the following accounts:
-      ||
-      ||
-      ||
-      ||
+      | email                   | first_name | last_name         | password |  admin  |
+      | terry@lovethe88.com     | Terry      | Richardson        | ******** |  true   |
+      | contact@lovethe88.com   | The88      |                   | ******** |  true   |
+      | non_admin@lovethe88.com | normal     | user              | ******** |  false   |
+    And I am authenticated as "terry@lovethe88.com" with "********"
+  
+  Scenario: Register a new account
+    Given I am on the new account page
+    When I am on the new account page
+    When I fill in the following:
+      | First name            | Bob            |
+      | Last name             | The Builder    |
+      | Email                 | bob@yahoo.com  |
+      | Password              | bob123456      |
+      | Password Confirmation | bob123456      |
+    And I press "Save User"
+    Then I should see "Edit Bob The Builder"
+
+  Scenario: Creating a new account requires admin rights
+    Given I am not authenticated
+    When I go to the new account page
+    Then I should be on the homepage
+    And I should see "You are not authorized to access this page."
+    When I am authenticated as "non_admin@lovethe88.com" with "********"
+    When I go to the new account page
+    Then I should be on the homepage
+    And I should see "You are not authorized to access this page."
+

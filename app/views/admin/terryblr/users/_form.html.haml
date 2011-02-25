@@ -1,11 +1,11 @@
-- form.inputs do 
+= form.inputs do
   = form.input :first_name, :label => 'First name' 
   = form.input :last_name, :label => 'Last name' 
   = form.input :email, :label => 'Email' 
   = form.input :password, :label => 'Password' 
   = form.input :password_confirmation, :label => 'Password Confirmation'
 
-- form.buttons do
+= form.buttons do
   = form.commit_button "Save User"
   %li.cancel
     - if @object.new_record?

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root :to => "terryblr/home#index"
   
   match "/admin", :to => "terryblr/admin#index", :as => "admin"
@@ -36,7 +37,7 @@ Rails.application.routes.draw do
     end
     # resources :orders
     # resources :products
-    resources :users do
+    resources :users, :controller => "terryblr/users" do
       collection do
         get :admins
       end

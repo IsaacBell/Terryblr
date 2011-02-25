@@ -2,8 +2,11 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   unloadable
 
-  # Authentication module should provide a require_user method
 #  include Settings.authentication.to_s.constantize
+  load_and_authorize_resource
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :notice => exception.message
+  end
 
 #  before_filter :authenticate
   before_filter :set_date, :only => [:index, :filter]
