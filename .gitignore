@@ -11,3 +11,4 @@ spec/dummy/vendor/
 terryblr-*.gem
 tmp/
 Gemfile.lock
+vendor/ruby
