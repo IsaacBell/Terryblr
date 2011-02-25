@@ -25,7 +25,7 @@ module Terryblr
       def create_migration_file
         generate('acts_as_taggable_on:migration')
         generate('delayed_job')
-        generate('devise:install')
+        # generate('devise:install')
 
         %w(videos photos orders posts pages likes comments messages features products line_items links votes tweets).each do |f|
           src = "create_#{f}.rb"
