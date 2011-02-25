@@ -39,6 +39,7 @@ module Terryblr
         copy_file 'string_extensions.rb', 'config/initializers/string_extensions.rb'
         copy_file 'settings.yml', 'config/settings.yml'
         copy_file 'assets.yml', 'config/assets.yml'
+        copy_file 'devise.rb', 'config/initializers/devise.rb'
         # Static assets
         copy_dir_contents 'public', 'public'
       end
