@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
   s.add_dependency "unicode_utils"
   s.add_dependency "validates_email_format_of"
   s.add_dependency "will_paginate", "3.0.pre2"
+  s.add_dependency "cancan"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "ruby-debug19"

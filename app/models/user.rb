@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   #
   # Behvaiours
   #
-  attr_accessible :first_name, :last_name
+  attr_accessible :first_name, :last_name, :admin
   # attr_accessible :twitter_token, :twitter_secret, :profile_pic_url, :fb_session_key
   
   #

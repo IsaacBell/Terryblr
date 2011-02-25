@@ -16,6 +16,7 @@ require "paperclip"
 require "dynamic_form"
 require "gattica"
 require "devise"
+require "cancan"
 
 module Dummy
   class Application < Rails::Application

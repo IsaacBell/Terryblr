@@ -9,18 +9,6 @@ Given /^I have one\s+user "([^\"]*)" with password "([^\"]*)" and login "([^\"]*
            :password_confirmation => password).save!
 end
 
-Given /^I am a new, authenticated user$/ do
-  email = 'testing@man.net'
-  login = 'Testing man'
-  password = 'secretpass'
-
-  Given %{I have one user "#{email}" with password "#{password}" and login "#{login}"}
-  And %{I go to login}
-  And %{I fill in "user_email" with "#{email}"}
-  And %{I fill in "user_password" with "#{password}"}
-  And %{I press "Sign in"}
-end
-
 Then /^dump_users$/ do
   puts User.all.inspect
 end
