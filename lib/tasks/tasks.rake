@@ -242,6 +242,152 @@ namespace :terryblr do
       end
     end
 
+    namespace :wordpress do
+      task :published => :environment do
+        i=11
+        continue=true
+
+        while continue == true
+          i+=1
+          begin 
+            puts i
+            feed_url ="#{ENV['BASEURI']}/feed/?paged=#{i}"
+            puts feed_url
+            blog_page = Nokogiri::XML(open(feed_url))
+            blog_page.css("item").each do |e|
+              if has_video(e)
+                import_video(e)
+              elsif has_photos(e)
+                import_photo(e)
+              else
+                import_regular(e)
+              end
+            end
+          rescue => detail
+            print detail.backtrace.join("\n")
+            continue=false
+          end
+        end
+      end
+
+      private
+
+      def import_regular(post, state = "published")
+        photos = []
+        structured_post_content = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text)
+
+        #Download/Reinsert Images
+        if (structured_post_content.css('img').count > 0)
+          structured_post_content.css('img').each do |i|
+            #create photo from a href link source
+            original_image_url = i.parent.attribute("href") ? i.parent.attribute("href").value : i.attribute("src").value
+            photo = Photo.create!(:url => original_image_url)
+            #fetch new image urls (thumb and original)
+            #modify body to reflect new images
+            new_image_url = photo.image.url(:medium)
+            i.attribute("src").value = new_image_url
+
+            if i.parent.attribute("href")
+              new_link_url = photo.image.url
+              i.parent.attribute("href").value = new_link_url
+            end
+            photos << photo
+          end
+        end
+
+        options = {
+          :slug => post.at_css("link").text.split("/").last,
+          :body => structured_post_content.to_s,
+          :title => post.at_css("title").text,
+          :tag_list => post.css("category").map(&:text).join(", "), 
+          :state => state,
+          :post_type => "post",
+          :photos => photos,
+          :published_at => post.at_css("pubDate").text
+        }
+
+        # Create Post with photo
+        Post.create!(options)
+
+      end
+
+      def import_video(post, state = "published")
+        photos = []
+
+        structured_post_content = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text)
+        vid_url = video_url(structured_post_content)
+        #Delete native embed
+        structured_post_content.at_css("iframe").remove
+        #Create video for Terryblr embed
+        video = Video.create!(:url => vid_url)
+
+        #Download/Reinsert Images
+        if (structured_post_content.css('img').count > 0)
+          structured_post_content.css('img').each do |i|
+            #create photo from a href link source
+            original_image_url = i.parent.attribute("href").value
+            photo = Photo.create!(:url => original_image_url)
+
+            #fetch new image urls (thumb and original)
+            new_link_url = photo.image.url
+            new_image_url = photo.image.url(:medium)
+
+            #modify body to reflect new links
+            i.parent.attribute("href").value = new_link_url
+            i.attribute("src").value = new_image_url
+
+            photos << photo
+          end
+        end
+
+        options = {
+          :slug => post.at_css("link").text.split("/").last,
+          :body => structured_post_content.to_s,
+          :title => post.at_css("title").text,
+          :tag_list => post.css("category").map(&:text).join(", "), 
+          :state => state,
+          :post_type => "video",
+          :photos => photos,
+          :videos => [video],
+          :published_at => post.at_css("pubDate").text
+        }
+
+        # Create Post with photo
+        Post.create!(options)
+      end
+
+
+
+      def has_video(post)
+        #does it have an iframe titled Youtube or Vimeo in its content?
+        iframe_node = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text).at_css("iframe")
+        if iframe_node
+          if iframe_node.attribute("title").value =~ /YouTube/
+            video_url = iframe_node.attribute("src").value
+            return true
+          #elsif vimeo..
+            #check if vimeo objects contain a "title" attribute structured similarly
+          end
+        else
+          return false
+        end
+      end
+
+      def has_photos(post)
+        return false #for now
+      end
+
+      def video_url(content)
+        iframe_node = content.at_css("iframe")
+        if iframe_node.attribute("title").value =~ /YouTube/
+          return video_url = iframe_node.attribute("src").value.split("/").last.insert(0, "http://www.youtube.com/watch?v=")
+        #elsif vimeo..
+          #check if vimeo objects contain a "title" attribute structured similarly
+        end
+      end
+
+    end
+
   end
   
 end
