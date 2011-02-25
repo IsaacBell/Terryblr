@@ -6,6 +6,9 @@ require 'acts_as_commentable'
 require 'validates_email_format_of'
 require 'jammit'
 
+require "devise"
+require "cancan"
+
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 
 require "acts-as-taggable-on"
@@ -13,8 +16,6 @@ require "money"
 require "paperclip"
 require "dynamic_form"
 require "gattica"
-require "devise"
-require "cancan"
 
 
 [ 'terryblr/configuration',
