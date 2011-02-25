@@ -134,7 +134,7 @@ module Terryblr::ApplicationHelper
   end
 
   def link_current_block
-    @link_current_block ||= Proc.new { |name| content_tag(:span, name); }
+    @link_current_block ||= Proc.new { |name| content_tag(:span, name) }
   end
 
   def body_classes

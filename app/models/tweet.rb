@@ -33,7 +33,7 @@ class Tweet < Terryblr::Base
     end
 
     def reach(since = 1.month.ago)
-      select("distinct(from_user), reach").where("tweeted_at > ?", since).sum(&:reach)
+      select("distinct(from_user), reach").where("tweeted_at > ?", since).to_a.sum(&:reach) # Array#sum, not Arel#sum !!
     end
 
     # Get most recent

@@ -30,7 +30,7 @@ module Terryblr
         %w(videos photos orders posts pages likes comments messages features products line_items links votes tweets).each do |f|
           src = "create_#{f}.rb"
           dst = "db/migrate/#{src}"
-          migration_template src, dst rescue puts $!
+          migration_template(src, dst) rescue puts $!
         end
       end
 
