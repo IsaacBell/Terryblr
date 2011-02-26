@@ -1,4 +1,5 @@
 class Admin::Terryblr::PagesController < Terryblr::AdminController
+  prepend_before_filter :find_page
 
   index {
     before {
@@ -48,6 +49,10 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   }
   
   private
+
+  def find_page
+    @page = Page.find_by_slug(params[:id])
+  end
   
   def collection
     order = "created_at desc"
