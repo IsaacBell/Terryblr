@@ -41,6 +41,7 @@ module Terryblr
         copy_file 'oembed.yml', 'config/oembed.yml'
         copy_file 'assets.yml', 'config/assets.yml'
         copy_file 'devise.rb', 'config/initializers/devise.rb'
+        copy_file 'delayed_job.rb', 'config/initializers/delayed_job.rb'
         # Static assets
         copy_dir_contents 'public', 'public'
       end
