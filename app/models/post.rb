@@ -11,9 +11,9 @@ class Post < Terryblr::Base
   #
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
   has_many :videos, :order => "display_order", :dependent => :destroy
-  belongs_to :tw_delayed_job, :class_name => "Delayed::Job"
-  belongs_to :fb_delayed_job, :class_name => "Delayed::Job"
-  belongs_to :tumblr_delayed_job, :class_name => "Delayed::Job"
+  belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"
+  belongs_to :fb_delayed_job, :class_name => "::Delayed::Job"
+  belongs_to :tumblr_delayed_job, :class_name => "::Delayed::Job"
   # has_many :likes, :as => :likeable
   # has_many :comments, :as => :commentable
   # has_many :votes, :as => :votable
@@ -265,7 +265,7 @@ class Post < Terryblr::Base
       # No Delayed Job id set or is failed? Then create one.
       if !self.send("#{assoc}_id?") or (self.send(assoc) and self.send(assoc).failed_at?)
         # Create new instance of class that will post to the soc network
-        dj = Delayed::Job.enqueue("#{prefix.capitalize}PostPublisherJob".constantize.new(self.id), 0, self.published_at)
+        dj = ::Delayed::Job.enqueue("#{prefix.capitalize}PostPublisherJob".constantize.new(self.id), 0, self.published_at)
         self.send("#{assoc}=", dj)
 
         # If already got a delayed job awaiting, then update the exec date
