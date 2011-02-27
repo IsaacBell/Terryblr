@@ -16,6 +16,7 @@ require "money"
 require "paperclip"
 require "dynamic_form"
 require "gattica"
+require "delayed_job"
 
 
 [ 'terryblr/configuration',
