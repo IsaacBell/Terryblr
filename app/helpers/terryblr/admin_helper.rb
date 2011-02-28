@@ -207,7 +207,7 @@ module Terryblr::AdminHelper
   end
 
   def sidebar_new_content_link
-    name = @controller.controller_name.split('/').last
+    name = controller.controller_name.split('/').last
     content_type = case name
     when "pages", "posts", "users"
       controller_name.singularize

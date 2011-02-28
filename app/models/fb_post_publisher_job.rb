@@ -8,7 +8,7 @@ require 'mini_fb'
 FbPostPublisherJob = Struct.new(:post_id)
 class FbPostPublisherJob
   
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain
   
   def perform

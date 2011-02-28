@@ -4,7 +4,7 @@ TumblrPostPublisherJob = Struct.new(:post_id)
 
 class TumblrPostPublisherJob
 
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain
 
   def perform
