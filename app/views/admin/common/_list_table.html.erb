@@ -16,7 +16,7 @@ cols_hash = class_obj.columns_hash
 		list_cols.each do |col|
 			next if cols_hash[col] and cols_hash[col].primary
 			next if ignore_cols.include?(col)
-			field_func = "#{col}_field"
+			field_func = "#{col}_column"
 			label_func = "#{col}_label"
 		%>
 			<th class="<%= sort_col(cols_hash[col]) %> <%= "sort#{params[:dir]}" if params[:sort]==col %> <%= "sortcol" unless nosort_cols.include?(col) %>">

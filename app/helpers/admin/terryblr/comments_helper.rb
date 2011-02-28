@@ -1,6 +1,6 @@
 module Admin::Terryblr::CommentsHelper
   
-  def author_field(comment)
+  def author_column(comment)
     comment.user ? comment.user.full_name : "Anonymous"
   end
   

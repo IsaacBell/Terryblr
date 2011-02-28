@@ -2,7 +2,7 @@
 	<% list_cols.each do |col|
 		next if cols_hash[col] and cols_hash[col].primary
 		next if ignore_cols.include?(col)
-		field_func = "#{col}_field"
+		field_func = "#{col}_column"
 	 %>
 	<td class="<%= field_func %>">
 	  <%= content_tag(:span, (self.respond_to?(field_func) ? send(field_func, record) : record.send(col))) %>

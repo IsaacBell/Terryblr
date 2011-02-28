@@ -1,14 +1,14 @@
 module Admin::Terryblr::ProductsHelper
 
-  def image_field(product)
+  def image_column(product)
     !product.photos.empty? ? image_tag(product.photos.first.image.url(:thumb)) : ""
   end
 
-  def product_field(product)
+  def product_column(product)
     link_to product.title, edit_admin_product_path(product)
   end
 
-  def inventory_field(product)
+  def inventory_column(product)
     content_tag(:table) do
       content_tag(:thead) do
         content_tag(:th, "Size") +
@@ -25,11 +25,11 @@ module Admin::Terryblr::ProductsHelper
     end
   end
 
-  def total_field(product)
+  def total_column(product)
     product.sizes.sum(:qty)
   end
 
-  def sales_field(product)
+  def sales_column(product)
     Money.new(product.orders.sum(:final_amount_cents)).format
   end
 
