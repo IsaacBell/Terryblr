@@ -19,7 +19,8 @@ Given /^the following accounts:$/ do |accounts|
 end
 
 Given /^I am authenticated as "([^"]*)" with "([^"]*)"$/ do |email, password|
-  Given %{I go to login}
+  Given %{I go to logout}
+  And %{I go to login}
   And %{I fill in "user_email" with "#{email}"}
   And %{I fill in "user_password" with "#{password}"}
   And %{I press "Sign in"}  

@@ -12,8 +12,14 @@ module NavigationHelpers
       '/'
     when /the new account page/
       admin_new_user_path
+    when /the new account page/
+      admin_new_user_path
+    when /^(.*) account page$/i
+      admin_user_path(User.find_by_email($1))
     when /login/
       new_user_session_path
+    when /logout/
+      destroy_user_session_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
