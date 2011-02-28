@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency "paperclip"
   s.add_dependency "rails", "~> 3.0"
   s.add_dependency "settingslogic"
-  s.add_dependency "tumblr"
+  s.add_dependency "tumblr-api"
   s.add_dependency "tweetstream"
   s.add_dependency "twitter"
   s.add_dependency "unicode_utils"
