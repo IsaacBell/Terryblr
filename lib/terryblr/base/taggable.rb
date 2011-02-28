@@ -6,6 +6,10 @@ module Terryblr
           # Throws errors if table doesn't exist on first project setup
           if recipient.table_exists?
             acts_as_taggable
+            
+            
+            Settings.tags[self.table_name]['groups'].inspect
+            
             acts_as_taggable_on Settings.tags[self.table_name]['groups'] if defined?(Settings.tags[self.table_name]['groups'])
             scope :tagged, lambda { |tags|
               tags_sql = tags.is_a?(Array) ? tags.map{|t|"'#{t}'"}.join(",") : "'#{tags}'"
