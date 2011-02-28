@@ -1,3 +1,6 @@
+ActiveSupport::Dependencies.logger = Logger.new(STDOUT)
+ActiveSupport::Dependencies.log_activity = true
+
 Rails.application.routes.draw do
   devise_for :users
   root :to => "terryblr/home#index"
