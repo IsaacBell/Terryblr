@@ -5,13 +5,13 @@ puts "ENV['NO_RELOAD']: #{ENV['NO_RELOAD'].inspect}"
 puts "ActiveSupport::Dependencies.mechanism: #{ActiveSupport::Dependencies.mechanism.inspect}"
 
 Rails.application.routes.draw do
-  devise_for :users
   root :to => "terryblr/home#index"
   
   match "/admin", :to => "terryblr/admin#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin#search", :as => :admin_search
   match '/admin/analytics.:format', :to => "terryblr/admin#analytics", :as => :admin_analytics
   namespace :admin do
+    devise_for :users
     resources :posts, :controller => "terryblr/posts" do
       collection do
         get  :filter

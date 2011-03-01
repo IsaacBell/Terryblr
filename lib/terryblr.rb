@@ -22,6 +22,7 @@ require "delayed_job"
 [ 'terryblr/configuration',
   'terryblr/memcached_system',
   'terryblr/validators',
+  'terryblr/formtastic_builder',
   'terryblr/base/base',
 ].each do |path|
   require File.expand_path(path, File.dirname(__FILE__))

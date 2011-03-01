@@ -5,7 +5,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 #  include Settings.authentication.to_s.constantize
   load_and_authorize_resource
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :notice => exception.message
+    redirect_to new_admin_user_session_path, :notice => exception.message
   end
 
 #  before_filter :authenticate

@@ -68,7 +68,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   destroy {
     wants.html {
-      redirect_to admin_path
+      redirect_to admin_posts_path
     }
   }
 
