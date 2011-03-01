@@ -17,7 +17,7 @@ begin
       t.profile = 'default'
     end
 
-    Cucumber::Rake::Task.new({:html => 'db:migrate'}, 'Run all the features, output html') do |t|
+    Cucumber::Rake::Task.new({:html}, 'Run all the features, output html') do |t|
       mkdir_p 'tmp/cucumber' unless File.exists? 'tmp/cucumber'
       t.binary = nil # If nil, the gem's binary is used.
       t.fork = false # You may get faster startup if you set this to false
