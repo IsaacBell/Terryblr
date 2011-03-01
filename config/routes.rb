@@ -1,8 +1,3 @@
-ActiveSupport::Dependencies.logger = Logger.new(STDOUT)
-ActiveSupport::Dependencies.log_activity = true
-
-puts "ENV['NO_RELOAD']: #{ENV['NO_RELOAD'].inspect}"
-puts "ActiveSupport::Dependencies.mechanism: #{ActiveSupport::Dependencies.mechanism.inspect}"
 
 Rails.application.routes.draw do
   devise_for :users
