@@ -13,6 +13,12 @@ en:
       go: Go!>>
       home: Home
       search: search
+    admin:
+      dashboard: dashboard
+      archives: archives
+      users: users
+      logout: logout
+      search: search
   terryblr: 
     common: 
       content_nav: 
@@ -39,10 +45,6 @@ en:
     tweets: tweets
     comments: comments
     photos: photos
-    x_posts: 
-      one: 1 post
-      other: "%{count} posts"
-      zero: 0 post
     draft: draft
     custom_url: custom URL
     errors: 
@@ -59,6 +61,14 @@ en:
         sales: Sales
         order: Order
         features: Features
+        x_posts: 
+          one: 1 post
+          other: "%{count} posts"
+          zero: 0 post
+        x_drafts: 
+          one: 1 draft
+          other: "%{count} drafts"
+          zero: no draft
       content_nav: 
         comments: Comments
         store: Store
@@ -67,10 +77,6 @@ en:
       search: 
         no_results_found: No results found
     archive: archive
-    x_drafts: 
-      one: 1 draft
-      other: "%{count} drafts"
-      zero: no draft
     loading_analytics: Loading analytics...
     visitors: visitors
     cross_posting: cross posting
