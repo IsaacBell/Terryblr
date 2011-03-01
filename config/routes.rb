@@ -1,6 +1,14 @@
 
 Rails.application.routes.draw do
-  devise_for :users
+
+  begin
+    devise_for :users
+  rescue ActiveRecord::StatementInvalid => e
+    puts "Devise could not be set up for the user model."
+    puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."
+    puts "Original exception: #{e.class}: #{e}"
+  end
+
   root :to => "terryblr/home#index"
   
   match "/admin", :to => "terryblr/admin#index", :as => "admin"
