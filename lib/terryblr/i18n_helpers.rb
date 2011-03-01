@@ -26,14 +26,14 @@ module Terryblr
         end
 
         def terryblr_translate_capitalize(*args)
-          capitalize translate(*args)
+          capitalize terryblr_translate(*args)
         end
 
         def terryblr_translate_titleize(*args)
           if I18n.locale == :en
-            UnicodeUtils.titlecase translate(*args), I18n.locale
+            UnicodeUtils.titlecase terryblr_translate(*args), I18n.locale
           else
-            capitalize translate(*args)
+            capitalize terryblr_translate(*args)
           end
         end
 

@@ -11,7 +11,7 @@
         =multi_file_uploader(:url => admin_post_photos_path(@post, :format => :js), :css_parent_class => "photos-upload")
         %p.inline-hints.clear= tt('.upload_hint')
       %li.photos-display-type
-        %label= tt '.galery_display'
+        %label= tt '.gallery_display'
         - Post.display_types.each do |dt|
           %span{:class => "#{dt} #{'selected' if @post.display_type==dt}"}
             = radio_button :post, :display_type, dt, :title => dt.humanize.titleize

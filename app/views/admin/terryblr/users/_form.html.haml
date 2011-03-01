@@ -6,7 +6,7 @@
   = form.input :password_confirmation, :label => ttt(:'.password_confirmation')
 
 = form.buttons do
-  = form.commit_button ttt(:'.save_user')
+  = form.commit_button ttt(:save)
   %li.cancel
     - if @object.new_record?
       = link_to ttt(:cancel), admin_users_path, :class => "cancel"

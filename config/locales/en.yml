@@ -13,13 +13,25 @@ en:
       go: Go!>>
       home: Home
       search: search
-    admin:
-      dashboard: dashboard
-      archives: archives
-      users: users
-      logout: logout
-      search: search
   terryblr: 
+    layouts: 
+      admin:
+        dashboard: dashboard
+        archives: archives
+        users: users
+        logout: logout
+        search: search
+        admin_title: admin
+    pages: Pages
+    archives: Archives
+    video: video
+    post: post
+    photos: photos
+    feature: feature
+    features: features
+    page: page
+    state: state
+    user: user
     common: 
       content_nav: 
         pages: Pages
@@ -28,7 +40,6 @@ en:
     new: new
     name: name
     photo: photo
-    crosspost_twitter: Post to Twitter
     logout: log out
     new_user: new user
     edit: edit
@@ -41,10 +52,8 @@ en:
     cancel: cancel
     delete: delete
     are_you_sure: Are you absolutely sure?
-    post: post
     tweets: tweets
     comments: comments
-    photos: photos
     draft: draft
     custom_url: custom URL
     errors: 
@@ -53,33 +62,31 @@ en:
         try_one_of_these_instead: Try one of these instead?
       "500": 
         sorry_we_encountered_an_error_our_team_has_been_notified: Sorry, We encountered an error. Our team has been notified.
-    admin: 
-      index: 
-        comment: Comment
-        edit: Edit
-        stats: Stats
-        sales: Sales
-        order: Order
-        features: Features
-        x_posts: 
-          one: 1 post
-          other: "%{count} posts"
-          zero: 0 post
-        x_drafts: 
-          one: 1 draft
-          other: "%{count} drafts"
-          zero: no draft
-      content_nav: 
-        comments: Comments
-        store: Store
-        pages: Pages
-        archives: Archives
-      search: 
-        no_results_found: No results found
+    terryblr:
+      admin: 
+        index: 
+          comment: Comment
+          edit: Edit
+          stats: Stats
+          sales: Sales
+          order: Order
+          features: Features
+          x_posts: 
+            one: 1 post
+            other: "%{count} posts"
+            zero: 0 post
+          x_drafts: 
+            one: 1 draft
+            other: "%{count} drafts"
+            zero: no draft
+        content_nav: 
+          comments: Comments
+          store: Store
+        search: 
+          no_results_found: No results found
     archive: archive
     loading_analytics: Loading analytics...
     visitors: visitors
-    cross_posting: cross posting
     products: 
       list: 
         more: More
@@ -91,13 +98,10 @@ en:
         back_to_store: Back to store
     pages: pages
     value: value
-    crossposted_twitter: Posted to Twitter
     year: year
     save: save
     view: view
     please_add_some_content_first: Please add some content first
-    video: video
-    features: features
     tweet_reach: tweet reach
     notifier: 
       sold_out_warning: 
@@ -150,124 +154,145 @@ en:
     published_on: Published on
     will_be_published_on: Will be published on
     search: search...
-    admin_title: admin
     email: email
     likes: likes
-  admin: 
-    common: 
-      archive_sidebar: 
-        filter: filter
-    terryblr: 
-      comments: 
-        index: 
-          comments: comments
-      orders: 
-        edit: 
-          qty: qty
-          address: address
-          name: name
-          items: items
-          price: price
-          by: by
-          size: size
-          total: total
-          order: Order
-          date: date
-          for: for
-          item: item
-        index: 
-          orders: orders
-        sidebar: 
-          published: Published
-          filter: Filter
-          drafts: Drafts
-      pages: 
-        edit: 
-          back: Back
-          parent: Parent
-          body: Body
-          title: Title
-          delete: Delete
-          custom_url: Custom URL
-          tags: Tags
-          publish_on: Publish on
-          view: View
-          leave_blank_to_create_automatically: Leave blank to create automatically
-        index: 
-          published: published
-          pages: Pages
-          drafts: drafts
-      products: 
-        edit: 
-          qty: qty
-          sizes: Sizes
-          back: Back
-          name: Name
-          title: Title
-          body: Body
-          photos: photos
-          common_tags: Common tags
-          publish_on: Publish on
-          upload_reorder_and_caption_photos: Upload, reorder and caption photos
-          currently: Currently
-          leave_blank_to_create_automatically: Leave blank to create automatically
-          price_hint: "Eg: $10.00"
-        index: 
-          month: Month
-          published: published
-          filter: Filter
-          products: Products
-          year: Year
-          posts: posts
-          drafts: drafts
-          queued: queued
-      features: 
-        form: 
-          photo: Photo
-          location: location
-          existing_post: existing post
-          choose_a_post: choose a post
-        index: 
-          drafted: Drafted
-          published: Published
-          drag_and_drop_featured_items_to_change_their_display_order: Drag and drop featured items to change their display order.
-      users: 
-        new: 
-          new_admin: New Admin
-        edit: 
-          edit: Edit
-        index: 
-          users: Users
-        show: 
-          user: User
-      user_sessions: 
-        new: 
-          please_login: please login
-      posts: 
-        post: 
-          add_inline_photo: + insert photo
-        form_sidebar: 
-          leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
-          tags: Tags
-        photos: 
-          body: Body
-          upload_hint: Upload, then reorder and caption photos
-        index: 
-          stats: stats
-          comments: Comments
-          published: published
-          sort_by: sort by
+
+    admin: 
+      common: 
+        archive_sidebar: 
           filter: filter
-          date: date
-          posts: posts
-          drafts: drafts
-          likes: Likes
-          queued: queued
-        video: 
-          video_url: Video Url
-          body: Body
-          or: or
-          video_upload: Video upload
-          save: Save
-          reorder_and_caption_videos: Reorder and caption videos
-          paste_in_a_url_to_a_vimeo_or_youtube_video: Paste in a URL to a vimeo or youtube video
+      terryblr: 
+        comments: 
+          index: 
+            comments: comments
+        orders: 
+          edit: 
+            qty: qty
+            address: address
+            name: name
+            items: items
+            price: price
+            by: by
+            size: size
+            total: total
+            order: Order
+            date: date
+            for: for
+            item: item
+          index: 
+            orders: orders
+          sidebar: 
+            published: Published
+            filter: Filter
+            drafts: Drafts
+        pages: 
+          edit: 
+            back: Back
+            parent: Parent
+            body: Body
+            title: Title
+            delete: Delete
+            custom_url: Custom URL
+            tags: Tags
+            publish_on: Publish on
+            view: View
+            leave_blank_to_create_automatically: Leave blank to create automatically
+            add_inline_photo: + insert photo
+          index: 
+            published: published
+            pages: Pages
+            drafts: drafts
+        products: 
+          edit: 
+            qty: qty
+            sizes: Sizes
+            back: Back
+            name: Name
+            title: Title
+            body: Body
+            photos: photos
+            common_tags: Common tags
+            publish_on: Publish on
+            upload_reorder_and_caption_photos: Upload, reorder and caption photos
+            currently: Currently
+            leave_blank_to_create_automatically: Leave blank to create automatically
+            price_hint: "Eg: $10.00"
+          index: 
+            month: Month
+            published: published
+            filter: Filter
+            products: Products
+            year: Year
+            posts: posts
+            drafts: drafts
+            queued: queued
+        features: 
+          form: 
+            photo: Photo
+            location: location
+            existing_post: existing post
+            choose_a_post: choose a post
+          index: 
+            drafted: Drafted
+            published: Published
+            x_features: 
+              one: 1 feature
+              other: "%{count} features"
+              zero: no feature
+            drag_and_drop_featured_items_to_change_their_display_order: Drag and drop featured items to change their display order.
+        users: 
+          new: 
+            new_admin: New Admin
+          edit: 
+            edit: Edit
+          index: 
+            users: Users
+          show: 
+            user: User
+          form:
+            firstname: firstname
+            lastname: lastname
+            email: email
+            password: password
+            password_confirmation: password_confirmation
+        user_sessions: 
+          new: 
+            please_login: please login
+        posts: 
+          post: 
+            add_inline_photo: + insert photo
+          form_sidebar: 
+            leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
+            tags: Tags
+            custom_url: custom URL
+            cross_posting: cross posting
+            message: message
+            crosspost_twitter: Post to Twitter
+            crosspost_facebook: Post to Facebook
+          photos: 
+            body: Body
+            upload_hint: Upload, then reorder and caption photos
+            gallery_display: gallery display
+          index: 
+            stats: stats
+            comments: Comments
+            published: published
+            sort_by: sort by
+            filter: filter
+            date: date
+            posts: posts
+            drafts: drafts
+            likes: Likes
+            queued: queued
+            x_posts: 
+              one: 1 post
+              other: "%{count} posts"
+              zero: 0 post
+          video: 
+            video_url: Video Url
+            body: Body
+            or: or
+            video_upload: Video upload
+            save: Save
+            reorder_and_caption_videos: Reorder and caption videos
+            paste_in_a_URL_to_a_vimeo_or_youtube_video: Paste in a URL to a vimeo or youtube video
