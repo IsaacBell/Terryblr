@@ -1,13 +1,13 @@
 = f.buttons do
-  = f.commit_button "Save", 'data-disable-with' => "Saving"
+  = f.commit_button ttt(:save), 'data-disable-with' => "Saving"
   %li.commit
     - if @post.live? and @post.valid?
-      = link_to "View", post_path(@post, @post.slug), :class => "preview", :target => "_blank"
+      = link_to ttt(:view), post_path(@post, @post.slug), :class => "preview", :target => "_blank"
     - elsif @post.pending?
-      = link_to_function "Preview", "alert('Please add some content first')", :class => "preview", :target => "_blank"
+      = link_to_function ttt(:preview), "alert('Please add some content first')", :class => "preview", :target => "_blank"
     - else
-      = link_to "Preview", preview_post_path(@post), :class => "preview", :target => "_blank"
+      = link_to ttt(:preview), preview_post_path(@post), :class => "preview", :target => "_blank"
   %li.cancel
-    = link_to "Cancel", admin_posts_path, :class => "cancel"
+    = link_to ttt(:cancel), admin_posts_path, :class => "cancel"
   %li.delete
-    = link_to "Delete", admin_post_path(@post), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"
+    = link_to ttt(:delete), admin_post_path(@post), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"

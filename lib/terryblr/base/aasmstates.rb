@@ -42,10 +42,10 @@ module Terryblr
 
           def states_for_select
             [
-              ["Publish now", :publish_now],
-              ["Save as a draft", :drafted],
+              [I18n.t(:publish_now,  :scope => [:model, :states]).capitalize, :publish_now],
+              [I18n.t(:drafyed,      :scope => [:model, :states]).capitalize, :drafted],
               # ["Add to queue", :queued],
-              ["Publish on date", :published_at]
+              [I18n.t(:published_at, :scope => [:model, :states]).capitalize, :published_at]
             ]
           end
 

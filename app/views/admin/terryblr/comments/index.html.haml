@@ -2,7 +2,7 @@
 
 = render :partial => 'admin/common/search_form'
 
-%h2 Comments
+%h2 #{ttt :'.comments'}
 
 .clear
 = render :partial => 'admin/common/list_table', :locals => { :records => @collection,	:class_obj => Comment, :list_cols => %w(author comment created_at), :action_cols => %w() }

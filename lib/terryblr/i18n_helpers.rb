@@ -11,13 +11,13 @@ module Terryblr
           if args[0].to_s.starts_with?('.') && scope_.include?('terryblr')
             # puts "already correctly scoped"
             args << options
-            I18n.translate(*args)
+            translate(*args)
           else
             # puts "re-scoping"
             raise "NotImplemented" unless scope_.empty?
             options[:scope] = 'terryblr'
             args << options
-            I18n.translate(*args)
+            translate(*args)
           end
         end
 
@@ -26,14 +26,14 @@ module Terryblr
         end
 
         def terryblr_translate_capitalize(*args)
-          capitalize terryblr_translate(*args)
+          capitalize translate(*args)
         end
 
         def terryblr_translate_titleize(*args)
           if I18n.locale == :en
-            UnicodeUtils.titlecase terryblr_translate(*args), I18n.locale
+            UnicodeUtils.titlecase translate(*args), I18n.locale
           else
-            capitalize terryblr_translate(*args)
+            capitalize translate(*args)
           end
         end
 

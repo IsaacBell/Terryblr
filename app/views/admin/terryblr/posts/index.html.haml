@@ -6,8 +6,8 @@
   %ul.summary
     %li.divider
     %li= pluralize Post.published.count, 'Post'
-    %li= link_to "Published", url_for(params.merge(:state => 'published'))
-    %li= link_to "Drafts", url_for(params.merge(:state => 'drafted', :month => @date.month, :year => @date.year))
+    %li= link_to ttt(:'.published'), url_for(params.merge(:state => 'published'))
+    %li= link_to ttt(:'.drafts'), url_for(params.merge(:state => 'drafted', :month => @date.month, :year => @date.year))
     - if params[:state].blank?
       %li.divider
       %li Filter:
@@ -19,6 +19,6 @@
         =select_tag "archive_year", options_for_select((today.year-5..today.year).to_a.reverse, @date.year), :onchange => "window.location = '#{filter_admin_posts_path}?state=#{params[:state]}&year='+this.value+'&month='+$('#archive_month').val()"
 
 %h2 
-  Archives: #{pluralize @posts.size, 'Posts'}
+  Archives: #{ttt :'.x_posts', :count => @posts.size}
 
 = render :partial => 'admin/common/archives'

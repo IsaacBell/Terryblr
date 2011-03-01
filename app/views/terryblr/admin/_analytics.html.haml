@@ -2,11 +2,11 @@
   - if rep_title=='tweets'
     .chart{:class => 'tweet-reach'}
       %h3 
-        Tweet Reach: 
+        = ttt :'.tweet_reach'
         %span= number_with_delimiter(@tweet_reach)
     .chart{:class => 'tweet-exposure'}
       %h3 
-        Tweet Exposure:
+        = ttt :'.tweet_exposure'
         %span= number_with_delimiter(@tweet_exposure)
     .clear
 
@@ -35,10 +35,10 @@
 
 - %w(top_referrers top_landing_pages).each do |rep_title|
   .chart{:class => rep_title}
-    %h3= rep_title.humanize.capitalize_words
+    %h3= ttt :'.rep_title'
     %table{:id => "#{rep_title}_data"}
       %thead
         %tr
-          %th Value
+          %th= ttt(:value)
           %th #
       = render :partial => "terryblr/admin/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}

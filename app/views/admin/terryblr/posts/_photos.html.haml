@@ -1,17 +1,17 @@
 = semantic_form_for @post, :url => admin_post_path(@post) do |f|
   
   #form_content{:class => "span-17"}
-    %h2 #{params[:action].to_s.capitalize} #{@type.to_s.capitalize}
+    %h2 #{ttt "#{params[:action]}"} #{ttt @type.to_s}
     = error_messages_for_post
     = f.semantic_errors
     = f.inputs do
-      = f.input :title, :label => 'Title', :input_html => { :class => "title" }
+      = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       %li.photos-upload
-        %label Photos
+        %label= ttt(:photo).pluralize
         =multi_file_uploader(:url => admin_post_photos_path(@post, :format => :js), :css_parent_class => "photos-upload")
-        %p.inline-hints.clear Upload, then reorder and caption photos
+        %p.inline-hints.clear= tt('.upload_hint')
       %li.photos-display-type
-        %label Gallery Display
+        %label= tt '.galery_display'
         - Post.display_types.each do |dt|
           %span{:class => "#{dt} #{'selected' if @post.display_type==dt}"}
             = radio_button :post, :display_type, dt, :title => dt.humanize.titleize
@@ -20,7 +20,7 @@
         %p.inline-hints.clear Show photos as a slideshow gallery or stacked above each other.
       %li.clear
         = edit_photos_for_assoc(@post)
-      = f.input :body, :label => 'Body', :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
+      = f.input :body, :label => ttt(:'.body'), :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
 
     = render :partial => 'form_buttons', :locals => {:f => f}
 

@@ -5,8 +5,8 @@
     %li.new-content
       = sidebar_new_content_link
     %li.divider
-    %li= "#{Feature.published.count} Published"
-    %li= "#{Feature.drafted.count} Drafted"
+    %li= "#{ttt :'x_features', :count => Feature.published.count} #{ttt :'.published'}"
+    %li= "#{ttt :'x_features', :count => Feature.drafted.count} #{ttt :'.drafted'}"
 
 = render :partial => "terryblr/admin/content_nav"
 
@@ -21,4 +21,4 @@
           %div.date-overlay=r.published_at.to_s(:month_and_day_ordinal) if r.published?
           %span=truncate_words(strip_tags(r.title? ? r.title : r.caption), :length => 10)
   = sortable_element("##{list_id}", :url => reorder_admin_features_path(:format => :js), :axis => "x")
-  %p.clear Drag and drop featured items to change their display order.
+  %p.clear #{ttt :'.drag_and_drop_featured_items_to_change_their_display_order'}

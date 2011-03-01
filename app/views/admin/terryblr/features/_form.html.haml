@@ -3,16 +3,16 @@
 = semantic_form_for @object, :url => (@object.new_record? ? admin_features_path : admin_feature_path(@object)) do |f|
   
   #form_content{:class => "span-17"}
-    %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
+    %h2 #{ttt params[:action].to_s} #{ttt @object.class.to_s}
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :input_html => { :class => "title" }
       %li.photos-upload
-        %label Photo
+        %label #{ttt :'.photo'}
         = multi_file_uploader(:url => admin_feature_photo_path((@object.new_record? ? '-' : @object), :format => :js), :css_parent_class => "photos-upload")
         .clear
       %li.photos-choose
-        %label Existing Post
+        %label #{ttt :'.existing_post'}
         = hidden_field :feature, :post_id
         = link_to_function "Choose", remote_function(:url => admin_posts_path(:format => :js), :type => :get, :success => "$('#feature_post_browser').toggle(); ")
         .clear
@@ -26,7 +26,7 @@
         
         #feature_post_browser{:style => 'display:none;'}
           .close= link_to_function 'close', "$('#feature_post_browser').hide();$(this).find('.archives').remove()"
-          %label Choose a Post:
+          %label #{ttt :'.choose_a_post'}
           #pagination
           
       = f.input :caption, :label => 'Caption', :as => 'text', :input_html => { :style => "height:10em;" }
@@ -52,7 +52,7 @@
 
       - if defined?(Settings.tags.posts.features)
         %li{:class => "features-tag-group tag-picker"}
-          %label Location
+          %label #{ttt :'.location'}
           %ul
             - Settings.tags.posts.features.each do |tag|
               %li.machine_tag.feature_tag{:class => @object.tag_list.include?(tag) ? "selected" : "" }

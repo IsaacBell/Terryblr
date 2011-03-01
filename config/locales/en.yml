@@ -58,6 +58,7 @@ en:
         stats: Stats
         sales: Sales
         order: Order
+        features: Features
       content_nav: 
         comments: Comments
         store: Store
@@ -90,6 +91,7 @@ en:
     view: view
     please_add_some_content_first: Please add some content first
     video: video
+    features: features
     tweet_reach: tweet reach
     notifier: 
       sold_out_warning: 

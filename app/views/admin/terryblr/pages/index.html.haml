@@ -9,7 +9,7 @@
     %li= link_to "Published", url_for(params.merge(:state => 'published'))
     %li= link_to "Drafts", url_for(params.merge(:state => 'drafted', :month => @date.month, :year => @date.year))
 
-%h2 Pages
+%h2 #{ttt :'.pages'}
 
 .clear
 = render :partial => 'admin/common/list_table', :locals => { :records => @collection,	:class_obj => Page, :list_cols => @list_cols, :action_cols => @action_cols }
