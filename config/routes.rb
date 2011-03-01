@@ -1,8 +1,3 @@
-ActiveSupport::Dependencies.logger = Logger.new(STDOUT)
-ActiveSupport::Dependencies.log_activity = true
-
-puts "ENV['NO_RELOAD']: #{ENV['NO_RELOAD'].inspect}"
-puts "ActiveSupport::Dependencies.mechanism: #{ActiveSupport::Dependencies.mechanism.inspect}"
 
 Rails.application.routes.draw do
   root :to => "terryblr/home#index"
@@ -11,7 +6,15 @@ Rails.application.routes.draw do
   match "/admin/search", :to => "terryblr/admin#search", :as => :admin_search
   match '/admin/analytics.:format', :to => "terryblr/admin#analytics", :as => :admin_analytics
   namespace :admin do
-    devise_for :users
+
+    begin
+      devise_for :users
+    rescue ActiveRecord::StatementInvalid => e
+      puts "Devise could not be set up for the user model."
+      puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."
+      puts "Original exception: #{e.class}: #{e}"
+    end
+
     resources :posts, :controller => "terryblr/posts" do
       collection do
         get  :filter
