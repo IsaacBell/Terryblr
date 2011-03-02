@@ -56,7 +56,10 @@ Rails.application.routes.draw do
     %w(page product user).each do |p|
       match "new/#{p}", :to => "terryblr/#{p.pluralize}#new"
     end
-    match "new/feature", :to => "todoadmin#index", :as => :new_content
+    match "new/feature", :to => "terryblr/features#new", :as => :new_content
+    resources :features, :collection => {:filter => :any, :reorder => :post}, :controller => "terryblr/features" do
+      resource :photo, :controller => "terryblr/photos"
+    end
     match "new/:type", :to => "terryblr/posts#new", :as => :new_content
   end
 
