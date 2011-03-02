@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110224141902) do
+ActiveRecord::Schema.define(:version => 20110302103916) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
   create_table "features", :force => true do |t|
     t.string   "title"
     t.integer  "photo_id"
+    t.integer  "post_id"
     t.integer  "display_order", :default => 0
     t.string   "state"
     t.string   "caption"
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
   end
 
   add_index "features", ["photo_id"], :name => "index_features_on_photo_id"
+  add_index "features", ["post_id"], :name => "index_features_on_post_id"
 
   create_table "likes", :force => true do |t|
     t.integer  "likeable_id"
@@ -99,7 +101,7 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
     t.string   "name"
     t.string   "subject"
     t.string   "email"
-    t.string   "body",               :limit => 3000
+    t.text     "body"
     t.string   "messagable_type"
     t.integer  "messagable_id"
     t.integer  "user_id"
@@ -140,17 +142,17 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
 
   create_table "pages", :force => true do |t|
     t.string   "title"
-    t.string   "body",           :limit => 3000
+    t.text     "body"
     t.string   "slug"
     t.datetime "published_at"
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "likes_count",                    :default => 0
-    t.integer  "comments_count",                 :default => 0
-    t.integer  "votes_count",                    :default => 0
+    t.integer  "likes_count",    :default => 0
+    t.integer  "comments_count", :default => 0
+    t.integer  "votes_count",    :default => 0
     t.integer  "parent_id"
-    t.integer  "position",                       :default => 0
+    t.integer  "position",       :default => 0
     t.integer  "post_id"
   end
 
@@ -179,25 +181,26 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
   create_table "posts", :force => true do |t|
     t.string   "post_type"
     t.string   "title"
-    t.string   "body",                  :limit => 3000
+    t.text     "body"
     t.string   "slug"
     t.datetime "published_at"
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tumblr_id"
-    t.integer  "likes_count",                           :default => 0
-    t.integer  "comments_count",                        :default => 0
-    t.integer  "votes_count",                           :default => 0
+    t.integer  "likes_count",                          :default => 0
+    t.integer  "comments_count",                       :default => 0
+    t.integer  "votes_count",                          :default => 0
     t.integer  "twitter_id"
     t.integer  "facebook_id"
     t.string   "display_type"
     t.integer  "tw_delayed_job_id"
     t.integer  "fb_delayed_job_id"
+    t.integer  "tumblr_delayed_job_id"
     t.string   "social_msg",            :limit => 140
     t.integer  "linkable_id"
     t.string   "linkable_type"
-    t.integer  "tumblr_delayed_job_id"
+    t.string   "import_url"
   end
 
   add_index "posts", ["comments_count"], :name => "index_posts_on_comments_count"
@@ -211,14 +214,14 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
   create_table "products", :force => true do |t|
     t.string   "title"
     t.string   "slug"
-    t.string   "body",           :limit => 3000
-    t.integer  "price_cents",                    :default => 0
+    t.text     "body"
+    t.integer  "price_cents",    :default => 0
     t.string   "price_currency"
     t.string   "state"
     t.datetime "published_at"
-    t.integer  "comments_count",                 :default => 0
-    t.integer  "likes_count",                    :default => 0
-    t.integer  "votes_count",                    :default => 0
+    t.integer  "comments_count", :default => 0
+    t.integer  "likes_count",    :default => 0
+    t.integer  "votes_count",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

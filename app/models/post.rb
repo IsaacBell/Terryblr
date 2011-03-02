@@ -9,6 +9,7 @@ class Post < Terryblr::Base
   #
   # Associatons
   #
+  has_many :features
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
   has_many :videos, :order => "display_order", :dependent => :destroy
   belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"

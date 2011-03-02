@@ -5,11 +5,11 @@
   #form_content{:class => "span-17"}
     %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
     = f.semantic_errors
-    - f.inputs do
+    = f.inputs do
       = f.input :title, :input_html => { :class => "title" }
       %li.photos-upload
         %label Photo
-        =multi_file_uploader(:url => admin_feature_photo_path((@object.new_record? ? '-' : @object), :format => :js), :css_parent_class => "photos-upload")
+        = multi_file_uploader(:url => admin_feature_photo_path((@object.new_record? ? '-' : @object), :format => :js), :css_parent_class => "photos-upload")
         .clear
       %li.photos-choose
         %label Existing Post
@@ -32,7 +32,7 @@
       = f.input :caption, :label => 'Caption', :as => 'text', :input_html => { :style => "height:10em;" }
       = f.input :url, :label => 'URL', :input_html => { :class => "title" }
 
-    - f.buttons do
+    = f.buttons do
       = f.commit_button "Save #{@object.class.to_s}"
       %li.cancel
         = link_to "Back", admin_features_path, :class => "cancel"
@@ -40,7 +40,7 @@
         = link_to "Delete", admin_feature_path(@object), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless @object.new_record?
 
   #form_sidebar{:class => "sidebar span-6 last"}
-    - f.inputs do
+    = f.inputs do
       = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
       - selected = (@object.pending? || @object.published?) ? (@object.published_at? ? :published_at : :published_now) : @object.state.to_sym
 
