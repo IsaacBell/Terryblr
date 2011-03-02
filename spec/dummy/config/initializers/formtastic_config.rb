@@ -53,6 +53,5 @@ Formtastic::SemanticFormBuilder.all_fields_required_by_default = false
 # You can add custom inputs or override parts of Formtastic by subclassing SemanticFormBuilder and
 # specifying that class here.  Defaults to SemanticFormBuilder.
 # Formtastic::SemanticFormHelper.builder = MyCustomBuilder
-require File.expand_path(File.dirname(__FILE__) + "/formtastic_builder")
-Formtastic::SemanticFormHelper.builder = TerryblrBuilder
+Formtastic::SemanticFormHelper.builder = TerryblrBuilder if defined? TerryblrBuilder
 

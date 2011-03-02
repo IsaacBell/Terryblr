@@ -66,6 +66,10 @@ common: &common
       tags: []
       location: [blog, featured]
       features: []
+    features:
+      groups: []
+    pages:
+      groups: []
   photo_dimensions:
     thumb: ["100x100#", :jpg]
     small: ["156x156#", :jpg]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302103916) do
+ActiveRecord::Schema.define(:version => 20110224141902) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(:version => 20110302103916) do
   create_table "features", :force => true do |t|
     t.string   "title"
     t.integer  "photo_id"
-    t.integer  "post_id"
     t.integer  "display_order", :default => 0
     t.string   "state"
     t.string   "caption"
@@ -56,7 +55,6 @@ ActiveRecord::Schema.define(:version => 20110302103916) do
   end
 
   add_index "features", ["photo_id"], :name => "index_features_on_photo_id"
-  add_index "features", ["post_id"], :name => "index_features_on_post_id"
 
   create_table "likes", :force => true do |t|
     t.integer  "likeable_id"
@@ -196,11 +194,10 @@ ActiveRecord::Schema.define(:version => 20110302103916) do
     t.string   "display_type"
     t.integer  "tw_delayed_job_id"
     t.integer  "fb_delayed_job_id"
-    t.integer  "tumblr_delayed_job_id"
     t.string   "social_msg",            :limit => 140
     t.integer  "linkable_id"
     t.string   "linkable_type"
-    t.string   "import_url"
+    t.integer  "tumblr_delayed_job_id"
   end
 
   add_index "posts", ["comments_count"], :name => "index_posts_on_comments_count"
