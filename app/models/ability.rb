@@ -1,13 +1,3 @@
-class Ability
-  include CanCan::Ability
-
-  def initialize(user)
-      # Define abilities for the passed in user here. For example:
-      # doc: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-      user ||= User.new
-      if user.admin?
-        can :manage, :all
-      end
-
-  end
+# Empty class to be overridden by host app - do not add functionality here!
+class Ability < Terryblr::Ability
 end

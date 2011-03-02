@@ -1,34 +1,3 @@
-class Like < Terryblr::Base
-
-  #
-  # Constants
-  #
-
-  #
-  # Associations
-  #
-  belongs_to :likeable, :polymorphic => true, :counter_cache => true
-  belongs_to :user
-
-  #
-  # Validations
-  #
-  validates_presence_of :user
-  validates_uniqueness_of :user_id, :scope => [:likeable_type, :likeable_id]
-
-  #
-  # Scopes
-  #
-  default_scope order('created_at ASC')
-
-  #
-  # Class Methods
-  #
-  class << self
-  end
-
-  #
-  # Instance Methods
-  #
-
+# Empty class to be overridden by host app - do not add functionality here!
+class Like < Terryblr::Like
 end

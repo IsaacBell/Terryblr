@@ -1,4 +1,4 @@
-class Link < Terryblr::Base
+class Terryblr::Link < Terryblr::Base
 
   #
   # Constants

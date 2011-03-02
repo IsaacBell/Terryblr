@@ -1,4 +1,4 @@
-class Video < Terryblr::Base
+class Terryblr::Video < Terryblr::Base
 
   #
   # Constants

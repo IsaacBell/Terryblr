@@ -1,19 +1,19 @@
 
 Rails.application.routes.draw do
   root :to => "terryblr/home#index"
+
+  begin
+    devise_for :users
+  rescue ActiveRecord::StatementInvalid => e
+    puts "Devise could not be set up for the user model."
+    puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."
+    puts "Original exception: #{e.class}: #{e}"
+  end
   
   match "/admin", :to => "terryblr/admin#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin#search", :as => :admin_search
   match '/admin/analytics.:format', :to => "terryblr/admin#analytics", :as => :admin_analytics
   namespace :admin do
-
-    begin
-      devise_for :users
-    rescue ActiveRecord::StatementInvalid => e
-      puts "Devise could not be set up for the user model."
-      puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."
-      puts "Original exception: #{e.class}: #{e}"
-    end
 
     resources :posts, :controller => "terryblr/posts" do
       collection do
@@ -86,6 +86,9 @@ Rails.application.routes.draw do
 
   # Search
   match "/search", :to => "terryblr/home#search", :as => "search"
+
+  # Sitemap.xml
+  match "/sitemap.xml", :to => "terryblr/home#sitemap", :format => "xml"
 
   # Robots.txt
   match "/robots.txt", :to => "terryblr/home#robots", :format => "txt"

@@ -3,6 +3,7 @@ class Terryblr::HomeController < Terryblr::PublicController
   helper 'terryblr/posts'
   
   caches_page :robots
+  before_filter :collection, :only => [:index, :sitemap]
   
   index {
     before {
@@ -19,7 +20,19 @@ class Terryblr::HomeController < Terryblr::PublicController
   def search
   end
 
+  def sitemap
+    @posts = collection
+    @countdowns = Post.live.tagged_with('countdown').all(:limit => 500)
+    @pages = Page.published.all(:limit => 500)
+    respond_to do |wants|
+      wants.xml
+    end
+  end
+  
   def robots
+    respond_to do |wants|
+      wants.txt
+    end
   end
 
   def error
@@ -39,7 +52,14 @@ class Terryblr::HomeController < Terryblr::PublicController
   end
 
   def collection
-    @collection ||= Post.published.paginate(:page => params[:page])
+    @collection ||= case action_name
+      when 'sitemap'
+        Post.live.all(:limit => 500, :order => "updated_at desc")
+      when 'index'
+        Post.live.paginate(:page => params[:page])
+      else
+        []
+      end
   end
 
 end

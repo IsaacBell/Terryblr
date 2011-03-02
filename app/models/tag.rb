@@ -1,30 +1,3 @@
-class Tag < Terryblr::Base
-
-  #
-  # Constants
-  #
-
-  #
-  # Associatons
-  #
-
-  #
-  # Validations
-  #
-  validates_presence_of :name
-
-  #
-  # Scopes
-  #
-
-  #
-  # Class Methods
-  #
-  class << self
-  end
-
-  #
-  # Instance Methods
-  #
-
+# Empty class to be overridden by host app - do not add functionality here!
+class Tag < Terryblr::Tag
 end
