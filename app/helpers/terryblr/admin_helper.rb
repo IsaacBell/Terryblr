@@ -218,7 +218,7 @@ module Terryblr::AdminHelper
     else
       name.to_s.singularize
     end
-    link_to "#{ttc :new} #{ttc content_type}", admin_new_content_path(content_type) if content_type
+    link_to ttc("new_#{content_type}"), admin_new_content_path(content_type) if content_type
   end
 
   def ga_visitors_graph(results)
