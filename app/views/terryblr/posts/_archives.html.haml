@@ -11,8 +11,8 @@
 #pagination.pagination.clear
   - if controller.action_name!="search" and !params[:month].blank?
     - prev_date = @date - 1.month
-    .previous= link_to "Previous", url_for(params.merge(:month => prev_date.month, :year => prev_date.year))
+    .previous= link_to ttt(:'.previous'), url_for(params.merge(:month => prev_date.month, :year => prev_date.year))
     - next_date = @date + 1.month
-    .next= link_to "Next", url_for(params.merge(:month => next_date.month, :year => next_date.year))
+    .next= link_to ttt(:'.next'), url_for(params.merge(:month => next_date.month, :year => next_date.year))
   - elsif @collection.size==@collection.per_page
-    .more= link_to "More", url_for(params.merge(:page => @collection.current_page+1, :format => "js")), :remote => true, :method => :get
+    .more= link_to ttt(:'.more'), url_for(params.merge(:page => @collection.current_page+1, :format => "js")), :remote => true, :method => :get

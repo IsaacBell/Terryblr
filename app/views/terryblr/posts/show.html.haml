@@ -4,7 +4,7 @@
 .clear
   
 #page_nav
-  = link_to "< previous", previous_post_path(@object), :class => "left" if @object.previous
-  = link_to "next >", next_post_path(@object), :class => "right" if @object.next
+  = link_to tt(".arrow_previous"), previous_post_path(@object), :class => "left" if @object.previous
+  = link_to tt(".arrow_next"), next_post_path(@object), :class => "right" if @object.next
 
 .clear
