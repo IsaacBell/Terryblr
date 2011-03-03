@@ -63,6 +63,13 @@ en:
       "500": 
         sorry_we_encountered_an_error_our_team_has_been_notified: Sorry, We encountered an error. Our team has been notified.
     terryblr:
+      home: 
+        index: 
+          diary: Diary
+      posts:
+        show:
+          arrow_previous: < previous
+          arrow_next: next >
       admin: 
         index: 
           comment: Comment
@@ -147,9 +154,6 @@ en:
     preview: preview
     archives: archives
     crosspost_queued_twitter: Twitter post queued
-    home: 
-      index: 
-        diary: Diary
     top_landing_pages: top landing pages
     published_on: Published on
     will_be_published_on: Will be published on
