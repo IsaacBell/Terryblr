@@ -160,6 +160,10 @@ class Terryblr::Post < Terryblr::Base
       @@display_types
     end
 
+    def sti_names
+      ['Post', 'Terryblr::Post']
+    end
+
   end
 
   #

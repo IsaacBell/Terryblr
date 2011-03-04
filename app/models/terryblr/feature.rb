@@ -11,7 +11,7 @@ class Terryblr::Feature < Terryblr::Base
   # Associatons
   #
   belongs_to :photo
-  belongs_to :post
+  belongs_to :post, :class_name => "Post"
 
   #
   # Constants
@@ -58,6 +58,13 @@ class Terryblr::Feature < Terryblr::Base
       @photo ||= Photo.find(photo_id)
     end
   end
+  
+  def video
+    if post_id? and video = post.videos.first
+      video
+    end
+  end
+  
 
   private
 

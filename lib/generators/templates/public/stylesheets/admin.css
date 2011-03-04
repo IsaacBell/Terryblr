@@ -708,6 +708,10 @@ form.formtastic .contributor-posts li.machine_tag a {
   background:#ddd;
 }
 
+#feature_photo li img {
+  width:100%;
+}
+
 /*
  * Forms
  *

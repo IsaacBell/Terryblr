@@ -14,7 +14,7 @@
       %li.photos-choose
         %label Existing Post
         = hidden_field :feature, :post_id
-        = link_to_function "Choose", remote_function(:url => admin_posts_path(:format => :js), :method => :get, :success => "$('#feature_post_browser').toggle(); ")
+        = link_to_function "Choose", remote_function(:url => admin_posts_path(:format => :js), :type => :get, :success => "$('#feature_post_browser').toggle(); ")
         .clear
       %li.photo
         #feature_photo.media-list

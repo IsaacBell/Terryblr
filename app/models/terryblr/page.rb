@@ -45,6 +45,12 @@ class Terryblr::Page < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def sti_names
+      ['Page', 'Terryblr::Page']
+    end
+    
+    
   end
 
   #

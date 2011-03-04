@@ -53,6 +53,11 @@ class Terryblr::Product < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def sti_names
+      ['Product', 'Terryblr::Product']
+    end
+    
   end
 
   #

@@ -170,13 +170,17 @@ module Terryblr::ApplicationHelper
   
   def remote_function(options)
     opts = {
-      :type     => options[:type] || 'post',
+      :type     => options[:type] || options[:method] || 'post',
       :dataType => options[:dataType] || 'script',
-      :url      => options[:url] || url_for(params),
+      :url      => options[:url] || url_for(params)
     }
     opts.each_pair{|k,v| opts[k] = "'#{v}'" }
     opts[:data] = options[:data] if options.key?(:data)
     
+    [:success, :complete, :beforeSend, :error].each do |k|
+      opts[k] = "function(){" + options[k] + "}" if options.key?(k)
+    end
+
     %($.ajax(#{options_for_javascript(opts)});)
   end
   
