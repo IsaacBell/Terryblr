@@ -1,0 +1,148 @@
+en: 
+  model: 
+    states: 
+      drafted: save as a draft
+      publish_now: publish now
+      published_at: publish on dbate
+
+  terryblr: 
+
+    layouts: 
+      public: 
+        go: Go!>>
+        home: Home
+        search: search
+      admin:
+        admin_title: admin
+        archives: archives
+        dashboard: dashboard
+        logout: logout
+        search: search
+        users: users
+
+    terryblr:
+      home: 
+        index: 
+          diary: Diary
+      posts:
+        show:
+          arrow_previous: < previous
+          arrow_next: next >
+      admin: 
+        index: 
+          x_drafts: 
+            one: 1 draft
+            other: "%{count} drafts"
+            zero: no draft
+          x_posts: 
+            one: 1 post
+            other: "%{count} posts"
+            zero: 0 post
+        analytics:
+          fb_page_likes: "Number of likes on Facebook"
+          fb_page_total_likes: "Total of likes on Facebook"
+          fb_page_total_views: "Total of page views on Facebook"
+          fb_page_views: "Number of page views on Facebook"
+          top_landing_pages: top landing pages
+          top_referrers: top referrers
+          tweet_exposure: tweet exposure
+          tweet_reach: tweet reach
+          tweets: tweets
+          visitors: visitors
+
+    admin: 
+      terryblr: 
+        features: 
+          index: 
+            drafted: Drafted
+            drag_and_drop_featured_items_to_change_their_display_order: Drag and drop featured items to change their display order.
+            published: Published
+            x_features: 
+              one: 1 feature
+              other: "%{count} features"
+              zero: no feature
+          form: 
+            caption: caption
+            choose_a_post: choose a post
+            existing_post: existing post
+            location: location
+            photo: Photo
+            url: URL
+        pages: 
+          index: 
+            drafts: drafts
+            published: published
+          edit: 
+            add_inline_photo: + insert photo
+            custom_url: Custom URL
+            leave_blank_to_create_automatically: Leave blank to create automatically
+            parent: Parent
+            publish_on: Publish on
+            tags: Tags
+        posts: 
+          index: 
+            drafts: drafts
+            published: published
+            queued: queued
+            x_posts: 
+              one: 1 post
+              other: "%{count} posts"
+              zero: 0 post
+          post: 
+            add_inline_photo: + insert photo
+          form_sidebar: 
+            cross_posting: cross posting
+            crosspost_facebook: Post to Facebook
+            crosspost_twitter: Post to Twitter
+            custom_url: custom URL
+            leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
+            message: message
+            published_on: published on
+            tags: Tags
+          photos: 
+            gallery_display: gallery display
+            show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Show photos as a slideshow gallery or stacked above each other."
+            upload_hint: Upload, then reorder and caption photos
+          video: 
+            paste_in_a_URL_to_a_vimeo_or_youtube_video: Paste in a URL to a vimeo or youtube video
+            reorder_and_caption_videos: Reorder and caption videos
+            video_url: Video Url
+        users: 
+          form:
+            email: email
+            firstname: firstname
+            lastname: lastname
+            password: password
+            password_confirmation: password_confirmation
+
+    archives: archives
+    are_you_sure: Are you absolutely sure?
+    back: back
+    body: body
+    cancel: cancel
+    delete: delete
+    edit_post: edit post
+    email: email
+    features: features
+    name: name
+    new: new
+    new_admin: new admin
+    new_feature: new feature
+    new_page: new page
+    new_photos: new photos
+    new_post: new post
+    new_user: new user
+    new_video: new video
+    page: page
+    pages: pages
+    photos: photos
+    post: post
+    preview: preview
+    save: save
+    state: state
+    title: title
+    update_feature: update feature
+    users: users
+    value: value
+    video: video
+    view: view

@@ -1,11 +1,11 @@
 = semantic_form_for @post, :url => (@post.new_record? ? admin_posts_path : admin_post_path(@post)) do |f|
   
   #form_content{:class => "span-17"}
-    %h2 #{params[:action].to_s.capitalize} #{@type.to_s.capitalize}
+    %h2= ttt("#{params[:action]}_#{@type.to_s}")
     = error_messages_for_post
     = f.semantic_errors
     - f.inputs do
-      = f.input :title, :label => 'Title', :input_html => { :class => "title" }
+      = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       / %li.video-upload
       /   %label Video Upload
       /   =multi_file_uploader(:url => admin_post_videos_path(@post, :format => :js), :css_parent_class => "video-upload", :file_types => "*.mov;*.avi;*.mpg;*.3gp;*.m4v;")
@@ -13,15 +13,15 @@
       / %li.video-or
       /   %span or
       %li.string.optional.video-url
-        %label{:for => "post_videos_attributes__url"} Video Url
+        %label{:for => "post_videos_attributes__url"} #{ttt :'.video_url'}
         = text_field_tag "video_url"
-        = link_to "Save", admin_post_videos_path(@post, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
-        %p.inline-hints Paste in a URL to a vimeo or youtube video
+        = link_to ttt(:'.save'), admin_post_videos_path(@post, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
+        %p.inline-hints #{tt :'.paste_in_a_URL_to_a_vimeo_or_youtube_video'}
       %li.video-list
         = edit_videos_for_assoc(@post)
-        %p.inline-hints.clear Reorder and caption videos
+        %p.inline-hints.clear #{ttt :'.reorder_and_caption_videos'}
 
-      = f.input :body, :label => 'Body', :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
+      = f.input :body, :label => ttt(:body), :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
 
     = render :partial => 'form_buttons', :locals => {:f => f}
 

@@ -88,7 +88,7 @@ module Terryblr::AdminHelper
     css_flash = "add_photo_flash"
     css_link = ".add-inline-photo a"
     css_loading = ".add-inline-photo img"
-    link_to_function("+ Insert Photo", "$('##{css_flash}').swfupload('selectFile')") +
+    link_to_function(tt(:'.add_inline_photo'), "$('##{css_flash}').swfupload('selectFile')") +
     image_tag("loading.gif", :style => "display:none") +
     content_tag(:div, "", :id => css_flash) do
         content_tag(:span, "", :id => "spanButtonPlaceholder")
@@ -218,7 +218,7 @@ module Terryblr::AdminHelper
     else
       name.to_s.singularize
     end
-    link_to "New #{content_type.capitalize}", admin_new_content_path(content_type) if content_type
+    link_to ttc("new_#{content_type}"), admin_new_content_path(content_type) if content_type
   end
 
   def ga_visitors_graph(results)

@@ -1,3 +1,13 @@
+module ActionView
+  module Helpers
+    module TranslationHelper
+      unloadable
+
+      include Terryblr::I18nHelpers
+    end
+  end
+end
+
 class Terryblr::ApplicationController < ResourceController::Base
 
   include Terryblr::MemcachedSystem

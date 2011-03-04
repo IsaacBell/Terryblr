@@ -1,4 +1,4 @@
-%h2 User #{@user.full_name}
+%h2 #{ttt :'.user'} #{@user.full_name}
 
 %p
-  = link_to "Edit", edit_admin_user_path(@user)
+  = link_to ttt(:edit), edit_admin_user_path(@user)

@@ -11,13 +11,13 @@ module Terryblr
           if args[0].to_s.starts_with?('.') && scope_.include?('terryblr')
             # puts "already correctly scoped"
             args << options
-            I18n.translate(*args)
+            translate(*args)
           else
             # puts "re-scoping"
             raise "NotImplemented" unless scope_.empty?
             options[:scope] = 'terryblr'
             args << options
-            I18n.translate(*args)
+            translate(*args)
           end
         end
 

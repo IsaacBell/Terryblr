@@ -3,7 +3,7 @@
 %html
   %head
     %meta{"http-equiv"=>"Content-type", "content"=>"text/html; charset=utf-8"}
-    %title #{Settings.app_name}: Admin
+    %title #{Settings.app_name}: #{ttt :'.admin_title'}
     = yield :pre_head
     = include_javascripts :admin
     = include_stylesheets :admin
@@ -13,15 +13,15 @@
       #header
         #nav
           %ul
-            %li= link_to_unless_current "Dashboard", admin_path
-            %li= link_to_unless_current "Archives", admin_posts_path
-            %li= link_to_unless_current "Users", admins_admin_users_path
-            %li= link_to_unless_current "Logout", admin_logout_path
+            %li= link_to_unless_current ttt(:'.dashboard'), admin_path
+            %li= link_to_unless_current ttt(:'.archives'), admin_posts_path
+            %li= link_to_unless_current ttt(:'.users'), admins_admin_users_path
+            %li= link_to_unless_current ttt(:'.logout'), admin_logout_path
 
             %li
               = semantic_form_for Post.new, :url => admin_search_path, :html => {:method => :get, :class => "auto-hide-text", :id => "admin_search"} do |f|
                 =link_to_function image_tag("admin/search_icon.png")
-                =text_field_tag "search", (params[:search] || "Search...")
+                =text_field_tag "search", (params[:search] || ttt(:'.search'))
 
         %h1= link_to_unless_current "terryblr", admin_path
 

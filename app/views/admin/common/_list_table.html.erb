@@ -20,7 +20,7 @@ cols_hash = class_obj.columns_hash
 			label_func = "#{col}_label"
 		%>
 			<th class="<%= sort_col(cols_hash[col]) %> <%= "sort#{params[:dir]}" if params[:sort]==col %> <%= "sortcol" unless nosort_cols.include?(col) %>">
-				<%= self.respond_to?(label_func) ? send(label_func, col) : col.humanize.capitalize_words %>
+				<%= self.respond_to?(label_func) ? send(label_func, col) : ttt(col.to_s) %>
 			</th>
 		<% end %>
 		<% unless action_cols.empty? %>

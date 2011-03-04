@@ -13,17 +13,17 @@
       #header
         #search_form
           = semantic_form_for(Post.new, :url => search_path, :html => { :method => :get, :class => "auto-hide-text"}) do |f| 
-            =text_field_tag "search", (params[:search] || "SEARCH"), :class => "text"
-            =submit_tag "Go!>>"
+            =text_field_tag ttc('layouts.public.search'), (params[:search] || ttc('layouts.public.search')), :class => "text"
+            =submit_tag ttc('layouts.public.go')
 
         %h1{:id => 'logo'}=link_to Settings.app_name, root_path
 
         #nav
           #date=raw Time.zone.now.strftime("<strong>%A</strong>, %B %d, %Y")
           %ul
-            %li.home=link_to_unless_current "Home", root_path
+            %li.home=link_to_unless_current ttc('layouts.public.home'), root_path
             - if defined?(Settings.common_tags)
-              %li.diary=link_to_unless_current "Diary", tagged_posts_path(Settings.common_tags.first)
+              %li.diary=link_to_unless_current ttc('layouts.public.diary'), tagged_posts_path(Settings.common_tags.first)
 
       #body.clear
         = raw(flash_messages)

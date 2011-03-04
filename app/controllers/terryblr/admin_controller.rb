@@ -51,9 +51,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
     # Twitter mentions
     # Group by the date of the tweet
-    @tweets = Tweet.analytics(@since)
-    @tweet_exposure = Tweet.exposure(@since)
-    @tweet_reach = Tweet.reach(@since)
+    @tweets = Terryblr::Tweet.analytics(@since)
+    @tweet_exposure = Terryblr::Tweet.exposure(@since)
+    @tweet_reach = Terryblr::Tweet.reach(@since)
   end
 
   def search

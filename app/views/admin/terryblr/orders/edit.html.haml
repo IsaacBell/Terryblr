@@ -3,25 +3,25 @@
 = semantic_form_for @order, :url => admin_order_path(@order) do |f|
   
   #form_content{:class => "span-17 order-form form"}
-    %h2 Order ##{@order.number} by #{@order.full_name} for #{@order.final_amount.format}
+    %h2 #{ttt :'.order'} ##{@order.number} #{ttt :'.by'} #{@order.full_name} #{ttt :'.for'} #{@order.final_amount.format}
     = f.semantic_errors
     - f.inputs do
       %li.name
-        %label Name
+        %label #{ttt :'.name'}
         = @order.full_name
       %li.address
-        %label Address
+        %label #{ttt :'.address'}
         = simple_format @order.address
       %li.items
-        %label Items
+        %label #{ttt :'.items'}
         %table.order-items
           %thead
             %th
-            %th Item
-            %th Size
-            %th Qty
-            %th Price
-            %th Total
+            %th #{ttt :'.item'}
+            %th #{ttt :'.size'}
+            %th #{ttt :'.qty'}
+            %th #{ttt :'.price'}
+            %th #{ttt :'.total'}
           %tfoot
             %tr
               %td{:colspan => 3}
@@ -39,7 +39,7 @@
               %td= li.total_price.format
             
       %li.date
-        %label Date
+        %label #{ttt :'.date'}
         = @order.created_at.to_s(:datetime_ordinal)
           
 

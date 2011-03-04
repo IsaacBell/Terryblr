@@ -35,7 +35,7 @@ class Terryblr::User < Terryblr::Base
   #
   # Scopes
   #
-  scope :admins, where(:admin => true)
+  scope :admins, lambda { where(:admin => true) }
   
   #
   # Class Methods

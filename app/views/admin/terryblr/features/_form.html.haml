@@ -3,18 +3,18 @@
 = semantic_form_for @object, :url => (@object.new_record? ? admin_features_path : admin_feature_path(@object)) do |f|
   
   #form_content{:class => "span-17"}
-    %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
+    %h2= ttt("#{params[:action].to_s}_#{@object.class.to_s.downcase}")
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :input_html => { :class => "title" }
       %li.photos-upload
-        %label Photo
+        %label #{ttt :'.photo'}
         = multi_file_uploader(:url => admin_feature_photo_path((@object.new_record? ? '-' : @object), :format => :js), :css_parent_class => "photos-upload")
         .clear
       %li.photos-choose
-        %label Existing Post
+        %label #{ttt :'.existing_post'}
         = hidden_field :feature, :post_id
-        = link_to_function "Choose", remote_function(:url => admin_posts_path(:format => :js), :type => :get, :success => "$('#feature_post_browser').toggle(); ")
+        = link_to_function ttt(:'.choose'), remote_function(:url => admin_posts_path(:format => :js), :type => :get, :success => "$('#feature_post_browser').toggle(); ")
         .clear
       %li.photo
         #feature_photo.media-list
@@ -26,18 +26,18 @@
         
         #feature_post_browser{:style => 'display:none;'}
           .close= link_to_function 'close', "$('#feature_post_browser').hide();$(this).find('.archives').remove()"
-          %label Choose a Post:
+          %label #{ttt :'.choose_a_post'}
           #pagination
           
-      = f.input :caption, :label => 'Caption', :as => 'text', :input_html => { :style => "height:10em;" }
-      = f.input :url, :label => 'URL', :input_html => { :class => "title" }
+      = f.input :caption, :label => ttt(:'.caption'), :as => 'text', :input_html => { :style => "height:10em;" }
+      = f.input :url, :label => ttt(:'.url'), :input_html => { :class => "title" }
 
     = f.buttons do
-      = f.commit_button "Save #{@object.class.to_s}"
+      = f.commit_button ttt(:save)
       %li.cancel
-        = link_to "Back", admin_features_path, :class => "cancel"
+        = link_to ttt(:back), admin_features_path, :class => "cancel"
       %li.delete
-        = link_to "Delete", admin_feature_path(@object), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless @object.new_record?
+        = link_to ttt(:delete), admin_feature_path(@object), :class => "cancel", :confirm => ttt(:are_you_absolutely_sure), :method => "delete" unless @object.new_record?
 
   #form_sidebar{:class => "sidebar span-6 last"}
     = f.inputs do
@@ -52,7 +52,7 @@
 
       - if defined?(Settings.tags.posts.features)
         %li{:class => "features-tag-group tag-picker"}
-          %label Location
+          %label #{ttt :'.location'}
           %ul
             - Settings.tags.posts.features.each do |tag|
               %li.machine_tag.feature_tag{:class => @object.tag_list.include?(tag) ? "selected" : "" }

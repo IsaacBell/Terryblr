@@ -1,17 +1,17 @@
 = form.inputs do
-  = form.input :first_name, :label => 'First name' 
-  = form.input :last_name, :label => 'Last name' 
-  = form.input :email, :label => 'Email' 
-  = form.input :password, :label => 'Password' 
-  = form.input :password_confirmation, :label => 'Password Confirmation'
+  = form.input :first_name, :label => ttt(:'.firstname')
+  = form.input :last_name, :label => ttt(:'.lastname')
+  = form.input :email, :label => ttt(:'.email') 
+  = form.input :password, :label => ttt(:'.password') 
+  = form.input :password_confirmation, :label => ttt(:'.password_confirmation')
 
 = form.buttons do
-  = form.commit_button "Save User"
+  = form.commit_button ttt(:save)
   %li.cancel
     - if @object.new_record?
-      = link_to "Cancel", admin_users_path, :class => "cancel"
+      = link_to ttt(:cancel), admin_users_path, :class => "cancel"
     - else
-      = link_to "Back", admin_users_path, :class => "cancel"
+      = link_to ttt(:back), admin_users_path, :class => "cancel"
   %li.delete
-    = link_to "Delete", admin_user_path(@object.id), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless @object.new_record? or @object.id < 3
+    = link_to ttt(:delete), admin_user_path(@object.id), :class => "cancel", :confirm => ttt(:are_you_sure), :method => "delete" unless @object.new_record? or @object.id < 3
   

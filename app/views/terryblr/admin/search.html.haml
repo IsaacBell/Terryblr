@@ -4,8 +4,8 @@
   - records = @results[key.to_sym]
   - span = key=="pages" ? 5 : 6
   %div{ :class => "search-results span-#{span}", :id => "#{key}_results" }
-    %h3=pluralize records.total_entries, key.singularize.humanize
+    %h3= pluralize records.total_entries, ttt(key.singularize)
     - if records.empty?
-      %p No results found
+      %p #{ttt :'.no_results_found'}
     - else
       = render :partial => 'admin/common/archives', :locals => { :records => records }
