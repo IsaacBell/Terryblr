@@ -8,7 +8,7 @@
     %li= "#{Feature.published.count} Published"
     %li= "#{Feature.drafted.count} Drafted"
 
-= render :partial => "terryblr/common/content_nav"
+= render :partial => "terryblr/admin/content_nav"
 
 - @collections.each do |tag, collection|
   %h2 #{tag.humanize.titleize} Items
