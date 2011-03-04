@@ -7,11 +7,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     before {
       @show_as_dash = true
     }
-    wants.js {
-      render :update do |page|
-        page.replace "pagination", :partial => "admin/common/archives", :locals => { :posts => @collection }
-      end
-    }
+    wants.js
   }
 
   def filter

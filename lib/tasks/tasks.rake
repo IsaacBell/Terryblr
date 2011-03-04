@@ -31,7 +31,7 @@ namespace :terryblr do
         image_urls = content.css("img").map{|i|i.attributes['src'].to_s}
 
         photos = []
-        image_urls[0..9].each do |url| # limit the images to be imported
+        image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
         # image_urls.each do |url|
           photos << Photo.create!(:url => url)
         end

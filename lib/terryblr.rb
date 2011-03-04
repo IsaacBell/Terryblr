@@ -19,6 +19,7 @@ require "delayed_job"
 [ 'terryblr/configuration',
   'terryblr/memcached_system',
   'terryblr/validators',
+  'terryblr/time_formats',
   'terryblr/formtastic_builder',
   'terryblr/base/base',
 ].each do |path|

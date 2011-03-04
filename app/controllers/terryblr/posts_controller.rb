@@ -48,7 +48,9 @@ class Terryblr::PostsController < Terryblr::PublicController
   def tagged
     @page_title = "Posts tagged #{params[:tag]}"
     respond_to do |wants|
-      wants.html
+      wants.html {
+        render :action => "terryblr/posts/tagged", 
+      }
       wants.js {
         render :update do |page|
           page.replace "#more_posts_btn", :partial => "list"
