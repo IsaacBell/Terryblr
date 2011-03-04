@@ -1,5 +1,5 @@
 = f.buttons do
-  = f.commit_button "Save"
+  = f.commit_button "Save", 'data-disable-with' => "Saving"
   %li.commit
     - if @post.live? and @post.valid?
       = link_to "View", post_path(@post, @post.slug), :class => "preview", :target => "_blank"

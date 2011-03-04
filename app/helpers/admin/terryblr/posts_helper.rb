@@ -27,7 +27,7 @@ module Admin::Terryblr::PostsHelper
             end
           end
         end +
-        sortable_element("#{list_id}_ul", :url => reorder_admin_videos_path(:format => :js), :constraint => "horizontal")
+        sortable_element("#{list_id}_ul", :axis => "x")
       end
     end
   end

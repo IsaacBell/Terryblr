@@ -10,11 +10,7 @@ class Terryblr::HomeController < Terryblr::PublicController
       @posts = collection
     }
     wants.html
-    wants.js {
-      render :update do |page|
-        page.replace "#more_posts_btn", :partial => "terryblr/posts/list"
-      end
-    }
+    wants.js
   }
 
   def search

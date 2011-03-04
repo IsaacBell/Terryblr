@@ -37,11 +37,7 @@ class Terryblr::PostsController < Terryblr::PublicController
     @page_title = 'Archives'
     respond_to do |wants|
       wants.html
-      wants.js {
-        render :update do |page|
-          page.replace "pagination", :partial => "archives", :locals => { :posts => @collection }
-        end
-      }
+      wants.js
     end
   end
 
@@ -51,11 +47,7 @@ class Terryblr::PostsController < Terryblr::PublicController
       wants.html {
         render :action => "terryblr/posts/tagged", 
       }
-      wants.js {
-        render :update do |page|
-          page.replace "#more_posts_btn", :partial => "list"
-        end
-      }
+      wants.js
     end
   end
 

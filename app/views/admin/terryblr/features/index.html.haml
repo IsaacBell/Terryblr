@@ -20,5 +20,5 @@
         - link_to edit_admin_feature_path(r), :style => "background-image:url('#{img}')" do
           %div.date-overlay=r.published_at.to_s(:month_and_day_ordinal) if r.published?
           %span=truncate_words(strip_tags(r.title? ? r.title : r.caption), :length => 10)
-  = sortable_element(list_id, :url => reorder_admin_features_path(:format => :js), :constraint => "horizontal")
+  = sortable_element("##{list_id}", :url => reorder_admin_features_path(:format => :js), :axis => "x")
   %p.clear Drag and drop featured items to change their display order.

@@ -18,25 +18,15 @@ class Terryblr::CommentsController < Terryblr::PublicController
   create {
     before {
       build_object.request = request
-      
     }
     wants.html {
       head :ok, :location => post_path(parent_object)
     }
-    wants.js {
-      render :update do |page|
-        # Update like button
-        page.replace :bottom, parent_object.dom_id('comments'), comment_item(object)
-      end
-    }
+    wants.js
     failure.wants.html {
       head :error, :message => object.errors.full_messages.to_sentence
     }
-    failure.wants.js {
-      render :update do |page|
-        # Insert errors to form
-      end
-    }
+    failure.wants.js
   }
 
   private

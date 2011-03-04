@@ -13,3 +13,5 @@ terryblr-*.gem
 tmp/
 Gemfile.lock
 vendor/ruby
+Terryblr.tmproj
+

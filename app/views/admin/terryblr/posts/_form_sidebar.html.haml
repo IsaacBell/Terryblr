@@ -11,6 +11,7 @@
 
     - if defined?(Settings.tags.posts.groups)
       - (Settings.tags.posts.groups - %w(tags)).each do |group|
+        - next if Settings.tags.posts[group].empty?
         %li{:class => "#{group.parameterize}-tag-group tag-picker"}
           %label #{group.parameterize.tableize.singularize.humanize.titleize}
           %ul{:class => "#{group}_tag_list" }

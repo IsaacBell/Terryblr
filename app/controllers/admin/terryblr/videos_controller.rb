@@ -11,11 +11,7 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
     
     if object.save
       respond_to do |wants|
-        wants.js {
-          render :update do |page|
-            page.replace "videos_list", edit_videos_for_assoc(@post)
-          end
-        }
+        wants.js
         wants.html { render :status => :ok }
       end
     else
@@ -37,17 +33,8 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
   end
   
   destroy {
-    wants.js {
-      render :update do |page|
-        page.visual_effect :fade, object.dom_id('videos_list')
-      end
-    }
-    failure.wants.js {
-      render :update do |page|
-        page.replace "flash", flash_messages
-        page.visual_effect :appear, "flash"
-      end
-    }
+    wants.js
+    failure.wants.js
   }
   
   private

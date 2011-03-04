@@ -149,7 +149,7 @@ module Terryblr::AdminHelper
           object.photos.map do |photo|
             # Each photo
             photo_for_assoc(photo, object, list_id)
-          end
+          end.join.html_safe
         end +
         edit_photos_sortable(list_id)
       end
@@ -190,13 +190,13 @@ module Terryblr::AdminHelper
   end
 
   def edit_photos_sortable(list_id = "photos_list")
-    sortable_element("#{list_id}_ul", 
-      :url => reorder_admin_photos_path(:format => :js), 
-      :constraint => false,
-      :onUpdate => "function() { $('##{list_id}_ul input[id$=display_order]').each(function(i, el){ el.value = i }) }"
+    sortable_element("##{list_id}_ul", 
+      # :url => reorder_admin_photos_path(:format => :js), 
+      :axis => false,
+      :update => "function() { $('##{list_id}_ul input[id$=display_order]').each(function(i, el){ el.value = i }) }"
     )
   end
-
+  
   def calendar_day(day, posts)
     content_tag(:span, day.mday, :class => "mday #{'future' if day>Date.today}") +
     if (p = posts.detect{|b| b.published_at.mday==day.mday })

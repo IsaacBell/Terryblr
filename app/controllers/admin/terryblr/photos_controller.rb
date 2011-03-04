@@ -20,28 +20,13 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
         wants.js {
           if photoable.is_a?(Page) or (photoable.is_a?(Post) and photoable.post_type.post?)
             render :inline => "<%= image_tag(@object.image.url(:medium)) %>"
-          else
-            render :update do |page|
-              if params[:feature_id]
-                list_id = "feature_photo"
-                page.replace_html "#{list_id}_ul", photo_for_assoc(@object, @photoable, list_id)
-              else
-                list_id = "photos_list"
-                page.insert_html :bottom, "#{list_id}_ul", photo_for_assoc(@object, @object.photoable, list_id)
-                page << "$('##{list_id}').sortable('refresh')"
-              end
-            end
           end
         }
         wants.html { render :status => :ok }
       else
+        flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
         logger.error { "Photo errors: #{@object.errors.full_messages.to_sentence}" }
-        wants.js {
-          render :update do |page|
-            flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
-            page.replace_html "flash_messages", flash_messages
-          end
-        }
+        wants.js
         wants.html {
           render :text => @object.errors.full_messages.to_sentence
         }
@@ -62,20 +47,8 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
   end
 
   destroy {
-    wants.js {
-      render :update do |page|
-        page.visual_effect :fade, object.dom_id('photos_list')
-        page.delay(2) do
-          page.remove object.dom_id('photos_list')
-        end
-      end
-    }
-    failure.wants.js {
-      render :update do |page|
-        page.replace "flash", flash_messages
-        page.visual_effect :appear, "flash"
-      end
-    }
+    wants.js
+    failure.wants.js
   }
 
   private

@@ -7,27 +7,7 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
       @action_cols = %w(add_child)
     }
     wants.html {}
-    wants.js {
-      dom_id = "tablerow_#{params[:parent_id]}" if params[:parent_id]
-      render :update do |page|
-        # Insert rows
-        if dom_id
-          page.insert_html :after, dom_id, 
-            :partial => 'admin/common/list_table_row', 
-            :collection => @collection, 
-            :as => :record, 
-            :locals => { 
-              :list_cols => @list_cols, 
-              :cols_hash => Page.columns_hash, 
-              :ignore_cols => [], 
-              :action_cols => @action_cols, 
-              :record_name => :page
-            }
-        end
-        # Mark expand button as expanded
-        page << "$('#tablerow_1 span.collapsed').addClass('expanded').removeClass('collapsed')"
-      end
-    }
+    wants.js
   }
 
   new_action {

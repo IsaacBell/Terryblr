@@ -19,21 +19,11 @@ class Terryblr::LikesController < Terryblr::PublicController
     wants.html {
       head :ok, :location => post_path(parent_object)
     }
-    wants.js {
-      render :update do |page|
-        # Update like button
-        page.replace parent_object.dom_id('like_label'), like_label(parent_object)
-      end
-    }
+    wants.js
     failure.wants.html {
       head :error, :message => "You already liked this"
     }
-    failure.wants.js {
-      render :update do |page|
-        # Update like button
-        page.replace parent_object.dom_id('like_label'), "You already liked this"
-      end
-    }
+    failure.wants.js
   }
 
   private

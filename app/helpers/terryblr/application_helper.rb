@@ -115,7 +115,7 @@ module Terryblr::ApplicationHelper
     content_tag(:div, :id => "flash") do
       messages.map do |type|
         content_tag :div, :id => "flash-#{type.to_s}", :class => "flash #{type.to_s}" do
-          content_tag :span, message_for_item(flash[type], flash["#{type}_item".to_sym])
+          content_tag :span, message_for_item(flash[type], flash["#{type}_item".to_sym]).html_safe
         end
       end.join("\n").html_safe
     end
@@ -152,6 +152,47 @@ module Terryblr::ApplicationHelper
     words = txt.to_s.split()
     words[0..(ops[:length]-1)].join(' ').to_s + (words.length > ops[:length] ? ops[:omission] : '').to_s
   end
+  
+  #
+  # ScriptaculousHelper overrides for jQuery
+  #
+  
+  def sortable_element_js(element_id, options = {}) #:nodoc:
+    # options[:with]   ||= "$(#{ActiveSupport::JSON.encode(element_id)}).serialize()"
+    # options[:update] ||= "function(){" + remote_function(options) + "}"
+    
+    # Make AJAX callback request if URL provided
+    if options.key?(:url)
+      options[:update] = "function(){" + remote_function(options) + "}"
+      options.delete(:url)
+    end
+    [:axis].each {|k| options[k] = "'#{options[k]}'" }
+    
+    %($(#{ActiveSupport::JSON.encode(element_id)}).sortable(#{options_for_javascript(options)});)
+  end
+  
+  #             $.ajax({
+  #                 type: 'post', 
+  #                 data: $('#tasks-list').sortable('serialize') + '&id=<%=@user_story.id-%>', 
+  #                 dataType: 'script', 
+  #                 complete: function(request){
+  #                     $('#tasks-list').effect('highlight');
+  #                   },
+  #                 url: '/user_stories/prioritize_tasks'})
+  #             }
+  #           })
+  def remote_function(options)
+    opts = {
+      :type     => options[:type] || 'post',
+      :dataType => options[:dataType] || 'script',
+      :url      => options[:url] || url_for(params),
+    }
+    opts.each_pair{|k,v| opts[k] = "'#{v}'" }
+    opts[:data] = options[:data] if options.key?(:data)
+    
+    %($.ajax(#{options_for_javascript(opts)});)
+  end
+  
 
   #
   # Forms and Lists
