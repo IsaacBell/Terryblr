@@ -61,6 +61,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "ruby_parser"
   s.add_development_dependency "launchy"
+  s.add_development_dependency "hirb"
 
   s.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"] + ["LICENSE", "README.rdoc"]
 end

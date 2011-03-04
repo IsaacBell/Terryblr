@@ -14,6 +14,11 @@ module Jammit
 end
 Jammit.load_configuration(File.expand_path("../../../spec/dummy/config/assets.yml",  __FILE__))
 
+require 'hirb'
+require 'hirb/helpers/auto_table'
+require 'hirb/views/rails'
+Hirb::View.load_config :page => false
+
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/rspec'
 require 'cucumber/rails/world'

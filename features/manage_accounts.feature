@@ -33,14 +33,13 @@ Feature: Manage accounts
   Scenario: Creating a new account requires being authenticated
     Given I am not authenticated
     When I go to the new account page
-    Then I should be on the homepage
+    Then I should be on the login page
     And I should see "You are not authorized to access this page."
 
   Scenario: Creating a new account requires being admin
     When I am authenticated as "non_admin@lovethe88.com" with "********"
     When I go to the new account page
-    Then I should be on the homepage
-    And I should see "You are not authorized to access this page."
+    Then I should see "You are not authorized to access this page."
 
   Scenario: Delete an account with id > 3
     Given I am on deletable@lovethe88.com account page
