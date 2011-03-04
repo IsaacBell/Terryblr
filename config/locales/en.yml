@@ -1,67 +1,25 @@
---- 
 en: 
   model: 
     states: 
       drafted: save as a draft
       publish_now: publish now
       published_at: publish on dbate
-  layouts: 
-    public: 
-      your_cart: Your Cart
-      store: Store
-      diary: Diary
-      go: Go!>>
-      home: Home
-      search: search
+
   terryblr: 
+
     layouts: 
+      public: 
+        go: Go!>>
+        home: Home
+        search: search
       admin:
-        dashboard: dashboard
+        admin_title: admin
         archives: archives
-        users: users
+        dashboard: dashboard
         logout: logout
         search: search
-        admin_title: admin
-    pages: Pages
-    archives: Archives
-    video: video
-    post: post
-    photos: photos
-    feature: feature
-    features: features
-    page: page
-    state: state
-    user: user
-    common: 
-      content_nav: 
-        pages: Pages
-        features: Features
-        archives: Archives
-    new: new
-    name: name
-    photo: photo
-    logout: log out
-    new_user: new user
-    edit: edit
-    tweet_exposure: tweet exposure
-    top_referrers: top referrers
-    dashboard: dashboard
-    month: month
-    title: title
-    body: body
-    cancel: cancel
-    delete: delete
-    are_you_sure: Are you absolutely sure?
-    tweets: tweets
-    comments: comments
-    draft: draft
-    custom_url: custom URL
-    errors: 
-      "404": 
-        sorry_we_couldn_t_find_the_page_you_were_looking_for: "Sorry, we couldn't find the page you were looking for. "
-        try_one_of_these_instead: Try one of these instead?
-      "500": 
-        sorry_we_encountered_an_error_our_team_has_been_notified: Sorry, We encountered an error. Our team has been notified.
+        users: users
+
     terryblr:
       home: 
         index: 
@@ -72,231 +30,119 @@ en:
           arrow_next: next >
       admin: 
         index: 
-          comment: Comment
-          edit: Edit
-          stats: Stats
-          sales: Sales
-          order: Order
-          features: Features
-          x_posts: 
-            one: 1 post
-            other: "%{count} posts"
-            zero: 0 post
           x_drafts: 
             one: 1 draft
             other: "%{count} drafts"
             zero: no draft
-        content_nav: 
-          comments: Comments
-          store: Store
-        search: 
-          no_results_found: No results found
-    archive: archive
-    loading_analytics: Loading analytics...
-    visitors: visitors
-    products: 
-      list: 
-        more: More
-      tagged: 
-        products: Products
-      index: 
-        store: Store
-      show: 
-        back_to_store: Back to store
-    pages: pages
-    value: value
-    year: year
-    save: save
-    view: view
-    please_add_some_content_first: Please add some content first
-    tweet_reach: tweet reach
-    notifier: 
-      sold_out_warning: 
-        thanks: Thanks
-        please_login_to_add_more: Please login to add more
-        terryblr: Terryblr
-        x_products_sold_out: 
-          one: We have detected that 1 product has sold out
-          other: We have detected that %{count} products have sold out
-        hi_there: Hi there
-    posts: 
-      list: 
-        more: More
-      featured_posts: 
-        more: more
-      index: 
-        newer_link: !binary |
-          4oC5IG5ld2Vy
-
-        older_link: !binary |
-          b2xkZXIg4oC6
-
-        archives: Archives
-        more: More
-      show: 
-        back_to_archives: Back to Archives
-        comments: Comments
-      archives: 
-        previous: Previous
-        archives: Archives
-        next: Next
-        more: More
-      collection: 
-        older: older
-        last: last
-        newer: newer"
-        gallery: Gallery
-        view_more_videos: View more videos
-    user_sessions: 
-      new: 
-        login: Login
-    users: utilisateurs
-    preview: preview
-    archives: archives
-    crosspost_queued_twitter: Twitter post queued
-    top_landing_pages: top landing pages
-    published_on: Published on
-    will_be_published_on: Will be published on
-    search: search...
-    email: email
-    likes: likes
+          x_posts: 
+            one: 1 post
+            other: "%{count} posts"
+            zero: 0 post
+        analytics:
+          fb_page_likes: "Number of likes on Facebook"
+          fb_page_total_likes: "Total of likes on Facebook"
+          fb_page_total_views: "Total of page views on Facebook"
+          fb_page_views: "Number of page views on Facebook"
+          top_landing_pages: top landing pages
+          top_referrers: top referrers
+          tweet_exposure: tweet exposure
+          tweet_reach: tweet reach
+          tweets: tweets
+          visitors: visitors
 
     admin: 
-      common: 
-        archive_sidebar: 
-          filter: filter
       terryblr: 
-        comments: 
-          index: 
-            comments: comments
-        orders: 
-          edit: 
-            qty: qty
-            address: address
-            name: name
-            items: items
-            price: price
-            by: by
-            size: size
-            total: total
-            order: Order
-            date: date
-            for: for
-            item: item
-          index: 
-            orders: orders
-          sidebar: 
-            published: Published
-            filter: Filter
-            drafts: Drafts
-        pages: 
-          edit: 
-            back: Back
-            parent: Parent
-            body: Body
-            title: Title
-            delete: Delete
-            custom_url: Custom URL
-            tags: Tags
-            publish_on: Publish on
-            view: View
-            leave_blank_to_create_automatically: Leave blank to create automatically
-            add_inline_photo: + insert photo
-          index: 
-            published: published
-            pages: Pages
-            drafts: drafts
-        products: 
-          edit: 
-            qty: qty
-            sizes: Sizes
-            back: Back
-            name: Name
-            title: Title
-            body: Body
-            photos: photos
-            common_tags: Common tags
-            publish_on: Publish on
-            upload_reorder_and_caption_photos: Upload, reorder and caption photos
-            currently: Currently
-            leave_blank_to_create_automatically: Leave blank to create automatically
-            price_hint: "Eg: $10.00"
-          index: 
-            month: Month
-            published: published
-            filter: Filter
-            products: Products
-            year: Year
-            posts: posts
-            drafts: drafts
-            queued: queued
         features: 
-          form: 
-            photo: Photo
-            location: location
-            existing_post: existing post
-            choose_a_post: choose a post
           index: 
             drafted: Drafted
+            drag_and_drop_featured_items_to_change_their_display_order: Drag and drop featured items to change their display order.
             published: Published
             x_features: 
               one: 1 feature
               other: "%{count} features"
               zero: no feature
-            drag_and_drop_featured_items_to_change_their_display_order: Drag and drop featured items to change their display order.
-        users: 
-          new: 
-            new_admin: New Admin
-          edit: 
-            edit: Edit
+          form: 
+            caption: caption
+            choose_a_post: choose a post
+            existing_post: existing post
+            location: location
+            photo: Photo
+            url: URL
+        pages: 
           index: 
-            users: Users
-          show: 
-            user: User
-          form:
-            firstname: firstname
-            lastname: lastname
-            email: email
-            password: password
-            password_confirmation: password_confirmation
-        user_sessions: 
-          new: 
-            please_login: please login
-        posts: 
-          post: 
-            add_inline_photo: + insert photo
-          form_sidebar: 
-            leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
-            tags: Tags
-            custom_url: custom URL
-            cross_posting: cross posting
-            message: message
-            crosspost_twitter: Post to Twitter
-            crosspost_facebook: Post to Facebook
-          photos: 
-            body: Body
-            upload_hint: Upload, then reorder and caption photos
-            gallery_display: gallery display
-          index: 
-            stats: stats
-            comments: Comments
-            published: published
-            sort_by: sort by
-            filter: filter
-            date: date
-            posts: posts
             drafts: drafts
-            likes: Likes
+            published: published
+          edit: 
+            add_inline_photo: + insert photo
+            custom_url: Custom URL
+            leave_blank_to_create_automatically: Leave blank to create automatically
+            parent: Parent
+            publish_on: Publish on
+            tags: Tags
+        posts: 
+          index: 
+            drafts: drafts
+            published: published
             queued: queued
             x_posts: 
               one: 1 post
               other: "%{count} posts"
               zero: 0 post
+          post: 
+            add_inline_photo: + insert photo
+          form_sidebar: 
+            cross_posting: cross posting
+            crosspost_facebook: Post to Facebook
+            crosspost_twitter: Post to Twitter
+            custom_url: custom URL
+            leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
+            message: message
+            published_on: published on
+            tags: Tags
+          photos: 
+            gallery_display: gallery display
+            show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Show photos as a slideshow gallery or stacked above each other."
+            upload_hint: Upload, then reorder and caption photos
           video: 
-            video_url: Video Url
-            body: Body
-            or: or
-            video_upload: Video upload
-            save: Save
-            reorder_and_caption_videos: Reorder and caption videos
             paste_in_a_URL_to_a_vimeo_or_youtube_video: Paste in a URL to a vimeo or youtube video
+            reorder_and_caption_videos: Reorder and caption videos
+            video_url: Video Url
+        users: 
+          form:
+            email: email
+            firstname: firstname
+            lastname: lastname
+            password: password
+            password_confirmation: password_confirmation
+
+    archives: archives
+    are_you_sure: Are you absolutely sure?
+    back: back
+    body: body
+    cancel: cancel
+    delete: delete
+    edit_post: edit post
+    email: email
+    features: features
+    name: name
+    new: new
+    new_admin: new admin
+    new_feature: new feature
+    new_page: new page
+    new_photos: new photos
+    new_post: new post
+    new_user: new user
+    new_video: new video
+    page: page
+    pages: pages
+    photos: photos
+    post: post
+    preview: preview
+    save: save
+    state: state
+    title: title
+    update_feature: update feature
+    users: users
+    value: value
+    video: video
+    view: view

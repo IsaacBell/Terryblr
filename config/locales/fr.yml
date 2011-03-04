@@ -1,260 +1,148 @@
 fr:
-  back: retour
-  firstname: "prénom"
-  hello: Bonjour tout le monde
-  lastname: nom
-  password: mot de passe
-  user: utilisateur
-  month: mois
-  year: année
-  new: nouveau
-  name: nom
-  email: e-mail
-  new_user: nouvel utilisateur
-  title: titre
-  body: contenu
-  save: enregistrer
-  view: voir
-  cancel: annuler
-  preview: prévisualiser
-  delete: supprimer
-  please_add_some_content_first: Veuillez d'abord ajouter du contenu
-  are_you_sure: Êtes-vous surs ?
-  post: billet
-  photo: photo
-  photos: photos
-  video: vidéo
-  x_posts:
-    zero: aucun billet
-    one: 1 billet
-    other: "%{count} billets"
-  draft: brouillon
-  x_drafts:
-    zero: aucun brouillon
-    one: 1 brouillon
-    other: "%{count} brouillons"
-  edit: éditer
-  archives: archives
-  pages: pages
-  archive: archive
-  loading_analytics: Chargement des statistiques...
-  visitors: visiteurs
-  value: valeur
-  tweets: tweets
-  tweet_reach: "portée des tweets"
-  tweet_exposure: exposition aux tweets
-  top_referrers: principaux referrers
-  top_landing_pages: principales landing pages
-  published_on: "Publié le"
-  will_be_published_on: "Sera publié le"
-  custom_url: "URL spécifique"
-  cross_posting: republication
-  crossposted_twitter: "Publié sur Twitter"
-  crosspost_queued_twitter: Publication sur Twitter en cours
-  crosspost_twitter: Publier sur Twitter
   model:
     states:
-      publish_now: "publier immédiatement"
       drafted: enregistrer en brouillon
+      publish_now: "publier immédiatement"
       published_at: "publier le:"
-  comments: commentaires
-  likes: likes
-  layouts:
-    admin:
-      dashboard: tableau de bord
-      archives: archives
-      users: utilisateurs
-      logout: "déconnexion"
-      search: rechercher...
-      admin: administration
-    public:
-      diary: agenda
-      go: Go!>>
-      home: accueil
-      search: recherche
-      store: boutique
-      your_cart: Votre panier
-  admin:
-    terryblr:
-      user_sessions:
-        new:
-          please_login: veuillez vous identifier
-      posts:
-        index:
-          published: "publiés"
-          drafts: brouillons
-          queued: en attente
-          stats: stats
-          sort_by: classer par
-          filter: filtrer
-          date: date
-          comments: commentaires
-          likes: likes
-          posts: billets
-        photos:
-          upload_hint: "Uploadez des photos, puis ré-ordonnez et nommez-les"
-          gallery_display: affichage de la gallerie
-          body: contenu
-        form_sidebar:
-          leave_blank_to_create_automatically_from_the_title: "Laissez vide pour créer automatiquement à partir du titre"
-          tags: tags
-        video:
-          body: contenu
-          or: ou
-          paste_in_a_url_to_a_vimeo_or_youtube_video: "Coller une URL de vidéo vimeo ou youtube"
-          reorder_and_caption_videos: "Réorganiser et renommer les vidéos"
-          save: enregistrer
-          video_upload: "Envoyer une vidéo"
-          video_url: "URL de la vidéo"
-      comments:
-        index:
-          comments: commentaires
-      features:
-        form:
-          choose_a_post: choisir un billet
-          existing_post: billets existants
-          location: emplacement
-          photo: photo
-        index:
-          drafted: "brouillon"
-          drag_and_drop_featured_items_to_change_their_display_order: "Faites glisser et déposez-les pour changer leur ordre d'affichage."
-          published: "publié"
-      orders:
-        edit:
-          address: l'adresse
-          by: par
-          date: date
-          for: pour
-          item: article
-          items: articles
-          name: nom
-          order: commande
-          price: prix
-          qty: "qté"
-          size: taille
-          total: total
-        index:
-          orders: commandes
-        sidebar:
-          drafts: brouillons
-          filter: Filtrer
-          published: "Publié"
-      pages:
-        edit:
-          back: Retour
-          body: contenu
-          custom_url: "URL personnalisées"
-          delete: Supprimer
-          leave_blank_to_create_automatically: "Laissez vide pour créer automatiquement"
-          parent: parent
-          publish_on: publier sur
-          tags: tags
-          title: titre
-          view: voir
-        index:
-          drafts: projets
-          pages: pages
-          published: "publié"
-      products:
-        edit:
-          back: retour
-          body: contenu
-          common_tags: tags communs
-          currently: "à l'heure actuelle"
-          leave_blank_to_create_automatically: "Laissez vide pour créer automatiquement"
-          name: Nom
-          photos: photos
-          price_hint: "Par exemple: 10,00 $"
-          publish_on: Publier sur
-          qty: "qté"
-          sizes: tailles
-          title: titre
-          upload_reorder_and_caption_photos: "Uploadez, réorganisez et renommez les photos"
-        index:
-          drafts: brouillons
-          filter: Filtrer
-          month: Mois
-          posts: messages
-          products: produits
-          published: "publié"
-          queued: en attente
-          year: "année"
-      users:
-        edit:
-          edit: modifier
-        index:
-          users: utilisateurs
-        new:
-          new_admin: nouvel admin
-        show:
-          user: utilisateur
-    common:
-      archive_sidebar:
-        filter: filtre
 
   terryblr:
+
+    layouts:
+      public:
+        go: "chercher !>>"
+        home: accueil
+        search: recherche
+      admin:
+        admin_title: admin
+        archives: archives
+        dashboard: tableau de bord
+        logout: déconnexion
+        search: recherche
+        users:  utilisateurs
+
+    terryblr:
+      home:
+        index:
+          diary: journal
+      posts:
+        show:
+          arrow_previous: "< précédent"
+          arrow_next: "suivant >"
+      admin:
+        index:
+          x_drafts:
+            zero: aucun brouillon
+            one: 1 brouillon
+            other: "%{count} brouillons"
+          x_posts:
+            zero: aucun billet
+            one: 1 billet
+            other: "%{count} billets"
+        analytics:
+          fb_page_likes: "nombre de likes sur Facebook"
+          fb_page_total_likes: "total des likes sur Facebook"
+          fb_page_total_views: "total de pages vues sur Facebook"
+          fb_page_views: "nombre de pages vues sur Facebook"
+          top_landing_pages: principales landing pages
+          top_referrers: principaux referrers
+          tweet_exposure: exposition aux tweets
+          tweet_reach: "portée des tweets"
+          tweets: tweets
+          visitors: visiteurs
+
     admin:
-      content_nav:
-        archives: archives
-        comments: commentaires
-        pages: pages
-        store: boutique
-      index:
-        comment: commentaire
-        edit: modifier
-        order: commande
-        sales: ventes
-        stats: stats
-      search:
-        no_results_found: "Aucun résultat trouvé"
-    common:
-      content_nav:
-        archives: archives
-        features: "en vedette"
-        pages: pages
-    errors:
-      "404":
-        sorry_we_couldn_t_find_the_page_you_were_looking_for: "Désolé, nous n'avons pas pu trouver la page que vous recherchiez."
-        try_one_of_these_instead: Essayez ceci à la place?
-      "500":
-        sorry_we_encountered_an_error_our_team_has_been_notified: "Désolé, nous avons rencontré une erreur. Notre équipe a été avisée."
-    home:
-      index:
-        diary: agenda
-    notifier:
-      sold_out_warning:
-        hi_there: Bonjour
-        please_login_to_add_more: "Veuillez vous identifier pour en ajouter"
-        terryblr: Terryblr
-        thanks: Merci
-        x_products_sold_out:
-          one: nous avons détecté qu'un produit est en rupture de stock"
-          other: "nous avons détecté que %{count} produits sont en rupture de stock"
-    posts:
-      archives:
-        archives: archives
-        more: plus
-        next: suivant
-        previous: "précédent"
-      featured_posts:
-        more: plus
-      index:
-        archives: archives
-        more: plus
-      list:
-        more: plus
-      show:
-        back_to_archives: retour aux archives
-        comments: commentaires
-    products:
-      index:
-        store: boutique
-      list:
-        more: plus
-      show:
-        back_to_store: "Retour à la boutique"
-      tagged:
-        products: produits
-    user_sessions:
-      new:
-        login: connectez-vous
+      terryblr:
+        features:
+          index:
+            drafted: brouillons
+            published: "publiés"
+            queued: en attente
+            x_features:
+              one: 1 billet vedette
+              other: "%{count} billets vedettes"
+              zero: aucun billet vedette
+          form:
+            caption: "légende"
+            choose_a_post: choisir un billet
+            existing_post: billet existant
+            location: location
+            photo: Photo
+            url: URL
+        pages:
+          index:
+            drafts: "brouillons"
+            published: "publiés"
+          edit:
+            add_inline_photo: "+ Ajouter une photo"
+            custom_url: "URL personnalisées"
+            leave_blank_to_create_automatically: "Laissez vide pour le créer automatiquement"
+            parent: parent
+            publish_on: "Publier le"
+            tags: tags
+        posts:
+          index:
+            drafts: brouillons
+            published: "publiés"
+            queued: en attente
+            x_posts:
+              zero: aucun billet
+              one: 1 billet
+              other: "%{count} billets"
+          post:
+            add_inline_photo: "+ Ajouter une photo"
+          form_sidebar:
+            cross_posting: publications externes
+            crosspost_facebook: Publier sur Facebook
+            crosspost_twitter: Publier sur Twitter
+            custom_url: "URL personnalisées"
+            leave_blank_to_create_automatically_from_the_title: "Laissez vide pour créer automatiquement à partir du titre"
+            message: message
+            published_on: "Publié le"
+            tags: tags
+          photos:
+            gallery_display: affichage de la gallerie
+            show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Montrer les photos avec un diaporama ou superposées les unes sur les autres."
+            upload_hint: "Uploadez des photos, puis ré-ordonnez et nommez-les"
+          video:
+            paste_in_a_URL_to_a_vimeo_or_youtube_video: "Coller une URL de vidéo vimeo ou youtube"
+            reorder_and_caption_videos: "Réorganiser et renommer les vidéos"
+            video_url: "URL de la vidéo"
+        users:
+          form:
+            email: "e-mail"
+            firstname: "prénom"
+            lastname: "nom de famille"
+            password: "mot de passe"
+            password_confirmation: "confirmer le mot de passe"
+
+    archives: archives
+    are_you_absolutely_sure: "Êtes vous sûr ?"
+    back: retour
+    body: contenu
+    cancel: annuler
+    delete: supprimer
+    edit_post: "édition d'un billet"
+    email: e-mail
+    features: en vedette
+    name: nom
+    new: nouveau
+    new_admin: "nouvel administrateur"
+    new_feature: "nouveau billet vedette"
+    new_page: "nouvelle page"
+    new_photos: "nouvelles photos"
+    new_post: "nouveau billet"
+    new_user: "nouveau utilisateur"
+    new_video: "nouvelle vidéo"
+    page: page
+    pages: pages
+    photos: photos
+    post: billet
+    preview: voir
+    save: enregistrer
+    state: status
+    title: titre
+    update_feature: "Changer le billet vedette"
+    users: utilisateurs
+    value: valeur
+    video: vidéo
+    view: voir
