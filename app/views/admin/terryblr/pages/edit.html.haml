@@ -3,7 +3,7 @@
 = semantic_form_for @object, :url => (@object.new_record? ? admin_pages_path : admin_page_path(@object)) do |f|
   
   #form_content{:class => "span-17"}
-    %h2 #{params[:action].to_s.capitalize} #{@object.class.to_s}
+    %h2= ttt("#{params[:action].to_s}_#{@object.class.to_s}".downcase)
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }, :required => true
@@ -28,7 +28,7 @@
       = f.input :published_at, :label => ttt(:'.publish_on'), :as => "string", :wrapper_html => { :class => "date-picker" }
       = f.input :parent_id, :as => "select", :label => ttt(:'.parent'), :wrapper_html => { :class => "parent-picker" }, :collection => Page.published.all.map{|p| [p.title, p.id]}
       = f.input :tag_list, :label => ttt(:'.tags'), :as => "text", :wrapper_html => { :class => "tag-picker" }
-      = f.input :slug, :label => ttt(:'.custom_url'), :as => "underline", :prefix => "/", :hint => "Leave blank to create automatically", :wrapper_html => { :class => "underlined-input" }
+      = f.input :slug, :label => ttt(:'.custom_url'), :as => "underline", :prefix => "/", :hint => ttt(:".leave_blank_to_create_automatically"), :wrapper_html => { :class => "underlined-input" }
 
   .clear
 
