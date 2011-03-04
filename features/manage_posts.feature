@@ -21,7 +21,6 @@ Feature: Manage posts
     And  I should see "New expo"
     And  I should see "My draft"
 
-  @wip
   Scenario: Create a posts
     Given I am on the posts admin page
     And I follow "Post"
@@ -32,7 +31,6 @@ Feature: Manage posts
     Then I should see "New event"
     Then I should see "Your post is now live"
   
-  @wip
   Scenario: Delete a post
     Given I am on the posts admin page
     When I follow "New expo"
