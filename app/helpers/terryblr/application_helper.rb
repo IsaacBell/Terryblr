@@ -158,9 +158,6 @@ module Terryblr::ApplicationHelper
   #
   
   def sortable_element_js(element_id, options = {}) #:nodoc:
-    # options[:with]   ||= "$(#{ActiveSupport::JSON.encode(element_id)}).serialize()"
-    # options[:update] ||= "function(){" + remote_function(options) + "}"
-    
     # Make AJAX callback request if URL provided
     if options.key?(:url)
       options[:update] = "function(){" + remote_function(options) + "}"
@@ -171,16 +168,6 @@ module Terryblr::ApplicationHelper
     %($(#{ActiveSupport::JSON.encode(element_id)}).sortable(#{options_for_javascript(options)});)
   end
   
-  #             $.ajax({
-  #                 type: 'post', 
-  #                 data: $('#tasks-list').sortable('serialize') + '&id=<%=@user_story.id-%>', 
-  #                 dataType: 'script', 
-  #                 complete: function(request){
-  #                     $('#tasks-list').effect('highlight');
-  #                   },
-  #                 url: '/user_stories/prioritize_tasks'})
-  #             }
-  #           })
   def remote_function(options)
     opts = {
       :type     => options[:type] || 'post',

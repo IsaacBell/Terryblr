@@ -98,8 +98,6 @@ class Terryblr::Photo < Terryblr::Base
   end
   
   def photoable_type=(sType)
-    Rails.logger.debug { "========================================" }
-    Rails.logger.debug { "photoable_type=(sType): #{sType.inspect}" }
     super(sType.to_s.classify.constantize.base_class.to_s)
   end
 
