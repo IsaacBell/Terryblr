@@ -45,6 +45,11 @@ class Terryblr::Feature < Terryblr::Base
   # Class Methods
   #
   class << self
+
+    def sti_names
+      ['Feature', 'Terryblr::Feature']
+    end
+
   end
 
   #

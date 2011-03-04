@@ -24,6 +24,11 @@ class Terryblr::Message < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def sti_names
+      ['Message', 'Terryblr::Message']
+    end
+    
   end
 
   #

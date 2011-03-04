@@ -25,6 +25,11 @@ class Terryblr::Like < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def sti_names
+      ['Like', 'Terryblr::Like']
+    end
+    
   end
 
   #
