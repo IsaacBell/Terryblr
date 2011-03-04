@@ -3,10 +3,16 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   unloadable
 
 #  include Settings.authentication.to_s.constantize
-  # load_and_authorize_resource
-  # rescue_from CanCan::AccessDenied do |exception|
-  #   redirect_to new_admin_user_session_path, :notice => exception.message
-  # end
+  load_and_authorize_resource
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user && !current_user.admin?
+      @message = exception.message
+      render 'admin/common/access_denied'
+      # raise exception
+    else
+      redirect_to new_user_session_path, :notice => exception.message
+    end
+  end
 
 #  before_filter :authenticate
   before_filter :set_date, :only => [:index, :filter]
