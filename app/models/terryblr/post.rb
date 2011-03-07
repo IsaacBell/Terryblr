@@ -1,10 +1,14 @@
 class Terryblr::Post < Terryblr::Base
 
+  include Terryblr::Base::Taggable
+  include Terryblr::Base::AasmStates
+  include Terryblr::Base::Validation
+
   #
   # Constants
   #
   @@post_types = %w(post photos video)
-  @@display_types = %w(gallery photos)
+  @@display_types = %w(photos gallery)
 
   #
   # Associatons
@@ -22,9 +26,6 @@ class Terryblr::Post < Terryblr::Base
   #
   # Behaviours
   #
-  include Terryblr::Base::Taggable
-  include Terryblr::Base::AasmStates
-  include Terryblr::Base::Validation
 
   attr_accessor :url, :tw_me, :fb_me, :tumblr_me
 
@@ -38,7 +39,8 @@ class Terryblr::Post < Terryblr::Base
   validates_presence_of :post_type, :unless => :pending? 
   validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
   validates_length_of :social_msg, :within => 0..140, :if => :social_msg?
-
+  validates_inclusion_of :post_type, :in => @@post_types
+  validates_inclusion_of :display_type, :in => @@display_types
   validate :state_status
 
   def state_status
@@ -160,8 +162,8 @@ class Terryblr::Post < Terryblr::Base
       @@display_types
     end
 
-    def sti_names
-      ['Post', 'Terryblr::Post']
+    def name
+      'Post'
     end
 
   end

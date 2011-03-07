@@ -28,6 +28,8 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
         :published_at => nil,
         :twitter_id => nil
       )
+logger.ap object.tags
+logger.ap object.location
       object.save!
       object.slug = ""
     }

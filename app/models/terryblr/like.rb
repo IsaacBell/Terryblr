@@ -26,8 +26,8 @@ class Terryblr::Like < Terryblr::Base
   #
   class << self
     
-    def sti_names
-      ['Like', 'Terryblr::Like']
+    def name
+      'Like'
     end
     
   end

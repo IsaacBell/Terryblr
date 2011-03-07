@@ -16,9 +16,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
 #  before_filter :authenticate
   before_filter :set_date, :only => [:index, :filter]
-#XXX  before_filter :set_expires, :only => [:analytics]
+  before_filter :set_expires, :only => [:analytics]
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
-#XXX  around_filter :cache, :only => [:analytics]
+  around_filter :cache, :only => [:analytics]
   after_filter :set_last_modified
 
   layout 'admin'

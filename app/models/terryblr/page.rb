@@ -1,4 +1,8 @@
 class Terryblr::Page < Terryblr::Base
+
+  include Terryblr::Base::Taggable
+  include Terryblr::Base::AasmStates
+  include Terryblr::Base::Validation
   
   #
   # Constants
@@ -13,8 +17,6 @@ class Terryblr::Page < Terryblr::Base
   #
   # Behaviours
   #
-  include Terryblr::Base::Taggable
-  include Terryblr::Base::AasmStates
 
   accepts_nested_attributes_for :messages
   accepts_nested_attributes_for :photos, :allow_destroy => true
@@ -46,8 +48,8 @@ class Terryblr::Page < Terryblr::Base
   #
   class << self
     
-    def sti_names
-      ['Page', 'Terryblr::Page']
+    def name
+      'Page'
     end
     
     

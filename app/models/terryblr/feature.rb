@@ -46,8 +46,8 @@ class Terryblr::Feature < Terryblr::Base
   #
   class << self
 
-    def sti_names
-      ['Feature', 'Terryblr::Feature']
+    def name
+      'Feature'
     end
 
   end

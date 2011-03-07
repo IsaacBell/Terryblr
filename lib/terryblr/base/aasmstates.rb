@@ -23,6 +23,11 @@ module Terryblr
           aasm_event :queue do
             transitions :from => [:pending, :published, :drafted], :to => :queued
           end
+          
+          #
+          # Validation
+          #
+          validates :state, :inclusion => { :in => aasm_states.map(&:name).compact.map(&:to_s) }
 
           #
           # Scopes
@@ -40,6 +45,24 @@ module Terryblr
             where("#{table_name}.state = 'published' and #{table_name}.published_at < ?", Time.zone.now)
           }
 
+
+          #
+          # Callbacks
+          #
+          after_initialize :set_initial_state
+          def set_initial_state
+            self.state ||= self.class.aasm_initial_state
+          end
+
+          before_validation :stringify_state
+          def stringify_state
+            self.state = state.to_s if state?
+          end
+
+          #
+          # Methods
+          #
+          
           def states_for_select
             [
               [I18n.t(:publish_now,  :scope => [:model, :states]).capitalize, :publish_now],

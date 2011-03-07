@@ -1,4 +1,5 @@
 Factory.define :post, :class => Post do |post|
+  post.state            "pending"
   post.post_type        "post"
   post.sequence(:title) { |n| "Factory post #{n}" }
   post.body             "<h1>I'm a simple body</h1>"
