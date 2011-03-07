@@ -3,4 +3,5 @@
 source "http://rubygems.org"
 gemspec
 
+gem "aws-s3",  :require => "aws/s3"
 gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"

@@ -1,5 +1,5 @@
 module Terryblr
-  module MemcachedSystem
+  module CacheSystem
     protected
 
     #
@@ -30,7 +30,7 @@ module Terryblr
         return
       else
         yield
-        Rails.cache.write(memcached_cache_key, response.body) if response.status[0..2]=="200"
+        Rails.cache.write(memcached_cache_key, response.body) if response.status>=200 and response.status<300
       end
     end
 
@@ -45,8 +45,8 @@ module Terryblr
 
     def cache_content
       @content ||= Rails.cache.fetch(memcached_cache_key) 
-    rescue Memcached::ServerIsMarkedDead => exc
-      return nil
+    # rescue Memcached::ServerIsMarkedDead => exc
+    #   return nil
     end
   end
 end

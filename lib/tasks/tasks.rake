@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'nokogiri'
+
 namespace :terryblr do
   desc "Greeting rake task from Terryblr"
   task :greet do
@@ -53,10 +56,14 @@ namespace :terryblr do
         }
 
         # Create Post with photo
-        p = Post.create!(options)
-        
-        puts "Created post '#{p.title}'"
-         
+        if Post.find_by_import_url(url).nil?
+          p = Post.create!(options)
+          puts "Created post '#{p.title}'"
+
+        else
+          puts "Skipping '#{p.title}' - already imported!"
+
+        end
       end
 
       #these is used to split appropriately, for example if a post is titled "London, September 21st, 2009" vs "London, England, September 21st, 2009"

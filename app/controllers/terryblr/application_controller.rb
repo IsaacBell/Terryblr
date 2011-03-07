@@ -10,7 +10,7 @@ end
 
 class Terryblr::ApplicationController < ResourceController::Base
 
-  include Terryblr::MemcachedSystem
+  include Terryblr::CacheSystem
   helper 'terryblr/application'
   #helper_method :current_user_session, :current_user
 

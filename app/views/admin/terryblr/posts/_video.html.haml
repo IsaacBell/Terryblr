@@ -1,7 +1,7 @@
 = semantic_form_for @post, :url => (@post.new_record? ? admin_posts_path : admin_post_path(@post)) do |f|
   
   #form_content{:class => "span-17"}
-    %h2= ttt("#{params[:action]}_#{@type.to_s}")
+    %h2= ttt("#{params[:action]}_#{@type.to_s}").html_safe
     = error_messages_for_post
     = f.semantic_errors
     - f.inputs do

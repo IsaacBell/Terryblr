@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
 
   s.add_dependency "aasm"
+  s.add_dependency "aws-s3"
   s.add_dependency "acts-as-taggable-on"
   s.add_dependency "acts_as_commentable"
   s.add_dependency "bitly"
@@ -43,6 +44,7 @@ Gem::Specification.new do |s|
   s.add_dependency "unicode_utils"
   s.add_dependency "validates_email_format_of"
   s.add_dependency "will_paginate", "3.0.pre2"
+  s.add_dependency "nokogiri"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "ruby-debug19"

@@ -21,11 +21,6 @@ class Terryblr::Tag < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def sti_names
-      ['Tag', 'Terryblr::Tag']
-    end
-    
   end
 
   #
