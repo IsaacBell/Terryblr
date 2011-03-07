@@ -9,11 +9,6 @@ end
 require 'rake'
 require 'rake/rdoctask'
 
-require File.expand_path('../spec/dummy/config/application', __FILE__)
-Dummy::Application.load_tasks
-namespace :dummy do
-  Dummy::Application.load_tasks
-end
 
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
