@@ -22,8 +22,8 @@ Feature: Manage accounts
   Scenario: Register a new account
     Given I am on the new account page
     When I fill in the following:
-      | First name            | Bob            |
-      | Last name             | The Builder    |
+      | First Name            | Bob            |
+      | Last Name             | The Builder    |
       | Email                 | bob@yahoo.com  |
       | Password              | bob123456      |
       | Password Confirmation | bob123456      |

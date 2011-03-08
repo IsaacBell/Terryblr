@@ -1,7 +1,7 @@
 = form.inputs do
-  = form.input :first_name, :label => ttt(:'.firstname')
-  = form.input :last_name, :label => ttt(:'.lastname')
-  = form.input :email, :label => ttt(:'.email') 
+  = form.input :first_name, :label => ttt(:'.firstname'), :wrapper_html => { :class => "left half" }, :input_html => { :class => "title" }
+  = form.input :last_name, :label => ttt(:'.lastname'), :wrapper_html => { :class => "left half" }, :input_html => { :class => "title" }
+  = form.input :email, :label => ttt(:'.email'), :wrapper_html => { :class => "clear" }
   = form.input :password, :label => ttt(:'.password') 
   = form.input :password_confirmation, :label => ttt(:'.password_confirmation')
 

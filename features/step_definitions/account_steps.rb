@@ -23,7 +23,7 @@ Given /^I am authenticated as "([^"]*)" with "([^"]*)"$/ do |email, password|
   visit new_user_session_path
   And %{I fill in "user_email" with "#{email}"}
   And %{I fill in "user_password" with "#{password}"}
-  And %{I press "Sign in"}  
+  And %{I press "Login"}  
 end
 
 

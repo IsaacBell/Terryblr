@@ -3,18 +3,18 @@ Rails.application.routes.draw do
   root :to => "terryblr/home#index"
 
   begin
-    devise_for :users
+    devise_for :users, :path => "admin", :controllers => { :sessions => "admin/terryblr/sessions" }, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
   rescue ActiveRecord::StatementInvalid => e
     puts "Devise could not be set up for the user model."
     puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."
     puts "Original exception: #{e.class}: #{e}"
   end
-  
+  match "/admin", :to => "terryblr/admin#index", :as => "user_root" # Redirect to after login
+
   match "/admin", :to => "terryblr/admin#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin#search", :as => :admin_search
   match '/admin/analytics.:format', :to => "terryblr/admin#analytics", :as => :admin_analytics
   namespace :admin do
-
     resources :posts, :controller => "terryblr/posts" do
       collection do
         get  :filter
@@ -51,7 +51,6 @@ Rails.application.routes.draw do
         get :admins
       end
     end
-    match "/logout", :to => "todoadmin#index"
 
     %w(page product user).each do |p|
       match "new/#{p}", :to => "terryblr/#{p.pluralize}#new"

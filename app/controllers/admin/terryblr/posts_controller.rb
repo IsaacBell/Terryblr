@@ -81,7 +81,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   def collection
     scope = case params[:state]
     when "drafted"
-      Post.drafted.all
+      Post.drafted
     else
       Post.published
     end
@@ -94,9 +94,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       []
     end
 
-    @posts ||= scope.paginate(
-      :page => params[:page],
-      :conditions => conditions,
-      :order => "#{col} desc, created_at desc")
+    @posts = @collection ||= scope.where(conditions).order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
+    
   end
 end

@@ -761,6 +761,7 @@ form .sidebar textarea[disabled] {
 }
 
 input[type=text],
+input[type=email],
 input[type=password],
 textarea,
 .jq_tags_editor {
@@ -791,6 +792,7 @@ form.formtastic fieldset ol li.feature-photo-for-assoc {
 
 form.formtastic fieldset ol li.string input,
 form.formtastic fieldset ol li.text textarea,
+form.formtastic fieldset ol li.email input,
 form.formtastic fieldset ol li.password input {
   width:100%;
   padding:2px;
@@ -801,8 +803,18 @@ form.formtastic fieldset ol li.text span.mceEditor {
   width:100%;
 }
 
+form.formtastic fieldset ol li.boolean input {
+  top:0;
+}
+
+form.formtastic fieldset ol li.boolean label {
+  padding-left:0;
+}
+
+
 form.formtastic fieldset ol li.string input.title,
-#user_session_password_input input {
+form.formtastic fieldset ol li.email input.title,
+form.formtastic fieldset ol li.password input.title {
   padding:5px;
   font-size:2em;
 }

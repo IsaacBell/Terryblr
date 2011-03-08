@@ -33,35 +33,35 @@ namespace :terryblr do
         content = Nokogiri::HTML(content_html)
         image_urls = content.css("img").map{|i|i.attributes['src'].to_s}
 
-        photos = []
-        image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
-        # image_urls.each do |url|
-          photos << Photo.create!(:url => url)
-        end
-
         title = post.css('title').text #place and date
         url = post.at_css("link[rel='alternate'][type='text/html']")['href'] rescue nil
-        
-        options = {
-          :slug => fetch_slug(post),
-          :body => fetch_date(title),
-          :title => fetch_location(title),
-          :tag_list => parse_tags(post),
-          :photos => photos,
-          :post_type => "photos",
-          :state => "published",
-          :published_at => post.css('published').text,
-          :display_type => "photos",
-          :import_url => url
-        }
 
-        # Create Post with photo
+
+        # Create Post with photo unless already exists.
         if Post.find_by_import_url(url).nil?
+          photos = []
+          image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
+          # image_urls.each do |url|
+            photos << Photo.create!(:url => url)
+          end
+        
+          options = {
+            :slug => fetch_slug(post),
+            :body => fetch_date(title),
+            :title => fetch_location(title),
+            :tag_list => parse_tags(post),
+            :photos => photos,
+            :post_type => "photos",
+            :state => "published",
+            :published_at => post.css('published').text,
+            :display_type => "photos",
+            :import_url => url
+          }
           p = Post.create!(options)
           puts "Created post '#{p.title}'"
 
         else
-          puts "Skipping '#{p.title}' - already imported!"
+          puts "Skipping '#{title}' - already imported!"
 
         end
       end

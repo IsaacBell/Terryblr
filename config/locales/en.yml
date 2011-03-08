@@ -3,7 +3,7 @@ en:
     states: 
       drafted: save as a draft
       publish_now: publish now
-      published_at: publish on dbate
+      published_at: publish on date
 
   terryblr: 
 
@@ -110,11 +110,12 @@ en:
         users: 
           form:
             email: email
-            firstname: firstname
-            lastname: lastname
+            firstname: first name
+            lastname: last name
             password: password
-            password_confirmation: password_confirmation
+            password_confirmation: password confirmation
 
+    edit: edit
     archives: archives
     are_you_sure: Are you absolutely sure?
     back: back
@@ -122,6 +123,8 @@ en:
     cancel: cancel
     delete: delete
     edit_post: edit post
+    edit_photos: edit photos
+    edit_video: edit video
     email: email
     features: features
     name: name
@@ -129,6 +132,7 @@ en:
     new_admin: new admin
     new_feature: new feature
     new_page: new page
+    new_post: new post
     new_photos: new photos
     new_post: new post
     new_user: new user

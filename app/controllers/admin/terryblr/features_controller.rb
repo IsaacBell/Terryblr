@@ -26,7 +26,7 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   update {
     wants.html {
-      redirect_to admin_features_path(object)
+      redirect_to admin_features_path
     }
   }
 

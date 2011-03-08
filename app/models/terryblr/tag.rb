@@ -1,4 +1,4 @@
-class Terryblr::Tag < Terryblr::Base
+class Terryblr::Tag < ActsAsTaggableOn::Tag
 
   #
   # Constants
@@ -11,7 +11,6 @@ class Terryblr::Tag < Terryblr::Base
   #
   # Validations
   #
-  validates_presence_of :name
 
   #
   # Scopes

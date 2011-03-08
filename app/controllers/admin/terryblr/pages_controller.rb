@@ -24,7 +24,7 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   show {
     wants.html {
-      redirect_to admin_pages_path(object)
+      redirect_to admin_pages_path
     }
   }
   
