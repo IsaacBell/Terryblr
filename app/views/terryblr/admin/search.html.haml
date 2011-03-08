@@ -1,6 +1,6 @@
 %h2 Search results for '#{@query}'
 
-- %w(posts products pages).each do |key|
+- %w(posts pages).each do |key|
   - records = @results[key.to_sym]
   - span = key=="pages" ? 5 : 6
   %div{ :class => "search-results span-#{span}", :id => "#{key}_results" }
@@ -8,4 +8,4 @@
     - if records.empty?
       %p #{ttt :'.no_results_found'}
     - else
-      = render :partial => 'admin/common/archives', :locals => { :records => records }
+      = render :partial => 'admin/terryblr/posts/archives', :locals => { :records => records }

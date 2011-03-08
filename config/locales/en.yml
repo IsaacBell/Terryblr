@@ -122,6 +122,7 @@ en:
     body: body
     cancel: cancel
     delete: delete
+    edit_page: edit page
     edit_post: edit post
     edit_photos: edit photos
     edit_video: edit video
