@@ -58,6 +58,10 @@ class Terryblr::Product < Terryblr::Base
       'Product'
     end
     
+    def base_class
+      self
+    end
+    
   end
 
   #

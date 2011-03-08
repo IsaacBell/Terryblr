@@ -46,6 +46,10 @@ class Terryblr::Feature < Terryblr::Base
   #
   class << self
 
+    def base_class
+      self
+    end
+
     def name
       'Feature'
     end

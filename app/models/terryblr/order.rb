@@ -91,6 +91,11 @@ class Terryblr::Order < Terryblr::Base
         :ip_address => user.current_login_ip
       }))
     end
+    
+    def base_class
+      self
+    end
+    
   end
 
   #

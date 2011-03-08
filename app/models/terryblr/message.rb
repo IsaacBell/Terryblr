@@ -29,6 +29,10 @@ class Terryblr::Message < Terryblr::Base
       'Message'
     end
     
+    def base_class
+      self
+    end
+    
   end
 
   #

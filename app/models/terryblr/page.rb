@@ -52,6 +52,9 @@ class Terryblr::Page < Terryblr::Base
       'Page'
     end
     
+    def base_class
+      self
+    end
     
   end
 

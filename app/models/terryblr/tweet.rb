@@ -94,6 +94,11 @@ class Terryblr::Tweet < Terryblr::Base
         # Return new tweets created
         count(:id).where("created_at >= ?", started_at)
       end
+      
+      def base_class
+        self
+      end
+      
     end
 
     private 

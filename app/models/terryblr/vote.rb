@@ -26,6 +26,11 @@ class Terryblr::Vote < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def base_class
+      self
+    end
+    
   end
 
   #

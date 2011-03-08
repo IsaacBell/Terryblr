@@ -42,7 +42,12 @@ namespace :terryblr do
           photos = []
           image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
           # image_urls.each do |url|
-            photos << Photo.create!(:url => url)
+            photo = Photo.create(:url => url)
+            if photo.valid?
+              photos << photo
+            else
+              puts "Skipping image '#{url}' - #{photo.errors.full_messages.to_sentence}"
+            end
           end
         
           options = {

@@ -30,6 +30,10 @@ class Terryblr::Like < Terryblr::Base
       'Like'
     end
     
+    def base_class
+      self
+    end
+    
   end
 
   #

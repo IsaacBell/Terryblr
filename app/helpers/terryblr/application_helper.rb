@@ -69,7 +69,7 @@ module Terryblr::ApplicationHelper
     return if object.photos.empty?
     
     detail_path = send("#{obj_type}_path",object.to_param, object.slug)
-    image_size = detail_page? ? :medium : :list
+    image_size = :list # Is this needed? -> detail_page? ? :medium : :list
     thumb_panes = detail_page? ? 6 : 4
     thumb_photos = object.photos[(detail_page? ? 0 : 1)..(detail_page? ? object.photos.count : thumb_panes+1)]
     is_gallery = (object.respond_to?(:display_type) and object.display_type? and object.display_type.gallery?)

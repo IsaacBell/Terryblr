@@ -165,6 +165,14 @@ class Terryblr::Post < Terryblr::Base
     def name
       'Post'
     end
+    
+    def sti_names
+      ['Post', 'Terryblr::Post']
+    end
+
+    def base_class
+      self
+    end
 
   end
 

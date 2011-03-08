@@ -41,6 +41,11 @@ class Terryblr::User < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def base_class
+      self
+    end
+    
   end
 
   #
