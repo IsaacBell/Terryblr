@@ -81,20 +81,19 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   def collection
     scope = case params[:state]
     when "drafted"
+      col = :updated_at
       Post.drafted
     else
+      col = :published_at
       Post.published
     end
 
-    col = :published_at
-    conditions = if params[:month] and params[:year]
+    if params[:month] and params[:year]
       @date = Date.parse("#{params[:year]}-#{params[:month]}-1")
-      ["EXTRACT(MONTH from #{col}) = ? and EXTRACT(YEAR from #{col}) = ?", @date.month, @date.year]
-    else
-      []
+      scope = scope.for_month @date, col
     end
 
-    @posts = @collection ||= scope.where(conditions).order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
+    @posts = @collection ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
     
   end
 end
