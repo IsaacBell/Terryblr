@@ -62,6 +62,11 @@ class Terryblr::Post < Terryblr::Base
   #
   default_scope order("posts.published_at desc, posts.id desc")
 
+  scope :for_month, lambda { |date, col|
+    col ||= :published_at
+    where(col => date.beginning_of_month..date.end_of_month)
+  }
+
   scope :by_month, lambda { |*args|
     # Needs to be sep variable or AR will cache the first time and it'll never change
     now = Time.zone.now
