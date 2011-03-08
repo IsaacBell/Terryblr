@@ -18,12 +18,6 @@ module Terryblr
                 joins("JOIN taggings ON taggings.taggable_id = #{table_name}.id AND taggings.taggable_type IN ('#{self.sti_names.join("','")}')").
                 where("taggings.tag_id in (SELECT id from tags where name IN (#{tags_sql}))")
               }
-              scope :tagged_on, lambda { |tags, context|
-                tags_sql = tags.is_a?(Array) ? tags.map{|t|"'#{t}'"}.join(",") : "'#{tags}'"
-                select("#{table_name}.*").
-                joins("JOIN taggings ON taggings.taggable_id = #{table_name}.id AND taggings.taggable_type IN ('#{self.sti_names.join("','")}')").
-                where("taggings.tag_id in (SELECT id from tags where name IN (#{tags_sql})) and taggings.context = ?", context.to_s)
-              }
             end
           end
         end
