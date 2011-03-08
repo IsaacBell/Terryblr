@@ -27,7 +27,7 @@ Feature: Manage accounts
       | Email                 | bob@yahoo.com  |
       | Password              | bob123456      |
       | Password Confirmation | bob123456      |
-    And I press "Save User"
+    And I press "Save"
     Then I should see "Edit Bob The Builder"
 
   Scenario: Creating a new account requires being authenticated

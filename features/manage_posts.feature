@@ -12,24 +12,28 @@ Feature: Manage posts
       | title         |                   body                    | post_type   |    state    |
       | Hey guys      | Nevermind, just testing my new site.      | post        |  published  |
       | New expo      | Do not miss it !!!                        | post        |  published  |
-      | My draft         | Not ready for prime time yet...           | post        |  drafted    |
+      | My draft      | Not ready for prime time yet...           | post        |  drafted    |
 
-  Scenario: List the posts
+  Scenario: List the published posts
     Given I am on the posts admin page
     # Then show me the posts
     Then I should see "Hey guys"
     And  I should see "New expo"
+  
+  Scenario: List the drafted posts
+    Given I am on the drafted admin posts page
+    # Then show me the posts
     And  I should see "My draft"
-
+  
   Scenario: Create a posts
     Given I am on the posts admin page
     And I follow "Post"
     When I fill in the following:
       | Title       | New event    |
-      | Body        | Come join us !   |
+      | Body        | Come join us! |
     And I press "Save"
     Then I should see "New event"
-    Then I should see "Your post is now live"
+  #   # Then I should see "Successfully updated!"
   
   Scenario: Delete a post
     Given I am on the posts admin page
@@ -37,4 +41,4 @@ Feature: Manage posts
     Then I should see "Edit Post"
     When I follow "Delete"
     Then I should see "Successfully removed!"
-    And I should see "Archives: 2 Posts"
+    And I should see "Archives: 1 Post"

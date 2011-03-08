@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do
+        match ':state/:month/:year(.:format)', :to => "terryblr/posts#filter", :as => :drafted, :constraints => { :state => 'drafted', :year => /\d{4}/, :month => /\d{1,2}/ }
         get  :filter
         post :filter
       end
