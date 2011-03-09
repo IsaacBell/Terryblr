@@ -3,12 +3,12 @@ class CreateTweets < ActiveRecord::Migration
     create_table :tweets, :force => true do |t|
       t.datetime :tweeted_at
       t.string :text, :length => 140
-      if Rails.database.mysql?
+      if Rails.database.mysql? 
         t.column :twitter_id, 'BIGINT UNSIGNED'
-        t.integer :twitter_id, :limit => 20
-      else
-        t.integer :twitter_id, :limit => 20
+      elsif Rails.database.postgresql?
+        t.column :twitter_id, 'BIGINT'
       end
+      t.integer :twitter_id, :limit => 20
       t.string :from_user
       t.string :profile_image_url
       t.string :to_user

@@ -34,8 +34,9 @@ common: &common
     page_id: 100914013285388
     app_id: 110195482348474
   twitter:
-    consumer_key: 96nlw6FwgUYvio0AN4vlXg
-    consumer_secret: iePJS0kG67mkT7Y7BXN1cJUHOICCOhTBx7gQZe3mI
+    login: 
+    consumer_key: uPDt8kCyGTcZsZTQHeKPiQ
+    consumer_secret: jRJiSOFOj1DDY8s5n9kphDFQTEnIoe4jyDW26X74Io
     # oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret, :sign_in => true)
     # oauth.set_callback_url(app.root_url(:host => Settings.domain))
     # rtoken  = oauth.request_token.token
@@ -46,9 +47,9 @@ common: &common
     # oauth.authorize_from_request(rtoken, rsecret, oauth_verifier)
     # oauth.access_token.token -> use below
     # oauth.access_token.secret -> use below
-    app_user_token: 636223-Yg5JxRA8qSCAEagDwrmhmaaiK7YwnN6ijByDQrgzyjE
-    app_user_secret: oVJQeDQtzvlXwccSmt2Tci4j3EPnvOofEMMAxf3Xnfw
-    login: terryblr
+    app_user_token: 142716515-p3qcuaGq6xLdtSNySr0aI7WCAujpdGMsmpv6NcpO
+    app_user_secret: WNcvqsoh83XsoDRTlRHPgAMbuekCPpcvbrZ0o4A4jj8
+    search_for: terryblr OR "The 88" OR "Le 88"
   bitly:
     login: jacksonlaycock
     key: R_c8a7f8051740494c879df5865cd04b4b
@@ -98,25 +99,7 @@ production:
   ganalytics:
     code: UA-12859057-1
     profile_id: 25211478
-  domain: terryrichardson.com
-  vimeo:
-    key: b54e1791dc294c6ead7cf6f4c7fa9d23
-    secret: fcfb4b9bb66e992b
-  twitter:
-    consumer_key: JHq3Fti6SVvBOhEeLl3Dg
-    consumer_secret: gvAVYWjUrFy1mpXoADLoPZmKFiEJjhvOvCUlr0cBzSo
-    # oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret, :sign_in => true)
-    # oauth.set_callback_url(app.root_url(:host => Settings.domain))
-    # rtoken  = oauth.request_token.token
-    # rsecret = oauth.request_token.secret
-    # oauth.request_token.authorize_url 
-    # -- Go to above URL and sign-in/approve the app and retrieve the verifier param from the return-to-app URL
-    # oauth_verifier = "0aRHi5UAGWoxfyaa0iMnUYNC3nUXF5gIIzjtxyauc58"
-    # oauth.authorize_from_request(rtoken, rsecret, oauth_verifier)
-    # oauth.access_token.token -> use below
-    # oauth.access_token.secret -> use below
-    app_user_token: 114012228-ckEBx61yLR8IHisgxnKxnctFu4GYao0vGExOWWo7
-    app_user_secret: RuzCNzdO1V60UA6naQwTYnftLJxVqG243J2wDkxGtg
+  domain: terryblr.com
   facebook:
     # GoTo:
     # http://graph.facebook.com/oauth/authorize?client_id=632c768327fd8d5ec7a55b2364424abe&redirect_uri=http://kanonvodka.rails

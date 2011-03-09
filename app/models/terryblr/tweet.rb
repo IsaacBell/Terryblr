@@ -7,7 +7,6 @@ class Terryblr::Tweet < Terryblr::Base
   #
   # Associatons
   #
-  default_scope order(:twitter_id)
 
   #
   # Validations
@@ -19,7 +18,7 @@ class Terryblr::Tweet < Terryblr::Base
     def analytics(since = 1.month.ago)
       days = select("count(id) as twitter_id, sum(reach) as reach, DATE(tweeted_at) as tweeted_at").
         where("tweeted_at > ?", since).
-        group("DATE(tweeted_at)").map { |t|
+        group("DATE(tweeted_at)").order(:twitter_id).map { |t|
           {
             :tweets => t.twitter_id,
             :reach => t.reach,
@@ -33,7 +32,7 @@ class Terryblr::Tweet < Terryblr::Base
     end
 
     def reach(since = 1.month.ago)
-      select("distinct(from_user), reach").where("tweeted_at > ?", since).to_a.sum(&:reach) # Array#sum, not Arel#sum !!
+      select("distinct(from_user), reach").where("tweeted_at > ?", since).to_a.sum(&:reach)
     end
 
     # Get most recent
@@ -92,7 +91,7 @@ class Terryblr::Tweet < Terryblr::Base
         end
 
         # Return new tweets created
-        count(:id).where("created_at >= ?", started_at)
+        where("created_at >= ?", started_at).count(:id)
       end
       
       def base_class
@@ -104,6 +103,7 @@ class Terryblr::Tweet < Terryblr::Base
     private 
 
     def twitter
+      require 'grackle' unless defined?(Grackle)
       @twitter ||= Grackle::Client.new(:auth => {
         :type => :oauth,
         :consumer_key => Settings.twitter.consumer_key, 

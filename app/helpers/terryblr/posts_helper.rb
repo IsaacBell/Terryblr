@@ -30,7 +30,7 @@ module Terryblr::PostsHelper
       parts.first.to_s + "... " + link_to("Continue reading #{post.title}.", post_path(post, post.slug))
     else
       post.body.to_s
-    end
+    end.html_safe
   end
 
   def video_body(post)

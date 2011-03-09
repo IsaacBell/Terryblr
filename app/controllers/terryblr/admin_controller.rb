@@ -70,7 +70,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     joins  = nil
     @results = {
       :posts    => Post.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
-      # :products => Product.all(:conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
       :pages    => Page.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1)
     }
     respond_to do |wants|
