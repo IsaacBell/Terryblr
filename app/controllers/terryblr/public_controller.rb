@@ -13,8 +13,10 @@ class Terryblr::PublicController < Terryblr::ApplicationController
 
   if Rails.env.production? # || Rails.env.staging?
     rescue_from 'Exception' do |exception|
-      logger.error exception, exception.backtrace
-
+      
+      logger.error "Exception: #{exception}"
+      logger.error exception.backtrace
+  
       case exception.class.to_s
       when ActiveRecord::RecordNotFound.to_s
         render :template => 'terryblr/errors/404', :layout => 'public', :status => 404
