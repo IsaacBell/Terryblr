@@ -7,7 +7,7 @@
     - f.inputs do
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       / %li.video-upload
-      /   %label Video Upload
+      /   %label Terryblr::Video Upload
       /   =multi_file_uploader(:url => admin_post_videos_path(@post, :format => :js), :css_parent_class => "video-upload", :file_types => "*.mov;*.avi;*.mpg;*.3gp;*.m4v;")
       /   %p.inline-hints.clear Upload films from your computer
       / %li.video-or

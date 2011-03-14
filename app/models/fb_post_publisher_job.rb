@@ -12,7 +12,7 @@ class FbPostPublisherJob
   default_url_options[:host] = Settings.domain
   
   def perform
-    post = Post.find post_id
+    post = Terryblr::Post.find post_id
     
     # Abort if already posted
     return if post.facebook_id?
@@ -31,7 +31,7 @@ class FbPostPublisherJob
     resp = facebook.post("/me/feed", {
       :message => msg,
       :name => "#{Settings.app_name} - #{post.title.truncate(420)}",
-      :from => Settings.facebook.page_id, # Post as the page
+      :from => Settings.facebook.page_id, # Terryblr::Post as the page
       :link => url,
       :source => (post.post_type.video? && !post.videos.empty?) ? post.videos.first.url : img_url,
       :caption => body, 

@@ -4,9 +4,9 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
 
   def create
     object = if params.key?(:Filedata)
-      Video.new(:upload => params[:Filedata], :post => post)
+      Terryblr::Video.new(:upload => params[:Filedata], :post => post)
     elsif params.key?(:video_url)
-      Video.new(:url => params[:video_url], :post => post)
+      Terryblr::Video.new(:url => params[:video_url], :post => post)
     end
     
     if object.save
@@ -24,7 +24,7 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
     if params[:videos_list].is_a?(Array)
       i = 0
       params[:videos_list].each do |id|
-        Video.update_all({:display_order => (i+=1)}, {:id => id})
+        Terryblr::Video.update_all({:display_order => (i+=1)}, {:id => id})
       end
       render :nothing => true, :status => :ok
     else
@@ -40,7 +40,7 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
   private
   
   def post
-    @post ||= Post.find_by_slug(params[:post_id]) || Post.find_by_id(params[:post_id]) || Post.new
+    @post ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id]) || Terryblr::Post.new
   end
   
   def object

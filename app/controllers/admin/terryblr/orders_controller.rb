@@ -32,11 +32,11 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
   end
   
   def object
-    @object ||= Order.find params[:id]
+    @object ||= Terryblr::Order.find params[:id]
   end
   
   def find_by_month
-    @orders = Order.by_month(@date.month).by_year(@date.year).paginate(:page => params[:page])
+    @orders = Terryblr::Order.by_month(@date.month).by_year(@date.year).paginate(:page => params[:page])
   end
   
 end

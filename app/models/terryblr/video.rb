@@ -200,7 +200,7 @@ class Terryblr::Video < Terryblr::Base
   end
 
   def vimeo_video
-    @video_upload ||= Vimeo::Advanced::Video.new(Settings.vimeo.consumer_key, Settings.vimeo.consumer_secret, :token => Settings.vimeo.user_token, :secret => Settings.vimeo.user_secret)
+    @video_upload ||= Vimeo::Advanced::Terryblr::Video.new(Settings.vimeo.consumer_key, Settings.vimeo.consumer_secret, :token => Settings.vimeo.user_token, :secret => Settings.vimeo.user_secret)
   end
 
 end

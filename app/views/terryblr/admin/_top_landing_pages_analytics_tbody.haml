@@ -5,7 +5,7 @@
 - range      = (rep[:start_date].to_date .. rep[:end_date].to_date).to_a
 %tbody{:units => 'visit'}
   - range.each do |date|
-    / Order visitors by date
+    / Terryblr::Order visitors by date
     - point = data.points[range.index(date)]
     - next unless point
     %tr

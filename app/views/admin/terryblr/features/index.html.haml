@@ -5,8 +5,8 @@
     %li.new-content
       = sidebar_new_content_link
     %li.divider
-    %li= "#{ttt :'.x_features', :count => Feature.published.count} #{ttt :'.published'}"
-    %li= "#{ttt :'.x_features', :count => Feature.drafted.count} #{ttt :'.drafted'}"
+    %li= "#{ttt :'.x_features', :count => Terryblr::Feature.published.count} #{ttt :'.published'}"
+    %li= "#{ttt :'.x_features', :count => Terryblr::Feature.drafted.count} #{ttt :'.drafted'}"
 
 = render :partial => "terryblr/admin/content_nav"
 

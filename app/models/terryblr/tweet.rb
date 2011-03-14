@@ -47,8 +47,8 @@ class Terryblr::Tweet < Terryblr::Base
         # Get most recent tweets
         tweets = twitter[:search].search.json?(
           :q => Settings.twitter.search_for, 
-          :since_id => Tweet.maximum(:twitter_id),
-          # :since => (Tweet.maximum(:tweeted_at) || 1.month.ago).to_date.to_s,
+          :since_id => Terryblr::Tweet.maximum(:twitter_id),
+          # :since => (Terryblr::Tweet.maximum(:tweeted_at) || 1.month.ago).to_date.to_s,
           # :max_id => self.minimum(:twitter_id, :conditions => ["created_at >= ?", started_at]),
           :rpp => per_page, 
           :lang => "all"

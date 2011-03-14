@@ -1,7 +1,7 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
   def create
-    @object = Photo.new(:image => params[:Filedata])
+    @object = Terryblr::Photo.new(:image => params[:Filedata])
 
     # Features belong to the photo and not the otherway
     if photoable.is_a?(Feature)
@@ -23,7 +23,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
         }
       else
         flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
-        logger.error { "Photo errors: #{@object.errors.full_messages.to_sentence}" }
+        logger.error { "Terryblr::Photo errors: #{@object.errors.full_messages.to_sentence}" }
         wants.js
         wants.html {
           render :text => @object.errors.full_messages.to_sentence
@@ -36,7 +36,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     if params[:photos_list].is_a?(Array)
       i = 0
       params[:photos_list].each do |id|
-        Photo.update_all({:display_order => (i+=1)}, {:id => id})
+        Terryblr::Photo.update_all({:display_order => (i+=1)}, {:id => id})
       end
       render :nothing => true, :status => :ok
     else
@@ -53,18 +53,17 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
   def photoable
     @photoable ||= if params[:post_id]
-      Post.find_by_slug(params[:post_id]) || Post.find_by_id(params[:post_id].to_i) || Post.new
+      Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id].to_i) || Terryblr::Post.new
     elsif params[:product_id]
-      Product.find_by_slug(params[:product_id]) || Product.find_by_id(params[:product_id].to_i) || Product.new
+      Terryblr::Product.find_by_slug(params[:product_id]) || Terryblr::Product.find_by_id(params[:product_id].to_i) || Terryblr::Product.new
     elsif params[:page_id]
-      Page.find_by_slug(params[:page_id]) || Page.find_by_id(params[:page_id].to_i) || Page.new
+      Terryblr::Page.find_by_slug(params[:page_id]) || Terryblr::Page.find_by_id(params[:page_id].to_i) || Terryblr::Page.new
     elsif params[:feature_id]
-      Feature.find_by_id(params[:feature_id].to_i) || Feature.new
+      Terryblr::Feature.find_by_id(params[:feature_id].to_i) || Terryblr::Feature.new
     end
   end
 
   def object
     @object ||= end_of_association_chain.find_by_id(params[:id])
   end
-
 end

@@ -31,16 +31,19 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   private
 
   def find_page
-    @page = Page.find_by_slug(params[:id])
+    @page = Terryblr::Page.find_by_slug(params[:id])
   end
   
   def collection
     order = "created_at desc"
     @collection = @posts ||= if params[:parent_id]
-      Page.by_state(params[:state] || 'published').all(:conditions => {:parent_id => params[:parent_id]}, :order => order)
+      Terryblr::Page.by_state(params[:state] || 'published').all(:conditions => {:parent_id => params[:parent_id]}, :order => order)
     else
-      Page.roots.by_state(params[:state] || 'published').all(:order => order)
+      Terryblr::Page.roots.by_state(params[:state] || 'published').all(:order => order)
     end
   end
   
+  def model_name
+    "Terryblr::Page"
+  end
 end

@@ -84,4 +84,8 @@ class Terryblr::ApplicationController < ResourceController::Base
     respond_to?(:collection, true) and !collection.nil? and !collection.empty?
   end
 
+  def current_ability
+    @current_ability ||= Terryblr::Ability.new(current_user)
+  end
+
 end

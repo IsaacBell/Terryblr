@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root :to => "terryblr/home#index"
 
   begin
-    devise_for :users, :path => "admin", :controllers => { :sessions => "admin/terryblr/sessions" }, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+    devise_for :users, :class_name => "Terryblr::User", :path => "admin", :controllers => { :sessions => "admin/terryblr/sessions" }, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
   rescue ActiveRecord::StatementInvalid => e
     puts "Devise could not be set up for the user model."
     puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."

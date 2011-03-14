@@ -13,9 +13,9 @@ class Terryblr::Post < Terryblr::Base
   #
   # Associatons
   #
-  has_many :features
-  has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy
-  has_many :videos, :order => "display_order", :dependent => :destroy
+  has_many :features, :class_name => "Terryblr::Feature"
+  has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Photo"
+  has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
   belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :fb_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "::Delayed::Job"
@@ -132,7 +132,7 @@ class Terryblr::Post < Terryblr::Base
   end
 
   def push_to_social
-    # Post to social networks
+    # Terryblr::Post to social networks
     social_cross_posts if published? and (tw_me or fb_me or tumblr_me)
   end
 
@@ -211,10 +211,10 @@ class Terryblr::Post < Terryblr::Base
 
     max = 6
     @related_posts  = []
-    @related_posts += Post.live.tagged_with(tag_list, :match_all => :true).all(:conditions => ["posts.id not in (?)", [id]], :limit => max) rescue []
-    @related_posts += Post.live.tagged_with(tag_list, :any       => :true).all(:conditions => ["posts.id not in (?)", @related_posts.map(&:id)+[id]], :limit => max - @related_posts.size) if @related_posts.size < max rescue []
+    @related_posts += Terryblr::Post.live.tagged_with(tag_list, :match_all => :true).all(:conditions => ["posts.id not in (?)", [id]], :limit => max) rescue []
+    @related_posts += Terryblr::Post.live.tagged_with(tag_list, :any       => :true).all(:conditions => ["posts.id not in (?)", @related_posts.map(&:id)+[id]], :limit => max - @related_posts.size) if @related_posts.size < max rescue []
     @related_posts.uniq!
-    @related_posts += Post.live.all(:conditions => ["posts.id not in (?)", @related_posts.map(&:id)+[id]], :limit => max - @related_posts.size) if @related_posts.size < max rescue []
+    @related_posts += Terryblr::Post.live.all(:conditions => ["posts.id not in (?)", @related_posts.map(&:id)+[id]], :limit => max - @related_posts.size) if @related_posts.size < max rescue []
     @related_posts
   end
 

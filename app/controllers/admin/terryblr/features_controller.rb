@@ -6,7 +6,7 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
     @show_as_dash = true
     @collections = {}
     Settings.tags.posts.features.map do |tag|
-      @collections[tag] = Feature.live.tagged_with(tag)
+      @collections[tag] = Terryblr::Feature.live.tagged_with(tag)
     end
   end
 
@@ -35,7 +35,7 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
     if params[key].is_a?(Array)
       i = 0
       params[key].each do |id|
-        Feature.update_all({:display_order => (i+=1)}, {:id => id})
+        Terryblr::Feature.update_all({:display_order => (i+=1)}, {:id => id})
       end
       render :nothing => true, :status => :ok
     else
@@ -49,4 +49,7 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
     @object ||= end_of_association_chain.find(params[:id])
   end
 
+  def model_name
+    "Terryblr::Feature"
+  end
 end
