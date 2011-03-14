@@ -1,4 +1,4 @@
-Factory.define :photo, :class => Photo do |photo|
+Factory.define :photo, :class => Terryblr::Photo do |photo|
   photo.sequence(:caption)        { |n| "Factory photo #{n}" }
   photo.url                       "http://test.host/test.url"
   photo.image_file_name           "factory_test_file.png"

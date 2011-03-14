@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110224141902) do
+ActiveRecord::Schema.define(:version => 20110314150044) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -226,6 +226,16 @@ ActiveRecord::Schema.define(:version => 20110224141902) do
   add_index "products", ["comments_count"], :name => "index_products_on_comments_count"
   add_index "products", ["likes_count"], :name => "index_products_on_likes_count"
   add_index "products", ["votes_count"], :name => "index_products_on_votes_count"
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

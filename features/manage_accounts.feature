@@ -7,7 +7,7 @@ Feature: Manage accounts
     Given the following accounts:
       | email                   | first_name | last_name         | password |  admin  |
       | terry@lovethe88.com     | Terry      | Richardson        | ******** |  true   |
-      | contact@lovethe88.com   | The88      |                   | ******** |  true   |
+      | contact@lovethe88.com   | The88      | Agency            | ******** |  true   |
       | non_admin@lovethe88.com | normal     | user              | ******** |  false  |
       | deletable@lovethe88.com | deletable  | user              | ******** |  true   |
     And I am authenticated as "terry@lovethe88.com" with "********"

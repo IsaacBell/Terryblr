@@ -1,6 +1,7 @@
-require 'spec_helper'
+require File.join(File.dirname(__FILE__), '../spec_helper.rb')
 
 describe "PagesLinks" do
+
   before do
     @page = Factory(:page)
   end
@@ -9,4 +10,5 @@ describe "PagesLinks" do
     get "/#{@page.slug}"
     response.should be_success
   end
+
 end

@@ -1,4 +1,4 @@
-Factory.define :post, :class => Post do |post|
+Factory.define :post, :class => Terryblr::Post do |post|
   post.state            "pending"
   post.post_type        "post"
   post.sequence(:title) { |n| "Factory post #{n}" }

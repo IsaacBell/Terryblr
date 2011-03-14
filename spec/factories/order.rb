@@ -1,4 +1,4 @@
-Factory.define :order, :class => Order do |order|
+Factory.define :order, :class => Terryblr::Order do |order|
   order.state               "pending"
   order.user_id             nil
   order.amount_cents        1000
@@ -18,13 +18,13 @@ Factory.define :order, :class => Order do |order|
   order.updated_at          5.minutes.ago
 end
 
-Factory.define :completed_order, :class => Order, :parent => :order do |order|
+Factory.define :completed_order, :class => Terryblr::Order, :parent => :order do |order|
   order.state               "completed"
   order.payment_gateway     ""
   order.gateway_data        ""
 end
 
-Factory.define :failed_order, :class => Order, :parent => :order do |order|
+Factory.define :failed_order, :class => Terryblr::Order, :parent => :order do |order|
   order.state               "failed"
   order.payment_gateway     ""
   order.gateway_data        ""

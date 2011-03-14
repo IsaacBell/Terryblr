@@ -1,4 +1,4 @@
-Factory.define :video, :class => Video do |video|
+Factory.define :video, :class => Terryblr::Video do |video|
   video.sequence(:caption)  { |n| "Factory video #{n}" }
   video.url                 "http://test.host/test.url"
   video.vimeo_id            "url4test"

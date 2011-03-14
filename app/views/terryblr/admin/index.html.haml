@@ -19,10 +19,10 @@
       =link_to Settings.domain, root_path
     %li.posts-count
       = image_tag "admin/dashboard_controls_posts.png"
-      = link_to ttt(:'.x_posts', :count => Post.published.count), admin_posts_path
+      = link_to ttt(:'.x_posts', :count => Terryblr::Post.published.count), admin_posts_path
     %li.drafts-count
       = image_tag "admin/dashboard_controls_drafts.png"
-      = link_to ttt(:'.x_drafts', :count => Post.drafted.count), admin_posts_path(:state => "drafted")
+      = link_to ttt(:'.x_drafts', :count => Terryblr::Post.drafted.count), admin_posts_path(:state => "drafted")
     %li.divider
 
 = render :partial => "terryblr/admin/content_nav"

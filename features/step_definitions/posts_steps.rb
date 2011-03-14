@@ -1,5 +1,5 @@
 Given /^the following posts:$/ do |posts|
-  Post.create!(posts.hashes)
+  Terryblr::Post.create!(posts.hashes)
 end
 
 Then /^show me the posts$/ do
