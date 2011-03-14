@@ -5,6 +5,11 @@
 # files.
 
 ENV["RAILS_ENV"] ||= "test"
+require 'rubygems'
+require 'spork'
+
+Spork.prefork do
+
 require File.expand_path(File.dirname(__FILE__) + '/../../spec/dummy/config/environment')
 module Jammit
   remove_const :PUBLIC_ROOT
@@ -21,6 +26,13 @@ Hirb::View.load_config :page => false
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/rspec'
+end
+
+
+
+
+Spork.each_run do
+
 require 'cucumber/rails/world'
 require 'cucumber/rails/active_record'
 require 'cucumber/web/tableish'
@@ -67,4 +79,5 @@ if defined?(ActiveRecord::Base)
     DatabaseCleaner.strategy = :truncation
   rescue LoadError => ignore_if_database_cleaner_not_present
   end
+end
 end

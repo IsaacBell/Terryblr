@@ -280,7 +280,8 @@ class Terryblr::Post < Terryblr::Base
       # No Delayed Job id set or is failed? Then create one.
       if !self.send("#{assoc}_id?") or (self.send(assoc) and self.send(assoc).failed_at?)
         # Create new instance of class that will post to the soc network
-        dj = ::Delayed::Job.enqueue("#{prefix.capitalize}PostPublisherJob".constantize.new(self.id), 0, self.published_at)
+        job = "#{prefix.capitalize}PostPublisherJob".constantize.new(self.id)
+        dj = ::Delayed::Job.enqueue :payload_object => job, :priority =>  0, :run_at => self.published_at
         self.send("#{assoc}=", dj)
 
         # If already got a delayed job awaiting, then update the exec date
