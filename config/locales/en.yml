@@ -49,6 +49,8 @@ en:
           tweet_reach: tweet reach
           tweets: tweets
           visitors: visitors
+        search:
+          no_results_found: No results found
 
     admin: 
       terryblr: 

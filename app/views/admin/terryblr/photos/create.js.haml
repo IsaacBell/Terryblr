@@ -1,6 +1,8 @@
 $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn()
 - if @object.valid?
-  - if params[:feature_id]
+  - if @photoable.is_a?(Page) or (@photoable.is_a?(Post) and @photoable.post_type.post?)
+    jQuery.wymeditors(0).insert('#{escape_javascript(image_tag(@object.image.url(:list)))}')
+  - elsif params[:feature_id]
     - list_id = "feature_photo"
     $("##{list_id}_ul").replaceWith("#{escape_javascript(photo_for_assoc(@object, @photoable, list_id))}")
   - else

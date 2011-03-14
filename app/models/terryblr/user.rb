@@ -30,7 +30,10 @@ class Terryblr::User < Terryblr::Base
   #
   # Validations
   #
-  validates_uniqueness_of :email
+  validates :email, :presence => true, :uniqueness => true
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
+  
 
   #
   # Scopes

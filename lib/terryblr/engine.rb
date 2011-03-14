@@ -23,7 +23,7 @@ module Terryblr
     
     # Add flash uploader session detection middleware
     initializer :add_flash_middleware, :before => :load_application_initializers do |app|
-      config.app_middleware.insert_before(Warden::Manager, FlashSessionCookieMiddleware, ::Settings.session_key)
+      config.app_middleware.insert_before(ActiveRecord::SessionStore, FlashSessionCookieMiddleware, ::Settings.session_key)
     end
 
     

@@ -129,8 +129,7 @@ module Terryblr::AdminHelper
               $('#{css_link}').show()
               $('#{css_loading}').hide()
               if (response) {
-                // Inset into TinyMCE
-                $('.rich-text textarea').tinymce().execCommand('mceInsertContent',false, server_data);
+                jQuery.globalEval(server_data)
               }
             })
             .bind('uploadError',function(event, file, error, message) {

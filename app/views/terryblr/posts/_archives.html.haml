@@ -5,7 +5,7 @@
     - css_class = r.respond_to?(obj_type) ? r.send(obj_type) : ""
     %li{:id => r.dom_id, :class => css_class}
       - img = r.post_type.video? ? r.videos.first.thumb_url : r.photos.first.image.url(:thumb) rescue ""
-      = link_to send("admin_#{r.class.table_name.to_s.singularize.downcase}_path", r.to_param), :style => "background-image:url('#{img}')" do
+      = link_to send("#{r.class.table_name.to_s.singularize.downcase}_path", r.to_param, r.slug), :style => "background-image:url('#{img}')" do
         %div.date-overlay=r.published_at.to_s(:month_and_day_ordinal) if r.published? and r.published_at?
         %span=truncate_words(r.title? ? r.title : strip_tags(r.body), :length => 10)
 

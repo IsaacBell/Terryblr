@@ -17,12 +17,10 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
     respond_to do |wants|
       if @object.save
-        wants.js {
-          if photoable.is_a?(Page) or (photoable.is_a?(Post) and photoable.post_type.post?)
-            render :inline => "<%= image_tag(@object.image.url(:medium)) %>"
-          end
+        wants.js
+        wants.html { 
+          render :status => :ok 
         }
-        wants.html { render :status => :ok }
       else
         flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
         logger.error { "Photo errors: #{@object.errors.full_messages.to_sentence}" }

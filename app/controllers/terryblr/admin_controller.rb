@@ -1,6 +1,12 @@
 class Terryblr::AdminController < Terryblr::ApplicationController
 
   unloadable
+  before_filter :work_around_rails_middleware_bug
+  def work_around_rails_middleware_bug
+    request.env["action_dispatch.request.parameters"] = nil
+    params.merge! request.params
+  end
+
 
 #  include Settings.authentication.to_s.constantize
   load_and_authorize_resource
@@ -64,13 +70,13 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   def search
     @query = params[:search].to_s.strip
-    like_q = "%#{@query}%"
-    conds  = ["state like ? or body like ? or title like ?", like_q, like_q, like_q]
-    tag    = Tag.find_by_name(@query)
+    like_q = "%#{@query}%".downcase
+    conds  = ["LOWER(state) like ? or LOWER(body) like ? or LOWER(title) like ?", like_q, like_q, like_q]
+    tag    = Terryblr::Tag.find_by_name(@query)
     joins  = nil
     @results = {
       :posts    => Post.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
-      :pages    => Page.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1)
+      :pages    => Terryblr::Page.all(   :conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1)
     }
     respond_to do |wants|
       wants.html {
@@ -98,9 +104,9 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   def model_name
     ctrl_name = params[:controller].split('/').last.strip
     if ctrl_name=='admin'
-      'Post'
+      'Terryblr::Post'
     else
-      ctrl_name.singularize.camelize
+      "Terryblr::#{ctrl_name.singularize.camelize}"
     end
   end
 

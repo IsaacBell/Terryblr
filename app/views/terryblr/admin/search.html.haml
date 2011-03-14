@@ -6,6 +6,6 @@
   %div{ :class => "search-results span-#{span}", :id => "#{key}_results" }
     %h3= pluralize records.total_entries, ttt(key.singularize)
     - if records.empty?
-      %p #{ttt :'.no_results_found'}
+      %p #{ttt(:'.no_results_found').html_safe}
     - else
       = render :partial => 'admin/terryblr/posts/archives', :locals => { :records => records }
