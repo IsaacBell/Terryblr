@@ -2,13 +2,11 @@
 .bundle/
 log/*.log
 pkg/
-spec/dummy/config/
-spec/dummy/db/
+# spec/dummy/config/
+spec/dummy/db/*.sqlite3
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/public/
-spec/dummy/vendor/
-spec/dummy/db/migrate
 terryblr-*.gem
 tmp/
 Gemfile.lock
