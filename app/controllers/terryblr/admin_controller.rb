@@ -130,7 +130,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
 
   def object
-    @object ||= end_of_association_chain.find_by_slug(params[:id]) || end_of_association_chain.find(params[:id])
+    @object ||= (end_of_association_chain.respond_to?(:find_by_slug) && end_of_association_chain.find_by_slug(params[:id])) || end_of_association_chain.find(params[:id])
   end
 
   def build_object

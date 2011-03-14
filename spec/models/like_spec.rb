@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Like do
+describe Terryblr::Like do
 end

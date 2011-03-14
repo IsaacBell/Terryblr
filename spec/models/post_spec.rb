@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Post do
+describe Terryblr::Post do
 
   describe "validation" do
     before do

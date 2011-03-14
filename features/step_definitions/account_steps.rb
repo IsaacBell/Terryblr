@@ -1,21 +1,21 @@
 Given /^I am not authenticated$/ do
-  visit('/users/sign_out') # ensure that at least
+  visit('/admin/logout') # ensure that at least
 end
 
 Given /^I have one\s+user "([^\"]*)" with password "([^\"]*)" and login "([^\"]*)"$/ do |email, password, login|
-  User.new(:email => email,
+  Terryblr::User.new(:email => email,
            :login => login,
            :password => password,
            :password_confirmation => password).save!
 end
 
 Then /^dump_users$/ do
-  puts User.all.inspect
+  puts Terryblr::User.all.inspect
 end
 
 
 Given /^the following accounts:$/ do |accounts|
-  User.create!(accounts.hashes)
+  Terryblr::User.create!(accounts.hashes)
 end
 
 Given /^I am authenticated as "([^"]*)" with "([^"]*)"$/ do |email, password|
