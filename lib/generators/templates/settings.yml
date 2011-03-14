@@ -1,7 +1,6 @@
 common: &common
   app_name: Terryblr
   admin_email: 
-  session_key: we_love_terryblr
   ganalytics:
     code: UA-XXXXXXX-XX
     email: terryblr@gmail.com
@@ -59,9 +58,6 @@ common: &common
   bitly:
     login: jacksonlaycock
     key: R_c8a7f8051740494c879df5865cd04b4b
-  s3:
-    access_key_id: 
-    secret_access_key: 
   tags: 
     posts:
       groups: [tags, location]

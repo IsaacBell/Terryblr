@@ -53,6 +53,7 @@ end
 module ActionView
   module Helpers
     module TranslationHelper
+      unloadable
       include Terryblr::I18nHelpers
     end
   end
