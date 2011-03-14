@@ -9,4 +9,5 @@ gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"
 group :development, :test do
   gem 'awesome_print'
   gem 'wirble'
+  gem 'spork'
 end
