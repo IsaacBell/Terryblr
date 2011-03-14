@@ -1,6 +1,6 @@
 class Admin::Terryblr::UsersController < Terryblr::AdminController
 
-  before_filter :make_admin, :only => [:new, :create] 
+  before_filter :make_admin, :only => [:new, :create]
   
   show {
     wants.html {
