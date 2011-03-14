@@ -1,0 +1,50 @@
+package_assets:         on
+embed_assets:           off
+template_function:      _.template
+package_path:           packages
+javascript_compressor:  yui
+# compressor_options:
+#   compilation_level: ADVANCED_OPTIMIZATIONS
+
+javascripts:
+  public:
+    - public/javascripts/jquery.js
+    - public/javascripts/jquery-ui.js
+    - public/javascripts/jquery.cycle.js
+    - public/javascripts/jquery.flash.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/swfobject.js
+    - public/javascripts/jrails.js
+    - public/javascripts/rails.js
+    - public/javascripts/public.js
+  galleria:
+    - public/javascripts/galleria/src/galleria.js
+    - public/javascripts/galleria/src/plugins/galleria.history.js
+  admin:
+    - public/javascripts/jquery.js
+    - public/javascripts/jquery-ui.js
+    - public/javascripts/jquery.swfupload.js
+    - public/javascripts/jquery.flash.js
+    - public/javascripts/jrails.js
+    - public/javascripts/rails.js
+    - public/javascripts/admin.js
+  admin_edit:
+    - public/javascripts/jtags.js
+    - public/javascripts/tiny_mce/jquery.tinymce.js
+    - public/javascripts/swfupload/swfupload.js
+    - public/javascripts/jquery.swfupload.js
+
+stylesheets:
+  public: 
+    - public/stylesheets/public_grid.css
+    - public/stylesheets/public.css
+  admin:
+    - public/stylesheets/admin_grid.css
+    - public/stylesheets/formtastic.css
+    - public/stylesheets/jquery-ui.css
+    - public/stylesheets/admin.css
+  admin_edit:
+    - public/stylesheets/iphone-checkboxes.css
+  galleria:
+    - public/stylesheets/galleria.css
+
