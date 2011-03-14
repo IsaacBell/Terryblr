@@ -32,7 +32,7 @@ Rails.application.routes.draw do
         post :filter
         post :reorder
       end
-      resource :photo, :controller => "terryblr/photo"
+      resource :photos, :controller => "terryblr/photos"
     end
     resources :comments
     resources :videos, :only => [:index, :destroy], :controller => "terryblr/videos" do
