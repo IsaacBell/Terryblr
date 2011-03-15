@@ -66,9 +66,8 @@ common: &common
     key: R_c8a7f8051740494c879df5865cd04b4b
   tags: 
     posts:
-      groups: [tags, location]
+      groups: [tags]
       tags: []
-      location: [blog, featured]
       features: []
     features:
       groups: []
