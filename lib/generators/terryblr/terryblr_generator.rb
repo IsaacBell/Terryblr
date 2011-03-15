@@ -43,7 +43,7 @@ module Terryblr
         copy_file 'devise.rb', 'config/initializers/devise.rb'
         copy_file 'delayed_job.rb', 'config/initializers/delayed_job.rb'
         copy_file 'formtastic_config.rb', 'config/initializers/formtastic_config.rb'
-        copy_file 'session_store.rb', 'config/initializers/session_store.rb'
+        # copy_file 'session_store.rb', 'config/initializers/session_store.rb'
         # Static assets
         copy_dir_contents 'public', 'public'
       end
