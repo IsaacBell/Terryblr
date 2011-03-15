@@ -1,8 +1,14 @@
 class Terryblr::User < Terryblr::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  begin
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :trackable, :validatable
+  rescue NoMethodError
+    puts "[WARNING] The Devise initializer seems to be missing. If you are generating `devise:install`, this is normal."
+    def self.devise *args
+    end
+  end
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
