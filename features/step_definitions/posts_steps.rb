@@ -3,7 +3,7 @@ Given /^the following posts:$/ do |posts|
 end
 
 Then /^show me the posts$/ do
-  puts Hirb::View.render_output Post.all
+  puts Hirb::View.render_output Terryblr::Post.all
 end
 
 
