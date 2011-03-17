@@ -1,7 +1,5 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
-  load_and_authorize_resource :class => Terryblr::Photo
-
   def create
     @object = Terryblr::Photo.new(:image => params[:Filedata])
 

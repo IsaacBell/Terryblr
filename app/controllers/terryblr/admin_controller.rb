@@ -7,7 +7,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     params.merge! request.params
   end
 
-  load_and_authorize_resource :class => Terryblr::Post
+  #XXX load_and_authorize_resource - Removed as causing too much trouble.
   
   rescue_from CanCan::AccessDenied do |exception|
     if current_user && !current_user.admin?

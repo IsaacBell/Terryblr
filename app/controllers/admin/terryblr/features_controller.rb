@@ -2,13 +2,11 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   helper 'admin/terryblr/features'
 
-  load_and_authorize_resource :class => Terryblr::Feature
-
   def index
     @show_as_dash = true
     @collections = {}
     Settings.tags.posts.features.map do |tag|
-      @collections[tag] = Terryblr::Feature.live.tagged_with(tag)
+      @collections[tag] = end_of_association_chain.live.tagged_with(tag)
     end
   end
 
@@ -33,11 +31,11 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   }
 
   def reorder
-    key = params.keys.detect{|k| k.to_s.starts_with?('features_') }
+    key = params.keys.detect{|k| k.to_s.starts_with?('feature') }
     if params[key].is_a?(Array)
       i = 0
       params[key].each do |id|
-        Terryblr::Feature.update_all({:display_order => (i+=1)}, {:id => id})
+        end_of_association_chain.update_all({:display_order => (i+=1)}, {:id => id})
       end
       render :nothing => true, :status => :ok
     else
@@ -47,13 +45,14 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   private
 
+  def end_of_association_chain
+    Terryblr::Feature
+  end
+  
   def object
     @object ||= end_of_association_chain.find(params[:id])
   end
 
-  def model_name
-    "Terryblr::Feature"
-  end
-
   include Terryblr::Extendable
+  
 end

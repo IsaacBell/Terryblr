@@ -160,11 +160,13 @@ module Terryblr::ApplicationHelper
   def sortable_element_js(element_id, options = {}) #:nodoc:
     # Make AJAX callback request if URL provided
     if options.key?(:url)
+      options[:data] = %($(#{ActiveSupport::JSON.encode(element_id)}).sortable('serialize'))
       options[:update] = "function(){" + remote_function(options) + "}"
       options.delete(:url)
+      options.delete(:data)
     end
     [:axis].each {|k| options[k] = "'#{options[k]}'" }
-    
+
     %($(#{ActiveSupport::JSON.encode(element_id)}).sortable(#{options_for_javascript(options)});)
   end
   

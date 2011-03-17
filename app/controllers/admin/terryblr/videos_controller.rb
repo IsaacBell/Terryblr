@@ -1,7 +1,5 @@
 class Admin::Terryblr::VideosController < Terryblr::AdminController
 
-  load_and_authorize_resource :class => Terryblr::Video
-  
   helper "admin/terryblr/posts"
 
   def create

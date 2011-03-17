@@ -2,8 +2,6 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   prepend_before_filter :find_page
 
-  load_and_authorize_resource :class => Terryblr::Page
-
   index {
     before {
       @list_cols = %w(page state)
