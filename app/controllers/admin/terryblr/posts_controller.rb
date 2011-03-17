@@ -7,17 +7,19 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     before {
       @show_as_dash = true
     }
-    wants.js
+    wants.js {
+      render :template => "admin/terryblr/posts/index"
+    }
+    wants.html {
+      render :template => "admin/terryblr/posts/index"
+    }
   }
 
   def filter
     @show_as_dash = true
-    logger.debug "=========="
-    logger.ap params
-    logger.debug "=========="
     respond_to do |wants|
       wants.html {
-        render :action => "index"
+        render :template => "admin/terryblr/posts/index"
       }
     end
   end
@@ -36,17 +38,20 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     }
     wants.html {
       @type = object.post_type
-      render :action => "edit"
+      render :template => "admin/terryblr/posts/edit"
     }
   }
 
   edit {
     @editing = true
+    wants.html {
+      render :template => "admin/terryblr/posts/edit"
+    }
   }
 
   create {
     failure.wants.html {
-      render :action => "edit"
+      render :template => "admin/terryblr/posts/edit"
     }
   }
 
@@ -59,11 +64,9 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     }
   }
 
-  show {
-    wants.html {
-      redirect_to edit_admin_post_path(object)
-    }
-  }
+  def show
+    redirect_to edit_admin_post_path(object)
+  end
 
   destroy {
     wants.html {

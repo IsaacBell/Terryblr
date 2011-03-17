@@ -10,8 +10,8 @@
         = add_inline_photo(admin_post_photos_path(@post))
       = f.input :body, :label => ttt(:body), :as => 'text', :wrapper_html => { :class => "rich-text" }, :input_html => { :style => "height:30em;" }, :required => true
 
-    = render :partial => 'form_buttons', :locals => {:f => f}
+    = render :partial => 'admin/terryblr/posts/form_buttons', :locals => {:f => f}
         
-  =render :partial => 'form_sidebar', :locals => {:f => f}
+  =render :partial => 'admin/terryblr/posts/form_sidebar', :locals => {:f => f}
   
   .clear

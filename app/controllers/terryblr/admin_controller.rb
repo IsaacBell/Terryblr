@@ -104,9 +104,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
   
   def end_of_association_chain
-    logger.ap params
     ctrl_name = params[:controller].split('/').last.strip
-    logger.ap ctrl_name
     @end_of_association_chain = if ctrl_name=='admin'
       'Terryblr::Post'
     else
@@ -122,10 +120,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
   
   def build_object
-
-    Rails.logger.debug { "new_obj: #{new_obj.inspect}" } if defined? new_obj
-    Rails.logger.debug { "end_of_association_chain: #{end_of_association_chain.inspect}" }
-    
     @object ||= (new_obj = end_of_association_chain.pending.first) ? (new_obj.attributes = object_params; new_obj) : end_of_association_chain.new(object_params)
   end
 

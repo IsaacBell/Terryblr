@@ -10,7 +10,6 @@ module Terryblr
     # otherwise, we would get "could not find table 'xxxx'" exceptions.
     config.eager_load_paths -= [ paths["app/models"].first ]
     config.autoload_paths << paths["app/models"].first
-puts config.root.inspect
     config.autoload_paths += %W(#{Rails.root}/app/terryblr #{Rails.root}/app/terryblr/models)
     
     config.gem 'devise'
