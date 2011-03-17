@@ -38,4 +38,6 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
   }
   
   private
+
+  include Terryblr::Extendable
 end

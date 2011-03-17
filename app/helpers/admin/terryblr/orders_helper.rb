@@ -28,4 +28,5 @@ module Admin::Terryblr::OrdersHelper
   
   
   
+  include Terryblr::Extendable
 end

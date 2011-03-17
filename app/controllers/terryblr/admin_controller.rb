@@ -179,4 +179,5 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     end
   end
 
+  include Terryblr::Extendable
 end

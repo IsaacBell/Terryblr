@@ -21,4 +21,5 @@ class Terryblr::PagesController < Terryblr::PublicController
     Terryblr::Page
   end
 
+  include Terryblr::Extendable
 end

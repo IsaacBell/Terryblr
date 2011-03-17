@@ -77,4 +77,6 @@ class Terryblr::Product < Terryblr::Base
 
   private
 
+
+  include Terryblr::Extendable
 end

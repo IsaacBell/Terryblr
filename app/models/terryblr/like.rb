@@ -40,4 +40,5 @@ class Terryblr::Like < Terryblr::Base
   # Instance Methods
   #
 
+  include Terryblr::Extendable
 end

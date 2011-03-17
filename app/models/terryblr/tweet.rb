@@ -124,4 +124,6 @@ class Terryblr::Tweet < Terryblr::Base
     self.class.twitter
   end
 
+
+  include Terryblr::Extendable
 end

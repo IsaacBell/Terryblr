@@ -18,4 +18,5 @@ class Admin::Terryblr::CommentsController < Terryblr::AdminController
     @collection ||= scope.all(:order => "created_at desc").paginate(:page => params[:page])
   end
 
+  include Terryblr::Extendable
 end

@@ -84,4 +84,6 @@ class Terryblr::User < Terryblr::Base
     item
   end
 
+
+  include Terryblr::Extendable
 end

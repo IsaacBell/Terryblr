@@ -209,4 +209,7 @@ class Terryblr::Order < Terryblr::Base
         :password => Settings.paypal.password})
     end
   end
+
+
+  include Terryblr::Extendable
 end

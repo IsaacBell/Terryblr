@@ -88,4 +88,6 @@ class Terryblr::Comment < Terryblr::Base
     update_attribute(:moderated_at, nil)
     Akismetor.submit_ham(akismet_attributes)
   end
+
+  include Terryblr::Extendable
 end

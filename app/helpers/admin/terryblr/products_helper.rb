@@ -33,4 +33,5 @@ module Admin::Terryblr::ProductsHelper
     Money.new(product.orders.sum(:final_amount_cents)).format
   end
 
+  include Terryblr::Extendable
 end

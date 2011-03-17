@@ -52,4 +52,6 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   def model_name
     "Terryblr::Feature"
   end
+
+  include Terryblr::Extendable
 end

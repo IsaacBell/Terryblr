@@ -68,4 +68,5 @@ module Terryblr::PostsHelper
     end
   end
 
+  include Terryblr::Extendable
 end

@@ -31,4 +31,6 @@ class Terryblr::Link < Terryblr::Base
   # Instance Methods
   #
 
+
+  include Terryblr::Extendable
 end

@@ -44,4 +44,6 @@ class Terryblr::Vote < Terryblr::Base
     update_attributes!(:value => 0)
   end
 
+
+  include Terryblr::Extendable
 end

@@ -229,4 +229,6 @@ module Terryblr::AdminHelper
     })
     ")
   end
+
+  include Terryblr::Extendable
 end

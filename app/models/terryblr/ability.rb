@@ -9,4 +9,6 @@ class Terryblr::Ability
         can :manage, :all
       end
   end
+
+  include Terryblr::Extendable
 end

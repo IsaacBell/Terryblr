@@ -123,4 +123,6 @@ class Terryblr::PostsController < Terryblr::PublicController
   def posts_chain
     Terryblr::Post.live
   end
+
+  include Terryblr::Extendable
 end
