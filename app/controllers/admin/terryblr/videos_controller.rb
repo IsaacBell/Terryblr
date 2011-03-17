@@ -49,4 +49,5 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
     @object ||= end_of_association_chain.find(params[:id])
   end
   
+  include Terryblr::Extendable
 end

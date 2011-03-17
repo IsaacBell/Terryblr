@@ -13,4 +13,5 @@ module Admin::Terryblr::PagesHelper
     link_to 'Add Child', new_admin_page_path(:parent_id => page.id)
   end
 
+  include Terryblr::Extendable
 end

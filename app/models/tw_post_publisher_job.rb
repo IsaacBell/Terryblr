@@ -37,4 +37,6 @@ class TwPostPublisherJob
     tweet = client.update(msg)
     post.update_twitter_id(tweet.id)
   end    
+
+  include Terryblr::Extendable
 end

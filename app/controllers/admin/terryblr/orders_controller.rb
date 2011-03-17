@@ -39,4 +39,5 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
     @orders = Terryblr::Order.by_month(@date.month).by_year(@date.year).paginate(:page => params[:page])
   end
   
+  include Terryblr::Extendable
 end

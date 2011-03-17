@@ -69,4 +69,6 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     @object ||= end_of_association_chain.find_by_id(params[:id])
   end
 
+  include Terryblr::Extendable
+
 end

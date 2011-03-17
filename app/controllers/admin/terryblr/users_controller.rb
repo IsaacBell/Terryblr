@@ -42,4 +42,5 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
     @object ||= Terryblr::User.new(params[:user])
   end
 
+  include Terryblr::Extendable
 end

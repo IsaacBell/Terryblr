@@ -99,4 +99,6 @@ class Terryblr::Page < Terryblr::Base
   def parent_of(page = self)
     page.parent_id? ? self.class.find(page.parent_id) : nil
   end
+
+  include Terryblr::Extendable
 end

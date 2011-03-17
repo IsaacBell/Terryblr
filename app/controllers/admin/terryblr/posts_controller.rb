@@ -99,4 +99,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     @posts = @collection ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
     
   end
+
+  include Terryblr::Extendable
 end

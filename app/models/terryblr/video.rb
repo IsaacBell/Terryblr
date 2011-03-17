@@ -203,4 +203,6 @@ class Terryblr::Video < Terryblr::Base
     @video_upload ||= Vimeo::Advanced::Terryblr::Video.new(Settings.vimeo.consumer_key, Settings.vimeo.consumer_secret, :token => Settings.vimeo.user_token, :secret => Settings.vimeo.user_secret)
   end
 
+
+  include Terryblr::Extendable
 end

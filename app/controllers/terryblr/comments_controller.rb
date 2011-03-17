@@ -47,4 +47,5 @@ class Terryblr::CommentsController < Terryblr::PublicController
     @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
   end
 
+  include Terryblr::Extendable
 end

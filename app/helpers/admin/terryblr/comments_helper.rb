@@ -5,4 +5,5 @@ module Admin::Terryblr::CommentsHelper
   end
   
   
+  include Terryblr::Extendable
 end

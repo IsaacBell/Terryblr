@@ -26,4 +26,5 @@ class Terryblr::PublicController < Terryblr::ApplicationController
     end
   end
   
+  include Terryblr::Extendable
 end

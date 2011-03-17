@@ -39,4 +39,6 @@ class Terryblr::Message < Terryblr::Base
   # Instance Methods
   #
 
+
+  include Terryblr::Extendable
 end

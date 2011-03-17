@@ -5,4 +5,6 @@ class Settings < Settingslogic
   def s3_enabled?
     !!(s3.access_key_id.present? && s3.secret_access_key.present? if respond_to? :s3)
   end
+
+  include Terryblr::Extendable
 end

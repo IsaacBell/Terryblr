@@ -249,4 +249,5 @@ module Terryblr::ApplicationHelper
     link_to action.capitalize, send(url, record), {:class => action}.merge(options).merge(final_options)
   end
 
+  include Terryblr::Extendable
 end

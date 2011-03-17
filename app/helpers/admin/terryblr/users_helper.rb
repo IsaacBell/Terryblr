@@ -4,4 +4,5 @@ module Admin::Terryblr::UsersHelper
     link_to user.full_name, admin_user_path(user)
   end
 
+  include Terryblr::Extendable
 end

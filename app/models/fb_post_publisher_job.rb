@@ -55,5 +55,7 @@ class FbPostPublisherJob
     @facebook ||= MiniFB::OAuthSession.new(Settings.facebook.page_token)
   end
 
+
+  include Terryblr::Extendable
 end
 

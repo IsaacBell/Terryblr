@@ -51,4 +51,9 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
     @object ||= end_of_association_chain.find(params[:id])
   end
 
+  def model_name
+    "Terryblr::Feature"
+  end
+
+  include Terryblr::Extendable
 end

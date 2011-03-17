@@ -58,4 +58,5 @@ class Terryblr::HomeController < Terryblr::PublicController
       end
   end
 
+  include Terryblr::Extendable
 end
