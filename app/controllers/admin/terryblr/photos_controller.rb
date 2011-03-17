@@ -1,10 +1,12 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
+  load_and_authorize_resource :class => Terryblr::Photo
+
   def create
     @object = Terryblr::Photo.new(:image => params[:Filedata])
 
     # Features belong to the photo and not the otherway
-    if photoable.is_a?(Feature)
+    if photoable.is_a?(Terryblr::Feature)
       feature = photoable
 
       # Delete any others photos unless they belong to posts
@@ -23,7 +25,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
         }
       else
         flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
-        logger.error { "Terryblr::Photo errors: #{@object.errors.full_messages.to_sentence}" }
+        logger.error { "Photo errors: #{@object.errors.full_messages.to_sentence}" }
         wants.js
         wants.html {
           render :text => @object.errors.full_messages.to_sentence
@@ -55,7 +57,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     @photoable ||= if params[:post_id]
       Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id].to_i) || Terryblr::Post.new
     elsif params[:product_id]
-      Terryblr::Product.find_by_slug(params[:product_id]) || Terryblr::Product.find_by_id(params[:product_id].to_i) || Terryblr::Product.new
+      Product.find_by_slug(params[:product_id]) || Product.find_by_id(params[:product_id].to_i) || Product.new
     elsif params[:page_id]
       Terryblr::Page.find_by_slug(params[:page_id]) || Terryblr::Page.find_by_id(params[:page_id].to_i) || Terryblr::Page.new
     elsif params[:feature_id]
@@ -66,4 +68,5 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
   def object
     @object ||= end_of_association_chain.find_by_id(params[:id])
   end
+
 end

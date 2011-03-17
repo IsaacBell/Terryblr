@@ -2,6 +2,8 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   helper 'admin/terryblr/features'
 
+  load_and_authorize_resource :class => Terryblr::Feature
+
   def index
     @show_as_dash = true
     @collections = {}
@@ -49,7 +51,4 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
     @object ||= end_of_association_chain.find(params[:id])
   end
 
-  def model_name
-    "Terryblr::Feature"
-  end
 end

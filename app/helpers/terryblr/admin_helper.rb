@@ -141,7 +141,6 @@ module Terryblr::AdminHelper
   end
 
   def edit_photos_for_assoc(object)
-    p object.photos
     list_id = "photos_list"
     if object and object.respond_to?(:photos)
       content_tag(:div, :id => list_id, :class => "media-list") do
@@ -157,7 +156,7 @@ module Terryblr::AdminHelper
   end
   
   def photo_for_assoc(photo, object, list_id = "photos_list")
-    if defined?(Feature) and object.is_a?(Feature)
+    if defined?(Terryblr::Feature) and object.is_a?(Terryblr::Feature)
       feature_photo_for_assoc(photo, object, list_id)
     else
       post_photo_for_assoc(photo, object, list_id)

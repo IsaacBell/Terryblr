@@ -11,7 +11,7 @@ class Terryblr::Feature < Terryblr::Base
   # Associatons
   #
   belongs_to :photo
-  belongs_to :post, :class_name => "Post"
+  belongs_to :post, :class_name => "Terryblr::Post"
 
   #
   # Constants

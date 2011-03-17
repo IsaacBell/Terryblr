@@ -42,7 +42,7 @@ namespace :terryblr do
           photos = []
           image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
           # image_urls.each do |url|
-            photo = Photo.create(:url => url)
+            photo = Terryblr::Photo.create(:url => url)
             if photo.valid?
               photos << photo
             else
@@ -187,7 +187,7 @@ namespace :terryblr do
         printf "*  Importing video : #{post.inspect}\n"
 
         # Create video first
-        video = Video.create!(:url => post["video-source"].to_s)
+        video = Terryblr::Video.create!(:url => post["video-source"].to_s)
 
         title =  post["slug"].gsub(/-/, " ").humanize rescue "Draft #{Time.now.to_i}"
 
@@ -230,9 +230,9 @@ namespace :terryblr do
         # Create Photos first
         if post.has_key?("photoset")
           # multiple photos
-          photos = Photo.create!(post['photoset'].first["photo"].map { |photo| { :url => photo["photo-url"].first["content"] } })
+          photos = Terryblr::Photo.create!(post['photoset'].first["photo"].map { |photo| { :url => photo["photo-url"].first["content"] } })
         else
-          photos = [ Photo.create!(:url => post['photo-url'].first["content"]) ]
+          photos = [ Terryblr::Photo.create!(:url => post['photo-url'].first["content"]) ]
         end
 
         title =  post["slug"].gsub(/-/, " ").humanize rescue ""
@@ -295,7 +295,7 @@ namespace :terryblr do
           structured_post_content.css('img').each do |i|
             #create photo from a href link source
             original_image_url = i.parent.attribute("href") ? i.parent.attribute("href").value : i.attribute("src").value
-            photo = Photo.create!(:url => original_image_url)
+            photo = Terryblr::Photo.create!(:url => original_image_url)
             #fetch new image urls (thumb and original)
             #modify body to reflect new images
             new_image_url = photo.image.url(:medium)
@@ -333,14 +333,14 @@ namespace :terryblr do
         #Delete native embed
         structured_post_content.at_css("iframe").remove
         #Create video for Terryblr embed
-        video = Video.create!(:url => vid_url)
+        video = Terryblr::Video.create!(:url => vid_url)
 
         #Download/Reinsert Images
         if (structured_post_content.css('img').count > 0)
           structured_post_content.css('img').each do |i|
             #create photo from a href link source
             original_image_url = i.parent.attribute("href").value
-            photo = Photo.create!(:url => original_image_url)
+            photo = Terryblr::Photo.create!(:url => original_image_url)
 
             #fetch new image urls (thumb and original)
             new_link_url = photo.image.url

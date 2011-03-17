@@ -128,6 +128,10 @@ en:
     edit_post: edit post
     edit_photos: edit photos
     edit_video: edit video
+    update_page: edit page
+    update_post: edit post
+    update_photos: edit photos
+    update_video: edit video
     email: email
     features: features
     name: name

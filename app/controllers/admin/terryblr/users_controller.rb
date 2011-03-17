@@ -1,5 +1,7 @@
 class Admin::Terryblr::UsersController < Terryblr::AdminController
 
+  load_and_authorize_resource :class => Terryblr::User
+  
   before_filter :make_admin, :only => [:new, :create]
   
   show {

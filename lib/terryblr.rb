@@ -15,13 +15,18 @@ require "dynamic_form"
 require "gattica"
 require "delayed_job"
 
-
 [ 'terryblr/configuration',
   'terryblr/cache_system',
   'terryblr/validators',
   'terryblr/time_formats',
   'terryblr/formtastic_builder',
+  "terryblr/cache_system",
+  "terryblr/i18n_helpers",
+  "terryblr/flash_session_cookie_middleware",
   'terryblr/base/base',
+  'terryblr/base/taggable',
+  'terryblr/base/aasmstates',
+  'terryblr/base/validation',
 ].each do |path|
   require File.expand_path(path, File.dirname(__FILE__))
 end

@@ -1,5 +1,5 @@
 Given /^I am not authenticated$/ do
-  visit('/admin/logout') # ensure that at least
+  visit('/users/sign_out') # ensure that at least
 end
 
 Given /^I have one\s+user "([^\"]*)" with password "([^\"]*)" and login "([^\"]*)"$/ do |email, password, login|

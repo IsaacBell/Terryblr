@@ -1,5 +1,5 @@
 / Featured Posts
-- featured_posts = Terryblr::Post.published.tagged_with('featured').all(:limit => 3) rescue []
+- featured_posts = Terryblr::Post.published.tagged_with('featured').limit(3) rescue []
 #featured_videos
   - featured_posts.each do |post|
     .featured_video

@@ -18,8 +18,8 @@ class Terryblr::HomeController < Terryblr::PublicController
 
   def sitemap
     @posts = collection
-    @countdowns = Terryblr::Post.live.tagged_with('countdown').all(:limit => 500)
-    @pages = Terryblr::Page.published.all(:limit => 500)
+    @countdowns = Terryblr::Post.live.tagged_with('countdown').limit(500)
+    @pages = Terryblr::Page.published.limit(500)
     respond_to do |wants|
       wants.xml
     end

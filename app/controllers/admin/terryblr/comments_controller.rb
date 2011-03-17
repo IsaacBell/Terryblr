@@ -11,7 +11,7 @@ class Admin::Terryblr::CommentsController < Terryblr::AdminController
     end
 
     unless params[:post_id].blank?
-      scope = scope.commentable_type('Post').commentable_id(params[:post_id])
+      scope = scope.commentable_type('Terryblr::Post').commentable_id(params[:post_id])
     end
 
     # TODO: check if acts_as_commentable's comments_ordered_by_submitted would fit here

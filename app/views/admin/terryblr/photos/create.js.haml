@@ -1,6 +1,6 @@
 $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn()
 - if @object.valid?
-  - if @photoable.is_a?(Page) or (@photoable.is_a?(Post) and @photoable.post_type.post?)
+  - if @photoable.is_a?(Terryblr::Page) or (@photoable.is_a?(Terryblr::Post) and @photoable.post_type.post?)
     jQuery.wymeditors(0).insert('#{escape_javascript(image_tag(@object.image.url(:list)))}')
   - elsif params[:feature_id]
     - list_id = "feature_photo"

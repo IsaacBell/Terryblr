@@ -36,7 +36,7 @@ class Terryblr::CommentsController < Terryblr::PublicController
   end
 
   def build_object
-    @object ||= Terryblr::Comment.new(params[:comment].update(:user => current_user, :commentable => parent_object))
+    @object ||= Comment.new(params[:comment].update(:user => current_user, :commentable => parent_object))
   end
 
   def collection

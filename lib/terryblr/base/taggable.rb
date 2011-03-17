@@ -7,15 +7,15 @@ module Terryblr
           if recipient.table_exists?
             acts_as_taggable
 
-            #XXX Seems this is needed to make the tagging work :-S
-            #XXX Maybe better like this? Settings.tags.send(self.table_name).send(:groups)
+            Settings.load! # Needed for dev env when reloading class caches
+            
             if defined?(Settings.tags[self.table_name]) && defined?(Settings.tags[self.table_name]['groups'])
               acts_as_taggable_on Settings.tags[self.table_name]['groups']
               scope :tagged, lambda { |tags|
                 tags_sql = tags.is_a?(Array) ? tags.map{|t|"'#{t}'"}.join(",") : "'#{tags}'"
                 select("#{table_name}.*").
                 joins("JOIN taggings ON taggings.taggable_id = #{table_name}.id AND taggings.taggable_type IN ('#{self.sti_names.join("','")}')").
-                where("taggings.tag_id in (SELECT id from tags where name IN (#{tags_sql}))")
+                where("taggings.tag_id in (SELECT id from tags where LOWER(name) IN (#{tags_sql.downcase}))")
               }
             end
           end

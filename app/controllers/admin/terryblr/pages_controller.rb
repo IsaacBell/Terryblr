@@ -1,5 +1,8 @@
 class Admin::Terryblr::PagesController < Terryblr::AdminController
+
   prepend_before_filter :find_page
+
+  load_and_authorize_resource :class => Terryblr::Page
 
   index {
     before {
@@ -31,7 +34,7 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   private
 
   def find_page
-    @page = Terryblr::Page.find_by_slug(params[:id])
+    @page = Terryblr::Page.find_by_slug(params[:id]) || Terryblr::Page.find_by_id(params[:id])
   end
   
   def collection
@@ -43,7 +46,4 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
     end
   end
   
-  def model_name
-    "Terryblr::Page"
-  end
 end

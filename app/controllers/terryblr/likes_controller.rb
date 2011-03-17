@@ -33,7 +33,7 @@ class Terryblr::LikesController < Terryblr::PublicController
   end
 
   def build_object
-    @object ||= Terryblr::Like.new(:user => current_user, :likeable => parent_object)
+    @object ||= Like.new(:user => current_user, :likeable => parent_object)
   end
 
   def collection

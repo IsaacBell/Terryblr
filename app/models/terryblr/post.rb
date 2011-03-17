@@ -82,7 +82,7 @@ class Terryblr::Post < Terryblr::Base
 
   scope :popular_photos, lambda {
     now = Time.zone.now
-    joins("INNER JOIN photos ON photos.photoable_type = 'Post' AND photos.photoable_id = posts.id").
+    joins("INNER JOIN photos ON photos.photoable_type = 'Terryblr::Post' AND photos.photoable_id = posts.id").
     select("posts.*, ((comments_count*2)+likes_count) as final_count").
     where("posts.state = 'published' AND posts.published_at < ? AND posts.published_at < ?", now-1.week, now).
     order("final_count desc, published_at desc").
@@ -174,7 +174,7 @@ class Terryblr::Post < Terryblr::Base
     end
 
     def name
-      'Post'
+      'Terryblr::Post'
     end
     
     def sti_names

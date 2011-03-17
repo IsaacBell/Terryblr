@@ -12,6 +12,9 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def filter
     @show_as_dash = true
+    logger.debug "=========="
+    logger.ap params
+    logger.debug "=========="
     respond_to do |wants|
       wants.html {
         render :action => "index"
