@@ -1,4 +1,5 @@
-Terryblr.configure do
+Terryblr.configure do |conf|
+  conf.override 'Post', 'PostsController'
 end
 
 module Rails

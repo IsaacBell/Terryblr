@@ -17,6 +17,7 @@ require "delayed_job"
 
 
 [ 'terryblr/configuration',
+  'terryblr/extendable',
   'terryblr/cache_system',
   'terryblr/validators',
   'terryblr/time_formats',

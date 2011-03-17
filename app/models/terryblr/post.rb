@@ -290,4 +290,6 @@ class Terryblr::Post < Terryblr::Base
       end
     end
   end
+
+  include Terryblr::Extendable
 end
