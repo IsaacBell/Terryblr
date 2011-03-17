@@ -64,7 +64,7 @@ class Terryblr::Post < Terryblr::Base
 
   scope :for_month, lambda { |date, col|
     col ||= :published_at
-    where(col => date.beginning_of_month..date.end_of_month)
+    where("#{col} >= ? AND #{col} <= ?", date.beginning_of_month, date.end_of_month)
   }
 
   scope :by_month, lambda { |*args|
@@ -142,11 +142,17 @@ class Terryblr::Post < Terryblr::Base
   class << self
 
     def next(post)
-      self.live.where("published_at > ? and id != ?", post.published_at, post.id).order("published_at asc, id desc").first
+      with_exclusive_scope { 
+        # Due to problems with the default_scope ordering the 'live' scope must come AFTER the order scope
+        where("published_at > ? and id != ?", post.published_at, post.id).order("published_at asc, id asc").live.first
+      }
     end
 
     def previous(post)
-      self.live.where("published_at < ? and id != ?", post.published_at, post.id).order("published_at desc, id desc").first
+      with_exclusive_scope { 
+        # Due to problems with the default_scope ordering the 'live' scope must come AFTER the order scope
+        where("published_at < ? and id != ?", post.published_at, post.id).order("published_at desc, id desc").live.first
+      }
     end
 
     def next_month(month = Date.today.month)
