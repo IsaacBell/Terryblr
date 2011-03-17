@@ -1,5 +1,5 @@
 Terryblr.configure do |conf|
-  conf.override 'Post', 'PostsController'
+  conf.override 'PostsController', 'Terryblr::Post' => "Post"
 end
 
 module Rails

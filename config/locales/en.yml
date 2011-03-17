@@ -28,7 +28,7 @@ en:
         show:
           arrow_previous: < previous
           arrow_next: next >
-      admin: 
+      admin_home: 
         index: 
           x_drafts: 
             one: 1 draft

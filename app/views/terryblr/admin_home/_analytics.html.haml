@@ -31,7 +31,7 @@
         %tr
           %th= ttt(:value)
           %th #
-      = render :partial => "terryblr/admin/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}
+      = render :partial => "terryblr/admin_home/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}
 
 - %w(top_referrers top_landing_pages).each do |rep_title|
   .chart{:class => rep_title}
@@ -41,4 +41,4 @@
         %tr
           %th= ttt(:value)
           %th #
-      = render :partial => "terryblr/admin/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}
+      = render :partial => "terryblr/admin_home/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}

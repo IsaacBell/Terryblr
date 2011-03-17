@@ -88,5 +88,4 @@ class Terryblr::ApplicationController < ResourceController::Base
     @current_ability ||= Terryblr::Ability.new(current_user)
   end
 
-  include Terryblr::Extendable
 end

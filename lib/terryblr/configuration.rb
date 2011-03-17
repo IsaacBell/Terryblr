@@ -17,13 +17,18 @@ class Terryblr::Configuration
     overrides = args.extract_options!
     args.each { |arg| overrides[arg] = arg.to_sym }
     overrides.each do | terryblr_classname, host_concern_name |
-      @overrides["Terryblr::#{terryblr_classname}".to_sym] << host_concern_name
+      unless terryblr_classname.to_s.starts_with? 'Terryblr::'
+        terryblr_classname = "Terryblr::#{terryblr_classname}"
+      end
+      @overrides[terryblr_classname.to_sym] << host_concern_name
     end
   end
 
   def inject_overrides terryblr_class
-    @overrides[terryblr_class.to_s.to_sym].each do |hostapp_module_name|
+    modules = @overrides[terryblr_class.to_s.to_sym]
+    modules.each do |hostapp_module_name|
       host_module = hostapp_module_name.to_s.constantize
+
       terryblr_class.class_eval do
         include host_module
       end
