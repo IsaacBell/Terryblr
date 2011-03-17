@@ -14,7 +14,7 @@ class TwPostPublisherJob
   def perform
 
     # Find objects
-    post = Post.find(post_id)
+    post = Terryblr::Post.find(post_id)
 
     # Abort if already posted
     return if post.twitter_id?

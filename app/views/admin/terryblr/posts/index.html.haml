@@ -5,7 +5,7 @@
 - content_for :sidebar do
   %ul.summary
     %li.divider
-    %li= pluralize Post.published.count, 'Post'
+    %li= pluralize Terryblr::Post.published.count, 'Post'
     %li= link_to ttt(:'.published'), admin_posts_path
     %li= link_to ttt(:'.drafts'), drafted_admin_posts_path(:state => 'drafted', :month => @date.month, :year => @date.year)
     - if params[:state].blank?

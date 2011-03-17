@@ -64,7 +64,7 @@ class Terryblr::Feature < Terryblr::Base
     if post_id?
       post.photos.first
     elsif photo_id?
-      @photo ||= Photo.find(photo_id)
+      @photo ||= Terryblr::Photo.find(photo_id)
     end
   end
   

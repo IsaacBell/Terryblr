@@ -5,7 +5,7 @@
     %li.new-content
       =sidebar_new_content_link
     %li.divider
-    %li= pluralize Post.published.count, 'posts'
+    %li= pluralize Terryblr::Post.published.count, 'posts'
     %li= link_to ttt(:'.published'), url_for(params.merge(:state => 'published'))
     %li= link_to ttt(:'.drafts'), url_for(params.merge(:state => 'drafted', :month => @date.month, :year => @date.year))
     %li= link_to ttt(:'.queued'), url_for(params.merge(:state => 'queued', :month => @date.month, :year => @date.year))

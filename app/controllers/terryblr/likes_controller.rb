@@ -33,7 +33,7 @@ class Terryblr::LikesController < Terryblr::PublicController
   end
 
   def build_object
-    @object ||= Like.new(:user => current_user, :likeable => parent_object)
+    @object ||= Terryblr::Like.new(:user => current_user, :likeable => parent_object)
   end
 
   def collection
@@ -41,7 +41,7 @@ class Terryblr::LikesController < Terryblr::PublicController
   end
 
   def parent_object
-    @parent ||= Post.find_by_slug(params[:post_id]) || Post.find(params[:post_id])
+    @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
   end
 
 end

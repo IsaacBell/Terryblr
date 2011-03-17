@@ -1,13 +1,3 @@
-module ActionView
-  module Helpers
-    module TranslationHelper
-      unloadable
-
-      include Terryblr::I18nHelpers
-    end
-  end
-end
-
 class Terryblr::ApplicationController < ResourceController::Base
 
   include Terryblr::CacheSystem
@@ -92,6 +82,10 @@ class Terryblr::ApplicationController < ResourceController::Base
 
   def collection?
     respond_to?(:collection, true) and !collection.nil? and !collection.empty?
+  end
+
+  def current_ability
+    @current_ability ||= Terryblr::Ability.new(current_user)
   end
 
 end

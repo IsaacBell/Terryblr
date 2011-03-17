@@ -5,9 +5,9 @@
     %li.new-content
       =sidebar_new_content_link
     %li.divider
-    %li= ttt :'.x_orders', :count => Order.count
+    %li= ttt :'.x_orders', :count => Terryblr::Order.count
     %li.divider
-    %li= ttt :'.x_products', :count => Product.count
+    %li= ttt :'.x_products', :count => Terryblr::Product.count
     %li= link_to ttt(:'.published'), admin_products_path(:state => 'published')
     %li= link_to ttt(:'.drafts'), admin_products_path(:state => 'drafted', :month => @date.month, :year => @date.year)
     %li.divider

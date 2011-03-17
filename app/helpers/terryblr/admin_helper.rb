@@ -141,6 +141,7 @@ module Terryblr::AdminHelper
   end
 
   def edit_photos_for_assoc(object)
+    p object.photos
     list_id = "photos_list"
     if object and object.respond_to?(:photos)
       content_tag(:div, :id => list_id, :class => "media-list") do

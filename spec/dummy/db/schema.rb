@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314150044) do
+ActiveRecord::Schema.define(:version => 20110314151665) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20110314150044) do
   create_table "features", :force => true do |t|
     t.string   "title"
     t.integer  "photo_id"
+    t.integer  "post_id"
     t.integer  "display_order", :default => 0
     t.string   "state"
     t.string   "caption"
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20110314150044) do
   end
 
   add_index "features", ["photo_id"], :name => "index_features_on_photo_id"
+  add_index "features", ["post_id"], :name => "index_features_on_post_id"
 
   create_table "likes", :force => true do |t|
     t.integer  "likeable_id"

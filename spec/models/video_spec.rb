@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Video do
+describe Terryblr::Video do
   describe "validation" do
     before do
       @post = Factory(:post)

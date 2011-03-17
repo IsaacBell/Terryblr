@@ -71,7 +71,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   private
 
   def model_name
-    'Post'
+    'Terryblr::Post'
   end
 
   def set_type
@@ -82,10 +82,10 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     scope = case params[:state]
     when "drafted"
       col = :updated_at
-      Post.drafted
+      Terryblr::Post.drafted
     else
       col = :published_at
-      Post.published
+      Terryblr::Post.published
     end
 
     if params[:month] and params[:year]

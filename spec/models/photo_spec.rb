@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Photo do
+describe Terryblr::Photo do
   describe "validation" do
     before do
       @post = Factory(:post)

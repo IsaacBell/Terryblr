@@ -76,7 +76,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def featured_pics
-    @featured_pics ||= Feature.live.tagged_with('sidebar')
+    @featured_pics ||= Terryblr::Feature.live.tagged_with('sidebar')
   end
 
   def collection

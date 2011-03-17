@@ -9,12 +9,12 @@ class Terryblr::Photo < Terryblr::Base
   #
   serialize :sizes
 
-  # Regen thumbs with rake paperclip:refresh CLASS=Photo or .reprocess!
+  # Regen thumbs with rake paperclip:refresh CLASS=Terryblr::Photo or .reprocess!
   has_attached_file :image,
     :styles => Settings.photo_dimensions.dup.symbolize_keys,
-    :storage => Settings.key?('s3') ? :s3 : :filesystem,
+    :storage => Settings.s3_enabled? ? :s3 : :filesystem,
     :convert_options => { :all=> "-density 72 " },
-    :path => Settings.key?('s3') ? ":attachment/:id/:style/:basename.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
+    :path => Settings.s3_enabled? ? ":attachment/:id/:style/:basename.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
     :s3_credentials => (Settings.s3.symbolize_keys rescue nil),
     :bucket => [Settings.app_name, Rails.env].join('-').parameterize.to_s,
     :log_command => Rails.env.development?
@@ -66,7 +66,7 @@ class Terryblr::Photo < Terryblr::Base
 
   def add_to_queue
     # Set the display order to be last
-    self.display_order = Photo.count(:conditions => {:photoable_id => self.photoable_id, :photoable_type => self.photoable_type})
+    self.display_order = Terryblr::Photo.count(:conditions => {:photoable_id => self.photoable_id, :photoable_type => self.photoable_type})
   end
 
   def update_associated_models

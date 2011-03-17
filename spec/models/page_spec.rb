@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Page do
+describe Terryblr::Page do
 end

@@ -2,7 +2,7 @@ module Terryblr::PostsHelper
 
   def like_label(post)
     count = post.likes.count
-    str = count.zero? ? "Like this?" : "#{pluralize(count, 'people')} like this"
+    str = count.zero? ? "Terryblr::Like this?" : "#{pluralize(count, 'people')} like this"
     content_tag :div, link_to(str, post_likes_path(post), :remote => true), :id => post.dom_id('like_label')
   end
 
