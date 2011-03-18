@@ -822,6 +822,7 @@ form.formtastic fieldset ol li.boolean label {
 }
 
 
+form.formtastic fieldset ol li.url input.title,
 form.formtastic fieldset ol li.string input.title,
 form.formtastic fieldset ol li.email input.title,
 form.formtastic fieldset ol li.password input.title {
