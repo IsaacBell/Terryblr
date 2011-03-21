@@ -19,7 +19,7 @@ module Terryblr::AdminHelper
     end +
     javascript_tag("
     $(document).ready(function() {
-        $('.#{css_class}').swfupload({
+        $('.#{css_parent_class} .#{css_class}').swfupload({
             // Backend Settings
             upload_url: '#{url}',    // Relative to the SWF file (or you can use absolute paths)
             post_params: {
@@ -43,7 +43,7 @@ module Terryblr::AdminHelper
         });
 
         // assign our event handlers
-        $('.#{css_class}')
+        $('.#{css_parent_class} .#{css_class}')
             .bind('fileQueued', function(event, file){
                 // start the upload once a file is queued
                 // console.log('fileQueued')
