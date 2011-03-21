@@ -51,12 +51,12 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
     tag    = Terryblr::Tag.find_by_name(@query)
     joins  = nil
     @results = {
-      :posts    => Terryblr::Post.all(:conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1),
-      :pages    => Terryblr::Page.all(:conditions => conds, :joins => joins, :include => :photos).paginate(:page => 1)
+      :posts    => Terryblr::Post.where(conds).paginate(:page => 1),
+      :pages    => Terryblr::Page.where(conds).paginate(:page => 1)
     }
     respond_to do |wants|
       wants.html {
-       render :action => "terryblr/admin/search"
+       render :action => "terryblr/admin_home/search"
       }
     end
   end
