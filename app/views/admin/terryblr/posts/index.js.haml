@@ -1,1 +1,1 @@
-$("#pagination").html("#{escape_javascript(render(:partial => "admin/terryblr/posts/archives", :locals => { :posts => @collection }))}")
+$("#pagination").replaceWith("#{escape_javascript(render(:partial => "admin/terryblr/posts/archives", :locals => { :posts => @collection }))}")
