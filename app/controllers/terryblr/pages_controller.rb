@@ -12,12 +12,12 @@ class Terryblr::PagesController < Terryblr::PublicController
   private
 
   def object
-    @page = @object ||= page_chain.find_by_slug(params[:page_slug]) || 
-                        page_chain.find_by_slug(params[:id]) || 
+    @page = @object ||= end_of_association_chain.find_by_slug(params[:page_slug]) || 
+                        end_of_association_chain.find_by_slug(params[:id]) || 
                         (raise ActiveRecord::RecordNotFound)
   end
 
-  def page_chain
+  def end_of_association_chain
     Terryblr::Page
   end
 
