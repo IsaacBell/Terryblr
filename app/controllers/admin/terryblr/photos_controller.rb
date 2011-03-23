@@ -19,7 +19,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       if @object.save
         wants.js
         wants.html { 
-          render :status => :ok 
+          render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok 
         }
       else
         flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"

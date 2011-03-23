@@ -1,6 +1,6 @@
 %h2 #{ttt :new_admin}
 
-= semantic_form_for @user, :url => admin_users_path do |form|
+= semantic_form_for @user, :url => admin_users_path, :as => "user" do |form|
   #form_content{:class => "span-17"}
     = error_messages_for :user
     = render :partial => "form", :locals => { :form => form }

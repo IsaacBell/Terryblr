@@ -1,6 +1,6 @@
 = render :partial => 'admin/edit_head_content'
   
-= semantic_form_for @object, :url => (@object.new_record? ? admin_features_path : admin_feature_path(@object)) do |f|
+= semantic_form_for @object, :url => (@object.new_record? ? admin_features_path : admin_feature_path(@object)), :as => "feature" do |f|
   
   #form_content{:class => "span-17"}
     %h2= ttt("#{params[:action].to_s}_feature").html_safe

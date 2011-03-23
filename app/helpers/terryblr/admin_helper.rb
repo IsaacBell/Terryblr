@@ -164,14 +164,14 @@ module Terryblr::AdminHelper
   end
   
   def post_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :thumb)
+    param_name = object.class.to_s.demodulize.downcase
     attr_name  = 'photos_attributes]['
-    
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
       link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
       image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
-      text_area_tag("#{object.class.to_s.downcase}[#{attr_name}][caption]", photo.caption) +
-      hidden_field_tag("#{object.class.to_s.downcase}[#{attr_name}][id]", photo.id) +
-      hidden_field_tag("#{object.class.to_s.downcase}[#{attr_name}][display_order]", photo.display_order)
+      text_area_tag("#{param_name}[#{attr_name}][caption]", photo.caption) +
+      hidden_field_tag("#{param_name}[#{attr_name}][id]", photo.id) +
+      hidden_field_tag("#{param_name}[#{attr_name}][display_order]", photo.display_order)
     end
   end
   

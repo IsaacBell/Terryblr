@@ -96,6 +96,8 @@ en:
             cross_posting: cross posting
             crosspost_facebook: Post to Facebook
             crosspost_twitter: Post to Twitter
+            crosspost_queued_twitter: In Twitter post queue
+            crosspost_queued_facebook: In Facebook post queue
             custom_url: custom URL
             leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
             message: message

@@ -174,13 +174,9 @@ class Terryblr::Post < Terryblr::Base
     end
 
     def name
-      'Terryblr::Post'
+      self.to_s
     end
     
-    def sti_names
-      ['Post', 'Terryblr::Post']
-    end
-
     def base_class
       self
     end
@@ -243,10 +239,6 @@ class Terryblr::Post < Terryblr::Base
     self.class.post_types
   end
 
-  def append_as_comment(text, twitter_id)
-    #deprecate to tracked_tweet model?
-  end
-
   def slug=(value)
     # Do not let id based slugs through
     write_attribute(:slug, value.to_s.match(/^\d+$/) ? nil : value)
@@ -278,7 +270,6 @@ class Terryblr::Post < Terryblr::Base
 
   def social_cross_posts
     %w(tw fb).each do |prefix|
-
       next unless self.send("#{prefix}_me")
 
       assoc = "#{prefix}_delayed_job"
@@ -295,6 +286,8 @@ class Terryblr::Post < Terryblr::Base
         self.send(assoc).update_attribute(:run_at, self.published_at)
       end
     end
+
+
   end
 
   include Terryblr::Extendable

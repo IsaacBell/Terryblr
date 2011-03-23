@@ -41,7 +41,10 @@
           - if @post.twitter_id?
             = link_to(ttc('.crossposted_twitter'), "http://twitter.com/#{Settings.twitter.login}/status/#{@post.twitter_id}")
           - elsif @post.tw_delayed_job_id?
-            %span= ttc('.crosspost_queued_twitter') + " (" + @post.tw_delayed_job.run_at.to_s(:date_ordinal) + ")"
+            %span 
+              #{ttc('.crosspost_queued_twitter')}
+              %br
+              (#{@post.tw_delayed_job.run_at.to_s(:date_ordinal)})
           - else
             = check_box(:post, :tw_me)
             = ttc '.crosspost_twitter'
@@ -49,7 +52,10 @@
           - if @post.facebook_id?
             = link_to(ttc('.crossposted_facebook'), "http://facebook.com/pages/#{Settings.app_name.parameterize}/#{Settings.facebook.page_id}")
           - elsif @post.fb_delayed_job_id?
-            %span= ttc('.crosspost_queued_facebook') + " (" + @post.fb_delayed_job.run_at.to_s(:date_ordinal) + ")"
+            %span
+              #{ttc('.crosspost_queued_facebook')}
+              %br
+              (#{@post.fb_delayed_job.run_at.to_s(:date_ordinal)})
           - else 
             = check_box(:post, :fb_me)
             = ttc '.crosspost_facebook'

@@ -27,6 +27,8 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   layout 'admin'
 
+  private
+
   def object_url
     send("#{url_name}_path", object)
   end
@@ -40,19 +42,24 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     ctrl_parts.delete("terryblr")
     ctrl_parts.join('_').singularize
   end
+  alias_method :route_name, :url_name
 
-  def route_name
-    ctrl_parts = params[:controller].split('/')
-    ctrl_parts.delete("terryblr")
-    ctrl_parts.join('_')
+  def admin_model_name
+    ctrl_name = params[:controller].split('/').last.strip
+    "Terryblr::#{ctrl_name.singularize.camelize}"
   end
   
-  def end_of_association_chain
-    ctrl_name = params[:controller].split('/').last.strip
-    "Terryblr::#{ctrl_name.singularize.camelize}".constantize
+  def resource_name
+    admin_model_name.demodulize.downcase
+  end
+  
+  def object_name
+    admin_model_name.split('::').join('_').downcase
   end
 
-  private
+  def end_of_association_chain
+    admin_model_name.constantize
+  end
 
   def object
     @object ||= end_of_association_chain.find_by_slug(params[:id]) || end_of_association_chain.find(params[:id])
@@ -79,15 +86,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     end
   end
 
-  def tw_client
-    if @tw_client.nil?
-      oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret)
-      oauth.authorize_from_access(Settings.twitter.app_user_token, Settings.twitter.app_user_secret)
-      @tw_client = Twitter::Base.new(oauth)
-    end
-    @tw_client
-  end
-
   def set_expires
     expires_in (last_modified+6.hours), :private => false, :public => true
     fresh_when(:etag => last_modified.utc.to_i, :last_modified => last_modified.utc, :public => true)
@@ -95,7 +93,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   def last_modified
     case controller_name
-    when 'admin'
+    when 'admin_home'
       now = Time.now
       mod = now.hour%6
       last_modified = (now-mod.hours).change(:min => 0, :sec => 0, :usec => 0)

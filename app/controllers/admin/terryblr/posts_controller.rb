@@ -43,7 +43,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   }
 
   edit {
-    @editing = true
     wants.html {
       render :template => "admin/terryblr/posts/edit"
     }
@@ -75,10 +74,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   }
 
   private
-
-  def model_name
-    'Terryblr::Post'
-  end
 
   def set_type
     @type = object.post_type

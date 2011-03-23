@@ -44,10 +44,6 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
     end
   end
   
-  def model_name
-    "Terryblr::Page"
-  end
-
   include Terryblr::Extendable
 
 end

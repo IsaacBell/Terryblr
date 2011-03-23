@@ -42,6 +42,10 @@ class Terryblr::User < Terryblr::Base
   
 
   #
+  # Callbacks
+  #
+
+  #
   # Scopes
   #
   scope :admins, lambda { where(:admin => true) }
@@ -84,6 +88,11 @@ class Terryblr::User < Terryblr::Base
     item
   end
 
+  protected
+
+  def password_required?
+    !persisted? || password.present? || password_confirmation.present?
+  end
 
   include Terryblr::Extendable
 end

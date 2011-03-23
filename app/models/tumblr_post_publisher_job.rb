@@ -1,8 +1,8 @@
-require 'tumblr'
-
 TumblrPostPublisherJob = Struct.new(:post_id)
 
 class TumblrPostPublisherJob
+
+  require 'tumblr'
 
   include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain

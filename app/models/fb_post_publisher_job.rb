@@ -1,12 +1,12 @@
-require 'uri'
-require 'yaml'
-require 'mini_fb'
-
 # 
 # Delayed::Job.enqueue(FbPostPublisherJob.new(post.id, url))
 # 
 FbPostPublisherJob = Struct.new(:post_id)
 class FbPostPublisherJob
+
+  require 'uri'
+  require 'yaml'
+  require 'mini_fb'
   
   include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain

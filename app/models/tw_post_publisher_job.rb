@@ -1,5 +1,3 @@
-require 'yaml'
-require 'twitter'
 # require 'bitly'
 
 # 
@@ -7,6 +5,9 @@ require 'twitter'
 # 
 TwPostPublisherJob = Struct.new(:post_id)
 class TwPostPublisherJob
+
+  require 'yaml'
+  require 'twitter' unless defined? Twitter
 
   include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain
