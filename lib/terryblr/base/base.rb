@@ -34,7 +34,7 @@ module Terryblr
 
     def dom_id(prefix=nil)
       display_id = new_record? ? "new" : id
-      prefix ||= self.class.name
+      prefix ||= self.class.name.demodulize
       prefix != :bare ? "#{prefix.to_s.parameterize('_')}_#{display_id}" : display_id
     end
 
