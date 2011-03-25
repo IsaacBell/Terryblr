@@ -14,10 +14,10 @@
       #header
         #nav
           %ul
-            %li= link_to_unless_current ttt(:'.dashboard'), admin_path
-            %li= link_to_unless_current ttt(:'.archives'), admin_posts_path
-            %li= link_to_unless_current ttt(:'.users'), admins_admin_users_path
-            %li= link_to_unless_current ttt(:'.logout'), destroy_user_session_path
+            %li.nav-dashboard= link_to_unless_current ttt(:'.dashboard'), admin_path
+            %li.nav-archives= link_to_unless_current ttt(:'.archives'), admin_posts_path
+            %li.nav-users= link_to_unless_current ttt(:'.users'), admins_admin_users_path
+            %li.nav-logout= link_to_unless_current ttt(:'.logout'), destroy_user_session_path
 
             %li
               = semantic_form_for Terryblr::Post.new, :url => admin_search_path, :html => {:method => :get, :class => "auto-hide-text", :id => "admin_search"} do |f|
