@@ -10,6 +10,7 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
 
   def create
     @user = Terryblr::User.new(params[:user])
+    @user.admin = true
     if @user.save
       redirect_to edit_admin_user_path(@user)
     else

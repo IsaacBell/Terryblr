@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   match "/admin", :to => "terryblr/admin_home#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin_home#search", :as => :admin_search
-  match '/admin/analytics.:format', :to => "terryblr/admin_home#analytics", :as => :admin_analytics
+  match '/admin/analytics.(:format)', :to => "terryblr/admin_home#analytics", :as => :admin_analytics
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do

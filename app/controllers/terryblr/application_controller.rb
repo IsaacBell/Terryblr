@@ -1,5 +1,5 @@
 class Terryblr::ApplicationController < ResourceController::Base
-
+  
   include Terryblr::CacheSystem
   helper 'terryblr/application'
   #helper_method :current_user_session, :current_user
@@ -7,6 +7,17 @@ class Terryblr::ApplicationController < ResourceController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   private
+  
+  before_filter :work_around_rails_middleware_bug
+  def work_around_rails_middleware_bug
+    request.env["action_dispatch.request.parameters"] = nil
+    request.env["action_dispatch.request.formats"] = nil
+    request.env["action_dispatch.request.accepts"] = nil
+    request.env["action_dispatch.request.content_type"] = nil
+    params.merge! request.params
+    params.merge! request.params.symbolize_keys
+    request.parameters[:format] = params[:format]
+  end
 
   #def current_user_session
   #  return @current_user_session if defined?(@current_user_session)

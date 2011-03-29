@@ -1,11 +1,6 @@
 class Terryblr::AdminController < Terryblr::ApplicationController
 
   unloadable
-  before_filter :work_around_rails_middleware_bug
-  def work_around_rails_middleware_bug
-    request.env["action_dispatch.request.parameters"] = nil
-    params.merge! request.params
-  end
 
   #XXX load_and_authorize_resource - Removed as causing too much trouble.
   

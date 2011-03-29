@@ -1,6 +1,44 @@
 require 'open-uri'
 require 'nokogiri'
 
+desc "This task is called by the Heroku cron add-on"
+task :cron => :environment do
+
+  djs = []
+  dj_priority = -1
+  time = Time.now.in_time_zone
+
+  # Each minute
+
+  # Each Hour at a certain minute
+  case time.min
+  when 0
+  end
+
+  # Top of each hour
+  case time.hour
+  when 0
+    # Get latest tweets
+    djs << Terryblr::Tweet.send_later(:fetch_recent)
+  when 7
+    # At the top of the hour
+
+  when 8
+    # At the top of the hour
+
+  end if time.min.zero?
+
+  # Top of each wday
+  case time.wday
+  when 0
+
+  end
+
+  # Set priority on all the delayed-jobs create here
+  Delayed::Job.update_all({:priority => dj_priority}, ["id in (?)", djs.map(&:id)])
+
+end
+
 namespace :terryblr do
   desc "Greeting rake task from Terryblr"
   task :greet do
@@ -20,7 +58,6 @@ namespace :terryblr do
         entries.each { |e| import_post(e) }
       end
 
-
       private
 
       def import_post(post)
@@ -38,7 +75,7 @@ namespace :terryblr do
 
 
         # Create Post with photo unless already exists.
-        if Post.find_by_import_url(url).nil?
+        if Terryblr::Post.find_by_import_url(url).nil?
           photos = []
           image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
           # image_urls.each do |url|
@@ -62,7 +99,7 @@ namespace :terryblr do
             :display_type => "photos",
             :import_url => url
           }
-          p = Post.create!(options)
+          p = Terryblr::Post.create!(options)
           puts "Created post '#{p.title}'"
 
         else
@@ -203,7 +240,7 @@ namespace :terryblr do
         }
 
         # Create Post with photo
-        Post.create!(options)
+        Terryblr::Post.create!(options)
       end
 
       def import_regular(post, state = "published")
@@ -221,7 +258,7 @@ namespace :terryblr do
         }
 
         # Create Post with photo
-        Post.create!(options)
+        Terryblr::Post.create!(options)
       end
 
       def import_photo(post, state = 'published')
@@ -252,7 +289,7 @@ namespace :terryblr do
         }
 
         # Create Post with photo
-        Post.create!(options)
+        Terryblr::Post.create!(options)
       end
     end
 
@@ -321,7 +358,7 @@ namespace :terryblr do
         }
 
         # Create Post with photo
-        Post.create!(options)
+        Terryblr::Post.create!(options)
 
       end
 
@@ -367,7 +404,7 @@ namespace :terryblr do
         }
 
         # Create Post with photo
-        Post.create!(options)
+        Terryblr::Post.create!(options)
       end
 
 

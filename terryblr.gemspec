@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency "htmlentities"
   s.add_dependency "jammit"
   s.add_dependency "jquery-rails"
-  s.add_dependency "makandra_resource_controller"
+  s.add_dependency "rd_resource_controller"
   s.add_dependency "memcached"
   s.add_dependency "mini_fb"
   s.add_dependency "money"

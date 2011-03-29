@@ -7,7 +7,8 @@ class Terryblr::PostsController < Terryblr::PublicController
   skip_before_filter :set_expires, :only => [:preview]
 
   index {
-    wants.rss {}
+    wants.atom
+    wants.rss
   }
 
   show {
@@ -95,7 +96,7 @@ class Terryblr::PostsController < Terryblr::PublicController
       end
 
     when 'tagged'
-      posts_chain.tagged_with(params[:tag]).paginate(:page => params[:page])
+      posts_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page])
 
     when 'archives'
       col = :published_at

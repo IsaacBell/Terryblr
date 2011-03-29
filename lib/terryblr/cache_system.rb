@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 module Terryblr
   module CacheSystem
     protected
@@ -5,11 +7,11 @@ module Terryblr
     #
     # Caching. Override in controller if need specific behaviour
     #
-    def cache
+    def pre_cache
       # Only cache is request is a get, there is no caching enabled and no flash message
-      yield and return unless request.get? and ActionController::Base.perform_caching
+      return unless request.get? and ActionController::Base.perform_caching
 
-      if cache_content
+      unless cache_content.blank?
         # Make sure the right headers are sent out for IE
         respond_to do |wants|
           wants.html {
@@ -27,10 +29,14 @@ module Terryblr
             }
           end
         end
-        return
-      else
-        yield
-        Rails.cache.write(memcached_cache_key, response.body) if response.status>=200 and response.status<300
+        return false
+      end
+    end
+
+    def post_cache
+      # Write response body to the cache if required.
+      if response.status>=200 and response.status<300 and cache_content.blank?
+        Rails.cache.write(memcached_cache_key, response.body)
       end
     end
 
@@ -40,11 +46,11 @@ module Terryblr
     end
 
     def memcached_cache_key
-      cache_key[0..(250-Rails.env.size-2)]
+      Digest::SHA1.hexdigest(cache_key)
     end
 
     def cache_content
-      @content ||= Rails.cache.fetch(memcached_cache_key) 
+      @cache_content ||= Rails.cache.fetch(memcached_cache_key) 
     # rescue Memcached::ServerIsMarkedDead => exc
     #   return nil
     end

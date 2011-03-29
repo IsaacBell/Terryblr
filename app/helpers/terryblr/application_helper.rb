@@ -2,43 +2,52 @@
 module Terryblr::ApplicationHelper
 
   def facebook_meta_tags
+
     return unless page_object
 
     title = Settings.app_name + " - #{page_title}"
 
     str  = tag(:meta, :name => "title", :content => title) + "\n"
-    str += tag(:meta, :name => "description", :content => page_description)
+    str += tag(:meta, :name => "description", :content => page_description) + "\n"
+
+    str += tag(:meta, :property => "og:title", :content => title) + "\n"
+    str += tag(:meta, :property => "og:description", :content => page_description) + "\n"
+    str += tag(:meta, :property => "og:url", :content => request.url) + "\n"
+    str += tag(:meta, :property => "og:site_name", :content => Settings.app_name) + "\n"
+    str += tag(:meta, :property => "og:type", :content => "article") + "\n"
     
     return str unless object.respond_to?(:post_type)
     
     str += case page_object.post_type.to_s
     when "video"
-      if page_object.videos.empty?
-        ""
-      else
+      unless page_object.videos.empty?
         v = page_object.videos.first
         tag(:link, :rel => "video_src", :href => v.embed_url, :title => title) + "\n" +
         tag(:meta, :rel => "video_height", :content => v.height) + "\n" +
         tag(:meta, :rel => "video_width", :content => v.width) + "\n" +
         tag(:meta, :rel => "video_type", :content => "application/x-shockwave-flash") + "\n" +
-        tag(:link, :rel => "image_src", :href => v.thumb_url, :title => title)
+        tag(:link, :rel => "image_src", :href => v.thumb_url, :title => title) + "\n" +
+        tag(:meta, :property => "og:video", :content => v.embed_url) + "\n" +
+        tag(:meta, :property => "og:video:height", :content => v.height) + "\n" +
+        tag(:meta, :property => "og:video:width", :content => v.width) + "\n" +
+        tag(:meta, :property => "og:video:type", :content => "application/x-shockwave-flash") + "\n" +
+        tag(:meta, :property => "og:image", :content => v.thumb_url)
       end
     else
-      if page_object.photos.empty?
-        ""
-      else
+      unless page_object.photos.empty?
         p = page_object.photos.first
         tag(:link, :rel => "image_src", :href => p.image.url(:thumb), :title => title) + "\n" +
-        tag(:meta, :name => "medium", :content => "image")
+        tag(:meta, :name => "medium", :content => "image") + "\n" +
+        tag(:meta, :property => "og:image", :content => p.image.url(:thumb)) + "\n"
       end
     end
-    str
+    str.html_safe
   end
   
   def page_title
-    return "" if page_object.nil? and @page_title.nil?
+    return "" if page_object.nil?
 
-    @page_title ? @page_title : page_object.title
+    page_object.title
   end
 
   def page_description
@@ -47,12 +56,16 @@ module Terryblr::ApplicationHelper
   end
 
   def page_object
-    @page_object ||= @post || @page || @object || nil
-    @page_object ||= @posts.first if @posts
-    @page_object
+    page_object ||= @post || @page || @object || nil
+    page_object ||= @posts.first if @posts
+    page_object
   end
   
   def detail_page?
+puts "request.format.to_s: #{request.format.to_s}"
+puts "params: #{params.inspect}"
+    return true if %w(atom rss application/atom+xml application/rss+xml).include?(request.format.to_s)
+    
     case controller.controller_name.to_sym
     when :contributors
       false
@@ -62,6 +75,7 @@ module Terryblr::ApplicationHelper
   end
 
   def photos_post_body(object)
+
     obj_type = object.class.to_s.downcase.split('::').last
 
     # Rejection cases
