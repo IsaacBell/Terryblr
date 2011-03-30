@@ -62,8 +62,6 @@ module Terryblr::ApplicationHelper
   end
   
   def detail_page?
-puts "request.format.to_s: #{request.format.to_s}"
-puts "params: #{params.inspect}"
     return true if %w(atom rss application/atom+xml application/rss+xml).include?(request.format.to_s)
     
     case controller.controller_name.to_sym

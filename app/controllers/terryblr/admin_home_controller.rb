@@ -9,7 +9,6 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
   around_filter :cache, :only => [:analytics]
 
-  skip_before_filter :load_and_authorize_resource
 
 
   rescue_from CanCan::AccessDenied do |exception|

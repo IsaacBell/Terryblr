@@ -4,9 +4,8 @@ class Terryblr::PublicController < Terryblr::ApplicationController
   inherit_resources
 
   # caches_page # for making static sites
-  before_filter :pre_cache
-  after_filter :post_cache
-
+  around_filter :cache
+  
   # Set HTTP caching headers
   before_filter :set_expires
   before_filter :set_fresh_when

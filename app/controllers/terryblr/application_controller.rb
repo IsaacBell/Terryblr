@@ -83,7 +83,8 @@ class Terryblr::ApplicationController < ActionController::Base
 
   def set_last_modified(force = false)
     # Don't update it unless forced to or the if the request is just a GET
-    @last_modified = Rails.cache.write(LAST_MODIFIED_CACHE_KEY, Time.now.utc) if force or !request.get?
+    @last_modified = Time.now.utc
+    Rails.cache.write(LAST_MODIFIED_CACHE_KEY, @last_modified) if force or !request.get?
   end
 
   def object?

@@ -7,9 +7,9 @@ module Terryblr
     #
     # Caching. Override in controller if need specific behaviour
     #
-    def pre_cache
-      # Only cache is request is a get, there is no caching enabled and no flash message
-      return unless request.get? and ActionController::Base.perform_caching
+    def cache
+      # Only cache request if it's a get and caching is active.
+      return yield unless request.get? and ActionController::Base.perform_caching
 
       unless cache_content.blank?
         # Make sure the right headers are sent out for IE
@@ -30,19 +30,21 @@ module Terryblr
           end
         end
         return false
-      end
-    end
+      
+      else
+        # Execute the request
+        yield
 
-    def post_cache
-      # Write response body to the cache if required.
-      if response.status>=200 and response.status<300 and cache_content.blank?
-        Rails.cache.write(memcached_cache_key, response.body)
+        # Write response body to the cache if required.
+        if response.status>=200 and response.status<300
+          Rails.cache.write(memcached_cache_key, response.body)
+        end
       end
     end
 
     # Override this if other valuables are needed
     def cache_key
-      "#{request.url}/#{request.format.to_sym.to_s}/#{flash.to_s.gsub(/\W/,'')}"
+      "#{request.path}/#{request.format.to_sym.to_s}/#{flash.to_s.gsub(/\W/,'')}"
     end
 
     def memcached_cache_key
