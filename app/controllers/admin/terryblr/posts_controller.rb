@@ -3,75 +3,74 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   before_filter :set_type, :only => [:edit, :update]
   before_filter :collection, :only => [:index, :filter]
 
-  index {
-    before {
-      @show_as_dash = true
-    }
-    wants.js {
-      render :template => "admin/terryblr/posts/index"
-    }
-    wants.html {
-      render :template => "admin/terryblr/posts/index"
-    }
-  }
+  def index
+    @show_as_dash = true
+    super do |wants|
+      wants.js    { render :template => "admin/terryblr/posts/index" }
+      wants.html  { render :template => "admin/terryblr/posts/index" }
+    end
+  end
 
   def filter
     @show_as_dash = true
     respond_to do |wants|
+      wants.html { render :template => "admin/terryblr/posts/index" }
+    end
+  end
+
+  # NOTE: WTF!!!
+  def new
+    # Create post!
+    resource.attributes = resource.new.attributes.symbolize_keys.update(
+      :state => "pending",
+      :post_type => params[:type],
+      :published_at => nil,
+      :twitter_id => nil
+    )
+    resource.save!
+    resource.slug = ""
+    super do |wants|
       wants.html {
-        render :template => "admin/terryblr/posts/index"
+        @type = resource.post_type
+        render :template => "admin/terryblr/posts/edit"
       }
     end
   end
 
-  new_action {
-    before {
-      # Create post!
-      object.attributes= object.class.new.attributes.symbolize_keys.update(
-        :state => "pending",
-        :post_type => params[:type],
-        :published_at => nil,
-        :twitter_id => nil
-      )
-      object.save!
-      object.slug = ""
-    }
-    wants.html {
-      @type = object.post_type
-      render :template => "admin/terryblr/posts/edit"
-    }
-  }
-
-  edit {
-    wants.html {
-      render :template => "admin/terryblr/posts/edit"
-    }
-  }
-
-  create {
-    failure.wants.html {
-      render :template => "admin/terryblr/posts/edit"
-    }
-  }
-
-  update {
-    wants.html {
-      if params[:post] and params[:post][:state]=="publish_now"
-        flash[:notice] += " <b>Your post is now live!</b>"
-      end
-      redirect_to admin_posts_path
-    }
-  }
-
-  def show
-    redirect_to edit_admin_post_path(object)
+  def edit
+    super do |wants|
+      wants.html { render :template => "admin/terryblr/posts/edit" }
+    end
   end
 
-  destroy {
-    wants.html {
-      redirect_to admin_posts_path
-    }
-  }
+  def create
+    super do |success, failure|
+      failure.html { render :template => "admin/terryblr/posts/edit" }
+    end
+  end
+
+  def update
+    super do |wants|
+      wants.html {
+        if params[:post] and params[:post][:state]=="publish_now"
+          flash[:notice] += " <b>Your post is now live!</b>"
+        end
+        redirect_to admin_posts_path
+      }
+    end
+  end
+
+  def show
+    super do |wants|
+      wants.html { redirect_to edit_admin_post_path(object) }
+    end
+  end
+
+  def destroy
+    super do |wants|
+      wants.html { redirect_to admin_posts_path }
+    end
+  end
 
   private
 
@@ -95,7 +94,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     end
 
     @posts = @collection ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
-    
   end
 
   include Terryblr::Extendable

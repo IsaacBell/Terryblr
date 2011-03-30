@@ -6,22 +6,20 @@ class Terryblr::PostsController < Terryblr::PublicController
   before_filter :require_user, :only => [:preview]
   skip_before_filter :set_expires, :only => [:preview]
 
-  index {
-    wants.atom
-    wants.rss
-  }
+  def index
+    index! do |wants|
+      wants.atom
+      wants.rss
+    end
+  end
 
-  show {
-    before {
-      @page_title = object.title rescue nil
-    }
-    wants.xml {
-      render "terryblr/common/slideshow"
-    }
-    failure.wants.html {
-      raise ActiveRecord::RecordNotFound
-    }
-  }
+  def show
+    @page_title = object.title rescue nil
+    show! do |success, failure|
+      success.xml   { render "terryblr/common/slideshow" }
+      failure.html  { raise ActiveRecord::RecordNotFound }
+    end
+  end
 
   def preview
     @object = Terryblr::Post.find(params[:id])
@@ -81,7 +79,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def collection
-    @posts = @collection ||= case self.action_name 
+    @posts = @collection ||= case self.action_name
     when 'index'
       if !params[:search].blank?
         # Normal post listing

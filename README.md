@@ -43,3 +43,5 @@ To use spork, first launch a Sport server like this:
 Then, add the command-line option `--drb` to your RSpec or Cucumber command
 
 ## Troubleshooting ##
+
+Explain how to create a first user

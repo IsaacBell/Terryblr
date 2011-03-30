@@ -3,28 +3,22 @@ class Terryblr::LikesController < Terryblr::PublicController
   helper "Terryblr::Posts"
   before_filter :require_user, :only => [:create]
 
-  index {
-    wants.html {
-      head :not_found
-    }
-    wants.json {
-      render :json => collection.to_json
-    }
-    wants.xml {
-      render :xml => collection.to_xml
-    }
-  }
+  def index
+    index! do |success, failure|
+      success.html { head :not_found }
+      success.json { render :json => collection.to_json }
+      success.xml  { render :xml => collection.to_xml }
+    end
+  end
 
-  create {
-    wants.html {
-      head :ok, :location => post_path(parent_object)
-    }
-    wants.js
-    failure.wants.html {
-      head :error, :message => "You already liked this"
-    }
-    failure.wants.js
-  }
+  def create
+    create! do |success, failure|
+      success.html { head :ok, :location => post_path(parent_object) }
+      success.js
+      failure.wants.html { head :error, :message => "You already liked this" }
+      failure.wants.js
+    end
+  end
 
   private
 

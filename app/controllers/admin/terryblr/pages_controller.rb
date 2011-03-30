@@ -2,39 +2,34 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   prepend_before_filter :find_page
 
-  index {
-    before {
-      @list_cols = %w(page state)
-      @action_cols = %w(add_child)
-    }
-    wants.html {}
-    wants.js
-  }
+  def index
+    @list_cols = %w(page state)
+    @action_cols = %w(add_child)
+    super
+  end
 
-  new_action {
-    before {
-      # Create post!
-      object.save!
-      object.state = :published
-      object.parent_id = params[:parent_id].to_i if params[:parent_id]
-    }
-    wants.html {
-      render :action => "edit"
-    }
-  }
+  def new
+    # Create post!
+    object.save!
+    object.state = :published
+    object.parent_id = params[:parent_id].to_i if params[:parent_id]
+    super do |wants|
+      wants.html { render :action => "edit" }
+    end
+  end
 
-  show {
-    wants.html {
-      redirect_to admin_pages_path
-    }
-  }
-  
+  def show
+    super do |wants|
+      wants.html { redirect_to admin_pages_path }
+    end
+  end
+
   private
 
   def find_page
     @page = Terryblr::Page.find_by_slug(params[:id]) || Terryblr::Page.find_by_id(params[:id])
   end
-  
+
   def collection
     order = "created_at desc"
     @collection = @posts ||= if params[:parent_id]
@@ -43,7 +38,6 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
       Terryblr::Page.roots.by_state(params[:state] || 'published').all(:order => order)
     end
   end
-  
-  include Terryblr::Extendable
 
+  include Terryblr::Extendable
 end

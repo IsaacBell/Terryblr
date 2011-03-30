@@ -1,18 +1,13 @@
 class Terryblr::AdminHomeController < Terryblr::AdminController
 
-  index {
-    before {
-      raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet
-      @show_as_dash = true
-    }
-    wants.html {
-      
-    }
-  }
+  def index
+    raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet
+    @show_as_dash = true
+    index!
+  end
 
   def analytics
     @since = 1.month.ago.to_date
-
     # Visitors
     gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
     @reports = {

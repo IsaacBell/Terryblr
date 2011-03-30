@@ -1,17 +1,14 @@
 class Terryblr::HomeController < Terryblr::PublicController
 
   helper 'terryblr/posts'
-  
+
   caches_page :robots
   before_filter :collection, :only => [:index, :sitemap]
-  
-  index {
-    before {
-      @posts = collection
-    }
-    wants.html
-    wants.js
-  }
+
+  def index
+    @posts = collection
+    index!
+  end
 
   def search
   end
@@ -24,7 +21,7 @@ class Terryblr::HomeController < Terryblr::PublicController
       wants.xml
     end
   end
-  
+
   def robots
     respond_to do |wants|
       wants.txt
@@ -46,6 +43,8 @@ class Terryblr::HomeController < Terryblr::PublicController
       }
     end
   end
+
+  private
 
   def collection
     @collection ||= case action_name

@@ -3,7 +3,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   unloadable
 
   #XXX load_and_authorize_resource - Removed as causing too much trouble.
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     if current_user && !current_user.admin?
       @message = exception.message
@@ -43,11 +43,11 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     ctrl_name = params[:controller].split('/').last.strip
     "Terryblr::#{ctrl_name.singularize.camelize}"
   end
-  
+
   def resource_name
     admin_model_name.demodulize.downcase
   end
-  
+
   def object_name
     admin_model_name.split('::').join('_').downcase
   end

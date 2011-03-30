@@ -1,3 +1,4 @@
+require 'inherited_resources'
 require 'haml'
 require 'formtastic'
 require 'settingslogic'

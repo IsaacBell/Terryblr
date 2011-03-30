@@ -1,5 +1,5 @@
-class Terryblr::ApplicationController < ResourceController::Base
-  
+class Terryblr::ApplicationController < ActionController::Base
+  inherit_resources
   include Terryblr::CacheSystem
   helper 'terryblr/application'
   #helper_method :current_user_session, :current_user

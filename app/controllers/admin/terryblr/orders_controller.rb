@@ -1,13 +1,12 @@
 class Admin::Terryblr::OrdersController < Terryblr::AdminController
-
   helper 'terryblr/admin', 'admin/terryblr/orders'
   before_filter :find_by_month, :only => [:filter]
 
-  show {
-    wants.html {
-      redirect_to edit_admin_order_path(object)
-    }
-  }
+  def show
+    super do |wants|
+      wants.html { redirect_to edit_admin_order_path(object) 
+    end
+  end
   
   def filter
     respond_to do |wants|
@@ -16,10 +15,9 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
       }
     end
   end
-  
 
   private
-  
+
   def collection
     conditions = ""
     unless params[:search].blank?
@@ -30,14 +28,14 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
     end
     @collection ||= end_of_association_chain.all(:conditions => conditions, :order => "created_at desc").paginate(:page => params[:page])
   end
-  
+
   def object
     @object ||= Terryblr::Order.find params[:id]
   end
-  
+
   def find_by_month
     @orders = Terryblr::Order.by_month(@date.month).by_year(@date.year).paginate(:page => params[:page])
   end
-  
+
   include Terryblr::Extendable
 end

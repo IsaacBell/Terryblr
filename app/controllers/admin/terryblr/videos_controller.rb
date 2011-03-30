@@ -19,7 +19,7 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
       render :text => object.errors.full_messages.to_sentence
     end
   end
-  
+
   def reorder
     if params[:videos_list].is_a?(Array)
       i = 0
@@ -31,21 +31,16 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
       render :nothing => true, :status => :error
     end
   end
-  
-  destroy {
-    wants.js
-    failure.wants.js
-  }
-  
+
   private
-  
+
   def post
     @post ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id]) || Terryblr::Post.new
   end
-  
+
   def object
     @object ||= end_of_association_chain.find(params[:id])
   end
-  
+
   include Terryblr::Extendable
 end

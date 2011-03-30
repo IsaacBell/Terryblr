@@ -44,11 +44,6 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     end
   end
 
-  destroy {
-    wants.js
-    failure.wants.js
-  }
-
   private
 
   def photoable
@@ -68,5 +63,4 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
   end
 
   include Terryblr::Extendable
-
 end

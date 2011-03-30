@@ -10,25 +10,24 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
     end
   end
 
-  new_action {
-    before {
-      # Create feature!
-      object.attributes = object.class.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
-      object.save!
-    }
-  }
+  def new
+    # Create feature!
+    object.attributes = object.class.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
+    object.save!
+    super
+  end
 
-  show {
-    wants.html {
-      redirect_to edit_admin_feature_path(object)
-    }
-  }
+  def show
+    super do |wants|
+      wants.html { redirect_to edit_admin_feature_path(object) }
+    end
+  end
 
-  update {
-    wants.html {
-      redirect_to admin_features_path
-    }
-  }
+  def update
+    super do |wants|
+      wants.html { redirect_to admin_features_path }
+    end
+  end
 
   def reorder
     key = params.keys.detect{|k| k.to_s.starts_with?('feature') }
@@ -48,11 +47,10 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   def end_of_association_chain
     Terryblr::Feature
   end
-  
+
   def object
     @object ||= end_of_association_chain.find(params[:id])
   end
 
   include Terryblr::Extendable
-  
 end

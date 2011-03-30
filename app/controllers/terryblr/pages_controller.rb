@@ -1,13 +1,11 @@
 class Terryblr::PagesController < Terryblr::PublicController
 
-  show {
-    before {
-      @page_title = object.title
-    }
-    failure.wants.html {
-      raise ActiveRecord::RecordNotFound
-    }
-  }
+  def show
+    @page_title = object.title
+    show! do |success, failure|
+      failure.wants.html { raise ActiveRecord::RecordNotFound }
+    end
+  end
 
   private
 

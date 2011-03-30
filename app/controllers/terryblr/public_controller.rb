@@ -5,7 +5,7 @@ class Terryblr::PublicController < Terryblr::ApplicationController
   # caches_page # for making static sites
   before_filter :pre_cache
   after_filter :post_cache
-  
+
   # Set HTTP caching headers
   before_filter :set_expires
   before_filter :set_fresh_when
@@ -17,7 +17,7 @@ class Terryblr::PublicController < Terryblr::ApplicationController
       
       Rails.logger.info "Exception: #{exception}"
       Rails.logger.info exception.backtrace.join("\n")
-  
+      
       case exception.class.to_s
       when ActiveRecord::RecordNotFound.to_s
         render :template => 'terryblr/errors/404', :layout => 'public', :status => 404
