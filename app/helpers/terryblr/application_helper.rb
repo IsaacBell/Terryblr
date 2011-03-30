@@ -16,7 +16,7 @@ module Terryblr::ApplicationHelper
     str += tag(:meta, :property => "og:site_name", :content => Settings.app_name) + "\n"
     str += tag(:meta, :property => "og:type", :content => "article") + "\n"
     
-    return str unless object.respond_to?(:post_type)
+    return str unless page_object.respond_to?(:post_type)
     
     str += case page_object.post_type.to_s
     when "video"
