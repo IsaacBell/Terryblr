@@ -8,7 +8,7 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
 
   def create
     create! do |success, failure|
-      success.html { redirect_to edit_admin_user_path(resource), :notice => t('en.devise.registrations.signed_up') }
+      success.html { redirect_to edit_admin_user_path(resource), :notice => t('devise.registrations.signed_up') }
       failure.html { render :action => :new }
     end
   end

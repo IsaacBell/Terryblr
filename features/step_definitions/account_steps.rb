@@ -21,9 +21,11 @@ end
 Given /^I am authenticated as "([^"]*)" with "([^"]*)"$/ do |email, password|
   visit destroy_user_session_path
   visit new_user_session_path
-  And %{I fill in "user_email" with "#{email}"}
-  And %{I fill in "user_password" with "#{password}"}
-  And %{I press "Login"}  
+  steps %Q{
+    And I fill in "user_email" with "#{email}"
+    And I fill in "user_password" with "#{password}"
+    And I press "Login"
+  }
 end
 
 

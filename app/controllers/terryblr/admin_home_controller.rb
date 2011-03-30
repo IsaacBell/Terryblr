@@ -1,4 +1,9 @@
-class Terryblr::AdminHomeController < Terryblr::AdminController
+class Terryblr::AdminHomeController < Terryblr::ApplicationController
+  layout 'admin'
+  
+  inherit_resources
+  
+  after_filter :set_last_modified
   before_filter :set_date, :only => [:index, :filter]
   before_filter :set_expires, :only => [:analytics]
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
@@ -6,12 +11,25 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
 
   skip_before_filter :load_and_authorize_resource
 
+
+  rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.info "AdminHomeController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
+    if current_user && !current_user.admin?
+      @message = exception.message
+      render 'admin/common/access_denied'
+    else
+      redirect_to new_user_session_path, :notice => exception.message
+    end
+  end
+
   def collection
     nil
   end
 
   def index
-    raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet
+    if cannot? :read, Terryblr::Tweet
+      raise CanCan::AccessDenied
+    end
     @show_as_dash = true
     index!
   end
@@ -68,6 +86,14 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
   
   private
   
+  def set_date
+    @date ||= if params[:month] || params[:year]
+      "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
+    else
+      Date.today
+    end
+  end
+
   def end_of_association_chain
     Terryblr::Post
   end

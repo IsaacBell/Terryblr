@@ -25,7 +25,7 @@ Feature: Manage posts
     # Then show me the posts
     And  I should see "My draft"
   
-  Scenario: Create a posts
+  Scenario: Create a post
     Given I am on the posts admin page
     And I follow "Post"
     When I fill in the following:
@@ -40,5 +40,4 @@ Feature: Manage posts
     When I follow "New expo"
     Then I should see "Edit Post"
     When I follow "Delete"
-    Then I should see "Successfully removed!"
-    And I should see "Archives: 1 Post"
+    Then I should see "successfully"

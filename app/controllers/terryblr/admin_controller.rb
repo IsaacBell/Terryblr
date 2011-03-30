@@ -1,14 +1,19 @@
 class Terryblr::AdminController < Terryblr::ApplicationController
 
-  unloadable
-
-  #XXX load_and_authorize_resource - Removed as causing too much trouble.
+  inherit_resources
+  def self.inherited(base)
+    super
+    resource_class_name = base.name.sub(/Admin::/, '').sub(/Controller/, '').singularize
+    base.resource_class = resource_class_name.constantize
+  end
+  
+  load_and_authorize_resource :class => resource_class
 
   rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.info "AdminController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
     if current_user && !current_user.admin?
       @message = exception.message
       render 'admin/common/access_denied'
-      # raise exception
     else
       redirect_to new_user_session_path, :notice => exception.message
     end
@@ -80,14 +85,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
       conditions = ["#{conditions} AND (LOWER(title) like ? OR LOWER(state) like ?)", search_str, search_str]
     end
     @collection ||= end_of_association_chain.paginate(:conditions => conditions, :order => "published_at desc, created_at desc", :page => params[:page])
-  end
-
-  def set_date
-    @date ||= if params[:month] || params[:year]
-      "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
-    else
-      Date.today
-    end
   end
 
   def set_expires

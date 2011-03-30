@@ -1,6 +1,7 @@
 class Terryblr::PublicController < Terryblr::ApplicationController
 
   unloadable
+  inherit_resources
 
   # caches_page # for making static sites
   before_filter :pre_cache
