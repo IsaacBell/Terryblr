@@ -53,7 +53,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails", "~> 2.5"
   s.add_development_dependency "sqlite3-ruby"
-  s.add_development_dependency "capybara", "~> 0.4"
+  # s.add_development_dependency "capybara"
   s.add_development_dependency "webrat"
   s.add_development_dependency "cucumber"
   s.add_development_dependency "cucumber-rails"
@@ -65,6 +65,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ruby_parser"
   s.add_development_dependency "launchy"
   s.add_development_dependency "hirb"
+  s.add_development_dependency "spork"
+  s.add_development_dependency "awesome_print"
+  s.add_development_dependency "wirble"
 
   s.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"] + ["LICENSE", "README.rdoc"]
 end

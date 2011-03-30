@@ -1,5 +1,11 @@
 class Terryblr::AdminHomeController < Terryblr::AdminController
 
+  skip_before_filter :load_and_authorize_resource
+
+  def collection
+    nil
+  end
+
   index {
     before {
       raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet

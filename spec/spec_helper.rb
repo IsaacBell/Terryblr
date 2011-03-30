@@ -15,6 +15,7 @@ Spork.prefork do
   end
   Jammit.load_configuration(File.expand_path("../dummy/config/assets.yml",  __FILE__))
   require "rspec/rails"
+  require "capybara/rspec"
   require "factory_girl"
   require "database_cleaner"
 
@@ -36,7 +37,6 @@ Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
     # Remove this line if you don't want RSpec's should and should_not
     # methods or matchers
     require 'rspec/expectations'
-    config.include RSpec::Matchers
 
     # == Mock Framework
     config.mock_with :rspec
