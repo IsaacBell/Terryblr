@@ -14,10 +14,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     end
   end
 
-  before_filter :set_date, :only => [:index, :filter]
-  before_filter :set_expires, :only => [:analytics]
-  skip_before_filter :verify_authenticity_token, :only => [:analytics]
-  around_filter :cache, :only => [:analytics]
   after_filter :set_last_modified
 
   layout 'admin'
@@ -61,7 +57,20 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
   
   def build_object
-    @object ||= (new_obj = end_of_association_chain.pending.first) ? (new_obj.attributes = object_params; new_obj) : end_of_association_chain.new(object_params)
+    @object ||= begin
+      # puts "end_of_association_chain: #{end_of_association_chain.inspect}"
+      new_obj = if end_of_association_chain.respond_to? :pending
+        end_of_association_chain.pending.first
+      else
+        end_of_association_chain.first
+      end
+      if new_obj
+        new_obj.attributes = object_params
+        new_obj
+      else
+        end_of_association_chain.new(object_params)
+      end
+    end
   end
 
   def collection

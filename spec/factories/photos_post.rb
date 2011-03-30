@@ -1,6 +1,6 @@
-Factory.define :post, :class => Terryblr::Post do |post|
+Factory.define :photos_post, :class => Terryblr::Post do |post|
   post.state            "published"
-  post.post_type        "post"
+  post.post_type        "photos"
   post.sequence(:title) { |n| "Factory post #{n}" }
   post.body             "<h1>I'm a simple body</h1>"
   post.published_at     1.minute.ago
