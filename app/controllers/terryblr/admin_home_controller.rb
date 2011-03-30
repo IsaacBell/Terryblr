@@ -1,4 +1,14 @@
 class Terryblr::AdminHomeController < Terryblr::AdminController
+  before_filter :set_date, :only => [:index, :filter]
+  before_filter :set_expires, :only => [:analytics]
+  skip_before_filter :verify_authenticity_token, :only => [:analytics]
+  around_filter :cache, :only => [:analytics]
+
+  skip_before_filter :load_and_authorize_resource
+
+  def collection
+    nil
+  end
 
   def index
     raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet
