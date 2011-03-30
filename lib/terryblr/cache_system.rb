@@ -7,7 +7,7 @@ module Terryblr
     #
     # Caching. Override in controller if need specific behaviour
     #
-    def pre_cache
+    def cache
       # Only cache request if it's a get and caching is active.
       return yield unless request.get? and ActionController::Base.perform_caching
 
