@@ -1,2 +1,2 @@
 
-RAILS_ENV=test AUTOFEATURE=true bundle exec autotest
+RAILS_ENV=test AUTOFEATURE=true bundle exec autotest $*
