@@ -91,11 +91,10 @@ module Terryblr::AdminHelper
     link_to_function(tt(:'.add_inline_photo'), "$('##{css_flash}').swfupload('selectFile')") +
     image_tag("loading.gif", :style => "display:none") +
     content_tag(:div, "", :id => css_flash) do
-        content_tag(:span, "", :id => "spanButtonPlaceholder")
+      content_tag(:span, "", :id => "spanButtonPlaceholder")
     end +
     javascript_tag("
     $(document).ready(function() {
-
         $('##{css_flash}').swfupload({
             upload_url: '#{url}',    // Relative to the SWF file (or you can use absolute paths)
             post_params: {

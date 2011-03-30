@@ -4,13 +4,13 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
     # Create post!
     object.save!
     object.state = :published
-    new! do |wants|
+    super do |wants|
       wants.html { render :action => "edit" }
     end
   end
 
   def show
-    show! do |wants|
+    super do |wants|
       wants.html { redirect_to edit_admin_product_path(object) }
     end
   end

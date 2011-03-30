@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314151665) do
+ActiveRecord::Schema.define(:version => 20110330204953) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -196,10 +196,11 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
     t.string   "display_type"
     t.integer  "tw_delayed_job_id"
     t.integer  "fb_delayed_job_id"
+    t.integer  "tumblr_delayed_job_id"
     t.string   "social_msg",            :limit => 140
     t.integer  "linkable_id"
     t.string   "linkable_type"
-    t.integer  "tumblr_delayed_job_id"
+    t.string   "import_url"
   end
 
   add_index "posts", ["comments_count"], :name => "index_posts_on_comments_count"
@@ -274,7 +275,6 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",    :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"

@@ -13,7 +13,6 @@ Then /^dump_users$/ do
   puts Terryblr::User.all.inspect
 end
 
-
 Given /^the following accounts:$/ do |accounts|
   Terryblr::User.create!(accounts.hashes)
 end
@@ -39,4 +38,3 @@ end
 Then /^I should see the following accounts:$/ do |expected_accounts_table|
   expected_accounts_table.diff!(tableish('table tr', 'td,th'))
 end
-

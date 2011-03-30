@@ -48,8 +48,8 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def update
-    super do |wants|
-      wants.html {
+    super do |success, failure|
+      success.html {
         if params[:post] and params[:post][:state]=="publish_now"
           flash[:notice] += " <b>Your post is now live!</b>"
         end

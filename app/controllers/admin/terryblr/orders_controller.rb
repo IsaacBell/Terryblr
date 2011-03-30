@@ -4,7 +4,7 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
 
   def show
     super do |wants|
-      wants.html { redirect_to edit_admin_order_path(object) }
+      wants.html { redirect_to edit_admin_order_path(resource) }
     end
   end
   
@@ -27,10 +27,6 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
       conditions = [search_sql] + fields.size.times.map{|i| search_str }
     end
     @collection ||= end_of_association_chain.all(:conditions => conditions, :order => "created_at desc").paginate(:page => params[:page])
-  end
-
-  def object
-    @object ||= Terryblr::Order.find params[:id]
   end
 
   def find_by_month

@@ -15,9 +15,8 @@ class Terryblr::PostsController < Terryblr::PublicController
 
   def show
     @page_title = resource.title rescue nil
-    super do |success, failure|
-      success.xml   { render "terryblr/common/slideshow" }
-      failure.html  { raise ActiveRecord::RecordNotFound }
+    super do |wants|
+      wants.xml   { render "terryblr/common/slideshow" }
     end
   end
 

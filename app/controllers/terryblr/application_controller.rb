@@ -98,5 +98,4 @@ class Terryblr::ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= Terryblr::Ability.new(current_user)
   end
-
 end

@@ -12,20 +12,20 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def new
     # Create feature!
-    object.attributes = object.class.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
-    object.save!
+    resource.attributes = resource.class.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
+    resource.save!
     super
   end
 
   def show
     super do |wants|
-      wants.html { redirect_to edit_admin_feature_path(object) }
+      wants.html { redirect_to edit_admin_feature_path(resource) }
     end
   end
 
   def update
-    super do |wants|
-      wants.html { redirect_to admin_features_path }
+    super do |success, failure|
+      success.html { redirect_to admin_features_path }
     end
   end
 
@@ -46,10 +46,6 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def end_of_association_chain
     Terryblr::Feature
-  end
-
-  def object
-    @object ||= end_of_association_chain.find(params[:id])
   end
 
   include Terryblr::Extendable

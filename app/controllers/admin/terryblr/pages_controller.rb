@@ -26,8 +26,8 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   end
 
   def create
-    super do |wants|
-      wants.html { redirect_to admin_pages_path }
+    super do |success, failure|
+      success.html { redirect_to admin_pages_path }
     end
   end
 

@@ -4,10 +4,10 @@ class Terryblr::LikesController < Terryblr::PublicController
   before_filter :require_user, :only => [:create]
 
   def index
-    index! do |success, failure|
-      success.html { head :not_found }
-      success.json { render :json => collection.to_json }
-      success.xml  { render :xml => collection.to_xml }
+    index! do |wants|
+      wants.html { head :not_found }
+      wants.json { render :json => collection.to_json }
+      wants.xml  { render :xml => collection.to_xml }
     end
   end
 
