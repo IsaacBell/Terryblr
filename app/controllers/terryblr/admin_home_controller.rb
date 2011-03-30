@@ -3,10 +3,9 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
   index {
     before {
       raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet
-      @show_as_dash = true
     }
     wants.html {
-      
+      @show_as_dash = true
     }
   }
 
