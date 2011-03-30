@@ -15,6 +15,7 @@ Spork.prefork do
   end
   Jammit.load_configuration(File.expand_path("../dummy/config/assets.yml",  __FILE__))
   require "rspec/rails"
+  require "capybara/rspec"
   require "factory_girl"
   require "database_cleaner"
 
