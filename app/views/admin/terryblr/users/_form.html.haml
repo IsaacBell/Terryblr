@@ -8,10 +8,10 @@
 = form.buttons do
   = form.commit_button ttt(:save)
   %li.cancel
-    - if @object.new_record?
+    - if resource.new_record?
       = link_to ttt(:cancel), admin_users_path, :class => "cancel"
     - else
       = link_to ttt(:back), admin_users_path, :class => "cancel"
   %li.delete
-    = link_to ttt(:delete), admin_user_path(@object.id), :class => "cancel", :confirm => ttt(:are_you_sure), :method => "delete" unless @object.new_record? or @object.id < 3
+    = link_to ttt(:delete), admin_user_path(resource.id), :class => "cancel", :confirm => ttt(:are_you_sure), :method => "delete" unless resource.new_record? or resource.id < 3
   

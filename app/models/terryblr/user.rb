@@ -59,6 +59,9 @@ class Terryblr::User < Terryblr::Base
       self
     end
     
+    def build_admin props
+      self.new (props || {}).merge :admin => true
+    end
   end
 
   #
