@@ -4,7 +4,7 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
 
   def show
     super do |wants|
-      wants.html { redirect_to edit_admin_order_path(object) 
+      wants.html { redirect_to edit_admin_order_path(object) }
     end
   end
   
