@@ -1,6 +1,6 @@
 class Terryblr::PostsController < Terryblr::PublicController
   before_filter :date, :only => [:index]
-  before_filter :object, :only => [:gallery_params, :show, :next, :previous]
+  before_filter :resource, :only => [:gallery_params, :show, :next, :previous]
   before_filter :featured_pics, :only => [:show]
   before_filter :collection, :only => [:index, :tagged, :archives]
   before_filter :require_user, :only => [:preview]
@@ -14,8 +14,8 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def show
-    @page_title = object.title rescue nil
-    show! do |success, failure|
+    @page_title = resource.title rescue nil
+    super do |success, failure|
       success.xml   { render "terryblr/common/slideshow" }
       failure.html  { raise ActiveRecord::RecordNotFound }
     end
@@ -66,8 +66,8 @@ class Terryblr::PostsController < Terryblr::PublicController
 
   private
 
-  def object
-    @post = @object ||= posts_chain.find_by_id(params[:id])        || 
+  def resource
+    @post = @resource ||= posts_chain.find_by_id(params[:id])      || 
                         posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
                         posts_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
                         posts_chain.find_by_tumblr_id(params[:id]) || # Needed to keep permalinks alive

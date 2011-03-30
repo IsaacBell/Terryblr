@@ -30,13 +30,12 @@ Spork.prefork do
   Capybara.default_selector = :css
   # Load support files
   Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
-Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
+  Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
 
   RSpec.configure do |config|
     # Remove this line if you don't want RSpec's should and should_not
     # methods or matchers
     require 'rspec/expectations'
-    config.include RSpec::Matchers
 
     # == Mock Framework
     config.mock_with :rspec
@@ -48,8 +47,6 @@ Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
     end
     #config.before(:each) { DatabaseCleaner.start }
   end
-
-  
 end
 
 Spork.each_run do

@@ -10,15 +10,22 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   def new
     # Create post!
-    object.save!
-    object.state = :published
-    object.parent_id = params[:parent_id].to_i if params[:parent_id]
+    @page = Terryblr::Page.new
+    @page.save!
+    @page.state = :published
+    @page.parent_id = params[:parent_id].to_i if params[:parent_id]
     super do |wants|
       wants.html { render :action => "edit" }
     end
   end
 
   def show
+    super do |wants|
+      wants.html { redirect_to admin_pages_path }
+    end
+  end
+
+  def create
     super do |wants|
       wants.html { redirect_to admin_pages_path }
     end

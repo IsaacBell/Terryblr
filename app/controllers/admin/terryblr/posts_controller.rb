@@ -18,20 +18,19 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     end
   end
 
-  # NOTE: WTF!!!
   def new
     # Create post!
-    resource.attributes = resource.new.attributes.symbolize_keys.update(
+    @post = Terryblr::Post.new(
       :state => "pending",
       :post_type => params[:type],
       :published_at => nil,
       :twitter_id => nil
     )
-    resource.save!
-    resource.slug = ""
+    @post.save!
+    @post.slug = ""
     super do |wants|
       wants.html {
-        @type = resource.post_type
+        @type = @post.post_type
         render :template => "admin/terryblr/posts/edit"
       }
     end
@@ -62,7 +61,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def show
     super do |wants|
-      wants.html { redirect_to edit_admin_post_path(object) }
+      wants.html { redirect_to edit_admin_post_path(@post) }
     end
   end
 

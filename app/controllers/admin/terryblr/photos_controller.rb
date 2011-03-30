@@ -1,7 +1,7 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
   def create
-    @object = Terryblr::Photo.new(:image => params[:Filedata])
+    @photo = Terryblr::Photo.new(:image => params[:Filedata])
 
     # Features belong to the photo and not the otherway
     if photoable.is_a?(Terryblr::Feature)
@@ -10,23 +10,23 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       # Delete any others photos unless they belong to posts
       feature.photo.destroy if feature.photo and feature.photo.photoable.nil?
 
-      @object.features << feature
+      @photo.features << feature
     else
-      @object.photoable = photoable
+      @photo.photoable = photoable
     end
 
     respond_to do |wants|
-      if @object.save
+      if @photo.save
         wants.js
         wants.html { 
           render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok 
         }
       else
-        flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
-        logger.error { "Photo errors: #{@object.errors.full_messages.to_sentence}" }
+        flash[:error] = "Unable to save image: #{@photo.errors.full_messages.to_sentence}"
+        logger.error { "Photo errors: #{@photo.errors.full_messages.to_sentence}" }
         wants.js
         wants.html {
-          render :text => @object.errors.full_messages.to_sentence
+          render :text => @photo.errors.full_messages.to_sentence
         }
       end
     end
@@ -56,10 +56,6 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     elsif params[:feature_id]
       Terryblr::Feature.find_by_id(params[:feature_id].to_i) || Terryblr::Feature.new
     end
-  end
-
-  def object
-    @object ||= end_of_association_chain.find_by_id(params[:id])
   end
 
   include Terryblr::Extendable
