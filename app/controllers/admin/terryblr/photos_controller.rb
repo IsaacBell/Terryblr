@@ -1,7 +1,7 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
   def create
-    @photo = Terryblr::Photo.new(:image => params[:Filedata])
+    @photo = end_of_association_chain.new(:image => params[:Filedata])
 
     # Features belong to the photo and not the otherway
     if photoable.is_a?(Terryblr::Feature)
@@ -50,7 +50,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     @photoable ||= if params[:post_id]
       Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id].to_i) || Terryblr::Post.new
     elsif params[:product_id]
-      Product.find_by_slug(params[:product_id]) || Product.find_by_id(params[:product_id].to_i) || Product.new
+      Terryblr::Product.find_by_slug(params[:product_id]) || Terryblr::Product.find_by_id(params[:product_id].to_i) || Terryblr::Product.new
     elsif params[:page_id]
       Terryblr::Page.find_by_slug(params[:page_id]) || Terryblr::Page.find_by_id(params[:page_id].to_i) || Terryblr::Page.new
     elsif params[:feature_id]

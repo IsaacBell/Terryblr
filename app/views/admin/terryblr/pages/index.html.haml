@@ -12,4 +12,4 @@
 %h2 #{ttt :pages}
 
 .clear
-= render :partial => 'admin/common/list_table', :locals => { :records => @collection,	:class_obj => Terryblr::Page, :list_cols => @list_cols, :action_cols => @action_cols }
+= render :partial => 'admin/common/list_table', :locals => { :records => collection, :class_obj => Terryblr::Page, :list_cols => @list_cols, :action_cols => @action_cols }

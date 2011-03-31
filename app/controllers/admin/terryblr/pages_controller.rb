@@ -1,27 +1,24 @@
 class Admin::Terryblr::PagesController < Terryblr::AdminController
 
-  prepend_before_filter :find_page
-
   def index
     @list_cols = %w(page state)
     @action_cols = %w(add_child)
     super
   end
 
-  def new
-    # Create post!
-    @page = Terryblr::Page.new
-    @page.save!
-    @page.state = :published
-    @page.parent_id = params[:parent_id].to_i if params[:parent_id]
-    super do |wants|
-      wants.html { render :action => "edit" }
-    end
-  end
-
   def show
     super do |wants|
       wants.html { redirect_to admin_pages_path }
+    end
+  end
+
+  def new
+    # Create post!
+    resource.save!
+    resource.state = :published
+    resource.parent_id = params[:parent_id].to_i if params[:parent_id]
+    super do |wants|
+      wants.html { render :action => "edit" }
     end
   end
 
@@ -39,17 +36,23 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   private
 
-  def find_page
-    @page = Terryblr::Page.find_by_slug(params[:id]) || Terryblr::Page.find_by_id(params[:id])
+  def resource
+    @page ||= begin
+      if params[:id]
+        end_of_association_chain.find_by_slug(params[:id]) || end_of_association_chain.find_by_id(params[:id])
+      else
+        end_of_association_chain.new
+      end
+    end
   end
 
   def collection
     order = "created_at desc"
-    @collection = @posts ||= if params[:parent_id]
-      Terryblr::Page.by_state(params[:state] || 'published').all(:conditions => {:parent_id => params[:parent_id]}, :order => order)
+    @posts = @collection ||= if params[:parent_id]
+      end_of_association_chain.by_state(params[:state] || 'published').where(:parent_id => params[:parent_id])
     else
-      Terryblr::Page.roots.by_state(params[:state] || 'published').all(:order => order)
-    end
+      end_of_association_chain.roots.by_state(params[:state] || 'published')
+    end.order(order)
   end
 
   include Terryblr::Extendable

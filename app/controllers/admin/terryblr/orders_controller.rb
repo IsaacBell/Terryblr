@@ -7,12 +7,10 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
       wants.html { redirect_to edit_admin_order_path(resource) }
     end
   end
-  
+
   def filter
     respond_to do |wants|
-      wants.html {
-        render :action => "index"
-      }
+      wants.html { render :action => "index" }
     end
   end
 

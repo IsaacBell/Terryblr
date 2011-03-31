@@ -19,7 +19,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def new
-    @post = Terryblr::Post.new(
+    @post = end_of_association_chain.new(
       :state => "pending",
       :post_type => params[:type],
       :published_at => nil,
@@ -73,7 +73,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   private
 
   def set_type
-    @type = object.post_type
+    @type = resource.post_type
   end
 
   def collection

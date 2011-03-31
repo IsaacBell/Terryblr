@@ -7,7 +7,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   skip_before_filter :set_expires, :only => [:preview]
 
   def index
-    index! do |wants|
+    super do |wants|
       wants.atom
       wants.rss
     end
@@ -25,56 +25,43 @@ class Terryblr::PostsController < Terryblr::PublicController
     @object.published_at = Time.zone.now
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
-      wants.html {
-        render :action => "show"
-      }
+      wants.html { render :action => "show" }
     end
   end
 
   def archives
     @page_title = 'Archives'
     respond_to do |wants|
-      wants.html {
-        render :action => "terryblr/posts/archives"
-      }
-      wants.js {
-        render :action => "terryblr/posts/archives"
-      }
+      wants.html { render :action => "terryblr/posts/archives" }
+      wants.js   { render :action => "terryblr/posts/archives" }
     end
   end
 
   def tagged
     @page_title = "Posts tagged #{params[:tag]}"
     respond_to do |wants|
-      wants.html {
-        render :action => "terryblr/posts/tagged"
-      }
+      wants.html { render :action => "terryblr/posts/tagged" }
       wants.js
     end
   end
 
   def next
-    post = object.next || object
+    post = resource.next || resource
     redirect_to post_path(post, post.slug)
   end
 
   def previous
-    post = object.previous || object
+    post = resource.previous || resource
     redirect_to post_path(post, post.slug)
   end
 
   private
 
   def resource
-    @post = @resource ||= posts_chain.find_by_id(params[:id])      || 
-                        posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
-                        posts_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
-                        posts_chain.find_by_tumblr_id(params[:id]) || # Needed to keep permalinks alive
-                        (raise ActiveRecord::RecordNotFound)
-  end
-
-  def featured_pics
-    @featured_pics ||= Terryblr::Feature.live.tagged_with('sidebar')
+    @post = @resource ||= posts_chain.find_by_id(params[:id])        || 
+                          posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
+                          posts_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
+                          posts_chain.find_by_tumblr_id(params[:id]) # Needed to keep permalinks alive
   end
 
   def collection
@@ -84,16 +71,18 @@ class Terryblr::PostsController < Terryblr::PublicController
         # Normal post listing
         @query = params[:search]
         q = "%#{@query}%"
-        posts_chain.all(
-          :conditions => ["title like ? or body like ?", q, q]
-        ).paginate(:page => params[:page])
+        posts_chain.
+          where(["title like ? or body like ?", q, q]).
+          paginate(:page => params[:page])
       else
         # Normal post listing
         posts_chain.paginate(:page => params[:page])
       end
 
     when 'tagged'
-      posts_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page])
+      posts_chain.select("DISTINCT posts.id, posts.*").
+        tagged_with(params[:tag]).
+        paginate(:page => params[:page])
 
     when 'archives'
       col = :published_at
@@ -108,10 +97,13 @@ class Terryblr::PostsController < Terryblr::PublicController
         :page => params[:page],
         :conditions => conditions,
         :order => "#{col} desc, created_at desc")
-
     else
       []
     end
+  end
+
+  def featured_pics
+    @featured_pics ||= Terryblr::Feature.live.tagged_with('sidebar')
   end
 
   def date
@@ -119,7 +111,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def posts_chain
-    Terryblr::Post.live
+    end_of_association_chain.live
   end
 
   include Terryblr::Extendable

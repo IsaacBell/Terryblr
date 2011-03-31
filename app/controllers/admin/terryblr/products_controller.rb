@@ -2,8 +2,8 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
 
   def new
     # Create post!
-    object.save!
-    object.state = :published
+    resource.save!
+    resource.state = :published
     super do |wants|
       wants.html { render :action => "edit" }
     end
@@ -11,7 +11,7 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
 
   def show
     super do |wants|
-      wants.html { redirect_to edit_admin_product_path(object) }
+      wants.html { redirect_to edit_admin_product_path(resource) }
     end
   end
 
