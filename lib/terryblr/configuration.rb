@@ -8,10 +8,8 @@ class Terryblr::Configuration
     @user_model           = 'User'
     @admin_route_prefix   = 'admin'
     @admin_route_redirect = "/#{@admin_route_prefix}/pages"
-
     @overrides = Hash.new { |hash, key| hash[key] = [] }
   end
-
 
   def override *args
     overrides = args.extract_options!
@@ -28,11 +26,9 @@ class Terryblr::Configuration
     modules = @overrides[terryblr_class.to_s.to_sym]
     modules.each do |hostapp_module_name|
       host_module = hostapp_module_name.to_s.constantize
-
       terryblr_class.class_eval do
         include host_module
       end
     end
   end
-
 end

@@ -19,7 +19,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def new
-    resource.attributes = resource_class.new.attributes.symbolize_keys.update(
+    @post = Terryblr::Post.new(
       :state => "pending",
       :post_type => params[:type],
       :published_at => nil,

@@ -12,7 +12,7 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def new
     # Create feature!
-    resource.attributes = resource.class.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
+    resource = end_of_association_chain.new(:state => "pending", :published_at => nil)
     resource.save!
     super
   end

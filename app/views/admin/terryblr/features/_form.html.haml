@@ -1,6 +1,6 @@
 = render :partial => 'admin/edit_head_content'
   
-= semantic_form_for @object, :url => (@object.new_record? ? admin_features_path : admin_feature_path(@object)), :as => "feature" do |f|
+= semantic_form_for resource, :url => (resource.new_record? ? admin_features_path : admin_feature_path(resource)), :as => "feature" do |f|
   
   #form_content{:class => "span-17"}
     %h2= ttt("#{params[:action].to_s}_feature").html_safe
@@ -9,7 +9,7 @@
       = f.input :title, :input_html => { :class => "title" }
       %li.photos-upload
         %label #{ttt :'.photo'}
-        = multi_file_uploader(:url => admin_feature_photo_path((@object.new_record? ? '-' : @object), :format => :js), :css_parent_class => "photos-upload")
+        = multi_file_uploader(:url => admin_feature_photo_path((resource.new_record? ? '-' : resource), :format => :js), :css_parent_class => "photos-upload")
         .clear
       %li.photos-choose
         %label #{ttt :'.existing_post'}
@@ -19,10 +19,10 @@
       %li.photo
         #feature_photo.media-list
           %ul#feature_photo_ul
-            - if @object.photo
-              = photo_for_assoc(@object.photo, @object, "photos_list")
-            - elsif @object.post && @object.video
-              = image_tag @object.video.thumb_url
+            - if resource.photo
+              = photo_for_assoc(resource.photo, resource, "photos_list")
+            - elsif resource.post && resource.video
+              = image_tag resource.video.thumb_url
         
         #feature_post_browser{:style => 'display:none;'}
           .close= link_to_function 'close', "$('#feature_post_browser').hide();$(this).find('.archives').remove()"
@@ -37,17 +37,17 @@
       %li.cancel
         = link_to ttt(:back), admin_features_path, :class => "cancel"
       %li.delete
-        = link_to ttt(:delete), admin_feature_path(@object), :class => "cancel", :confirm => ttt(:are_you_absolutely_sure), :method => "delete" unless @object.new_record?
+        = link_to ttt(:delete), admin_feature_path(resource), :class => "cancel", :confirm => ttt(:are_you_absolutely_sure), :method => "delete" unless resource.new_record?
 
   #form_sidebar{:class => "sidebar span-6 last"}
     = f.inputs do
       = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
-      - selected = (@object.pending? || @object.published?) ? (@object.published_at? ? :published_at : :published_now) : @object.state.to_sym
+      - selected = (resource.pending? || resource.published?) ? (resource.published_at? ? :published_at : :published_now) : resource.state.to_sym
 
-      - @object.published_at = (@object.published_at || Time.now).in_time_zone # Needed to show time in user's TZ
-      - label = @object.published_at.past? ? "Published on: " : "Will be published on:"
+      - resource.published_at = (resource.published_at || Time.now).in_time_zone # Needed to show time in user's TZ
+      - label = resource.published_at.past? ? "Published on: " : "Will be published on:"
 
-      = f.input :state, :as => "select", :collection => @object.states_for_select, :selected => selected, :include_blank => false, :wrapper_html => { :class => "post-states" }
+      = f.input :state, :as => "select", :collection => resource.states_for_select, :selected => selected, :include_blank => false, :wrapper_html => { :class => "post-states" }
       = f.input :published_at, :label => label, :as => "string", :wrapper_html => { :class => "date-picker", :style => "display:#{selected==:published_at ? 'block' : 'none'}"} 
 
       - if defined?(Settings.tags.posts.features)
@@ -55,6 +55,6 @@
           %label #{ttt :'.location'}
           %ul
             - Settings.tags.posts.features.each do |tag|
-              %li.machine_tag.feature_tag{:class => @object.tag_list.include?(tag) ? "selected" : "" }
-                = radio_button_tag 'feature[tag_list][]', tag, @object.tag_list.include?(tag)
+              %li.machine_tag.feature_tag{:class => resource.tag_list.include?(tag) ? "selected" : "" }
+                = radio_button_tag 'feature[tag_list][]', tag, resource.tag_list.include?(tag)
                 = tag.humanize.titleize

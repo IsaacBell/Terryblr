@@ -31,6 +31,12 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
     end
   end
 
+  def update
+    super do |success, failure|
+      success.html { redirect_to admin_pages_path }
+    end
+  end
+
   private
 
   def find_page
