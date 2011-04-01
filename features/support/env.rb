@@ -30,7 +30,7 @@ end
 
 Spork.each_run do
   require 'cucumber/rails/world'
-  # require 'cucumber/rails/active_record'
+  require 'cucumber/rails/active_record'
   require 'cucumber/web/tableish'
 
   require 'capybara/rails'
@@ -74,6 +74,8 @@ Spork.each_run do
       require 'database_cleaner'
       DatabaseCleaner.strategy = :truncation
     rescue LoadError => ignore_if_database_cleaner_not_present
+      puts "DatabaseCleaner not loaded !"
+      raise ignore_if_database_cleaner_not_present
     end
   end
 end
