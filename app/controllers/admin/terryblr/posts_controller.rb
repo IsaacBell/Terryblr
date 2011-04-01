@@ -1,9 +1,10 @@
 class Admin::Terryblr::PostsController < Terryblr::AdminController
 
+  before_filter :post_type, :only => [:new]
   before_filter :collection, :only => [:index, :filter]
 
   def index
-    @show_as_dash = true
+    show_as_dash
     super do |wants|
       wants.js    { render :template => "admin/terryblr/posts/index" }
       wants.html  { render :template => "admin/terryblr/posts/index" }
@@ -11,21 +12,17 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def filter
-    @show_as_dash = true
+    show_as_dash
     respond_to do |wants|
       wants.html { render :template => "admin/terryblr/posts/index" }
     end
   end
 
   def new
-    @post = end_of_association_chain.new(
-      :post_type => post_type,
-      :published_at => nil,
-      :twitter_id => nil,
-      :slug => nil)
+    resource.post_type = post_type
     super
   end
-
+  
   def edit
     super do |wants|
       wants.html { render :template => "admin/terryblr/posts/edit" }
@@ -63,11 +60,15 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   private
+  
+  def show_as_dash
+    @show_as_dash ||= true
+  end
 
   def post_type
     @post_type ||= begin
-      if params.has_key?(:type)
-        params[:type].downcase.singularize
+      if params.has_key?(:type) && Terryblr::Post::post_types.include?(params[:type].downcase)
+        params[:type].downcase
       else
         'post'
       end

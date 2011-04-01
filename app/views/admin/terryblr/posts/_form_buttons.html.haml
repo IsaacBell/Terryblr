@@ -5,9 +5,10 @@
       = link_to ttt(:view), post_path(resource, resource.slug), :class => "preview", :target => "_blank"
     - elsif resource.pending?
       = link_to_function ttt(:preview), "alert('Please add some content first')", :class => "preview", :target => "_blank"
-    - else
+    - elsif !resource.new_record?
       = link_to ttt(:preview), preview_post_path(resource), :class => "preview", :target => "_blank"
   %li.cancel
     = link_to ttt(:cancel), admin_posts_path, :class => "cancel"
   %li.delete
+  - unless resource.new_record?
     = link_to ttt(:delete), admin_post_path(resource), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"
