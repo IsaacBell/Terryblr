@@ -14,9 +14,9 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   def new
     # Create post!
-    resource.save!
-    resource.state = :published
-    resource.parent_id = params[:parent_id].to_i if params[:parent_id]
+    @resource.save!
+    @resource.state = :published
+    @resource.parent_id = params[:parent_id].to_i if params[:parent_id]
     super do |wants|
       wants.html { render :action => "edit" }
     end

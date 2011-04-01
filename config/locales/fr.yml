@@ -99,7 +99,7 @@ fr:
             message: message
             published_on: "Publié le"
             tags: tags
-          photos:
+          photo:
             gallery_display: affichage de la gallerie
             show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Montrer les photos avec un diaporama ou superposées les unes sur les autres."
             upload_hint: "Uploadez des photos, puis ré-ordonnez et nommez-les"

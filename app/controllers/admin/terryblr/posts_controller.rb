@@ -1,6 +1,5 @@
 class Admin::Terryblr::PostsController < Terryblr::AdminController
 
-  before_filter :set_type, :only => [:edit, :update]
   before_filter :collection, :only => [:index, :filter]
 
   def index
@@ -20,19 +19,11 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def new
     @post = end_of_association_chain.new(
-      :state => "pending",
-      :post_type => params[:type],
+      :post_type => post_type,
       :published_at => nil,
-      :twitter_id => nil
-    )
-    @post.save!
-    @post.slug = ""
-    super do |wants|
-      wants.html {
-        @type = @post.post_type
-        render :template => "admin/terryblr/posts/edit"
-      }
-    end
+      :twitter_id => nil,
+      :slug => nil)
+    super
   end
 
   def edit
@@ -43,6 +34,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def create
     super do |success, failure|
+      success.html { redirect_to admin_posts_path }
       failure.html { render :template => "admin/terryblr/posts/edit" }
     end
   end
@@ -72,25 +64,29 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   private
 
-  def set_type
-    @type = resource.post_type
+  def post_type
+    @post_type ||= begin
+      if params.has_key?(:type)
+        params[:type].downcase.singularize
+      else
+        'post'
+      end
+    end
   end
 
   def collection
     scope = case params[:state]
-    when "drafted"
-      col = :updated_at
-      Terryblr::Post.drafted
-    else
-      col = :published_at
-      Terryblr::Post.published
+      when "drafted"
+        col = :updated_at
+        end_of_association_chain.drafted
+      else
+        col = :published_at
+        end_of_association_chain.published
     end
-
     if params[:month] and params[:year]
       @date = Date.parse("#{params[:year]}-#{params[:month]}-1")
       scope = scope.for_month @date, col
     end
-
     @posts = @collection ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
   end
 

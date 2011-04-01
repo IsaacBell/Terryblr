@@ -1,15 +1,13 @@
 class Terryblr::AdminHomeController < Terryblr::ApplicationController
   layout 'admin'
-  
+
   inherit_resources
-  
+
   after_filter :set_last_modified
   before_filter :set_date, :only => [:index, :filter]
   before_filter :set_expires, :only => [:analytics]
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
   around_filter :cache, :only => [:analytics]
-
-
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.info "AdminHomeController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"

@@ -15,20 +15,11 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       @photo.photoable = photoable
     end
 
-    respond_to do |wants|
-      if @photo.save
-        wants.js
-        wants.html { 
-          render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok 
-        }
-      else
-        flash[:error] = "Unable to save image: #{@photo.errors.full_messages.to_sentence}"
-        logger.error { "Photo errors: #{@photo.errors.full_messages.to_sentence}" }
-        wants.js
-        wants.html {
-          render :text => @photo.errors.full_messages.to_sentence
-        }
-      end
+    super do |success, failure|
+      success.json { render @photo.to_json }
+      success.html { render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok }
+      failure.json { render @photo.errors.to_json }
+      failure.html { render :text => @photo.errors.full_messages.to_sentence }
     end
   end
 

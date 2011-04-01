@@ -3,11 +3,12 @@ class Terryblr::ApplicationController < ActionController::Base
   helper 'terryblr/application'
   #helper_method :current_user_session, :current_user
 
+  before_filter :work_around_rails_middleware_bug
+
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   private
-  
-  before_filter :work_around_rails_middleware_bug
+
   def work_around_rails_middleware_bug
     request.env["action_dispatch.request.parameters"] = nil
     request.env["action_dispatch.request.formats"] = nil
@@ -18,34 +19,6 @@ class Terryblr::ApplicationController < ActionController::Base
     request.parameters[:format] = params[:format]
   end
 
-  #def current_user_session
-  #  return @current_user_session if defined?(@current_user_session)
-  #  @current_user_session = UserSession.find
-  #end
-  #
-  #def current_user
-  #  return @current_user if defined?(@current_user)
-  #  @current_user = current_user_session && current_user_session.record
-  #end
-  #
-  #def require_user
-  #  unless current_user
-  #    store_location
-  #    flash[:notice] = "You must be logged in to access this page"
-  #    redirect_to new_user_session_path
-  #    return false
-  #  end
-  #end
-
-  #def require_no_user
-  #  if current_user
-  #    store_location
-  #    flash[:notice] = "You must be logged out to access this page"
-  #    redirect_to user_path(current_user)
-  #    return false
-  #  end
-  #end
-  
   def store_location
     session[:return_to] = request.request_uri
   end
@@ -87,8 +60,8 @@ class Terryblr::ApplicationController < ActionController::Base
     Rails.cache.write(LAST_MODIFIED_CACHE_KEY, @last_modified) if force or !request.get?
   end
 
-  def object?
-    respond_to?(:object, true) and !object.nil?
+  def resource?
+    respond_to?(:resource, true) and !resource.nil?
   end
 
   def collection?

@@ -23,9 +23,9 @@ Rails.application.routes.draw do
       end
       # resources :comments, :except => [:new, :create], :controller => "terryblr/comments"
       # resources :links, :controller => "terryblr/links"
-      resources :videos, :controller => "terryblr/videos"
-      resources :photos, :controller => "terryblr/photos"
     end
+    resources :videos, :controller => "terryblr/videos"
+    resources :photos, :controller => "terryblr/photos"
     resources :features, :controller => "terryblr/features" do
       collection do
         get  :filter

@@ -8,7 +8,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
 
   # NOTE: authorize access to /users/new before doing what you are about to do with that next line
-  # load_and_authorize_resource :class => resource_class
+  load_and_authorize_resource :class => resource_class
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.info "AdminController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
@@ -84,12 +84,17 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
 
   def collection
-    conditions = "state = '#{params[:state] || 'published'}'"
-    unless params[:search].blank?
-      search_str = "%#{params[:search].downcase}%"
-      conditions = ["#{conditions} AND (LOWER(title) like ? OR LOWER(state) like ?)", search_str, search_str]
+    @collection ||= begin
+      conditions = "state = '#{params[:state] || 'published'}'"
+      unless params[:search].blank?
+        search_str = "%#{params[:search].downcase}%"
+        conditions = ["#{conditions} AND (LOWER(title) like ? OR LOWER(state) like ?)", search_str, search_str]
+      end
+      end_of_association_chain.
+        where(conditions).
+        order("published_at desc, created_at desc").
+        paginate(:page => params[:page])
     end
-    @collection ||= end_of_association_chain.paginate(:conditions => conditions, :order => "published_at desc, created_at desc", :page => params[:page])
   end
 
   def set_expires

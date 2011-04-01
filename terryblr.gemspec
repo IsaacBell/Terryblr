@@ -58,7 +58,7 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "capybara"
   s.add_development_dependency "webrat"
   s.add_development_dependency "cucumber"
-  s.add_development_dependency "cucumber-rails"
+  s.add_development_dependency "cucumber-rails", "~> 0.3.2"
   s.add_development_dependency "autotest"
   s.add_development_dependency "autotest-rails"
   s.add_development_dependency "ruby-debug19"

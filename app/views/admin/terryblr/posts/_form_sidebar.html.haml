@@ -2,7 +2,7 @@
   = f.inputs do
     = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
     - selected = (resource.pending? || resource.published?) ? (resource.published_at? ? :published_at : :publish_now) : resource.state.to_sym
-    
+
     - resource.published_at = (resource.published_at || Time.now).in_time_zone # Needed to show time in user's TZ
     - label = (resource.published_at.past? ? tt(:'.published_on') : tt('.will_be_published_on')) + ": "
 
@@ -19,7 +19,7 @@
               %li.machine_tag{:class => "#{group}_tag" }
                 = check_box_tag "post[#{group}_list][]", tag, resource.send("#{group}_list").include?(tag)
                 = tag.humanize.titleize
-      
+
       - if Settings.tags.posts.groups.include?('tags')
         %li{:class => "tags-tag-group tag-picker"}
           %label #{ttt :'.tags'}

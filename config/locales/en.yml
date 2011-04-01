@@ -103,7 +103,7 @@ en:
             message: message
             published_on: published on
             tags: Tags
-          photos: 
+          photo: 
             gallery_display: Gallery Display
             show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Show photos as a slideshow gallery or stacked above each other."
             upload_hint: Upload, then reorder and caption photos

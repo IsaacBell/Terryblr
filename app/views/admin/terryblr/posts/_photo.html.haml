@@ -1,14 +1,14 @@
-= semantic_form_for @post, :url => admin_post_path(@post), :as => "post" do |f|
-  
+= semantic_form_for @post, :url => (@post.new_record? ? admin_posts_path : admin_post_path(@post.id)), :as => "post" do |f|
+
   #form_content{:class => "span-17"}
-    %h2= ttt("#{params[:action]}_#{@type.to_s}").html_safe
+    %h2= ttt("#{params[:action]}_#{@post.post_type}").html_safe
     = error_messages_for_post
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       %li.photos-upload
         %label= ttt(:photos)
-        =multi_file_uploader(:url => admin_post_photos_path(@post, :format => :js), :css_parent_class => "photos-upload")
+        = multi_file_uploader(:url => admin_photos_path(:format => :json), :css_parent_class => "photos-upload")
         %p.inline-hints.clear= tt('.upload_hint')
       %li.photos-display-type
         %label= ttt('.gallery_display')

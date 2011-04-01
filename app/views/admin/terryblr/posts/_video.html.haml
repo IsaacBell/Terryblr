@@ -1,7 +1,7 @@
 = semantic_form_for resource, :url => (resource.new_record? ? admin_posts_path : admin_post_path(resource)), :as => "post" do |f|
   
   #form_content{:class => "span-17"}
-    %h2= ttt("#{params[:action]}_#{@type.to_s}").html_safe
+    %h2= ttt("#{params[:action]}_#{@post.post_type}").html_safe
     = error_messages_for_post
     = f.semantic_errors
     = f.inputs do
@@ -15,7 +15,7 @@
       %li.string.optional.video-url
         %label{:for => "post_videos_attributes__url"} #{ttt :'.video_url'}
         = text_field_tag "video_url"
-        = link_to ttt(:'.save'), admin_post_videos_path(resource, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
+        = link_to ttt(:'.save'), admin_videos_path(:format => "json"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
         %p.inline-hints #{tt :'.paste_in_a_URL_to_a_vimeo_or_youtube_video'}
       %li.video-list
         = edit_videos_for_assoc(resource)

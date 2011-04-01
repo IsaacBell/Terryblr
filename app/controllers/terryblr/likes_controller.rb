@@ -1,10 +1,11 @@
 class Terryblr::LikesController < Terryblr::PublicController
+  belongs_to :page, :post
 
   helper "Terryblr::Posts"
   before_filter :require_user, :only => [:create]
 
   def index
-    index! do |wants|
+    super do |wants|
       wants.html { head :not_found }
       wants.json { render :json => collection.to_json }
       wants.xml  { render :xml => collection.to_xml }
@@ -12,8 +13,8 @@ class Terryblr::LikesController < Terryblr::PublicController
   end
 
   def create
-    create! do |success, failure|
-      success.html { head :ok, :location => post_path(parent_object) }
+    super do |success, failure|
+      success.html { head :ok, :location => post_path(parent) }
       success.js
       failure.wants.html { head :error, :message => "You already liked this" }
       failure.wants.js
@@ -22,19 +23,19 @@ class Terryblr::LikesController < Terryblr::PublicController
 
   private
 
-  def object
-    @object ||= parent_object.likes.find(params[:id])
+  def resource
+    @resource ||= parent.likes.find params[:id]
   end
 
-  def build_object
-    @object ||= Like.new(:user => current_user, :likeable => parent_object)
+  def build_resource
+    @resource ||= Like.new :user => current_user, :likeable => parent
   end
 
   def collection
-    @collection ||= parent_object.likes.paginate(:page => params[:page])
+    @collection ||= parent.likes.paginate :page => params[:page]
   end
 
-  def parent_object
+  def parent
     @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
   end
 

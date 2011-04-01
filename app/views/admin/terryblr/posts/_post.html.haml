@@ -1,13 +1,13 @@
 = semantic_form_for @post, :url => (@post.new_record? ? admin_posts_path : admin_post_path(@post.id)), :as => "post" do |f|
   
   #form_content{:class => "span-17"}
-    %h2= ttt("#{params[:action]}_#{@type.to_s}").html_safe
+    %h2= ttt("#{params[:action]}_#{@post.post_type}").html_safe
     = error_messages_for_post
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       %li.add-inline-photo
-        = add_inline_photo(admin_post_photos_path(@post))
+        = add_inline_photo(admin_photos_path)
       = f.input :body, :label => ttt(:body), :as => 'text', :wrapper_html => { :class => "rich-text" }, :input_html => { :style => "height:30em;" }, :required => true
 
     = render :partial => 'admin/terryblr/posts/form_buttons', :locals => {:f => f}
