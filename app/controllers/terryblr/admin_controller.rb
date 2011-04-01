@@ -8,7 +8,8 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
 
   # NOTE: authorize access to /users/new before doing what you are about to do with that next line
-  # load_and_authorize_resource :class => resource_class
+  #  => didn't understand ??
+  load_and_authorize_resource :class => resource_class
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.info "AdminController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
