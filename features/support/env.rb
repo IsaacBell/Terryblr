@@ -16,6 +16,11 @@ module Jammit
   remove_const :ASSET_ROOT
   PUBLIC_ROOT = File.expand_path("../../../spec/dummy/public", __FILE__)
   ASSET_ROOT = File.expand_path("../../../spec/dummy", __FILE__)
+
+  class Packager
+    PATH_DIFF   = ::Jammit::PUBLIC_ROOT.sub(::Jammit::ASSET_ROOT, '')
+    PATH_TO_URL = /\A#{Regexp.escape(::Jammit::ASSET_ROOT)}(\/?#{Regexp.escape(PATH_DIFF)})?/
+  end
 end
 Jammit.load_configuration(File.expand_path("../../../spec/dummy/config/assets.yml",  __FILE__))
 
