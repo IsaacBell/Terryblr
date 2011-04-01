@@ -13,5 +13,5 @@
     - else
       = link_to ttt(:back), admin_users_path, :class => "cancel"
   %li.delete
-    = link_to ttt(:delete), admin_user_path(resource.id), :class => "cancel", :confirm => ttt(:are_you_sure), :method => "delete" unless resource.new_record? or resource.id < 3
+    = link_to ttt(:delete), admin_user_path(resource.id), :class => "cancel", :confirm => ttt(:are_you_sure), :method => "delete" if resource_class.can_destroy_admin? && !resource.new_record?
   
