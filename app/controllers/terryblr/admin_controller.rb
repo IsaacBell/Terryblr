@@ -7,7 +7,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     base.resource_class = resource_class_name.constantize
   end
 
-  # NOTE: authorize access to /users/new before doing what you are about to do with that next line
   load_and_authorize_resource :class => resource_class
 
   rescue_from CanCan::AccessDenied do |exception|

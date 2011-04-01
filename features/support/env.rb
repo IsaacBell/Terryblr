@@ -43,6 +43,11 @@ Spork.each_run do
   # steps to use the XPath syntax.
   Capybara.default_selector = :css
 
+
+  Capybara.register_driver :selenium do |app|
+    Capybara::Driver::Selenium.new(app, :browser => :chrome)
+  end
+
   # If you set this to false, any error raised from within your app will bubble 
   # up to your step definition and out to cucumber unless you catch it somewhere
   # on the way. You can make Rails rescue errors and render error pages on a
@@ -74,6 +79,8 @@ Spork.each_run do
       require 'database_cleaner'
       DatabaseCleaner.strategy = :truncation
     rescue LoadError => ignore_if_database_cleaner_not_present
+      puts "DatabaseCleaner not loaded !"
+      raise ignore_if_database_cleaner_not_present
     end
   end
 end

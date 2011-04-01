@@ -2,7 +2,7 @@ module Post
   extend ActiveSupport::Concern
 
   included do
-    puts "Dummy Post concern included !"
+    # puts "Dummy Post concern included !"
   end
 
   module ClassMethods
