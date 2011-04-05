@@ -15,7 +15,7 @@ class Admin::Terryblr::CommentsController < Terryblr::AdminController
     end
     
     # TODO: check if acts_as_commentable's comments_ordered_by_submitted would fit here
-    @collection ||= scope.all(:order => "created_at desc").paginate(:page => params[:page])
+    @comments ||= scope.all(:order => "created_at desc").paginate(:page => params[:page])
   end
 
   include Terryblr::Extendable

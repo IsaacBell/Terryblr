@@ -24,19 +24,20 @@ class Terryblr::LikesController < Terryblr::PublicController
   private
 
   def resource
-    @resource ||= parent.likes.find params[:id]
+    @like ||= parent.likes.find params[:id]
   end
 
   def build_resource
-    @resource ||= Like.new :user => current_user, :likeable => parent
+    @like ||= Like.new :user => current_user, :likeable => parent
   end
 
   def collection
-    @collection ||= parent.likes.paginate :page => params[:page]
+    @likes ||= parent.likes.paginate :page => params[:page]
   end
 
   def parent
-    @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
+    @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || 
+                Terryblr::Post.find(params[:post_id])
   end
 
   include Terryblr::Extendable

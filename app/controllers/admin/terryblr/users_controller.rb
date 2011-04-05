@@ -14,7 +14,7 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
   end
 
   def admins
-    @collection = Terryblr::User.admins.all.paginate(:page => params[:page])
+    @users = end_of_association_chain.admins.all.paginate(:page => params[:page])
     render :action => "index"
   end
 
@@ -25,7 +25,7 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
   end
 
   def collection
-    @collection ||= Terryblr::User.all.paginate(:page => params[:page])
+    @users ||= end_of_association_chain.all.paginate(:page => params[:page])
   end
 
   def resource_request_name

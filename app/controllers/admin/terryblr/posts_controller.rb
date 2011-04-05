@@ -60,7 +60,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   private
-  
+
   def show_as_dash
     @show_as_dash ||= true
   end
@@ -88,7 +88,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       @date = Date.parse("#{params[:year]}-#{params[:month]}-1")
       scope = scope.for_month @date, col
     end
-    @posts = @collection ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
+    @posts ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
   end
 
   include Terryblr::Extendable

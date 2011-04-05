@@ -21,8 +21,8 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def preview
-    @object = Terryblr::Post.find(params[:id])
-    @object.published_at = Time.zone.now
+    @post = Terryblr::Post.find(params[:id])
+    @post.published_at = Time.zone.now
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
       wants.html { render :action => "show" }
@@ -57,15 +57,19 @@ class Terryblr::PostsController < Terryblr::PublicController
 
   private
 
+  def posts_chain
+    end_of_association_chain.live
+  end
+
   def resource
-    @post = @resource ||= posts_chain.find_by_id(params[:id])        || 
-                          posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
-                          posts_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
-                          posts_chain.find_by_tumblr_id(params[:id]) # Needed to keep permalinks alive
+    @post ||= posts_chain.find_by_id(params[:id])        || 
+              posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
+              posts_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
+              posts_chain.find_by_tumblr_id(params[:id]) # Needed to keep permalinks alive
   end
 
   def collection
-    @posts = @collection ||= case self.action_name
+    @posts ||= case self.action_name
     when 'index'
       if !params[:search].blank?
         # Normal post listing
@@ -108,10 +112,6 @@ class Terryblr::PostsController < Terryblr::PublicController
 
   def date
     @date ||= "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
-  end
-
-  def posts_chain
-    end_of_association_chain.live
   end
 
   include Terryblr::Extendable

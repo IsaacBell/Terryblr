@@ -48,7 +48,7 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
 
   def collection
     order = "created_at desc"
-    @posts = @collection ||= if params[:parent_id]
+    @pages ||= if params[:parent_id]
       end_of_association_chain.by_state(params[:state] || 'published').where(:parent_id => params[:parent_id])
     else
       end_of_association_chain.roots.by_state(params[:state] || 'published')

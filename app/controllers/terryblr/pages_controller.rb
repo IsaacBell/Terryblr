@@ -8,8 +8,8 @@ class Terryblr::PagesController < Terryblr::PublicController
   private
 
   def resource
-    @page = @resource ||= end_of_association_chain.find_by_slug(params[:page_slug]) || 
-                          end_of_association_chain.find_by_slug(params[:id])
+    @page ||= end_of_association_chain.find_by_slug(params[:page_slug]) || 
+              end_of_association_chain.find_by_slug(params[:id])
   end
 
   include Terryblr::Extendable

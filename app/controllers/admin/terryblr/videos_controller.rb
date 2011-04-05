@@ -4,9 +4,9 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
 
   def create
     resource = if params.key?(:Filedata)
-      Terryblr::Video.new(:upload => params[:Filedata], :post => post)
+      end_of_association_chain.new(:upload => params[:Filedata], :post => post)
     elsif params.key?(:video_url)
-      Terryblr::Video.new(:url => params[:video_url], :post => post)
+      end_of_association_chain.new(:url => params[:video_url], :post => post)
     end
     
     if resource.save
@@ -35,11 +35,13 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
   private
 
   def post
-    @post ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id]) || Terryblr::Post.new
+    @post ||= Terryblr::Post.find_by_slug(params[:post_id]) || 
+              Terryblr::Post.find_by_id(params[:post_id]) || 
+              Terryblr::Post.new
   end
 
   def resource
-    @resource ||= end_of_association_chain.find(params[:id])
+    @video ||= end_of_association_chain.find(params[:id])
   end
 
   include Terryblr::Extendable

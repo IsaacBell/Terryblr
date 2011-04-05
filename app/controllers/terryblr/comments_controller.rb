@@ -23,19 +23,20 @@ class Terryblr::CommentsController < Terryblr::PublicController
   private
 
   def resource
-    @resource ||= parent.comments.find params[:id]
+    @comment ||= parent.comments.find params[:id]
   end
 
   def build_resource
-    @resource ||= Comment.new params[:comment].update(:user => current_user, :commentable => parent)
+    @comment ||= Comment.new params[:comment].update(:user => current_user, :commentable => parent)
   end
 
   def collection
-    @collection ||= parent.comments.approved.paginate :page => params[:page]
+    @comments ||= parent.comments.approved.paginate :page => params[:page]
   end
 
   def parent
-    @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
+    @parent ||= Terryblr::Post.find_by_slug!(params[:post_id]) || 
+                Terryblr::Post.find(params[:post_id])
   end
 
   include Terryblr::Extendable

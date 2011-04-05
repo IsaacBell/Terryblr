@@ -4,9 +4,9 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def index
     @show_as_dash = true
-    @collections = {}
+    @features = {}
     Settings.tags.posts.features.map do |tag|
-      @collections[tag] = end_of_association_chain.live.tagged_with(tag)
+      @features[tag] = end_of_association_chain.live.tagged_with(tag)
     end
   end
 

@@ -24,7 +24,7 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
       search_sql = fields.map {|f| "LOWER(#{f}) like ?" }.join(' OR ')
       conditions = [search_sql] + fields.size.times.map{|i| search_str }
     end
-    @collection ||= end_of_association_chain.all(:conditions => conditions, :order => "created_at desc").paginate(:page => params[:page])
+    @orders ||= end_of_association_chain.all(:conditions => conditions, :order => "created_at desc").paginate(:page => params[:page])
   end
 
   def find_by_month

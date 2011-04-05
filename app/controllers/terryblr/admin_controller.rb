@@ -29,8 +29,8 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   private
 
-  def object_url
-    send("#{url_name}_path", object)
+  def resource_url
+    send("#{url_name}_path", resource)
   end
 
   def collection_url
@@ -53,20 +53,17 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     admin_model_name.demodulize.downcase
   end
 
-  def object_name
-    admin_model_name.split('::').join('_').downcase
-  end
-
   def end_of_association_chain
     admin_model_name.constantize
   end
 
-  def object
-    @object ||= end_of_association_chain.find_by_slug(params[:id]) || end_of_association_chain.find(params[:id])
+  def resource
+    @resource ||= end_of_association_chain.find_by_slug(params[:id]) || 
+                end_of_association_chain.find(params[:id])
   end
 
-  def build_object
-    @object ||= begin
+  def build_resource
+    @resource ||= begin
       # puts "end_of_association_chain: #{end_of_association_chain.inspect}"
       new_obj = if end_of_association_chain.respond_to? :pending
         end_of_association_chain.pending.first
@@ -119,5 +116,4 @@ class Terryblr::AdminController < Terryblr::ApplicationController
       Date.today
     end
   end
-
 end

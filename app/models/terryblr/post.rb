@@ -64,7 +64,7 @@ class Terryblr::Post < Terryblr::Base
 
   scope :for_month, lambda { |date, col|
     col ||= :published_at
-    where("#{col} >= ? AND #{col} <= ?", date.beginning_of_month, date.end_of_month)
+    where("#{col} >= ? AND #{col} <= ?", date.to_time.beginning_of_month, date.to_time.end_of_month)
   }
 
   scope :by_month, lambda { |*args|
