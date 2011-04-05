@@ -6,7 +6,7 @@ describe "PagesLinks" do
     @page = Factory(:page)
   end
   
-  it "should show page at /:pages_slug" do
+  it "should show page at /:page_slug" do
     get "/#{@page.slug}"
     response.should be_success
   end

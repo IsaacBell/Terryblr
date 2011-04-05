@@ -21,11 +21,7 @@ class Terryblr::ApplicationController < ResourceController::Base
 
   def current_site
     # Use subdomain as key for site
-    @current_site ||= if !request.subdomains.empty?
-      Terryblr::Site.find_by_name(request.subdomains.last)
-    else
-      Terryblr::Site.default
-    end
+    @current_site ||= Terryblr::Site.find_by_name(request.subdomains.last) || Terryblr::Site.default
     session[:site_name] = @current_site.name
     @current_site
   end

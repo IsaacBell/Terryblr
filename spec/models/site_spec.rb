@@ -8,28 +8,28 @@ describe Terryblr::Site do
 
     it "should be valid and create a site" do
       site = Terryblr::Site.new(:name => "www")
-      site.valid?.should eql(true)
-      site.save.should eql(true)
+      site.valid?.should be(true)
+      site.save.should be(true)
     end
 
     it "should not be valid with non-unique name" do
       site = Terryblr::Site.new(:name => @site.name)
-      site.save.should eql(false)
-      site.valid?.should eql(false)
-      site.errors.on(:name).nil?.should eql(false)
+      site.save.should be(false)
+      site.valid?.should be(false)
+      site.errors[:name].nil?.should be(false)
     end
 
     it "should not be valid without a name" do
       site = Terryblr::Site.new()
-      site.save.should eql(false)
-      site.valid?.should eql(false)
-      site.errors.on(:name).nil?.should eql(false)
+      site.save.should be(false)
+      site.valid?.should be(false)
+      site.errors[:name].nil?.should be(false)
     end
   end
   
   describe "site scoping" do
     before do
-      @site_www = Factory(:site, :name => "www")
+      @site_www = Terryblr::Site.default
       @post_www = Factory(:post, :site => @site_www)
       @page_www = Factory(:page, :site => @site_www)
       @feature_www = Factory(:feature, :site => @site_www)
@@ -42,15 +42,28 @@ describe Terryblr::Site do
 
     it "should include different posts for different sites" do
 
-      @site_www.reload
-      @site_www.posts.include?(@post_www).should eql(false)
-      @site_www.pages.include?(@page_www).should eql(false)
-      @site_www.features.include?(@feature_www).should eql(false)
+      # Not empty?
+      [@site_www.posts, @site_www.pages, @site_www.features, @site_blog.posts, @site_blog.pages, @site_blog.features].each do |coll|
+        coll.empty?.should be(false)
+      end
 
-      @site_blog.reload
-      @site_blog.posts.include?(@post_blog).should eql(false)
-      @site_blog.pages.include?(@page_blog).should eql(false)
-      @site_blog.features.include?(@feature_blog).should eql(false)
+      # Positives
+      @site_blog.posts.include?(@post_blog).should be(true)
+      @site_blog.pages.include?(@page_blog).should be(true)
+      @site_blog.features.include?(@feature_blog).should be(true)
+      
+      @site_www.posts.include?(@post_www).should be(true)
+      @site_www.pages.include?(@page_www).should be(true)
+      @site_www.features.include?(@feature_www).should be(true)
+      
+      # Negatives
+      @site_blog.posts.include?(@post_www).should be(false)
+      @site_blog.pages.include?(@page_www).should be(false)
+      @site_blog.features.include?(@feature_www).should be(false)
+      
+      @site_www.posts.include?(@post_blog).should be(false)
+      @site_www.pages.include?(@page_blog).should be(false)
+      @site_www.features.include?(@feature_blog).should be(false)
 
     end
   end

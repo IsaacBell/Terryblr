@@ -16,10 +16,10 @@ class Terryblr::Site < Terryblr::Base
   #
   validates :name, :presence => true, :uniqueness => true
 
-
   #
   # Scopes
   #
+  default_scope :order => "id asc"
 
   #
   # Class Methods
@@ -28,22 +28,10 @@ class Terryblr::Site < Terryblr::Base
     
     # Use www or go for the first one
     def default
-      find_by_name('www') || first
+      find_by_name('www') || first || create(:name => 'www')
     end
     
   end
-
-  #
-  # Instance Methods
-  #
-  def yes!
-    update_attributes!(:value => 1)
-  end
-  
-  def no!
-    update_attributes!(:value => 0)
-  end
-
 
   include Terryblr::Extendable
 end

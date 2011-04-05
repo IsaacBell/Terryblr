@@ -6,4 +6,5 @@ Factory.define :page, :class => Terryblr::Page do |page|
   page.parent_id            nil
   page.sequence(:position)  { |n| n }
   page.post_id              nil
+  page.site_id              Terryblr::Site.default.id
 end

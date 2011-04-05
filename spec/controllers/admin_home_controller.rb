@@ -13,10 +13,16 @@ describe Terryblr::AdminHomeController do
     it "switches current site" do
 
       # Go to admin archives with default site
+      get admin_posts_path
+      response.should be_success
       
       # Switch to another site
+      get admin_switch_site_path(:site => @site_blog.name)
+      response.should be_success
       
       # Current site has changed and posts are different
+      get admin_posts_path
+      response.should be_success
       
     end
   end

@@ -5,4 +5,5 @@ Factory.define :post, :class => Terryblr::Post do |post|
   post.body             "<p>I'm a simple body</p>"
   post.published_at     1.minute.ago
   post.display_type     "gallery"
+  post.site_id          Terryblr::Site.default.id
 end
