@@ -3,8 +3,7 @@ class Terryblr::PublicController < Terryblr::ApplicationController
   unloadable
 
   # caches_page # for making static sites
-  before_filter :pre_cache
-  after_filter :post_cache
+  around_filter :cache
   
   # Set HTTP caching headers
   before_filter :set_expires

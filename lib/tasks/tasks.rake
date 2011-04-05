@@ -8,6 +8,9 @@ task :cron => :environment do
   dj_priority = -1
   time = Time.now.in_time_zone
 
+  # On heroku the daily cron job will run this
+  djs << Terryblr::Tweet.send_later(:fetch_recent)
+
   # Each minute
 
   # Each Hour at a certain minute
@@ -18,8 +21,6 @@ task :cron => :environment do
   # Top of each hour
   case time.hour
   when 0
-    # Get latest tweets
-    djs << Terryblr::Tweet.send_later(:fetch_recent)
   when 7
     # At the top of the hour
 
