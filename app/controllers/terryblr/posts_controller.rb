@@ -3,8 +3,6 @@ class Terryblr::PostsController < Terryblr::PublicController
   before_filter :object, :only => [:gallery_params, :show, :next, :previous]
   before_filter :featured_pics, :only => [:show]
   before_filter :collection, :only => [:index, :tagged, :archives]
-  before_filter :require_user, :only => [:preview]
-  skip_before_filter :set_expires, :only => [:preview]
 
   index {
     wants.atom
@@ -24,12 +22,12 @@ class Terryblr::PostsController < Terryblr::PublicController
   }
 
   def preview
-    @object = current_site.posts.find(params[:id])
-    @object.published_at = Time.zone.now
+    @object = current_site.posts.new(params[:post])
+    @object.published_at = 1.minute.ago
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
       wants.html {
-        render :action => "show"
+        render :template => "terryblr/posts/show"
       }
     end
   end
@@ -38,10 +36,10 @@ class Terryblr::PostsController < Terryblr::PublicController
     @page_title = 'Archives'
     respond_to do |wants|
       wants.html {
-        render :action => "terryblr/posts/archives"
+        render :template => "terryblr/posts/archives"
       }
       wants.js {
-        render :action => "terryblr/posts/archives"
+        render :template => "terryblr/posts/archives"
       }
     end
   end
@@ -50,7 +48,7 @@ class Terryblr::PostsController < Terryblr::PublicController
     @page_title = "Posts tagged #{params[:tag]}"
     respond_to do |wants|
       wants.html {
-        render :action => "terryblr/posts/tagged"
+        render :template => "terryblr/posts/tagged"
       }
       wants.js
     end
