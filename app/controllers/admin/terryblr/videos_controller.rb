@@ -40,7 +40,7 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
   private
   
   def post
-    @post ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id]) || Terryblr::Post.new
+    @post ||= current_site.posts.find_by_slug(params[:post_id]) || current_site.posts.find_by_id(params[:post_id]) || current_site.posts.new
   end
   
   def object

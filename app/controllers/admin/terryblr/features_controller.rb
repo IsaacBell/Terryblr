@@ -13,7 +13,7 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   new_action {
     before {
       # Create feature!
-      object.attributes = object.class.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
+      object.attributes = end_of_association_chain.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
       object.save!
     }
   }
@@ -45,10 +45,6 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   private
 
-  def end_of_association_chain
-    Terryblr::Feature
-  end
-  
   def object
     @object ||= end_of_association_chain.find(params[:id])
   end

@@ -2,13 +2,13 @@ class Terryblr::ApplicationController < ResourceController::Base
   
   include Terryblr::CacheSystem
   helper 'terryblr/application'
-  #helper_method :current_user_session, :current_user
-
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+
+  before_filter :work_around_rails_middleware_bug
+  before_filter :current_site
 
   private
   
-  before_filter :work_around_rails_middleware_bug
   def work_around_rails_middleware_bug
     request.env["action_dispatch.request.parameters"] = nil
     request.env["action_dispatch.request.formats"] = nil
@@ -19,34 +19,26 @@ class Terryblr::ApplicationController < ResourceController::Base
     request.parameters[:format] = params[:format]
   end
 
-  #def current_user_session
-  #  return @current_user_session if defined?(@current_user_session)
-  #  @current_user_session = UserSession.find
-  #end
-  #
-  #def current_user
-  #  return @current_user if defined?(@current_user)
-  #  @current_user = current_user_session && current_user_session.record
-  #end
-  #
-  #def require_user
-  #  unless current_user
-  #    store_location
-  #    flash[:notice] = "You must be logged in to access this page"
-  #    redirect_to new_user_session_path
-  #    return false
-  #  end
-  #end
-
-  #def require_no_user
-  #  if current_user
-  #    store_location
-  #    flash[:notice] = "You must be logged out to access this page"
-  #    redirect_to user_path(current_user)
-  #    return false
-  #  end
-  #end
+  def current_site
+    # Use subdomain as key for site
+    @current_site ||= if !request.subdomains.empty?
+      Terryblr::Site.find_by_name(request.subdomains.last)
+    else
+      Terryblr::Site.default
+    end
+    session[:site_name] = @current_site.name
+    @current_site
+  end
   
+  def end_of_association_chain
+    assoc_name = params[:controller].split('/').last.strip.to_sym
+    if current_site.respond_to?(assoc_name)
+      current_site.send(assoc_name)
+    else
+      model_name.constantize
+    end
+  end
+
   def store_location
     session[:return_to] = request.request_uri
   end

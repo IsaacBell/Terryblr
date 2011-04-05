@@ -13,6 +13,7 @@ class Terryblr::Page < Terryblr::Base
   #
   has_many :photos, :as => :photoable, :order => "display_order"
   has_many :messages, :as => :messagable
+  belongs_to :site, :class_name => "Terryblr::Site"
 
   #
   # Behaviours
@@ -25,7 +26,7 @@ class Terryblr::Page < Terryblr::Base
   # Validations
   #
   validates_presence_of :title, :body, :slug, :unless => :pending? 
-  validates_uniqueness_of :slug, :if => :slug?
+  validate :slug, :uniqueness => true, :if => :slug?, :scope => :site_id
 
   #
   # Scopes

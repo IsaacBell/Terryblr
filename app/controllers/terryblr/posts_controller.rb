@@ -24,7 +24,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   }
 
   def preview
-    @object = Terryblr::Post.find(params[:id])
+    @object = current_site.posts.find(params[:id])
     @object.published_at = Time.zone.now
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
@@ -69,15 +69,15 @@ class Terryblr::PostsController < Terryblr::PublicController
   private
 
   def object
-    @post = @object ||= posts_chain.find_by_id(params[:id])        || 
-                        posts_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
-                        posts_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
-                        posts_chain.find_by_tumblr_id(params[:id]) || # Needed to keep permalinks alive
+    @post = @object ||= end_of_association_chain.find_by_id(params[:id])        || 
+                        end_of_association_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
+                        end_of_association_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
+                        end_of_association_chain.find_by_tumblr_id(params[:id]) || # Needed to keep permalinks alive
                         (raise ActiveRecord::RecordNotFound)
   end
 
   def featured_pics
-    @featured_pics ||= Terryblr::Feature.live.tagged_with('sidebar')
+    @featured_pics ||= current_site.features.live.tagged_with('sidebar')
   end
 
   def collection
@@ -87,16 +87,16 @@ class Terryblr::PostsController < Terryblr::PublicController
         # Normal post listing
         @query = params[:search]
         q = "%#{@query}%"
-        posts_chain.all(
+        end_of_association_chain.all(
           :conditions => ["title like ? or body like ?", q, q]
         ).paginate(:page => params[:page])
       else
         # Normal post listing
-        posts_chain.paginate(:page => params[:page])
+        end_of_association_chain.paginate(:page => params[:page])
       end
 
     when 'tagged'
-      posts_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page])
+      end_of_association_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page])
 
     when 'archives'
       col = :published_at
@@ -107,7 +107,7 @@ class Terryblr::PostsController < Terryblr::PublicController
         []
       end
 
-      posts_chain.paginate(
+        paginate(
         :page => params[:page],
         :conditions => conditions,
         :order => "#{col} desc, created_at desc")
@@ -121,8 +121,8 @@ class Terryblr::PostsController < Terryblr::PublicController
     @date ||= "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
   end
 
-  def posts_chain
-    Terryblr::Post.live
+  def end_of_association_chain
+    current_site.posts.live
   end
 
   include Terryblr::Extendable

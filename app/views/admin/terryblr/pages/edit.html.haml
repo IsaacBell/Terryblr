@@ -4,6 +4,7 @@
   
   #form_content{:class => "span-17"}
     %h2= ttt("#{params[:action].to_s}_page".downcase)
+    = error_messages_for :object, :header_message => ttt(:validation_error_header, :model => @object.class.to_s.demodulize),  :message => ttt(:validation_error_message)
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }, :required => true

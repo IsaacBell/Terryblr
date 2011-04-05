@@ -8,7 +8,7 @@ class TerryblrBuilder < Formtastic::SemanticFormBuilder
     html_options = default_string_options(method, type).merge(html_options) if [:numeric, :string, :password, :text].include?(type)
 
     self.label(method, options_for_label(options)) <<
-    "<span>#{options[:prefix]}</span>" <<
+    "<span>#{options[:prefix]}</span>".html_safe <<
     self.send(form_helper_method, method, html_options)
   end
   
@@ -31,7 +31,7 @@ class TerryblrBuilder < Formtastic::SemanticFormBuilder
     html_options = default_string_options(method, type).merge(html_options) if [:numeric, :string, :password, :text].include?(type)
 
     self.label(method, options_for_label(options)) <<
-    "<span>$</span>" <<
+    "<span>$</span>".html_safe <<
     self.send(form_helper_method, method, html_options)
   end
   

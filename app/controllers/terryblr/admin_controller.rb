@@ -19,6 +19,20 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   layout 'admin'
 
   private
+  
+  def current_site
+    # Use session as key for 
+    @current_site ||= if session[:site_name]
+      Terryblr::Site.find_by_name(session[:site_name])
+    elsif !request.subdomains.empty?
+      Terryblr::Site.find_by_name(request.subdomains.last)
+    else
+      Terryblr::Site.default
+    end
+puts "==== @current_site: #{@current_site.inspect} ===="
+    session[:site_name] = @current_site.name
+    @current_site
+  end
 
   def object_url
     send("#{url_name}_path", object)
@@ -49,7 +63,12 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
 
   def end_of_association_chain
-    admin_model_name.constantize
+    assoc_name = params[:controller].split('/').last.strip.to_sym
+    if current_site.respond_to?(assoc_name)
+      current_site.send(assoc_name)
+    else
+      admin_model_name.constantize
+    end
   end
 
   def object

@@ -9,11 +9,13 @@ Rails.application.routes.draw do
     puts "Please make sure you have run 'rake terryblr:install:migrations' and run any pending migrations."
     puts "Original exception: #{e.class}: #{e}"
   end
-  match "/admin", :to => "terryblr/admin_home#index", :as => "user_root" # Redirect to after login
 
+  match "/admin", :to => "terryblr/admin_home#index", :as => "user_root" # Redirect to after login
   match "/admin", :to => "terryblr/admin_home#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin_home#search", :as => :admin_search
   match '/admin/analytics.(:format)', :to => "terryblr/admin_home#analytics", :as => :admin_analytics
+  match '/admin/switch_site/:site', :to => "terryblr/admin_home#switch_site", :as => :admin_switch_site
+
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do

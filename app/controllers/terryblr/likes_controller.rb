@@ -41,7 +41,7 @@ class Terryblr::LikesController < Terryblr::PublicController
   end
 
   def parent_object
-    @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
+    @parent ||= current_site.posts.find_by_slug(params[:post_id]) || current_site.posts.find(params[:post_id])
   end
 
   include Terryblr::Extendable

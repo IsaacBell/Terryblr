@@ -1,19 +1,16 @@
 common: &common
-  app_name: Terry Richardson
-  admin_email: info@terryrichardson.com
+  app_name: Terryblr
+  admin_email: 
   ganalytics:
     code: UA-XXXXXXX-XX
     email: terryblr@gmail.com
     password: weloveterry69
     profile_id: 25211350
-  domain: terryrichardson.rails
-  s3:
-    access_key_id: 
-    secret_access_key:
+  domain: localhost
   tumblr:
-    blog: terrysdiary
-    email: diary@terryrichardson.com
-    pass: bowery1
+    blog: 
+    email: 
+    pass: 
   vimeo:
     consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
     consumer_secret: fcfb4b9bb66e992b
@@ -53,9 +50,6 @@ common: &common
     app_user_token: 142716515-p3qcuaGq6xLdtSNySr0aI7WCAujpdGMsmpv6NcpO
     app_user_secret: WNcvqsoh83XsoDRTlRHPgAMbuekCPpcvbrZ0o4A4jj8
     search_for: terryblr OR "The 88" OR "Le 88"
-  bitly:
-    login: jacksonlaycock
-    key: R_c8a7f8051740494c879df5865cd04b4b
   vimeo:
     consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
     consumer_secret: fcfb4b9bb66e992b
@@ -66,9 +60,10 @@ common: &common
     key: R_c8a7f8051740494c879df5865cd04b4b
   tags: 
     posts:
-      groups: [tags]
+      groups: [tags, location]
       tags: []
-      features: []
+      location: [blog, featured]
+      features: [homepage, blog, header, sidebar]
     features:
       groups: []
     pages:
@@ -89,12 +84,7 @@ test:
 
 staging:
   <<: *common
-  ganalytics:
-    code: UA-XXXXXXX-XX
-  domain: terry.lovethe88.com
-  vimeo:
-    key: b54e1791dc294c6ead7cf6f4c7fa9d23
-    secret: fcfb4b9bb66e992b
+  domain: terryblr.lovethe88.com
 
 production:
   <<: *common

@@ -27,7 +27,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   new_action {
     before {
       # Create post!
-      object.attributes= object.class.new.attributes.symbolize_keys.update(
+      object.attributes= end_of_association_chain.new.attributes.symbolize_keys.update(
         :state => "pending",
         :post_type => params[:type],
         :published_at => nil,
@@ -83,10 +83,10 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     scope = case params[:state]
     when "drafted"
       col = :updated_at
-      Terryblr::Post.drafted
+      end_of_association_chain.drafted
     else
       col = :published_at
-      Terryblr::Post.published
+      end_of_association_chain.published
     end
 
     if params[:month] and params[:year]

@@ -17,9 +17,5 @@ class Terryblr::PagesController < Terryblr::PublicController
                         (raise ActiveRecord::RecordNotFound)
   end
 
-  def end_of_association_chain
-    Terryblr::Page
-  end
-
   include Terryblr::Extendable
 end

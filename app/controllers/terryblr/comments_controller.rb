@@ -36,7 +36,7 @@ class Terryblr::CommentsController < Terryblr::PublicController
   end
 
   def build_object
-    @object ||= Comment.new(params[:comment].update(:user => current_user, :commentable => parent_object))
+    @object ||= Terryblr::Comment.new(params[:comment].update(:user => current_user, :commentable => parent_object))
   end
 
   def collection
@@ -44,7 +44,7 @@ class Terryblr::CommentsController < Terryblr::PublicController
   end
 
   def parent_object
-    @parent ||= Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find(params[:post_id])
+    @parent ||= current_site.posts.find_by_slug(params[:post_id]) || current_site.posts.find(params[:post_id])
   end
 
   include Terryblr::Extendable

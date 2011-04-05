@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314151665) do
+ActiveRecord::Schema.define(:version => 20110404202437) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -53,10 +53,12 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "site_id"
   end
 
   add_index "features", ["photo_id"], :name => "index_features_on_photo_id"
   add_index "features", ["post_id"], :name => "index_features_on_post_id"
+  add_index "features", ["site_id"], :name => "index_features_on_site_id"
 
   create_table "likes", :force => true do |t|
     t.integer  "likeable_id"
@@ -154,12 +156,14 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
     t.integer  "parent_id"
     t.integer  "position",       :default => 0
     t.integer  "post_id"
+    t.integer  "site_id"
   end
 
   add_index "pages", ["comments_count"], :name => "index_pages_on_comments_count"
   add_index "pages", ["likes_count"], :name => "index_pages_on_likes_count"
   add_index "pages", ["parent_id"], :name => "index_pages_on_parent_id"
   add_index "pages", ["post_id"], :name => "index_pages_on_post_id"
+  add_index "pages", ["site_id"], :name => "index_pages_on_site_id"
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["votes_count"], :name => "index_pages_on_votes_count"
 
@@ -196,15 +200,18 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
     t.string   "display_type"
     t.integer  "tw_delayed_job_id"
     t.integer  "fb_delayed_job_id"
+    t.integer  "tumblr_delayed_job_id"
     t.string   "social_msg",            :limit => 140
     t.integer  "linkable_id"
     t.string   "linkable_type"
-    t.integer  "tumblr_delayed_job_id"
+    t.string   "import_url"
+    t.integer  "site_id"
   end
 
   add_index "posts", ["comments_count"], :name => "index_posts_on_comments_count"
   add_index "posts", ["likes_count"], :name => "index_posts_on_likes_count"
   add_index "posts", ["linkable_id"], :name => "index_posts_on_linkable_id"
+  add_index "posts", ["site_id"], :name => "index_posts_on_site_id"
   add_index "posts", ["slug"], :name => "index_posts_on_slug"
   add_index "posts", ["tumblr_delayed_job_id"], :name => "index_posts_on_tumblr_delayed_job_id"
   add_index "posts", ["twitter_id"], :name => "index_posts_on_twitter_id"
@@ -238,6 +245,14 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "sites", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -274,7 +289,6 @@ ActiveRecord::Schema.define(:version => 20110314151665) do
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",    :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"

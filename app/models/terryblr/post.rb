@@ -16,6 +16,7 @@ class Terryblr::Post < Terryblr::Base
   has_many :features, :class_name => "Terryblr::Feature"
   has_many :photos, :as => :photoable, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Photo"
   has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
+  belongs_to :site, :class_name => "Terryblr::Site"
   belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :fb_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "::Delayed::Job"

@@ -1,7 +1,5 @@
 class Admin::Terryblr::PagesController < Terryblr::AdminController
 
-  prepend_before_filter :find_page
-
   index {
     before {
       @list_cols = %w(page state)
@@ -31,16 +29,12 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   
   private
 
-  def find_page
-    @page = Terryblr::Page.find_by_slug(params[:id]) || Terryblr::Page.find_by_id(params[:id])
-  end
-  
   def collection
     order = "created_at desc"
     @collection = @posts ||= if params[:parent_id]
-      Terryblr::Page.by_state(params[:state] || 'published').all(:conditions => {:parent_id => params[:parent_id]}, :order => order)
+      end_of_association_chain.by_state(params[:state] || 'published').all(:conditions => {:parent_id => params[:parent_id]}, :order => order)
     else
-      Terryblr::Page.roots.by_state(params[:state] || 'published').all(:order => order)
+      end_of_association_chain.roots.by_state(params[:state] || 'published').all(:order => order)
     end
   end
   

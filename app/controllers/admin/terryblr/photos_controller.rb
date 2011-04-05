@@ -53,13 +53,13 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
   def photoable
     @photoable ||= if params[:post_id]
-      Terryblr::Post.find_by_slug(params[:post_id]) || Terryblr::Post.find_by_id(params[:post_id].to_i) || Terryblr::Post.new
+      current_site.posts.find_by_slug(params[:post_id]) || current_site.posts.find_by_id(params[:post_id].to_i) || current_site.posts.new
     elsif params[:product_id]
-      Product.find_by_slug(params[:product_id]) || Product.find_by_id(params[:product_id].to_i) || Product.new
+      Terryblr::Product.find_by_slug(params[:product_id]) || Terryblr::Product.find_by_id(params[:product_id].to_i) || Terryblr::Product.new
     elsif params[:page_id]
-      Terryblr::Page.find_by_slug(params[:page_id]) || Terryblr::Page.find_by_id(params[:page_id].to_i) || Terryblr::Page.new
+      current_site.pages.find_by_slug(params[:page_id]) || current_site.pages.find_by_id(params[:page_id].to_i) || current_site.pages.new
     elsif params[:feature_id]
-      Terryblr::Feature.find_by_id(params[:feature_id].to_i) || Terryblr::Feature.new
+      current_site.features.find_by_id(params[:feature_id].to_i) || current_site.features.new
     end
   end
 

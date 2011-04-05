@@ -19,7 +19,7 @@ module Terryblr
       end
 
     end
-  
+    
     def fix_tiny_mce
       # Fix broken paths from TinyMCE
       self.body = body.gsub(%r{src=\"(.*)/system/images/}, "src=\"/system/images/") if body?

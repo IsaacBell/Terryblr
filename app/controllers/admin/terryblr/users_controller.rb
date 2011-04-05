@@ -9,7 +9,7 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
   }
 
   def create
-    @user = Terryblr::User.new(params[:user])
+    @user = end_of_association_chain.new(params[:user])
     @user.admin = true
     if @user.save
       redirect_to edit_admin_user_path(@user)
@@ -19,7 +19,7 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
   end
   
   def admins
-    @collection = Terryblr::User.admins.all.paginate(:page => params[:page])
+    @collection = end_of_association_chain.admins.all.paginate(:page => params[:page])
     render :action => "index"
   end
 
@@ -30,16 +30,20 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
   end
   
   def collection
-    @collection ||= Terryblr::User.all.paginate(:page => params[:page])
+    @collection ||= end_of_association_chain.all.paginate(:page => params[:page])
   end
   
   def object
-    @object ||= Terryblr::User.find(params[:id])
+    @object ||= end_of_association_chain.find(params[:id])
   end
   
   def build_object
-    @object ||= Terryblr::User.new(params[:user])
+    @object ||= end_of_association_chain.new(params[:user])
   end
-
+  
+  def end_of_association_chain
+    Terryblr::User
+  end
+  
   include Terryblr::Extendable
 end

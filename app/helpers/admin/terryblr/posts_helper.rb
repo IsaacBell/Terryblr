@@ -2,8 +2,8 @@ module Admin::Terryblr::PostsHelper
 
   def error_messages_for_post
     error_messages_for :post, 
-      :header_message => "Uh oh. We found some problems with your #{@type.to_s}...", 
-      :message => "Please review the following fields:"
+      :header_message => ttt(:validation_error_header, :model => @type.to_s),  
+      :message => ttt(:validation_error_message)
   end
 
   def edit_videos_for_assoc(object)

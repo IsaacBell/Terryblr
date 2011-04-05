@@ -51,6 +51,8 @@ en:
           visitors: visitors
         search:
           no_results_found: No results found
+        switch_site:
+          site_changed: "Site changed to %{current_site}!"
 
     admin: 
       terryblr: 
@@ -159,3 +161,5 @@ en:
     value: value
     video: video
     view: view
+    validation_error_header: "Uh oh. We found some problems with your %{model}..."
+    validation_error_message: "Please review the following fields:"

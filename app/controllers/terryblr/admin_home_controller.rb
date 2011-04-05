@@ -61,8 +61,8 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
     tag    = Terryblr::Tag.find_by_name(@query)
     joins  = nil
     @results = {
-      :posts    => Terryblr::Post.where(conds).paginate(:page => 1),
-      :pages    => Terryblr::Page.where(conds).paginate(:page => 1)
+      :posts    => end_of_association_chain.where(conds).paginate(:page => 1),
+      :pages    => current_site.pages.where(conds).paginate(:page => 1)
     }
     respond_to do |wants|
       wants.html {
@@ -71,11 +71,22 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
     end
   end
   
+  def switch_site
+    # Set current-site if param matches an existing one
+    if s = Terryblr::Site.find_by_name(params[:site])
+      @current_site = s
+      session[:site_name] = s.name
+    end
+    flash[:notice] = t('terryblr.terryblr.admin_home.switch_site.site_changed', :current_site => current_site.name)
+    redirect_to request.env["HTTP_REFERER"] || admin_path
+  end
+
   private
-  
+
   def end_of_association_chain
-    Terryblr::Post
+    current_site.posts
   end
 
   include Terryblr::Extendable
+
 end

@@ -18,8 +18,8 @@ class Terryblr::HomeController < Terryblr::PublicController
 
   def sitemap
     @posts = collection
-    @countdowns = Terryblr::Post.live.tagged_with('countdown').limit(500)
-    @pages = Terryblr::Page.published.limit(500)
+    @countdowns = current_site.posts.live.tagged_with('countdown').limit(500)
+    @pages = current_site.pages.published.limit(500)
     respond_to do |wants|
       wants.xml
     end
@@ -50,9 +50,9 @@ class Terryblr::HomeController < Terryblr::PublicController
   def collection
     @collection ||= case action_name
       when 'sitemap'
-        Terryblr::Post.live.all(:limit => 500, :order => "updated_at desc")
+        current_site.posts.live.all(:limit => 500, :order => "updated_at desc")
       when 'index'
-        Terryblr::Post.live.paginate(:page => params[:page])
+        current_site.posts.live.paginate(:page => params[:page])
       else
         []
       end

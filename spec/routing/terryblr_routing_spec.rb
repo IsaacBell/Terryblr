@@ -37,3 +37,11 @@ describe 'Terryblr' do
     { :get => '/page_slug' }.should route_to(:controller => 'terryblr/pages', :action => 'show', :page_slug => 'page_slug')
   end
 end
+
+describe 'Terryblr::Admin' do
+  
+  it 'should switch admin site' do
+    { :get => '/admin/switch_site/www' }.should route_to(:controller => 'terryblr/admin_home', :action => 'switch_site', :site => 'www')
+  end
+  
+end

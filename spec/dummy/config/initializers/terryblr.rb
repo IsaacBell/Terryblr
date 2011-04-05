@@ -1,5 +1,7 @@
 Terryblr.configure do |conf|
-  conf.override 'PostsController', 'Terryblr::Post' => "Post"
+  # Example of overrides: Terryblr::Post will have ::Post included,
+  # whereas Terryblr::PostsController will have ::PostsControllerOverrides included
+  # conf.override 'Post', 'PostsController' => "PostsControllerOverrides"
 end
 
 module Rails

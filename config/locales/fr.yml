@@ -49,6 +49,8 @@ fr:
           tweet_reach: "portée des tweets"
           tweets: tweets
           visitors: visiteurs
+        switch_site:
+          site_changed: "site changé au %{current_site}."
 
     admin:
       terryblr:
