@@ -15,11 +15,20 @@ class Terryblr::Site < Terryblr::Base
   # Validations
   #
   validates :name, :presence => true, :uniqueness => true
+  validates :lang, :presence => true, :inclusion => { :in => I18n.available_locales }
 
   #
   # Scopes
   #
   default_scope :order => "id asc"
+  
+  #
+  # Callbacks
+  #
+  def before_validation
+    # Set the default value
+    self.lang ||= I18n.locale if new_record?
+  end
 
   #
   # Class Methods
@@ -28,10 +37,19 @@ class Terryblr::Site < Terryblr::Base
     
     # Use www or go for the first one
     def default
-      find_by_name('www') || first || create(:name => 'www')
+      find_by_name('www') || first || create(:name => 'www', :lang => I18n.locale)
     end
     
   end
+  
+  #
+  # Instance methods
+  #
+  def lang
+    # Symbolize to make easier to integrate w I18n
+    read_attribute(:lang) ? read_attribute(:lang).to_sym : nil
+  end
+  
 
   include Terryblr::Extendable
 end

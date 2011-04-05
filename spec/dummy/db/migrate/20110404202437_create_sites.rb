@@ -5,6 +5,7 @@ class CreateSites < ActiveRecord::Migration
   def self.up
     create_table :sites, :force => true do |t|
       t.string :name
+      t.string :lang
       t.timestamps
     end
     add_index :sites, :name, :unique => true

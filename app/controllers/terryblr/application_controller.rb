@@ -6,6 +6,7 @@ class Terryblr::ApplicationController < ResourceController::Base
 
   before_filter :work_around_rails_middleware_bug
   before_filter :current_site
+  before_filter :current_lang
 
   private
   
@@ -25,7 +26,11 @@ class Terryblr::ApplicationController < ResourceController::Base
     session[:site_name] = @current_site.name
     @current_site
   end
-  
+
+  def current_lang
+    @current_lang = I18n.locale = current_site.lang if I18n.available_locales.include?(current_site.lang)
+  end
+
   def end_of_association_chain
     assoc_name = params[:controller].split('/').last.strip.to_sym
     if current_site.respond_to?(assoc_name)

@@ -4,4 +4,5 @@ Factory.define :feature, :class => Terryblr::Feature do |feature|
   feature.association :post, :factory => :photos_post
   feature.created_at          5.minutes.ago
   feature.updated_at          5.minutes.ago
+  feature.tag_list            %w(home)
 end

@@ -248,6 +248,7 @@ ActiveRecord::Schema.define(:version => 20110404202437) do
 
   create_table "sites", :force => true do |t|
     t.string   "name"
+    t.string   "lang"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

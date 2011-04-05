@@ -51,10 +51,10 @@ module Terryblr
           #
           after_initialize :set_initial_state
           def set_initial_state
+            # Touch the state attribute and if missing reload
+            self.state rescue self.reload
+            
             self.state ||= self.class.aasm_initial_state
-          # rescue ActiveModel::MissingAttributeError => exc
-          #   self.reload # Often this happens because the state column hasn't been included in the SQL query
-          #   logger.error { "Unable to set state default value: #{exc}" }
           end
 
           before_validation :stringify_state

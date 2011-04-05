@@ -27,7 +27,7 @@ class Terryblr::Feature < Terryblr::Base
   validates_presence_of :photo, :display_order, :if => Proc.new{|f| !f.pending? && !f.post_id? }
   validates_numericality_of :display_order
   validates :url, :presence => true, :url => true, :if => :url?
-  validates :tags, :presence => true, :allow_blank => false
+  validates :tag_list, :presence => true, :allow_blank => false
   
 
   #
