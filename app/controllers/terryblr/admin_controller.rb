@@ -29,7 +29,6 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     else
       Terryblr::Site.default
     end
-puts "==== @current_site: #{@current_site.inspect} ===="
     session[:site_name] = @current_site.name
     @current_site
   end

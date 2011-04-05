@@ -31,7 +31,7 @@ Spork.prefork do
   Capybara.default_selector = :css
   # Load support files
   Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
-Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
+  Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
 
   RSpec.configure do |config|
     # Remove this line if you don't want RSpec's should and should_not

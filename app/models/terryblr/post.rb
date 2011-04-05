@@ -257,7 +257,7 @@ class Terryblr::Post < Terryblr::Base
   def tumblr_me=(value)
     @tumblr_me = (value.is_a?(TrueClass) || value.is_a?(FalseClass)) ? value : !value.to_i.zero?
   end
-
+  
   private
 
   def do_publish(msg = nil)

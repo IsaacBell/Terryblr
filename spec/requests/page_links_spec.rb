@@ -3,7 +3,8 @@ require File.join(File.dirname(__FILE__), '../spec_helper.rb')
 describe "PagesLinks" do
 
   before do
-    @page = Factory(:page)
+    @site = Terryblr::Site.default
+    @page = Factory(:page, :site => @site)
   end
   
   it "should show page at /:page_slug" do
