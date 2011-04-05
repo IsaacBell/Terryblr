@@ -8,6 +8,7 @@ spec/dummy/db/schema.rb
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/public/
+spec/dummy/vendor/plugins/resource_controller
 terryblr-*.gem
 tmp/
 Gemfile.lock
