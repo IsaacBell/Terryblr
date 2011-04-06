@@ -48,8 +48,16 @@ describe Terryblr::PostsController do
       post_atts = {
         :title => "Some cool new post",
         :body => "<p>Some cool new post body text</p>",
-        :state => "pending",
         :post_type => "post"
+        :state => "publish_now", 
+        :published_at => 5.mins.ago.to_s, 
+        :location_list=>["blog"],
+        :tag_list => "",
+        :slug => "", 
+        :post_type => "post", 
+        :tw_me => "1", 
+        :fb_me => "1", 
+        :social_msg => ""
       }
       
       # Standard post

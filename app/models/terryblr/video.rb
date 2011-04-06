@@ -20,6 +20,7 @@ class Terryblr::Video < Terryblr::Base
   before_validation :upload_video, :on => :create
 
   def upload_video
+
     # upload to vimeo
     send_to_vimeo if upload and File.exists?(upload)
 

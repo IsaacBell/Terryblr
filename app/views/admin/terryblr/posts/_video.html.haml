@@ -15,7 +15,7 @@
       %li.string.optional.video-url
         %label{:for => "post_videos_attributes__url"} #{ttt :'.video_url'}
         = text_field_tag "video_url"
-        = link_to ttt(:'.save'), admin_post_videos_path(@post, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
+        = link_to ttt(:'.save'), admin_post_videos_path(@post, :format => "js"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true, :method => :post
         %p.inline-hints #{tt :'.paste_in_a_URL_to_a_vimeo_or_youtube_video'}
       %li.video-list
         = edit_videos_for_assoc(@post)
