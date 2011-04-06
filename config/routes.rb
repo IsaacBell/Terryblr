@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do
-        match ':state/:month/:year(.:format)', :to => "terryblr/posts#filter", :as => :drafted, :constraints => { :state => /(drafted|published)/, :year => /\d{4}/, :month => /\d{1,2}/ }
+        match ':state/:month/:year(.:format)', :to => "terryblr/posts#filter", :as => :filter, :constraints => { :state => "published", :year => /\d{4}/, :month => /\d{1,2}/ }
+        match ':state(.:format)', :to => "terryblr/posts#filter", :as => :filter, :constraints => { :state => /drafted|published/ }
         get  :filter
         post :filter
       end
@@ -65,10 +66,8 @@ Rails.application.routes.draw do
   # Posts (be carefull, order matters!)
   match "/posts/tagged/:tag", :to => "terryblr/posts#tagged", :as => "tagged_posts"
   match "/posts/archives", :to => "terryblr/posts#archives", :as => "archive_posts"
+  match "/posts/preview", :to => "terryblr/posts#preview", :as => "preview_post"
   resources :posts, :only => [:index, :show], :controller => "terryblr/posts" do
-    collection do
-      post :preview
-    end
     member do
       get :gallery_params
       get :next
@@ -91,11 +90,7 @@ Rails.application.routes.draw do
   match "/404", :to => "terryblr/home#not_found", :as => "not_found"
 
   # Pages (MUST be last)
-  resources :pages, :only => [:show], :controller => "terryblr/pages" do
-    collection do
-      post :preview
-    end
-  end
+  match "/pages/preview", :to => "terryblr/pages#preview", :as => "preview_page"
   match "/:page_slug", :to => "terryblr/pages#show", :as => "page"
 
 end

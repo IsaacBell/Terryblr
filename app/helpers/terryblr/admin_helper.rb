@@ -229,5 +229,33 @@ module Terryblr::AdminHelper
     ")
   end
 
+  def link_to_preview
+    obj = params[:controller]=~/pages/ ? 'page' : 'post'
+    
+    link_to_function ttt(:preview), %Q{
+      $('iframe.preview-pane').dialog({ 
+        modal: true,  
+        width:960,  
+        height:500, 
+        open: function() {
+          $(this).css('width',960)
+          var form = $('form#post_edit').
+            clone().
+            attr('id','post_preview_form').
+            attr('action','#{preview_post_path}').
+            attr('target','post_preview').
+            hide().
+            appendTo($('#body')).
+            submit().
+            remove();
+          console.debug(form)
+          // form.submit()
+          // form.remove()
+          
+        } })
+    }, :class => "preview"
+  end
+  
+
   include Terryblr::Extendable
 end

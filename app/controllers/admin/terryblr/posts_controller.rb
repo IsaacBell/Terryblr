@@ -80,21 +80,31 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def collection
-    scope = case params[:state]
+    col_scope = end_of_association_chain.scoped
+    col_scope = case params[:state]
     when "drafted"
       col = :updated_at
-      end_of_association_chain.drafted
+      col_scope.drafted
     else
       col = :published_at
-      end_of_association_chain.published
+      col_scope.published
     end
 
     if params[:month] and params[:year]
       @date = Date.parse("#{params[:year]}-#{params[:month]}-1")
-      scope = scope.for_month @date, col
+      col_scope = col_scope.for_month @date, col
+    end
+    
+    col_scope = col_scope.order("#{col} desc, created_at desc")
+
+    # Show all if drafts
+    col_scope = if params[:state]=='drafted'
+      col_scope.all
+    else
+      col_scope.paginate(:page => (params[:page] || 1))
     end
 
-    @posts = @collection ||= scope.order("#{col} desc, created_at desc").paginate(:page => (params[:page] || 1))
+    @posts = @collection ||= col_scope
     
   end
 
