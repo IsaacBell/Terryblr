@@ -50,7 +50,6 @@ require "delayed_job"
   'terryblr/formtastic_builder',
   "terryblr/cache_system",
   "terryblr/i18n_helpers",
-  "terryblr/flash_session_cookie_middleware",
   'terryblr/base/base',
   'terryblr/base/taggable',
   'terryblr/base/aasmstates',

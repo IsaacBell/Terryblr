@@ -1,7 +1,17 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
+  
+  skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def create
-    @photo = end_of_association_chain.new(:image => params[:Filedata])
+    
+    # From gist: https://gist.github.com/26082d2b56b00bd54dad
+    data = request.body
+    filename = params[:qqfile]
+    data.class.send(:define_method, "original_filename") do
+      filename
+     end
+    
+    @photo = end_of_association_chain.new(:image => data)
 
     # Features belong to the photo and not the otherway
     if photoable && photoable.is_a?(Terryblr::Feature)
@@ -17,8 +27,10 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
 
     super do |success, failure|
       success.json { render @photo.to_json }
+      success.js   { render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok }
       success.html { render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok }
       failure.json { render @photo.errors.to_json }
+      failure.js   { render :text => @photo.errors.full_messages.to_sentence }
       failure.html { render :text => @photo.errors.full_messages.to_sentence }
     end
   end

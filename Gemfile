@@ -9,4 +9,5 @@ gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"
 group :development, :test do
   # gem 'capybara', :git => "https://github.com/jnicklas/capybara.git"
   gem 'capybara'
+  gem 'awesome_print'
 end

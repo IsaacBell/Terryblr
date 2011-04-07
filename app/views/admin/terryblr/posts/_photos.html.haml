@@ -8,7 +8,7 @@
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       %li.photos-upload
         %label= ttt(:photos)
-        = multi_file_uploader(:url => admin_photos_path(:format => :json), :css_parent_class => "photos-upload")
+        = multi_file_uploader(:url => admin_photos_path(:format => :js), :css_parent_class => "photos-upload")
         %p.inline-hints.clear= tt('.upload_hint')
       %li.photos-display-type
         %label= ttt('.gallery_display')

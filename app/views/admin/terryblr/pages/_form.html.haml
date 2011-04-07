@@ -6,7 +6,7 @@
     = f.inputs do
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }, :required => true
       %li.add-inline-photo
-        = add_inline_photo admin_photos_path(:format => :json)
+        = add_inline_photo admin_photos_path(:format => :js)
       = f.input :body, :label => ttt(:body), :as => 'text', :wrapper_html => { :class => "rich-text" }, :input_html => { :style => "height:25em;" }, :required => true
 
     = f.buttons do

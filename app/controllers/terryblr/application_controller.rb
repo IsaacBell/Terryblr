@@ -2,21 +2,11 @@ class Terryblr::ApplicationController < ActionController::Base
   include Terryblr::CacheSystem
   helper 'terryblr/application'
 
-  before_filter :work_around_rails_middleware_bug
+  # before_filter :work_around_rails_middleware_bug
   before_filter :current_site
   before_filter :current_lang
 
   private
-
-  def work_around_rails_middleware_bug
-    request.env["action_dispatch.request.parameters"] = nil
-    request.env["action_dispatch.request.formats"] = nil
-    request.env["action_dispatch.request.accepts"] = nil
-    request.env["action_dispatch.request.content_type"] = nil
-    params.merge! request.params
-    params.merge! request.params.symbolize_keys
-    request.parameters[:format] = params[:format]
-  end
 
   def current_site
     # Use subdomain as key for site
@@ -28,6 +18,16 @@ class Terryblr::ApplicationController < ActionController::Base
   def current_lang
     @current_lang = I18n.locale = current_site.lang if I18n.available_locales.include?(current_site.lang)
   end
+  
+  # def work_around_rails_middleware_bug
+  #   request.env["action_dispatch.request.parameters"] = nil
+  #   request.env["action_dispatch.request.formats"] = nil
+  #   request.env["action_dispatch.request.accepts"] = nil
+  #   request.env["action_dispatch.request.content_type"] = nil
+  #   params.merge! request.params
+  #   params.merge! request.params.symbolize_keys
+  #   request.parameters[:format] = params[:format]
+  # end
 
   def end_of_association_chain
     assoc_name = params[:controller].split('/').last.strip.to_sym

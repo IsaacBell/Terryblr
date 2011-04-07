@@ -24,7 +24,6 @@ javascripts:
     - public/javascripts/jquery.js
     - public/javascripts/jquery-ui.js
     - public/javascripts/wymeditor/jquery.wymeditor.js
-    - public/javascripts/jquery.swfupload.js
     - public/javascripts/jquery.flash.js
     - public/javascripts/jrails.js
     - public/javascripts/rails.js
@@ -32,9 +31,7 @@ javascripts:
   admin_edit:
     - public/javascripts/jtags.js
     - public/javascripts/wymeditor/jquery.wymeditor.js
-    - public/javascripts/swfupload/swfupload.js
-    - public/javascripts/jquery.swfupload.js
-
+    - public/javascripts/fileuploader.js
 stylesheets:
   public: 
     - public/stylesheets/public_grid.css
