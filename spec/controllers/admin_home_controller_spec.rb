@@ -6,8 +6,8 @@ describe Terryblr::AdminHomeController do
     
     before do
       @user = Factory(:user_admin)
-      @site_www = Factory(:site, :name => "www", :lang => :en)
-      @site_blog = Factory(:site, :name => "blog", :lang => :fr)
+      @site_www = Terryblr::Site.default
+      @site_blog = Factory(:site, :lang => :fr)
       @post_www = Factory(:post, :site => @site_www)
       @post_blog = Factory(:post, :site => @site_blog)
     end
