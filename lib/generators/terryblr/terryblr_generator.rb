@@ -41,6 +41,7 @@ module Terryblr
         copy_file 'oembed.yml', 'config/oembed.yml'
         copy_file 'assets.yml', 'config/assets.yml'
         copy_file 'devise.rb', 'config/initializers/devise.rb'
+        copy_file 'locales/devise_en.yml', 'config/locales/devise_en.yml'
         copy_file 'delayed_job.rb', 'config/initializers/delayed_job.rb'
         copy_file 'formtastic_config.rb', 'config/initializers/formtastic_config.rb'
         # copy_file 'session_store.rb', 'config/initializers/session_store.rb'

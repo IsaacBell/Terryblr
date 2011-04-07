@@ -44,6 +44,7 @@ class Terryblr::User < Terryblr::Base
   #
   # Callbacks
   #
+  before_destroy :prevent_destroying_last_admin
 
   #
   # Scopes
@@ -54,11 +55,22 @@ class Terryblr::User < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def base_class
-      self
+    def build_admin props
+      self.new (props || {}).merge :admin => true
     end
-    
+
+    def can_destroy_admin?
+      admins.count > 1
+    end
+  end
+
+  def prevent_destroying_last_admin
+    errors.add(:base, "not allowed destroying the last administrator") unless destroyable?
+    destroyable?
+  end
+
+  def destroyable?
+    !admin? || self.class.admins.count > 1
   end
 
   #
@@ -67,8 +79,7 @@ class Terryblr::User < Terryblr::Base
   def full_name
     [first_name, last_name].join(' ')
   end
-  
-  
+
   def add_to_cart(opts = {})
     product = opts[:product]
     size = opts[:size].to_s

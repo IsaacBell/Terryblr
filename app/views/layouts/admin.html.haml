@@ -1,3 +1,4 @@
+- self.extend Terryblr::ApplicationHelper
 - @show_as_dash ||= false
 !!!
 %html
@@ -45,7 +46,7 @@
       #body{:class => @show_as_dash ? "dashboard" : ""}
         =image_tag "admin/content_top_edit_form.png", :id => "content_top_edit_form"
         #content{:class => content_for?(:sidebar) ? "span-17" : "span-23 last"}
-          #flash_messages= flash_messages
+          #flash_messages= raw(flash_messages)
           = yield
 
         / Show Sidebar if there is something to include

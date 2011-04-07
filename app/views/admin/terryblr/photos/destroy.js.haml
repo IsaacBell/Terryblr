@@ -1,4 +1,4 @@
-- if @object.destroyed?
+- if resource.destroyed?
   $("##{object.dom_id('photos_list')}").fadeOut(function(){ $(this).remove() })
 - else
   $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn()

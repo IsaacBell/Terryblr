@@ -27,7 +27,7 @@ class Terryblr::Photo < Terryblr::Base
   # Associatons
   #
   belongs_to :photoable, :polymorphic => true, :touch => true
-  has_many :features
+  has_many :features, :class_name => "Terryblr::Feature"
 
   #
   # Validations
@@ -45,11 +45,6 @@ class Terryblr::Photo < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def base_class
-      self
-    end
-    
   end
 
   #
@@ -101,7 +96,7 @@ class Terryblr::Photo < Terryblr::Base
       }
     end
   end
-  
+
   def photoable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
   end
@@ -117,7 +112,6 @@ class Terryblr::Photo < Terryblr::Base
     errors.add(:url, "not valid. Unable to download image.")
     return nil
   end
-
 
   include Terryblr::Extendable
 end

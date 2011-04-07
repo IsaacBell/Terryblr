@@ -18,11 +18,6 @@ module Terryblr
     # Force routes to be loaded if we are doing any eager load.
     config.before_eager_load { |app| app.reload_routes! }
 
-    # Add flash uploader session detection middleware
-    initializer :add_flash_middleware, :before => :load_application_initializers do |app|
-      config.app_middleware.insert_before(Warden::Manager, FlashSessionCookieMiddleware, Rails.application.config.session_options[:key])
-    end
-
     rake_tasks do
       load 'terryblr/railties/tasks.rake'
     end

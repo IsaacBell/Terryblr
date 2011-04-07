@@ -1,6 +1,7 @@
 class Terryblr::PublicController < Terryblr::ApplicationController
 
   unloadable
+  inherit_resources
 
   # caches_page # for making static sites
   around_filter :cache
@@ -16,7 +17,7 @@ class Terryblr::PublicController < Terryblr::ApplicationController
       
       Rails.logger.info "Exception: #{exception}"
       Rails.logger.info exception.backtrace.join("\n")
-  
+      
       case exception.class.to_s
       when ActiveRecord::RecordNotFound.to_s
         render :template => 'terryblr/errors/404', :layout => 'public', :status => 404

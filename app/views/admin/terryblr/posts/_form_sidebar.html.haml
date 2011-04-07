@@ -1,12 +1,12 @@
 #form_sidebar{:class => "sidebar span-6 last"}
   = f.inputs do
     = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
-    - selected = (@post.pending? || @post.published?) ? (@post.published_at? ? :published_at : :publish_now) : @post.state.to_sym
-    
-    - @post.published_at = (@post.published_at || Time.now).in_time_zone # Needed to show time in user's TZ
-    - label = (@post.published_at.past? ? tt(:'.published_on') : tt('.will_be_published_on')) + ": "
+    - selected = (resource.pending? || resource.published?) ? (resource.published_at? ? :published_at : :publish_now) : resource.state.to_sym
 
-    = f.input :state, :as => "select", :collection => @post.states_for_select, :selected => selected, :include_blank => false, :wrapper_html => { :class => "post-states" }
+    - resource.published_at = (resource.published_at || Time.now).in_time_zone # Needed to show time in user's TZ
+    - label = (resource.published_at.past? ? tt(:'.published_on') : tt('.will_be_published_on')) + ": "
+
+    = f.input :state, :as => "select", :collection => resource.states_for_select, :selected => selected, :include_blank => false, :wrapper_html => { :class => "post-states" }
     = f.input :published_at, :label => label, :as => "string", :wrapper_html => { :class => "date-picker", :style => "display:#{selected==:published_at ? 'block' : 'none'}"} 
 
     - if defined?(Settings.tags.posts.groups)
@@ -17,9 +17,9 @@
           %ul{:class => "#{group}_tag_list" }
             - Settings.tags.posts[group].each do |tag|
               %li.machine_tag{:class => "#{group}_tag" }
-                = check_box_tag "post[#{group}_list][]", tag, @post.send("#{group}_list").include?(tag)
+                = check_box_tag "post[#{group}_list][]", tag, resource.send("#{group}_list").include?(tag)
                 = tag.humanize.titleize
-      
+
       - if Settings.tags.posts.groups.include?('tags')
         %li{:class => "tags-tag-group tag-picker"}
           %label #{ttt :'.tags'}
@@ -30,7 +30,7 @@
                 = link_to_function "+", "$('.tag-picker input.jq_tags_editor_input').attr('value','#{tag}').blur()"
           .clear
           = text_area :post, "tag_list", :class => "tag-picker"
-        
+
     = f.input :slug, :label => ttt(:'.custom_url'), :as => "underline", :prefix => "/posts/", :hint => ttt(:'.leave_blank_to_create_automatically_from_the_title'), :wrapper_html => { :class => "underlined-input" }
     = f.input :post_type, :as => "hidden"
 
@@ -38,29 +38,28 @@
       %label= ttt('.cross_posting')
       %ul
         %li.machine_tag
-          - if @post.twitter_id?
-            = link_to(ttc('.crossposted_twitter'), "http://twitter.com/#{Settings.twitter.login}/status/#{@post.twitter_id}")
-          - elsif @post.tw_delayed_job_id?
+          - if resource.twitter_id?
+            = link_to(ttc('.crossposted_twitter'), "http://twitter.com/#{Settings.twitter.login}/status/#{resource.twitter_id}")
+          - elsif resource.tw_delayed_job_id?
             %span 
               #{ttc('.crosspost_queued_twitter')}
               %br
-              (#{@post.tw_delayed_job.run_at.to_s(:date_ordinal)})
+              (#{resource.tw_delayed_job.run_at.to_s(:date_ordinal)})
           - else
             = check_box(:post, :tw_me)
             = ttc '.crosspost_twitter'
         %li.machine_tag
-          - if @post.facebook_id?
+          - if resource.facebook_id?
             = link_to(ttc('.crossposted_facebook'), "http://facebook.com/pages/#{Settings.app_name.parameterize}/#{Settings.facebook.page_id}")
-          - elsif @post.fb_delayed_job_id?
+          - elsif resource.fb_delayed_job_id?
             %span
               #{ttc('.crosspost_queued_facebook')}
               %br
-              (#{@post.fb_delayed_job.run_at.to_s(:date_ordinal)})
+              (#{resource.fb_delayed_job.run_at.to_s(:date_ordinal)})
           - else 
             = check_box(:post, :fb_me)
             = ttc '.crosspost_facebook'
         %li#social_message
           %label= ttt :'.message'
-          = text_area :post, :social_msg, :class=>"social_msg", :rows=>"4", :disabled => @post.twitter_id? && @post.facebook_id? && @object.live?
+          = text_area :post, :social_msg, :class=>"social_msg", :rows=>"4", :disabled => resource.twitter_id? && resource.facebook_id? && resource.live?
           %span.social_msg_chars
-    

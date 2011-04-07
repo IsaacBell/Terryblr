@@ -93,14 +93,9 @@ class Terryblr::Tweet < Terryblr::Base
         # Return new tweets created
         where("created_at >= ?", started_at).count(:id)
       end
-      
-      def base_class
-        self
-      end
-      
     end
 
-    private 
+    private
 
     def twitter
       require 'grackle' unless defined?(Grackle)
@@ -123,7 +118,6 @@ class Terryblr::Tweet < Terryblr::Base
   def twitter
     self.class.twitter
   end
-
 
   include Terryblr::Extendable
 end

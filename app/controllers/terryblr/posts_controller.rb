@@ -1,25 +1,22 @@
 class Terryblr::PostsController < Terryblr::PublicController
   before_filter :date, :only => [:index]
-  before_filter :object, :only => [:gallery_params, :show, :next, :previous]
+  before_filter :resource, :only => [:gallery_params, :show, :next, :previous]
   before_filter :featured_pics, :only => [:show]
   before_filter :collection, :only => [:index, :tagged, :archives]
 
-  index {
-    wants.atom
-    wants.rss
-  }
+  def index
+    super do |wants|
+      wants.atom
+      wants.rss
+    end
+  end
 
-  show {
-    before {
-      @page_title = object.title rescue nil
-    }
-    wants.xml {
-      render "terryblr/common/slideshow"
-    }
-    failure.wants.html {
-      raise ActiveRecord::RecordNotFound
-    }
-  }
+  def show
+    @page_title = resource.title rescue nil
+    super do |wants|
+      wants.xml   { render "terryblr/common/slideshow" }
+    end
+  end
 
   def preview
     @object = end_of_association_chain.new(params[:post])
@@ -37,51 +34,44 @@ class Terryblr::PostsController < Terryblr::PublicController
   def archives
     @page_title = 'Archives'
     respond_to do |wants|
-      wants.html {
-        render :template => "terryblr/posts/archives"
-      }
-      wants.js {
-        render :template => "terryblr/posts/archives"
-      }
+      wants.html { render :action => "terryblr/posts/archives" }
+      wants.js   { render :action => "terryblr/posts/archives" }
     end
   end
 
   def tagged
     @page_title = "Posts tagged #{params[:tag]}"
     respond_to do |wants|
-      wants.html {
-        render :template => "terryblr/posts/tagged"
-      }
+      wants.html { render :action => "terryblr/posts/tagged" }
       wants.js
     end
   end
 
   def next
-    post = object.next || object
+    post = resource.next || resource
     redirect_to post_path(post, post.slug)
   end
 
   def previous
-    post = object.previous || object
+    post = resource.previous || resource
     redirect_to post_path(post, post.slug)
   end
 
   private
 
-  def object
-    @post = @object ||= end_of_association_chain.find_by_id(params[:id])        || 
-                        end_of_association_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
-                        end_of_association_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
-                        end_of_association_chain.find_by_tumblr_id(params[:id]) || # Needed to keep permalinks alive
-                        (raise ActiveRecord::RecordNotFound)
-  end
-
   def featured_pics
     @featured_pics ||= current_site.features.live.tagged_with('sidebar')
   end
 
+  def resource
+    @post ||= end_of_association_chain.find_by_id(params[:id])        || 
+              end_of_association_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
+              end_of_association_chain.find_by_slug(params[:id])      || # Needed to keep permalinks alive
+              end_of_association_chain.find_by_tumblr_id(params[:id]) # Needed to keep permalinks alive
+  end
+
   def collection
-    @posts = @collection ||= case self.action_name 
+    @posts ||= case self.action_name
     when 'index'
       if !params[:search].blank?
         # Normal post listing
@@ -106,23 +96,29 @@ class Terryblr::PostsController < Terryblr::PublicController
       else
         []
       end
-
-        paginate(
+      paginate(
         :page => params[:page],
         :conditions => conditions,
         :order => "#{col} desc, created_at desc")
-
     else
       []
     end
   end
 
-  def date
-    @date ||= "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
+  def featured_pics
+    @featured_pics ||= Terryblr::Feature.live.tagged_with('sidebar')
+  end
+
+  def begin_of_association_chain
+    current_site
   end
 
   def end_of_association_chain
-    current_site.posts.live
+    Terryblr::Post.live
+  end
+  
+  def date
+    @date ||= "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
   end
 
   include Terryblr::Extendable

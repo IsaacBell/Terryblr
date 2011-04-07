@@ -1,19 +1,15 @@
 class Terryblr::PagesController < Terryblr::PublicController
 
-  show {
-    before {
-      @page_title = object.title
-    }
-    failure.wants.html {
-      raise ActiveRecord::RecordNotFound
-    }
-  }
+  def show
+    @page_title = resource.title
+    super
+  end
   
   def preview
-    @object = end_of_association_chain.new(params[:page])
-    @object.id ||= 0
-    @object.published_at = 1.minute.ago
-    @object.slug = 'preview' unless @object.slug?
+    @page = end_of_association_chain.new(params[:page])
+    @page.id ||= 0
+    @page.published_at = 1.minute.ago
+    @page.slug = 'preview' unless @page.slug?
     @body_classes = "page-show" # So that CSS will think it's the details page
     respond_to do |wants|
       wants.html {
@@ -21,13 +17,12 @@ class Terryblr::PagesController < Terryblr::PublicController
       }
     end
   end
-
+  
   private
 
-  def object
-    @page = @object ||= end_of_association_chain.find_by_slug(params[:page_slug]) || 
-                        end_of_association_chain.find_by_slug(params[:id]) || 
-                        (raise ActiveRecord::RecordNotFound)
+  def resource
+    @page ||= end_of_association_chain.find_by_slug(params[:page_slug]) || 
+              end_of_association_chain.find_by_slug(params[:id])
   end
 
   include Terryblr::Extendable

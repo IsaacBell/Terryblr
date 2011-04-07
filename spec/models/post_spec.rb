@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Terryblr::Post do
   describe "validation" do
     before do
-      @post = Factory(:post)
+      @post = Factory(:published_post)
     end
     
     it "should be valid and create a post" do

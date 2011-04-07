@@ -1,43 +1,55 @@
 class Admin::Terryblr::PagesController < Terryblr::AdminController
 
-  index {
-    before {
-      @list_cols = %w(page state)
-      @action_cols = %w(add_child)
-    }
-    wants.html {}
-    wants.js
-  }
+  def index
+    @list_cols = %w(page state)
+    @action_cols = %w(add_child)
+    super
+  end
 
-  new_action {
-    before {
-      # Create post!
-      object.save!
-      object.state = :published
-      object.parent_id = params[:parent_id].to_i if params[:parent_id]
-    }
-    wants.html {
-      render :action => "edit"
-    }
-  }
-
-  show {
-    wants.html {
-      redirect_to admin_pages_path
-    }
-  }
-  
-  private
-
-  def collection
-    order = "created_at desc"
-    @collection = @posts ||= if params[:parent_id]
-      end_of_association_chain.by_state(params[:state] || 'published').all(:conditions => {:parent_id => params[:parent_id]}, :order => order)
-    else
-      end_of_association_chain.roots.by_state(params[:state] || 'published').all(:order => order)
+  def show
+    super do |wants|
+      wants.html { redirect_to admin_pages_path }
     end
   end
-  
-  include Terryblr::Extendable
 
+  def new
+    resource.parent_id = params[:parent_id].to_i if params[:parent_id]
+    super
+  end
+
+  def create
+    super do |success, failure|
+      success.html { redirect_to admin_pages_path }
+    end
+  end
+
+  def update
+    super do |success, failure|
+      success.html { redirect_to admin_pages_path }
+    end
+  end
+
+  private
+
+  def resource
+    @page ||= begin
+      if params[:id]
+        end_of_association_chain.find_by_slug(params[:id]) || 
+        end_of_association_chain.find_by_id(params[:id])
+      else
+        end_of_association_chain.new
+      end
+    end
+  end
+
+  def collection
+    order = "pages.created_at desc"
+    @pages ||= if params[:parent_id]
+      end_of_association_chain.by_state(params[:state] || 'published').where(:parent_id => params[:parent_id]).order(order)
+    else
+      end_of_association_chain.roots.by_state(params[:state] || 'published').order(order)
+    end
+  end
+
+  include Terryblr::Extendable
 end

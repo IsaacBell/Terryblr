@@ -37,7 +37,7 @@ class TwPostPublisherJob
     client = Twitter::Base.new(oauth)
     tweet = client.update(msg)
     post.update_twitter_id(tweet.id)
-  end    
+  end
 
   include Terryblr::Extendable
 end

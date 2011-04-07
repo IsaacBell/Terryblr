@@ -7,7 +7,7 @@ describe Terryblr::Site do
     end
 
     it "should be valid and create a site" do
-      site = Terryblr::Site.new(:name => "www2")
+      site = Terryblr::Site.new(:name => "www-2")
       site.valid?.should eql(true)
       site.save.should eql(true)
       site.lang.should eql(I18n.locale)

@@ -53,15 +53,9 @@ class Terryblr::Product < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def name
-      'Product'
-    end
-    
     def base_class
       self
     end
-    
   end
 
   #
@@ -76,7 +70,6 @@ class Terryblr::Product < Terryblr::Base
   end
 
   private
-
 
   include Terryblr::Extendable
 end

@@ -1,9 +1,13 @@
 require 'unicode_utils'
 
 module Terryblr
+
+  # Implement a series of helpers to translate Terryblr
   module I18nHelpers
+
     def self.included(recipient)
       recipient.class_eval do
+
         def terryblr_translate *args
           options = args.extract_options!
           scope_ = options.fetch(:scope, [])

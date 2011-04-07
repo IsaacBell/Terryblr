@@ -1,3 +1,4 @@
+require 'inherited_resources'
 require 'haml'
 require 'formtastic'
 require 'settingslogic'
@@ -5,6 +6,32 @@ require 'will_paginate'
 require 'acts_as_commentable'
 require 'validates_email_format_of'
 require 'jammit'
+
+require 'cancan'
+# TODO: pull request in CanCan
+module CanCan
+  # For use with Inherited Resources
+  class InheritedResource < ControllerResource # :nodoc:
+    # defer this directly to Inherited Resources
+    def load_collection
+      @controller.send(:collection)
+    end
+
+    def resource_instance=(instance)
+    end
+
+    # def resource_instance
+    #   @controller.send(:resource) if load_instance?
+    # end
+
+    def collection_instance=(instance)
+    end
+
+    def collection_instance
+      @controller.send :collection
+    end
+  end
+end
 
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 
@@ -23,7 +50,6 @@ require "delayed_job"
   'terryblr/formtastic_builder',
   "terryblr/cache_system",
   "terryblr/i18n_helpers",
-  "terryblr/flash_session_cookie_middleware",
   'terryblr/base/base',
   'terryblr/base/taggable',
   'terryblr/base/aasmstates',

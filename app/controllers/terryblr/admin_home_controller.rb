@@ -1,23 +1,38 @@
-class Terryblr::AdminHomeController < Terryblr::AdminController
+class Terryblr::AdminHomeController < Terryblr::ApplicationController
+  layout 'admin'
 
-  skip_before_filter :load_and_authorize_resource
+  inherit_resources
+
+  after_filter :set_last_modified
+  before_filter :set_date, :only => [:index, :filter]
+  before_filter :set_expires, :only => [:analytics]
+  skip_before_filter :verify_authenticity_token, :only => [:analytics]
+  around_filter :cache, :only => [:analytics]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.info "AdminHomeController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
+    if current_user && !current_user.admin?
+      @message = exception.message
+      render 'admin/common/access_denied'
+    else
+      redirect_to new_user_session_path, :notice => exception.message
+    end
+  end
 
   def collection
     nil
   end
 
-  index {
-    before {
-      raise CanCan::AccessDenied if cannot? :read, Terryblr::Tweet
-    }
-    wants.html {
-      @show_as_dash = true
-    }
-  }
+  def index
+    if cannot? :read, Terryblr::Tweet
+      raise CanCan::AccessDenied
+    end
+    @show_as_dash = true
+    index!
+  end
 
   def analytics
     @since = 1.month.ago.to_date
-
     # Visitors
     gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
     @reports = {
@@ -78,10 +93,17 @@ class Terryblr::AdminHomeController < Terryblr::AdminController
 
   private
 
+  def set_date
+    @date ||= if params[:month] || params[:year]
+      "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today
+    else
+      Date.today
+    end
+  end
+
   def end_of_association_chain
     current_site.posts
   end
 
   include Terryblr::Extendable
-
 end

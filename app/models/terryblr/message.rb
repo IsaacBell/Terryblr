@@ -24,21 +24,11 @@ class Terryblr::Message < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def name
-      'Message'
-    end
-    
-    def base_class
-      self
-    end
-    
   end
 
   #
   # Instance Methods
   #
-
 
   include Terryblr::Extendable
 end

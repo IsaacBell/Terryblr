@@ -8,3 +8,15 @@ Factory.define :page, :class => Terryblr::Page do |page|
   page.post_id              nil
   page.site_id              Terryblr::Site.default.id
 end
+
+Factory.define :pending_page, :parent => :page, :class => Terryblr::Page do |page|
+  page.state                "pending"
+end
+
+Factory.define :drafted_page, :parent => :page, :class => Terryblr::Page do |page|
+  page.state                "drafted"
+end
+
+Factory.define :published_page, :parent => :page, :class => Terryblr::Page do |page|
+  page.state                "published"
+end

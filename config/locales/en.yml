@@ -54,13 +54,14 @@ en:
         switch_site:
           site_changed: "Site changed to %{current_site}!"
 
-    admin: 
+    admin:
       terryblr: 
         features: 
           index: 
             drafted: Drafted
             drag_and_drop_featured_items_to_change_their_display_order: Drag and drop featured items to change their display order.
             published: Published
+            queued: queued
             x_features: 
               one: 1 feature
               other: "%{count} features"
@@ -72,11 +73,18 @@ en:
             location: location
             photo: Photo
             url: URL
-        pages: 
+        pages:
+          form:
+            add_inline_photo: "add a photo"
+            publish_on: "published on"
+            parent: parent
+            tags: tags
+            custom_url: "custom URL"
+            leave_blank_to_create_automatically: "leave blank to set automatically"
           index: 
             drafts: drafts
             published: published
-          edit: 
+          form: 
             add_inline_photo: + insert photo
             custom_url: Custom URL
             leave_blank_to_create_automatically: Leave blank to create automatically
@@ -113,6 +121,7 @@ en:
             paste_in_a_URL_to_a_vimeo_or_youtube_video: Paste in a URL to a vimeo or youtube video
             reorder_and_caption_videos: Reorder and caption videos
             video_url: Video Url
+            save: save
         users: 
           form:
             email: email
@@ -120,14 +129,16 @@ en:
             lastname: last name
             password: password
             password_confirmation: password confirmation
-
-    edit: edit
+        sessions:
+          new:
+            please_login: Please login
     archives: archives
     are_you_sure: Are you absolutely sure?
     back: back
     body: body
     cancel: cancel
     delete: delete
+    edit: edit
     edit_page: edit page
     edit_post: edit post
     edit_photos: edit photos

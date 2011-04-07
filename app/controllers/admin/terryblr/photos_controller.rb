@@ -1,34 +1,37 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
+  
+  skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def create
-    @object = Terryblr::Photo.new(:image => params[:Filedata])
+    
+    # From gist: https://gist.github.com/26082d2b56b00bd54dad
+    data = request.body
+    filename = params[:qqfile]
+    data.class.send(:define_method, "original_filename") do
+      filename
+     end
+    
+    @photo = end_of_association_chain.new(:image => data)
 
     # Features belong to the photo and not the otherway
-    if photoable.is_a?(Terryblr::Feature)
+    if photoable && photoable.is_a?(Terryblr::Feature)
       feature = photoable
 
       # Delete any others photos unless they belong to posts
       feature.photo.destroy if feature.photo and feature.photo.photoable.nil?
 
-      @object.features << feature
+      @photo.features << feature
     else
-      @object.photoable = photoable
+      @photo.photoable = photoable
     end
 
-    respond_to do |wants|
-      if @object.save
-        wants.js
-        wants.html { 
-          render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok 
-        }
-      else
-        flash[:error] = "Unable to save image: #{@object.errors.full_messages.to_sentence}"
-        logger.error { "Photo errors: #{@object.errors.full_messages.to_sentence}" }
-        wants.js
-        wants.html {
-          render :text => @object.errors.full_messages.to_sentence
-        }
-      end
+    super do |success, failure|
+      success.json { render @photo.to_json }
+      success.js   { render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok }
+      success.html { render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok }
+      failure.json { render @photo.errors.to_json }
+      failure.js   { render :text => @photo.errors.full_messages.to_sentence }
+      failure.html { render :text => @photo.errors.full_messages.to_sentence }
     end
   end
 
@@ -44,11 +47,6 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     end
   end
 
-  destroy {
-    wants.js
-    failure.wants.js
-  }
-
   private
 
   def photoable
@@ -63,10 +61,5 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     end
   end
 
-  def object
-    @object ||= end_of_association_chain.find_by_id(params[:id])
-  end
-
   include Terryblr::Extendable
-
 end

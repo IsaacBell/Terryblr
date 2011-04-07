@@ -48,8 +48,6 @@ Spork.prefork do
     end
     #config.before(:each) { DatabaseCleaner.start }
   end
-
-  
 end
 
 Spork.each_run do

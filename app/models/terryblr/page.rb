@@ -11,9 +11,9 @@ class Terryblr::Page < Terryblr::Base
   #
   # Associatons
   #
-  has_many :photos, :as => :photoable, :order => "display_order"
-  has_many :messages, :as => :messagable
   belongs_to :site, :class_name => "Terryblr::Site"
+  has_many :photos, :as => :photoable, :order => "display_order", :class_name => "Terryblr::Photo"
+  has_many :messages, :as => :messagable, :class_name => "Terryblr::Message"
 
   #
   # Behaviours
@@ -48,15 +48,9 @@ class Terryblr::Page < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def name
-      'Page'
-    end
-    
     def base_class
       self
     end
-    
   end
 
   #
