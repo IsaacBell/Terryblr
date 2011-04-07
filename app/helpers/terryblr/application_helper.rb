@@ -56,7 +56,7 @@ module Terryblr::ApplicationHelper
   end
 
   def page_object
-    page_object ||= @post || @page || resource || nil
+    page_object ||= @post || @page
     page_object ||= @posts.first if @posts
     page_object
   end
