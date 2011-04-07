@@ -10,6 +10,8 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
+    when /the new photos post page/
+      admin_new_content_path :type => 'photos'
     when /the new account page/
       admin_new_user_path
     when /the drafted admin posts page/

@@ -26,6 +26,5 @@ class Terryblr::Tag < ActsAsTaggableOn::Tag
   # Instance Methods
   #
 
-
   include Terryblr::Extendable
 end

@@ -20,7 +20,7 @@ class CreateSites < ActiveRecord::Migration
     end
     
     # Migrate existing posts to new site
-    s = Terryblr::Site.find_by_name('www') || Terryblr::Site.create(:name => 'www')
+    s = Terryblr::Site.find_by_name('www') || Terryblr::Site.create!(:name => 'www', :lang => "en")
     TABLES.each do |tbl|
       "Terryblr::#{tbl.classify}".constantize.update_all({:site_id => s.id}, {:site_id => nil})
     end

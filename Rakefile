@@ -21,12 +21,10 @@ end
 require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb'] - FileList['spec/dummy/vendor/plugins/resource_controller/generators/**/*_spec.rb']
 end
 
 RSpec::Core::RakeTask.new(:spec_html) do |spec|
   mkdir_p 'tmp/spec' unless File.exists? 'tmp/spec'
-  spec.pattern = FileList['spec/**/*_spec.rb'] - FileList['spec/dummy/vendor/plugins/resource_controller/generators/**/*_spec.rb']
   spec.rspec_opts = '--format html --out tmp/spec/index.html'
 end
 

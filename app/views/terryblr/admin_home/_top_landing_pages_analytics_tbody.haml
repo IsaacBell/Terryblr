@@ -13,4 +13,3 @@
         - value = point.dimensions.map{|m| m.values }.flatten.join(' ')
         = link_to value.truncate(45), value, :title => value, :target => "_blank"
       %td= point.metrics.map{|m| m.values }.flatten.join(' ')
-      

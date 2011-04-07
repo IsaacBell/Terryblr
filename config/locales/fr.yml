@@ -28,16 +28,16 @@ fr:
         show:
           arrow_previous: "< précédent"
           arrow_next: "suivant >"
-      admin:
+      admin_home:
         index:
           x_drafts:
-            zero: aucun brouillon
             one: 1 brouillon
             other: "%{count} brouillons"
+            zero: aucun brouillon
           x_posts:
-            zero: aucun billet
             one: 1 billet
             other: "%{count} billets"
+            zero: aucun billet
         analytics:
           fb_page_likes: "nombre de likes sur Facebook"
           fb_page_total_likes: "total des likes sur Facebook"
@@ -49,14 +49,17 @@ fr:
           tweet_reach: "portée des tweets"
           tweets: tweets
           visitors: visiteurs
+        search:
+          no_results_found: Pas de résultats
         switch_site:
-          site_changed: "site changé au %{current_site}."
+          site_changed: "site changé au %{current_site}!"
 
     admin:
       terryblr:
         features:
           index:
             drafted: brouillons
+            drag_and_drop_featured_items_to_change_their_display_order: "Drag and drop featured items to change their display order."
             published: "publiés"
             queued: en attente
             x_features:
@@ -71,6 +74,13 @@ fr:
             photo: Photo
             url: URL
         pages:
+          form:
+            add_inline_photo: "ajouter une photo"
+            publish_on: "publié le"
+            parent: parent
+            tags: tags
+            custom_url: "personnaliser l'adresse"
+            leave_blank_to_create_automatically: "laisser à vide pour une génération automatique"
           index:
             drafts: "brouillons"
             published: "publiés"
@@ -96,6 +106,8 @@ fr:
             cross_posting: publications externes
             crosspost_facebook: Publier sur Facebook
             crosspost_twitter: Publier sur Twitter
+            crosspost_queued_twitter: En cours de postage sur Twitter
+            crosspost_queued_facebook: En cours de postage sur Facebook
             custom_url: "URL personnalisées"
             leave_blank_to_create_automatically_from_the_title: "Laissez vide pour créer automatiquement à partir du titre"
             message: message
@@ -109,6 +121,7 @@ fr:
             paste_in_a_URL_to_a_vimeo_or_youtube_video: "Coller une URL de vidéo vimeo ou youtube"
             reorder_and_caption_videos: "Réorganiser et renommer les vidéos"
             video_url: "URL de la vidéo"
+            save: sauver
         users:
           form:
             email: "e-mail"
@@ -116,14 +129,24 @@ fr:
             lastname: "nom de famille"
             password: "mot de passe"
             password_confirmation: "confirmer le mot de passe"
-
+        sessions:
+          new:
+            please_login: "Veuillez vous identifier"
     archives: archives
-    are_you_absolutely_sure: "Êtes vous sûr ?"
+    are_you_absolutely_sure: "Êtes vous sûr?"
     back: retour
     body: contenu
     cancel: annuler
     delete: supprimer
+    edit: éditer
+    edit_page: "éditer la page"
     edit_post: "édition d'un billet"
+    edit_photos: "éditer les photos"
+    edit_video: "éditer la video"
+    update_page: "mettre à jour la page"
+    update_post: "mettre à jour le post"
+    update_photos: "mettre à jour les photos"
+    update_video: "mettre à jour la video"
     email: e-mail
     features: en vedette
     name: nom
@@ -131,6 +154,7 @@ fr:
     new_admin: "nouvel administrateur"
     new_feature: "nouveau billet vedette"
     new_page: "nouvelle page"
+    new_post: "nouveau billet"
     new_photos: "nouvelles photos"
     new_post: "nouveau billet"
     new_user: "nouveau utilisateur"
@@ -148,3 +172,5 @@ fr:
     value: valeur
     video: vidéo
     view: voir
+    validation_error_header: "Uh oh. We found some problems with your %{model}..."
+    validation_error_message: "Please review the following fields:"

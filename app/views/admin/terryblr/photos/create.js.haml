@@ -1,11 +1,11 @@
 $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn()
-- if @object.valid?
+- if resource.valid?
   - if @photoable.is_a?(Terryblr::Page) or (@photoable.is_a?(Terryblr::Post) and @photoable.post_type.post?)
-    jQuery.wymeditors(0).insert('#{escape_javascript(image_tag(@object.image.url(:list)))}')
+    jQuery.wymeditors(0).insert('#{escape_javascript(image_tag(resource.image.url(:list)))}')
   - elsif params[:feature_id]
     - list_id = "feature_photo"
-    $("##{list_id}_ul").replaceWith("#{escape_javascript(photo_for_assoc(@object, @photoable, list_id))}")
+    $("##{list_id}_ul").replaceWith("#{escape_javascript(photo_for_assoc(resource, @photoable, list_id))}")
   - else
     - list_id = "photos_list"
-    $("##{list_id}_ul").append("#{escape_javascript(photo_for_assoc(@object, @object.photoable, list_id))}")
+    $("##{list_id}_ul").append("#{escape_javascript(photo_for_assoc(resource, resource.photoable, list_id))}")
     $('##{list_id}').sortable('refresh')

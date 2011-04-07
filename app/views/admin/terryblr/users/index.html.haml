@@ -8,4 +8,4 @@
 %h2 #{ttt :users}
 
 .clear
-= render :partial => 'admin/common/list_table', :locals => { :records => @collection,	:class_obj => Terryblr::User, :list_cols => %w(name email), :action_cols => %w() }
+= render :partial => 'admin/common/list_table', :locals => { :records => collection, :class_obj => Terryblr::User, :list_cols => %w(name email), :action_cols => %w() }

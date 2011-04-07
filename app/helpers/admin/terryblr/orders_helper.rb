@@ -1,17 +1,17 @@
 module Admin::Terryblr::OrdersHelper
-  
+
   def order_column(order)
     link_to order.number, admin_order_path(order)
   end
-  
+
   def date_column(order)
     order.created_at
   end
-  
+
   def buyer_column(order)
     content_tag(:div, content_tag(:abbr, order.full_name, :title => order.address), :class => "order-name")
   end
-  
+
   def items_column(order)
     order.line_items.map{|li| 
       photo = li.product.photos.first
@@ -21,12 +21,10 @@ module Admin::Terryblr::OrdersHelper
       )
     }.join
   end
-  
+
   def total_column(order)
     order.final_amount.format
   end
-  
-  
-  
+
   include Terryblr::Extendable
 end

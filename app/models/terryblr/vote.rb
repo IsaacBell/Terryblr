@@ -26,11 +26,6 @@ class Terryblr::Vote < Terryblr::Base
   # Class Methods
   #
   class << self
-    
-    def base_class
-      self
-    end
-    
   end
 
   #
@@ -43,7 +38,6 @@ class Terryblr::Vote < Terryblr::Base
   def no!
     update_attributes!(:value => 0)
   end
-
 
   include Terryblr::Extendable
 end

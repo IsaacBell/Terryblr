@@ -4,31 +4,30 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def index
     @show_as_dash = true
-    @collections = {}
+    @features = {}
     Settings.tags.posts.features.map do |tag|
-      @collections[tag] = end_of_association_chain.live.tagged_with(tag)
+      @features[tag] = end_of_association_chain.live.tagged_with(tag)
     end
   end
 
-  new_action {
-    before {
-      # Create feature!
-      object.attributes = end_of_association_chain.new.attributes.symbolize_keys.update(:state => "pending", :published_at => nil)
-      object.save!
-    }
-  }
+  def new
+    # Create feature!
+    @feature = end_of_association_chain.new(:state => "pending", :published_at => nil)
+    @feature.save!
+    super
+  end
 
-  show {
-    wants.html {
-      redirect_to edit_admin_feature_path(object)
-    }
-  }
+  def show
+    super do |wants|
+      wants.html { redirect_to edit_admin_feature_path(resource) }
+    end
+  end
 
-  update {
-    wants.html {
-      redirect_to admin_features_path
-    }
-  }
+  def update
+    super do |success, failure|
+      success.html { redirect_to admin_features_path }
+    end
+  end
 
   def reorder
     key = params.keys.detect{|k| k.to_s.starts_with?('feature') }
@@ -45,10 +44,5 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   private
 
-  def object
-    @object ||= end_of_association_chain.find(params[:id])
-  end
-
   include Terryblr::Extendable
-  
 end

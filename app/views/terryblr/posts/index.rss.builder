@@ -6,8 +6,8 @@ xml.rss :version => "2.0" do
     xml.description Settings.app_name
     xml.link root_url
     
-    unless !@collection 
-      @collection.each do |post|
+    unless !collection 
+      collection.each do |post|
         xml.item do
           xml.title post.title
           xml.description post_item(post)

@@ -18,15 +18,14 @@
     %li #{ttt :'.filter'}:
     %li
       #{ttt :'.month'}: 
-      =select_tag "archive_month", options_for_select(Date::MONTHNAMES.map{|m| [m, Date::MONTHNAMES.index(m)]}, @date.month), :onchange => "window.location = '#{filter_admin_posts_path}?state=#{params[:state]}&month='+this.value+'&year='+$('#archive_year').val()"
+      =select_tag "archive_month", options_for_select(Date::MONTHNAMES.map{|m| [m, Date::MONTHNAMES.index(m)]}, @date.month), :onchange => "window.location = '#{admin_posts_path}?state=#{params[:state]}&month='+this.value+'&year='+$('#archive_year').val()"
     %li
       #{ttt :'.year'}: 
-      =select_tag "archive_year", options_for_select((today.year-5..today.year).to_a.reverse, @date.year), :onchange => "window.location = '#{filter_admin_posts_path}?year='+this.value+'&month='+$('#archive_month').val()"
-
+      =select_tag "archive_year", options_for_select((today.year-5..today.year).to_a.reverse, @date.year), :onchange => "window.location = '#{admin_posts_path}?year='+this.value+'&month='+$('#archive_month').val()"
 
 = render :partial => 'admin/common/search_form'
 
 %h2 #{ttt :'.products'}
 
 .clear
-= render :partial => 'admin/common/list_table', :locals => { :records => @collection,	:class_obj => Product, :list_cols => %w(image product price inventory total sales), :action_cols => %w() }
+= render :partial => 'admin/common/list_table', :locals => { :records => collection, :class_obj => Terryblr::Product, :list_cols => %w(image product price inventory total sales), :action_cols => %w() }

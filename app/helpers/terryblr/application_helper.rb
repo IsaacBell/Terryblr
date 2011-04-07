@@ -16,7 +16,7 @@ module Terryblr::ApplicationHelper
     str += tag(:meta, :property => "og:site_name", :content => Settings.app_name) + "\n"
     str += tag(:meta, :property => "og:type", :content => "article") + "\n"
     
-    return str unless object.respond_to?(:post_type)
+    return str unless page_object.respond_to?(:post_type)
     
     str += case page_object.post_type.to_s
     when "video"
@@ -56,11 +56,11 @@ module Terryblr::ApplicationHelper
   end
 
   def page_object
-    page_object ||= @post || @page || @object || nil
+    page_object ||= @post || @page || resource || nil
     page_object ||= @posts.first if @posts
     page_object
   end
-  
+
   def detail_page?
     return true if %w(atom rss application/atom+xml application/rss+xml).include?(request.format.to_s)
     
@@ -73,7 +73,6 @@ module Terryblr::ApplicationHelper
   end
 
   def photos_post_body(object)
-
     obj_type = object.class.to_s.downcase.split('::').last
 
     # Rejection cases
@@ -152,7 +151,7 @@ module Terryblr::ApplicationHelper
   def body_classes
     con = params[:controller].split('/').last.strip
     act = params[:action].strip
-    id  = @object ? @object.to_param : nil
+    id  = resource ? resource.to_param : nil
     "#{con} #{con}-#{act} #{id} #{@body_classes.to_s}"
   end
 
@@ -164,11 +163,10 @@ module Terryblr::ApplicationHelper
     words = txt.to_s.split()
     words[0..(ops[:length]-1)].join(' ').to_s + (words.length > ops[:length] ? ops[:omission] : '').to_s
   end
-  
+
   #
   # ScriptaculousHelper overrides for jQuery
   #
-  
   def sortable_element_js(element_id, options = {}) #:nodoc:
     # Make AJAX callback request if URL provided
     if options.key?(:url)
@@ -197,7 +195,6 @@ module Terryblr::ApplicationHelper
 
     %($.ajax(#{options_for_javascript(opts)});)
   end
-  
 
   #
   # Forms and Lists

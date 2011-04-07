@@ -56,7 +56,7 @@ class TumblrPostPublisherJob
     
     # Tumblr it!
     post.update_tumblr_id(tumblr_id)
-  end    
+  end
 
   include Terryblr::Extendable
 end

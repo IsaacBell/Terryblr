@@ -16,7 +16,8 @@ class Terryblr::Site < Terryblr::Base
   #
   validates :name, :presence => true, :uniqueness => true
   validates :lang, :presence => true, :inclusion => { :in => I18n.available_locales }
-
+  before_validation :validate_lang
+  
   #
   # Scopes
   #
@@ -25,7 +26,7 @@ class Terryblr::Site < Terryblr::Base
   #
   # Callbacks
   #
-  def before_validation
+  def validate_lang
     # Set the default value
     self.lang ||= I18n.locale if new_record?
   end
@@ -49,7 +50,6 @@ class Terryblr::Site < Terryblr::Base
     # Symbolize to make easier to integrate w I18n
     read_attribute(:lang) ? read_attribute(:lang).to_sym : nil
   end
-  
 
   include Terryblr::Extendable
 end

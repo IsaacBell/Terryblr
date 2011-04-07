@@ -31,7 +31,9 @@ Gem::Specification.new do |s|
   s.add_dependency "htmlentities"
   s.add_dependency "jammit"
   s.add_dependency "jquery-rails"
-  s.add_dependency "rd_resource_controller"
+  s.add_dependency "has_scope"
+  s.add_dependency "responders"
+  s.add_dependency "inherited_resources"
   s.add_dependency "memcached"
   s.add_dependency "mini_fb"
   s.add_dependency "money"
@@ -56,7 +58,7 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "capybara"
   s.add_development_dependency "webrat"
   s.add_development_dependency "cucumber"
-  s.add_development_dependency "cucumber-rails"
+  s.add_development_dependency "cucumber-rails", "~> 0.3.2"
   s.add_development_dependency "autotest"
   s.add_development_dependency "autotest-rails"
   s.add_development_dependency "ruby-debug19"
@@ -68,6 +70,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "spork"
   s.add_development_dependency "awesome_print"
   s.add_development_dependency "wirble"
+  s.add_development_dependency "capybara-firebug"
 
   s.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"] + ["LICENSE", "README.rdoc"]
 end

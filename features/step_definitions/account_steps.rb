@@ -13,7 +13,6 @@ Then /^dump_users$/ do
   puts Terryblr::User.all.inspect
 end
 
-
 Given /^the following accounts:$/ do |accounts|
   Terryblr::User.create!(accounts.hashes)
 end
@@ -21,9 +20,11 @@ end
 Given /^I am authenticated as "([^"]*)" with "([^"]*)"$/ do |email, password|
   visit destroy_user_session_path
   visit new_user_session_path
-  And %{I fill in "user_email" with "#{email}"}
-  And %{I fill in "user_password" with "#{password}"}
-  And %{I press "Login"}  
+  steps %Q{
+    And I fill in "user_email" with "#{email}"
+    And I fill in "user_password" with "#{password}"
+    And I press "Login"
+  }
 end
 
 
@@ -37,4 +38,3 @@ end
 Then /^I should see the following accounts:$/ do |expected_accounts_table|
   expected_accounts_table.diff!(tableish('table tr', 'td,th'))
 end
-

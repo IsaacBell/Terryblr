@@ -1,15 +1,13 @@
-class Terryblr::ApplicationController < ResourceController::Base
-  
+class Terryblr::ApplicationController < ActionController::Base
   include Terryblr::CacheSystem
   helper 'terryblr/application'
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   before_filter :work_around_rails_middleware_bug
   before_filter :current_site
   before_filter :current_lang
 
   private
-  
+
   def work_around_rails_middleware_bug
     request.env["action_dispatch.request.parameters"] = nil
     request.env["action_dispatch.request.formats"] = nil
@@ -81,8 +79,8 @@ class Terryblr::ApplicationController < ResourceController::Base
     Rails.cache.write(LAST_MODIFIED_CACHE_KEY, @last_modified) if force or !request.get?
   end
 
-  def object?
-    respond_to?(:object, true) and !object.nil?
+  def resource?
+    respond_to?(:resource, true) and !resource.nil?
   end
 
   def collection?
@@ -92,5 +90,4 @@ class Terryblr::ApplicationController < ResourceController::Base
   def current_ability
     @current_ability ||= Terryblr::Ability.new(current_user)
   end
-
 end

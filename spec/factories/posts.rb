@@ -7,3 +7,15 @@ Factory.define :post, :class => Terryblr::Post do |post|
   post.display_type     "gallery"
   post.site_id          Terryblr::Site.default.id
 end
+
+Factory.define :pending_post, :parent => :post, :class => Terryblr::Post do |post|
+  post.state            "pending"
+end
+
+Factory.define :drafted_post, :parent => :post, :class => Terryblr::Post do |post|
+  post.state            "drafted"
+end
+
+Factory.define :published_post, :parent => :post, :class => Terryblr::Post do |post|
+  post.state            "published"
+end

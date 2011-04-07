@@ -48,14 +48,12 @@ class FbPostPublisherJob
   end
 
   protected
-  
+
   # Return a facebook client object
   def facebook
     MiniFB.disable_logging
     @facebook ||= MiniFB::OAuthSession.new(Settings.facebook.page_token)
   end
 
-
   include Terryblr::Extendable
 end
-

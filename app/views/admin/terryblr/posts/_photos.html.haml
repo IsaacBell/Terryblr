@@ -1,29 +1,29 @@
-= semantic_form_for @post, :url => admin_post_path(@post), :as => "post" do |f|
-  
+= semantic_form_for resource, :url => (resource.new_record? ? admin_posts_path : admin_post_path(resource.id)), :as => "post" do |f|
   #form_content{:class => "span-17"}
-    %h2= ttt("#{params[:action]}_#{@type.to_s}").html_safe
+    %h2= ttt("#{params[:action]}_#{resource.post_type}").html_safe
     = error_messages_for_post
     = f.semantic_errors
     = f.inputs do
+      = f.input :photo_ids, :as => :hidden
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
       %li.photos-upload
         %label= ttt(:photos)
-        =multi_file_uploader(:url => admin_post_photos_path(@post, :format => :js), :css_parent_class => "photos-upload")
+        = multi_file_uploader(:url => admin_photos_path(:format => :json), :css_parent_class => "photos-upload")
         %p.inline-hints.clear= tt('.upload_hint')
       %li.photos-display-type
         %label= ttt('.gallery_display')
         - Terryblr::Post.display_types.each do |dt|
-          %span{:class => "#{dt} #{'selected' if @post.display_type==dt}"}
+          %span{:class => "#{dt} #{'selected' if resource.display_type==dt}"}
             = radio_button :post, :display_type, dt, :title => dt.humanize.titleize
             = image_tag "admin/photos-display-type-#{dt}.png", :alt => dt.humanize.titleize
             = dt.humanize.titleize
         %p.inline-hints.clear= ttt(:".show_photos_as_a_slideshow_gallery_or_stacked_above_each_other")
       %li.clear
-        = edit_photos_for_assoc(@post)
+        = edit_photos_for_assoc(resource)
       = f.input :body, :label => ttt(:body), :as => 'text', :wrapper_html => { :class => "rich-text" }, :required => true
 
     = render :partial => 'admin/terryblr/posts/form_buttons', :locals => {:f => f}
 
-  =render :partial => 'admin/terryblr/posts/form_sidebar', :locals => {:f => f}
-  
+  = render :partial => 'admin/terryblr/posts/form_sidebar', :locals => {:f => f}
+
   .clear

@@ -40,6 +40,5 @@ class Terryblr::Size < Terryblr::Base
   # Instance Methods
   #
 
-
   include Terryblr::Extendable
 end
