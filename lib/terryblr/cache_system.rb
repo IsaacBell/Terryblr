@@ -1,6 +1,10 @@
 require 'digest/sha1'
 
 module Terryblr
+
+  # 
+  # Provides a general cache system for the application
+  #
   module CacheSystem
     protected
 
@@ -42,15 +46,21 @@ module Terryblr
       end
     end
 
+    # Compute a cache key from the request path and format
     # Override this if other valuables are needed
+    # @return a string used as the cache key for the request
     def cache_key
       "#{request.path}/#{request.format.to_sym.to_s}/#{flash.to_s.gsub(/\W/,'')}"
     end
 
+    # Hash the cache key with SHA1 to create new key used in memcached
+    # @return an SHA1 hex digest of the cache key
     def memcached_cache_key
       Digest::SHA1.hexdigest(cache_key)
     end
 
+    # Fetch the content for the current cache key
+    # @return the content associated with the cache key of the current request
     def cache_content
       @cache_content ||= Rails.cache.fetch(memcached_cache_key) 
     # rescue Memcached::ServerIsMarkedDead => exc

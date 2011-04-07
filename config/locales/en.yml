@@ -84,7 +84,7 @@ en:
           index: 
             drafts: drafts
             published: published
-          edit: 
+          form: 
             add_inline_photo: + insert photo
             custom_url: Custom URL
             leave_blank_to_create_automatically: Leave blank to create automatically

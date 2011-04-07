@@ -1,4 +1,6 @@
 module Terryblr
+  
+  # Base class inherited by every models in Terryblr
   class Base < ActiveRecord::Base
 
     #
@@ -19,12 +21,19 @@ module Terryblr
       end
 
     end
-    
+  
+    # Fix broken paths from TinyMCE
     def fix_tiny_mce
-      # Fix broken paths from TinyMCE
       self.body = body.gsub(%r{src=\"(.*)/system/images/}, "src=\"/system/images/") if body?
     end
   
+    # Give a string identifying the model based on it's properties.
+    # In order:
+    # - _slug_ if it has a property *slug*
+    # - _id-name_ if it has a property *name*
+    # - _id-title_ if it has a property *title*
+    # - _id_ otherwise
+    # @return A string describing an instance of a model
     def to_param
       return slug.to_s if self.respond_to?(:slug) and !slug.blank?
       return "#{id}-#{name.to_s.parameterize}" if self.respond_to?(:name) and self.name?

@@ -15,4 +15,6 @@ tmp/
 Gemfile.lock
 vendor/ruby
 Terryblr.tmproj
-
+doc/*
+.yardcache/*
+.yardoc/*
