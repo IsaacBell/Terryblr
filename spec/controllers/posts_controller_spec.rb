@@ -17,24 +17,25 @@ describe Terryblr::PostsController do
   describe "GET /posts/next,previous" do
     
     before do
+      Terryblr::Post.delete_all
       @posts = []
       3.times do |i|
-        @posts << Factory(:post, :published_at => i.hours.ago)
+        @posts << Factory(:post, :published_at => i.hours.ago, :site => Terryblr::Site.default)
       end
     end
 
     it "should redirect to the next post" do
+      @posts.all?(&:valid?).should eql(true)
+      
       get :next, :id => @posts[1].id
-      follow_redirect!
-      response.should be_success
-      assigns(:object).id.should eql(@posts[2].id)
+      response.should be_redirect
+      response.should redirect_to(post_path(@posts[0], @posts[0].slug))
     end
 
     it "should redirect to the previous post" do
       get :previous, :id => @posts[1].id
-      follow_redirect!
-      response.should be_success
-      assigns(:object).id.should eql(@posts[0].id)
+      response.should be_redirect
+      response.should redirect_to(post_path(@posts[2], @posts[2].slug))
     end
 
   end
@@ -48,15 +49,15 @@ describe Terryblr::PostsController do
       post_atts = {
         :title => "Some cool new post",
         :body => "<p>Some cool new post body text</p>",
-        :post_type => "post"
+        :post_type => "post",
         :state => "publish_now", 
-        :published_at => 5.mins.ago.to_s, 
+        :published_at => 1.minute.ago, 
         :location_list=>["blog"],
-        :tag_list => "",
-        :slug => "", 
+        :tag_list => ['test'],
+        :slug => "some-cool-news", 
         :post_type => "post", 
-        :tw_me => "1", 
-        :fb_me => "1", 
+        :tw_me => false, 
+        :fb_me => true, 
         :social_msg => ""
       }
       
@@ -64,7 +65,14 @@ describe Terryblr::PostsController do
       post :preview, :post => post_atts
       response.should be_success
       post_atts.each_pair do |key,val|
-        assigns(:object).send(key).should eql(val)
+        case key
+        when :state
+          assigns(:object).send(key).should eql('published')
+        when :published_at
+          assigns(:object).send(key).to_s.should eql(val.to_s)
+        else
+          assigns(:object).send(key).should eql(val)
+        end
       end
 
       # Photos post

@@ -145,14 +145,14 @@ class Terryblr::Post < Terryblr::Base
     def next(post)
       with_exclusive_scope { 
         # Due to problems with the default_scope ordering the 'live' scope must come AFTER the order scope
-        where("published_at > ? and id != ?", post.published_at, post.id).order("published_at asc, id asc").live.first
+        where("published_at >= ? and id != ?", post.published_at, post.id).order("published_at asc, id asc").live.first
       }
     end
 
     def previous(post)
       with_exclusive_scope { 
         # Due to problems with the default_scope ordering the 'live' scope must come AFTER the order scope
-        where("published_at < ? and id != ?", post.published_at, post.id).order("published_at desc, id desc").live.first
+        where("published_at <= ? and id != ?", post.published_at, post.id).order("published_at desc, id desc").live.first
       }
     end
 

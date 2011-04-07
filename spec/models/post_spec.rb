@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Terryblr::Post do
-
   describe "validation" do
     before do
       @post = Factory(:post)
@@ -19,6 +18,28 @@ describe Terryblr::Post do
       post.save.should eql(false)
     end
     
+  end
+  
+  describe "next & previous" do
+    
+    
+    before do
+      Terryblr::Post.delete_all
+      @posts = []
+      3.times do |i|
+        @posts << Factory(:post, :published_at => i.hours.ago, :site => Terryblr::Site.default)
+      end
+    end
+
+    it "should be the previous post" do
+      @posts[1].previous.id.should eql(@posts[2].id)
+    end
+
+    it "should be the next post" do
+      @posts[1].next.id.should eql(@posts[0].id)
+    end
+
+
   end
 
 end

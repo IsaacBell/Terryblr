@@ -16,6 +16,7 @@ class Terryblr::Site < Terryblr::Base
   #
   validates :name, :presence => true, :uniqueness => true
   validates :lang, :presence => true, :inclusion => { :in => I18n.available_locales }
+  before_validation :set_default_lang
 
   #
   # Scopes
@@ -25,10 +26,6 @@ class Terryblr::Site < Terryblr::Base
   #
   # Callbacks
   #
-  def before_validation
-    # Set the default value
-    self.lang ||= I18n.locale if new_record?
-  end
 
   #
   # Class Methods
@@ -50,6 +47,12 @@ class Terryblr::Site < Terryblr::Base
     read_attribute(:lang) ? read_attribute(:lang).to_sym : nil
   end
   
+  private
+  
+  def set_default_lang
+    # Set the default value
+    self.lang ||= I18n.locale if new_record?
+  end
 
   include Terryblr::Extendable
 end

@@ -42,7 +42,7 @@ module Terryblr
 
           scope :live, lambda {
             # Needs to be sep variable or AR will cache the first time and it'll never change
-            where("#{table_name}.state = 'published' and #{table_name}.published_at < ?", Time.zone.now)
+            where("#{table_name}.state = 'published' and #{table_name}.published_at <= ?", Time.zone.now)
           }
 
 

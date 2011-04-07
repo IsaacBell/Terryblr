@@ -7,7 +7,7 @@ describe Terryblr::Site do
     end
 
     it "should be valid and create a site" do
-      site = Terryblr::Site.new(:name => "www")
+      site = Terryblr::Site.new(:name => "www2")
       site.valid?.should eql(true)
       site.save.should eql(true)
       site.lang.should eql(I18n.locale)
@@ -42,7 +42,7 @@ describe Terryblr::Site do
       @page_www = Factory(:page, :site => @site_www)
       @feature_www = Factory(:feature, :site => @site_www)
 
-      @site_blog = Factory(:site, :name => "blog")
+      @site_blog = Factory(:site)
       @post_blog = Factory(:post, :site => @site_blog)
       @page_blog = Factory(:page, :site => @site_blog)
       @feature_blog = Factory(:feature, :site => @site_blog)
