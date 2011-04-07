@@ -54,11 +54,9 @@ describe Terryblr::PostsController do
         :published_at => 1.minute.ago, 
         :location_list=>["blog"],
         :tag_list => ['test'],
-        :slug => "some-cool-news", 
         :post_type => "post", 
         :tw_me => false, 
         :fb_me => true, 
-        :social_msg => ""
       }
       
       # Standard post

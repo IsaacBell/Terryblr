@@ -232,28 +232,26 @@ module Terryblr::AdminHelper
   def link_to_preview
     obj = params[:controller]=~/pages/ ? 'page' : 'post'
     
-    link_to_function ttt(:preview), %Q{
+    link_to_function(ttt(:preview), %Q{
       $('iframe.preview-pane').dialog({ 
         modal: true,  
         width:960,  
         height:500, 
         open: function() {
           $(this).css('width',960)
-          var form = $('form#post_edit').
+          var form = $('form##{obj}_edit').
             clone().
-            attr('id','post_preview_form').
-            attr('action','#{preview_post_path}').
-            attr('target','post_preview').
+            attr('id','#{obj}_preview_form').
+            attr('action','#{send("preview_#{obj}_path")}').
+            attr('target','#{obj}_preview').
             hide().
-            appendTo($('#body')).
-            submit().
-            remove();
-          console.debug(form)
-          // form.submit()
-          // form.remove()
-          
+            appendTo($('#body'));
+          form.find('.wym_box').remove();
+          form.find('.rich_text textarea').val(jQuery.wymeditors(0).html());
+          form.submit().remove();
         } })
-    }, :class => "preview"
+    }, :class => "preview") +
+    content_tag(:iframe, "", :id => "#{obj}_preview", :class => "preview-pane", :src => "about:blank", :width => 1, :height => 1, :name => "#{obj}_preview")
   end
   
 

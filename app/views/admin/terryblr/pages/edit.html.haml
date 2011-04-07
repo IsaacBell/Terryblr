@@ -17,6 +17,8 @@
       %li.commit
         - if @object.live?
           = link_to ttt(:view), page_path(@object), :class => "preview", :target => "_blank"
+      %li.commit
+        = link_to_preview
       %li.cancel
         = link_to ttt(:back), admin_pages_path, :class => "cancel"
       %li.delete

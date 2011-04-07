@@ -2,7 +2,6 @@
   = f.commit_button ttt(:save), 'data-disable-with' => "Saving"
   %li.commit
     = link_to_preview
-    %iframe#post_preview.preview-pane{:src => "/", :width => 1, :height => 1, :name => "post_preview"}
   %li.cancel
     = link_to ttt(:cancel), admin_posts_path, :class => "cancel"
   %li.delete
