@@ -30,7 +30,7 @@
                 = link_to_function "+", "$('.tag-picker input.jq_tags_editor_input').attr('value','#{tag}').blur()"
           .clear
           = text_area :post, "tag_list", :class => "tag-picker"
-        
+
     = f.input :slug, :label => ttt(:'.custom_url'), :as => "underline", :prefix => "/posts/", :hint => ttt(:'.leave_blank_to_create_automatically_from_the_title'), :wrapper_html => { :class => "underlined-input" }
     = f.input :post_type, :as => "hidden"
 
@@ -61,5 +61,5 @@
             = ttc '.crosspost_facebook'
         %li#social_message
           %label= ttt :'.message'
-          = text_area :post, :social_msg, :class=>"social_msg", :rows=>"4", :disabled => resource.twitter_id? && resource.facebook_id? && @object.live?
+          = text_area :post, :social_msg, :class=>"social_msg", :rows=>"4", :disabled => resource.twitter_id? && resource.facebook_id? && resource.live?
           %span.social_msg_chars

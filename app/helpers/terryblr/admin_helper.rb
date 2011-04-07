@@ -12,75 +12,74 @@ module Terryblr::AdminHelper
     css_class = "swfupload-control"
     css_upload = "upload-progress"
     content_tag(:div, :class => "#{css_class} upload-btn") do
-        content_tag(:span, "", :id => "spanButtonPlaceholder")
+      content_tag(:span, "", :id => "spanButtonPlaceholder")
     end +
     content_tag(:div, :class => css_upload, :style => "display:none") do
       content_tag(:span, "Uploading...")
     end +
     javascript_tag("
     $(document).ready(function() {
-        $('.#{css_parent_class} .#{css_class}').swfupload({
-            // Backend Settings
-            upload_url: '#{url}',    // Relative to the SWF file (or you can use absolute paths)
-            post_params: {
-              '#{session_key}': '#{cookies[session_key]}',
-              'authenticity_token': '#{form_authenticity_token}',
-            },
-            // File Upload Settings
-            file_size_limit : '102400', // 100MB
-            file_types : '#{opts[:file_types]}',
-            file_types_description : 'Files',
-            file_upload_limit : '#{opts[:file_upload_limit]}',
-            file_queue_limit : '#{opts[:file_queue_limit]}',
-            // Button Settings
-            button_image_url : '/images/admin/upload_btn.png', // Relative to the SWF file
-            button_placeholder_id : 'spanButtonPlaceholder',
-            button_width: 85,
-            button_height: 24,
-            button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-            // Flash Settings
-            flash_url : '/flash/swfupload.swf'
-        });
+      $('.#{css_parent_class} .#{css_class}').swfupload({
+        // Backend Settings
+        upload_url: '#{url}',    // Relative to the SWF file (or you can use absolute paths)
+        post_params: {
+          '#{session_key}': '#{cookies[session_key]}',
+          'authenticity_token': '#{form_authenticity_token}',
+        },
+        // File Upload Settings
+        file_size_limit : '102400', // 100MB
+        file_types : '#{opts[:file_types]}',
+        file_types_description : 'Files',
+        file_upload_limit : '#{opts[:file_upload_limit]}',
+        file_queue_limit : '#{opts[:file_queue_limit]}',
+        // Button Settings
+        button_image_url : '/images/admin/upload_btn.png', // Relative to the SWF file
+        button_placeholder_id : 'spanButtonPlaceholder',
+        button_width: 85,
+        button_height: 24,
+        button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+        // Flash Settings
+        flash_url : '/flash/swfupload.swf'
+      });
 
-        // assign our event handlers
-        $('.#{css_parent_class} .#{css_class}')
-            .bind('fileQueued', function(event, file){
-                // start the upload once a file is queued
-                // console.log('fileQueued')
-                $('.#{css_parent_class} .#{css_upload}').progressbar()
-                $('.#{css_parent_class} .#{css_upload}').show()
-                $('.#{css_parent_class} .upload-progress span').text('Uploading...')
-                $(this).swfupload('startUpload');
-            })
-            .bind('uploadComplete', function(event, file){
-                // start the upload (if more queued) once an upload is complete
-                $('.#{css_parent_class} .upload-progress span').text('Awaiting response...')
-                // console.log('uploadComplete')
-                $(this).swfupload('startUpload');
-            })
-            .bind('uploadSuccess',function(event, file, server_data, response) {
-              $('.#{css_parent_class} .upload-progress').hide()
-              if (response) {
-                jQuery.globalEval(server_data)
-              }
-            })
-            .bind('fileDialogComplete', function(event, files_sel, files_queued, total_files) {})
-            .bind('fileQueueError', function(event, file, error, message) {})
-            .bind('fileDialogComplete',function(event) {})
-            .bind('uploadProgress',function(event, file, bytes_complete, total_bytes) {
-              $('.#{css_parent_class} .#{css_upload}').show()
-              $('.#{css_parent_class} .upload-progress span').text('Uploading file '+ (file.index+1))
-              // console.log('bytes_complete: '+bytes_complete)
-              // console.log('total_bytes: '+total_bytes)
-              // console.log('progress: '+(bytes_complete/total_bytes))
-              $('.#{css_parent_class} .#{css_upload}').progressbar('value',((bytes_complete/total_bytes)*100))
-            })
-            .bind('uploadError',function(event, file, error, message) {
-              // console.log('uploadError')
-              $('#flash').html('Error from server trying to upload image: '+message).addClass('error flash').show()
-            })
-
-        });
+      // assign our event handlers
+      $('.#{css_parent_class} .#{css_class}')
+        .bind('fileQueued', function(event, file){
+          // start the upload once a file is queued
+          // console.log('fileQueued')
+          $('.#{css_parent_class} .#{css_upload}').progressbar()
+          $('.#{css_parent_class} .#{css_upload}').show()
+          $('.#{css_parent_class} .upload-progress span').text('Uploading...')
+          $(this).swfupload('startUpload');
+        })
+        .bind('uploadComplete', function(event, file){
+          // start the upload (if more queued) once an upload is complete
+          $('.#{css_parent_class} .upload-progress span').text('Awaiting response...')
+          // console.log('uploadComplete')
+          $(this).swfupload('startUpload');
+        })
+        .bind('uploadSuccess',function(event, file, server_data, response) {
+          $('.#{css_parent_class} .upload-progress').hide();
+          if (response) {
+            jQuery.globalEval(server_data)
+          }
+        })
+        .bind('fileDialogComplete', function(event, files_sel, files_queued, total_files) {})
+        .bind('fileQueueError', function(event, file, error, message) {})
+        .bind('fileDialogComplete',function(event) {})
+        .bind('uploadProgress',function(event, file, bytes_complete, total_bytes) {
+          $('.#{css_parent_class} .#{css_upload}').show()
+          $('.#{css_parent_class} .upload-progress span').text('Uploading file '+ (file.index+1))
+          // console.log('bytes_complete: '+bytes_complete)
+          // console.log('total_bytes: '+total_bytes)
+          // console.log('progress: '+(bytes_complete/total_bytes))
+          $('.#{css_parent_class} .#{css_upload}').progressbar('value',((bytes_complete/total_bytes)*100))
+        })
+        .bind('uploadError',function(event, file, error, message) {
+          // console.log('uploadError')
+          $('#flash').html('Error from server trying to upload image: '+message).addClass('error flash').show()
+        })
+      });
     ")
   end
 

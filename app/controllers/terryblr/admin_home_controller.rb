@@ -80,9 +80,9 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
       }
     end
   end
-  
+
   private
-  
+
   def set_date
     @date ||= if params[:month] || params[:year]
       "1-#{params[:month]}-#{params[:year] || Date.today.year}".to_date rescue Date.today

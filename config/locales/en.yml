@@ -52,7 +52,7 @@ en:
         search:
           no_results_found: No results found
 
-    admin: 
+    admin:
       terryblr: 
         features: 
           index: 
@@ -70,7 +70,14 @@ en:
             location: location
             photo: Photo
             url: URL
-        pages: 
+        pages:
+          form:
+            add_inline_photo: "add a photo"
+            publish_on: "published on"
+            parent: parent
+            tags: tags
+            custom_url: "custom URL"
+            leave_blank_to_create_automatically: "leave blank to set automatically"
           index: 
             drafts: drafts
             published: published
@@ -103,7 +110,7 @@ en:
             message: message
             published_on: published on
             tags: Tags
-          photo: 
+          photos: 
             gallery_display: Gallery Display
             show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Show photos as a slideshow gallery or stacked above each other."
             upload_hint: Upload, then reorder and caption photos
@@ -111,6 +118,7 @@ en:
             paste_in_a_URL_to_a_vimeo_or_youtube_video: Paste in a URL to a vimeo or youtube video
             reorder_and_caption_videos: Reorder and caption videos
             video_url: Video Url
+            save: save
         users: 
           form:
             email: email
@@ -118,14 +126,16 @@ en:
             lastname: last name
             password: password
             password_confirmation: password confirmation
-
-    edit: edit
+        sessions:
+          new:
+            please_login: Please login
     archives: archives
     are_you_sure: Are you absolutely sure?
     back: back
     body: body
     cancel: cancel
     delete: delete
+    edit: edit
     edit_page: edit page
     edit_post: edit post
     edit_photos: edit photos

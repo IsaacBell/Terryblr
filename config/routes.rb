@@ -1,4 +1,3 @@
-
 Rails.application.routes.draw do
   root :to => "terryblr/home#index"
 
@@ -17,9 +16,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
       collection do
-        match ':state/:month/:year(.:format)', :to => "terryblr/posts#filter", :as => :drafted, :constraints => { :state => /(drafted|published)/, :year => /\d{4}/, :month => /\d{1,2}/ }
-        get  :filter
-        post :filter
+        match ':state/:month/:year(.:format)', :to => "terryblr/posts#index", :as => :drafted, :constraints => { :state => /(drafted|published)/, :year => /\d{4}/, :month => /\d{1,2}/ }
       end
       # resources :comments, :except => [:new, :create], :controller => "terryblr/comments"
       # resources :links, :controller => "terryblr/links"

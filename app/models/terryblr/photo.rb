@@ -118,6 +118,5 @@ class Terryblr::Photo < Terryblr::Base
     return nil
   end
 
-
   include Terryblr::Extendable
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Terryblr::Photo do
   describe "validation" do
     before do
-      @post = Factory(:post)
+      @post = Factory(:published_post)
     end
 
     it "should update associated post on create" do

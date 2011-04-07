@@ -12,7 +12,6 @@ require 'cancan'
 module CanCan
   # For use with Inherited Resources
   class InheritedResource < ControllerResource # :nodoc:
-    
     # defer this directly to Inherited Resources
     def load_collection
       @controller.send(:collection)
@@ -33,7 +32,6 @@ module CanCan
     end
   end
 end
-
 
 require File.expand_path('terryblr/engine', File.dirname(__FILE__)) if defined?(Rails) && Rails::VERSION::MAJOR == 3
 

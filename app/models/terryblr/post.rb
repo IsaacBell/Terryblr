@@ -19,9 +19,9 @@ class Terryblr::Post < Terryblr::Base
   belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :fb_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "::Delayed::Job"
-  # has_many :likes, :as => :likeable
-  # has_many :comments, :as => :commentable
-  # has_many :votes, :as => :votable
+  # has_many :likes, :as => :likeable, :class_name => "Terryblr::Like"
+  # has_many :comments, :as => :commentable, :class_name => "Terryblr::Comment"
+  # has_many :votes, :as => :votable, :class_name => "Terryblr::Vote"
 
   #
   # Behaviours
@@ -171,14 +171,6 @@ class Terryblr::Post < Terryblr::Base
 
     def display_types
       @@display_types
-    end
-
-    def name
-      self.to_s
-    end
-    
-    def base_class
-      self
     end
 
   end

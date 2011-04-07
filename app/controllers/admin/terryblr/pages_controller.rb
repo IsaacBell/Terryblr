@@ -13,13 +13,8 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   end
 
   def new
-    # Create post!
-    resource.save!
-    resource.state = :published
     resource.parent_id = params[:parent_id].to_i if params[:parent_id]
-    super do |wants|
-      wants.html { render :action => "edit" }
-    end
+    super
   end
 
   def create
@@ -39,7 +34,8 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   def resource
     @page ||= begin
       if params[:id]
-        end_of_association_chain.find_by_slug(params[:id]) || end_of_association_chain.find_by_id(params[:id])
+        end_of_association_chain.find_by_slug(params[:id]) || 
+        end_of_association_chain.find_by_id(params[:id])
       else
         end_of_association_chain.new
       end
@@ -47,12 +43,12 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   end
 
   def collection
-    order = "created_at desc"
+    order = "pages.created_at desc"
     @pages ||= if params[:parent_id]
-      end_of_association_chain.by_state(params[:state] || 'published').where(:parent_id => params[:parent_id])
+      end_of_association_chain.by_state(params[:state] || 'published').where(:parent_id => params[:parent_id]).order(order)
     else
-      end_of_association_chain.roots.by_state(params[:state] || 'published')
-    end.order(order)
+      end_of_association_chain.roots.by_state(params[:state] || 'published').order(order)
+    end
   end
 
   include Terryblr::Extendable

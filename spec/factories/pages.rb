@@ -7,3 +7,15 @@ Factory.define :page, :class => Terryblr::Page do |page|
   page.sequence(:position)  { |n| n }
   page.post_id              nil
 end
+
+Factory.define :pending_page, :parent => :page, :class => Terryblr::Page do |page|
+  page.state                "pending"
+end
+
+Factory.define :drafted_page, :parent => :page, :class => Terryblr::Page do |page|
+  page.state                "drafted"
+end
+
+Factory.define :published_page, :parent => :page, :class => Terryblr::Page do |page|
+  page.state                "published"
+end

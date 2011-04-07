@@ -10,5 +10,5 @@
   %li.cancel
     = link_to ttt(:cancel), admin_posts_path, :class => "cancel"
   %li.delete
-  - unless resource.new_record?
-    = link_to ttt(:delete), admin_post_path(resource), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"
+    - unless resource.new_record?
+      = link_to ttt(:delete), admin_post_path(resource), :class => "cancel", :confirm => "Are you absolutely sure?", :method => "delete" unless params[:action]=="new"

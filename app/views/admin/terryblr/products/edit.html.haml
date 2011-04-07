@@ -66,8 +66,4 @@
                 = link_to_function "+", "$('.tag-picker input.jq_tags_editor_input').attr('value','#{tag}').blur()"
       = f.input :tag_list, :label => 'Tags', :as => "text", :wrapper_html => { :class => "tag-picker" }
       = f.input :slug, :label => 'Custom URL', :as => "underline", :prefix => "/products/", :hint => ttt(:'.leave_blank_to_create_automatically'), :wrapper_html => { :class => "underlined-input" }
-
   .clear
-
-
-

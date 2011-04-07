@@ -4,7 +4,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     @photo = end_of_association_chain.new(:image => params[:Filedata])
 
     # Features belong to the photo and not the otherway
-    if photoable.is_a?(Terryblr::Feature)
+    if photoable && photoable.is_a?(Terryblr::Feature)
       feature = photoable
 
       # Delete any others photos unless they belong to posts

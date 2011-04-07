@@ -1,7 +1,6 @@
 class Terryblr::ApplicationController < ActionController::Base
   include Terryblr::CacheSystem
   helper 'terryblr/application'
-  #helper_method :current_user_session, :current_user
 
   before_filter :work_around_rails_middleware_bug
 
