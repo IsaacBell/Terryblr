@@ -2,7 +2,7 @@ module Terryblr::PostsHelper
 
   def like_label(post)
     count = post.likes.count
-    str = count.zero? ? "Terryblr::Like this?" : "#{pluralize(count, 'people')} like this"
+    str = count.zero? ? "like this?" : "#{pluralize(count, 'people')} like this"
     content_tag :div, link_to(str, post_likes_path(post), :remote => true), :id => post.dom_id('like_label')
   end
 
@@ -21,7 +21,6 @@ module Terryblr::PostsHelper
     
     # Tags
     post_action_links(post)
-
   end
 
   def post_body(post)
@@ -47,15 +46,15 @@ module Terryblr::PostsHelper
     elsif video.vimeo_id? and !video.embed_url.blank?
       javascript_tag(%Q{
         $('##{video.dom_id}').flash({
-            src: '#{video.embed_url}', width: #{width}, height: #{height},
-            flashvars: {}
+          src: '#{video.embed_url}', width: #{width}, height: #{height},
+          flashvars: {}
         });
       })
     end
     str += post_body(post)
     str
   end
-  
+
   def post_action_links(post)
     content_tag(:div, :class => "post-links clear") do 
       content_tag(:ul) do 

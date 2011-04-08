@@ -18,6 +18,7 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   end
 
   def create
+    debugger
     super do |success, failure|
       success.html { redirect_to admin_pages_path }
     end
@@ -32,14 +33,8 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   private
 
   def resource
-    @page ||= begin
-      if params[:id]
-        end_of_association_chain.find_by_slug(params[:id]) || 
-        end_of_association_chain.find_by_id(params[:id])
-      else
-        end_of_association_chain.new
-      end
-    end
+    @page ||= end_of_association_chain.find_by_slug(params[:id]) || 
+              end_of_association_chain.find_by_id(params[:id])
   end
 
   def collection

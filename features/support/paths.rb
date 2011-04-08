@@ -15,8 +15,7 @@ module NavigationHelpers
     when /the new account page/
       admin_new_user_path
     when /the drafted admin posts page/
-      @date = Date.today
-      drafted_admin_posts_path(:state => 'drafted', :month => @date.month, :year => @date.year)
+      filter_admin_posts_path :state => 'drafted'
     when /^(.*) account page$/i
       admin_user_path(Terryblr::User.find_by_email($1))
     when /login/

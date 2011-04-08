@@ -63,6 +63,14 @@ class Terryblr::PostsController < Terryblr::PublicController
     @featured_pics ||= current_site.features.live.tagged_with('sidebar')
   end
 
+  def begin_of_association_chain
+    current_site
+  end
+
+  def end_of_association_chain
+    Terryblr::Post.live
+  end
+
   def resource
     @post ||= end_of_association_chain.find_by_id(params[:id])        || 
               end_of_association_chain.find_by_slug(params[:slug])    || # Needed to keep permalinks alive
@@ -103,18 +111,6 @@ class Terryblr::PostsController < Terryblr::PublicController
     else
       []
     end
-  end
-
-  def featured_pics
-    @featured_pics ||= Terryblr::Feature.live.tagged_with('sidebar')
-  end
-
-  def begin_of_association_chain
-    current_site
-  end
-
-  def end_of_association_chain
-    Terryblr::Post.live
   end
   
   def date
