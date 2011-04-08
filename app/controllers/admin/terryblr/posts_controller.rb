@@ -20,6 +20,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def create
+    resource.post_type = post_type
     super do |success, failure|
       success.html { redirect_to admin_posts_path }
       failure.html { render :template => "admin/terryblr/posts/edit" }
@@ -66,14 +67,8 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def resource
-    @post ||= begin
-      if params[:id]
-        end_of_association_chain.find_by_slug(params[:id]) || 
-        end_of_association_chain.find_by_id(params[:id])
-      else
-        end_of_association_chain.new
-      end
-    end
+    @post ||= end_of_association_chain.find_by_slug(params[:id]) || 
+              end_of_association_chain.find_by_id(params[:id])
   end
 
   def collection

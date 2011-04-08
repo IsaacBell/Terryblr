@@ -4,16 +4,16 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def index
     @show_as_dash = true
-    @features = {}
+    collection = {}
     Settings.tags.posts.features.map do |tag|
-      @features[tag] = end_of_association_chain.live.tagged_with(tag)
+      collection[tag] = end_of_association_chain.live.tagged_with(tag)
     end
   end
 
   def new
     # Create feature!
-    @feature = end_of_association_chain.new(:state => "pending", :published_at => nil)
-    @feature.save!
+    resource = end_of_association_chain.new(:state => "pending", :published_at => nil)
+    resource.save!
     super
   end
 

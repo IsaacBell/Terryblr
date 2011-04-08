@@ -5,6 +5,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     super
     resource_class_name = base.name.sub(/Admin::/, '').sub(/Controller/, '').singularize
     base.resource_class = resource_class_name.constantize
+    base.resources_configuration[:self][:request_name] = base.resource_class.to_s.sub(/Terryblr::/, '').underscore.gsub('/', '_')
   end
 
   load_and_authorize_resource :class => resource_class
