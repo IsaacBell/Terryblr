@@ -26,6 +26,10 @@ module Terryblr::AdminHelper
           allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
           minSizeLimit: 100,
           sizeLimit: #{10.megabytes},
+          params: {
+            resource_type: 'post',
+            post_type: 'photos'
+          },
           debug: #{Rails.env.development?},
           onSubmit: function(id, fileName){
             $('.#{css_parent_class} .#{css_upload}').progressbar()
@@ -54,43 +58,6 @@ module Terryblr::AdminHelper
         })
       })
     })
-    #     .bind('fileQueued', function(event, file){
-    #       // start the upload once a file is queued
-    #       // console.log('fileQueued')
-    #       $('.#{css_parent_class} .#{css_upload}').progressbar()
-    #       $('.#{css_parent_class} .#{css_upload}').show()
-    #       $('.#{css_parent_class} .upload-progress span').text('Uploading...')
-    #       $(this).swfupload('startUpload');
-    #     })
-    #     .bind('uploadComplete', function(event, file){
-    #       // start the upload (if more queued) once an upload is complete
-    #       $('.#{css_parent_class} .upload-progress span').text('Awaiting response...')
-    #       // console.log('uploadComplete')
-    #       $(this).swfupload('startUpload');
-    #     })
-    #     .bind('uploadSuccess',function(event, file, server_data, response) {
-    #       $('.#{css_parent_class} .upload-progress').hide();
-    #       if (response) {
-    #         jQuery.globalEval(server_data)
-    #       }
-    #     })
-    #     .bind('fileDialogComplete', function(event, files_sel, files_queued, total_files) {})
-    #     .bind('fileQueueError', function(event, file, error, message) {})
-    #     .bind('fileDialogComplete',function(event) {})
-    #     .bind('uploadProgress',function(event, file, bytes_complete, total_bytes) {
-          # $('.#{css_parent_class} .#{css_upload}').show()
-          # $('.#{css_parent_class} .upload-progress span').text('Uploading file '+ (file.index+1))
-          # // console.log('bytes_complete: '+bytes_complete)
-          # // console.log('total_bytes: '+total_bytes)
-          # // console.log('progress: '+(bytes_complete/total_bytes))
-          # $('.#{css_parent_class} .#{css_upload}').progressbar('value',((bytes_complete/total_bytes)*100))
-    #     })
-    #     .bind('uploadError',function(event, file, error, message) {
-    #       // console.log('uploadError')
-    #       $('#flash').html('Error from server trying to upload image: '+message).addClass('error flash').show()
-    #     })
-    #   });
-    # ")
   end
 
   def add_inline_photo(url)
@@ -164,7 +131,7 @@ module Terryblr::AdminHelper
   end
 
   def photo_for_assoc(photo, object, list_id = "photos_list")
-    if defined?(Terryblr::Feature) and object.is_a?(Terryblr::Feature)
+    if defined?(Terryblr::Feature) and object=='feature'
       feature_photo_for_assoc(photo, object, list_id)
     else
       post_photo_for_assoc(photo, object, list_id)
@@ -172,7 +139,7 @@ module Terryblr::AdminHelper
   end
 
   def post_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :thumb)
-    param_name = object.class.to_s.demodulize.downcase
+    param_name = object.to_s.demodulize.downcase
     attr_name  = 'photos_attributes]['
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
       link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +

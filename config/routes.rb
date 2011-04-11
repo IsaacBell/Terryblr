@@ -23,8 +23,8 @@ Rails.application.routes.draw do
         get  :filter
         post :filter
       end
-      # resources :videos, :controller => "terryblr/videos"
-      # resources :photos, :controller => "terryblr/photos"
+      resources :videos, :controller => "terryblr/videos"
+      resources :photos, :controller => "terryblr/photos"
     end
     resources :videos, :controller => "terryblr/videos"
     resources :photos, :controller => "terryblr/photos"
