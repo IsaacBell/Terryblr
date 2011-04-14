@@ -16,7 +16,11 @@ class Terryblr::AdminController < Terryblr::ApplicationController
       @message = exception.message
       render 'admin/common/access_denied'
     else
-      redirect_to new_user_session_path, :notice => exception.message
+      if terryblr_setup?
+        redirect_to new_user_session_path, :notice => exception.message
+      else
+        redirect_to terryblr_setup_path
+      end
     end
   end
 

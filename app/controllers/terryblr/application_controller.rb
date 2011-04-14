@@ -90,4 +90,8 @@ class Terryblr::ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= Terryblr::Ability.new(current_user)
   end
+
+  def terryblr_setup?
+    Terryblr::User.admins.count > 0
+  end
 end

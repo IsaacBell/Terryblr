@@ -9,6 +9,9 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
   around_filter :cache, :only => [:analytics]
 
+  before_filter :ensure_terryblr_setup, :only => [:index, :search]
+  before_filter :setup_only_once!, :only => [:setup, :setup!]
+
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.info "AdminHomeController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
     if current_user && !current_user.admin?
@@ -22,6 +25,21 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   def collection
     nil
   end
+
+  def setup
+    @user = Terryblr::User.new
+  end
+  def setup!
+    @user = Terryblr::User.new params[:user]
+    @user.admin = true
+    if @user.save
+      sign_in @user
+      redirect_to :admin
+    else
+      render "setup"
+    end
+  end
+
 
   def index
     if cannot? :read, Terryblr::Tweet
@@ -103,6 +121,19 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
 
   def end_of_association_chain
     current_site.posts
+  end
+
+  def ensure_terryblr_setup
+    if terryblr_setup?
+      true
+    else
+      redirect_to :terryblr_setup
+      false
+    end
+  end
+
+  def setup_only_once!
+    raise "Terryblr is already set up !" if terryblr_setup?
   end
 
   include Terryblr::Extendable
