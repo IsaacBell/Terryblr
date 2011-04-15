@@ -122,7 +122,7 @@ module Terryblr::AdminHelper
         content_tag(:ul, :id => "#{list_id}_ul") do
           object.photos.map do |photo|
             # Each photo
-            photo_for_assoc(photo, object, list_id)
+            photo_for_assoc(photo, object.class.to_s.downcase, list_id)
           end.join.html_safe
         end +
         edit_photos_sortable(list_id)
@@ -139,7 +139,7 @@ module Terryblr::AdminHelper
   end
 
   def post_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :thumb)
-    param_name = object.to_s.demodulize.downcase
+    param_name = (object.is_a?(String) ? object : object.class.to_s).demodulize.downcase
     attr_name  = 'photos_attributes]['
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
       link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
