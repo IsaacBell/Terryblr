@@ -9,6 +9,5 @@ $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn(
     $("##{list_id}_ul").replaceWith("#{escape_javascript(photo_for_assoc(resource, parent_resource_name, list_id))}")
   - elsif parent_resource_name=='post' and params[:post_type]=='photos'
     - list_id = "photos_list"
-    $("##{list_id}_ul").append("#{escape_javascript(hidden_field_tag("#{parent_resource_name}[photo_ids][]",resource.id))}")
     $("##{list_id}_ul").append("#{escape_javascript(photo_for_assoc(resource, parent_resource_name, list_id))}")
     $('##{list_id}').sortable('refresh')

@@ -145,6 +145,7 @@ module Terryblr::AdminHelper
       link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
       image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
       text_area_tag("#{param_name}[#{attr_name}][caption]", photo.caption) +
+      hidden_field_tag("#{param_name}[photo_ids][]", photo.id) +
       hidden_field_tag("#{param_name}[#{attr_name}][id]", photo.id) +
       hidden_field_tag("#{param_name}[#{attr_name}][display_order]", photo.display_order)
     end
