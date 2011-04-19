@@ -3,7 +3,7 @@ Factory.define :post, :class => Terryblr::Post do |post|
   post.post_type        "post"
   post.sequence(:title) { |n| "Factory post #{n}" }
   post.body             "<p>I'm a simple body</p>"
-  post.published_at     1.minute.ago
+  post.published_at     1.minute.ago.to_s
   post.display_type     "gallery"
   post.site_id          Terryblr::Site.default.id
 end

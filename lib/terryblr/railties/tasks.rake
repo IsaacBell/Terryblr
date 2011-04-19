@@ -73,15 +73,15 @@ module ActiveRecord
   end
 end
 
-class Hash
-  def to_query
-    result = []
-    each do |k, v|
-      result << "#{k}=#{v}"
-    end
-    result.join("&")
-  end
-end
+# class Hash
+#   def to_query
+#     result = []
+#     each do |k, v|
+#       result << "#{k}=#{v}"
+#     end
+#     result.join("&")
+#   end
+# end
 
 namespace :terryblr do
   namespace :install do
@@ -100,6 +100,4 @@ namespace :terryblr do
       ActiveRecord::Migration.copy( 'db/migrate', { 'terryblr' => Terryblr::Engine.new.paths['db/migrate'].first }, :on_skip => on_skip, :on_copy => on_copy)
     end
   end
-  
 end
-

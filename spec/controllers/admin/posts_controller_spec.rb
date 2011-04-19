@@ -29,7 +29,7 @@ describe Admin::Terryblr::PostsController do
         get :index, :state => "drafted", :month => Date.today.month, :year => Date.today.year
       end
 
-      it "should assigns only drafted posts as @posts" do
+      it "assigns only drafted posts as @posts" do
         assigns(:posts).empty?.should_not be true
         assigns(:posts).all? { |post| post.drafted?.should be true }
       end
@@ -59,49 +59,50 @@ describe Admin::Terryblr::PostsController do
         assigns(:post).valid?.should be true
       end
       
-      it "assigns a newly created post as @post with photo" do
-        photo = Factory(:photo) # Fake uploaded photo
-        post :create, :post => Factory.attributes_for(:drafted_post).merge(:photo_ids => [photo.id])
-        assigns(:post).photos.should eq [photo]
+      describe "with valid photos params" do
+        it "assigns a newly created post as @post with a photo" do
+          photo = Factory(:photo) # Fake uploaded photo
+          params = Factory.attributes_for(:drafted_post).
+            merge(:photo_ids => [photo.id]). # Photo to be associated with the post
+            merge(:photos_attributes => [photo.attributes.select{|a| %w(caption id display_order).include?(a)}]) # nested Photos attributes
+          post :create, :post => params
+          assigns(:post).photos.should eq [photo]
+        end
+
+        it "assigns a newly created post as @post with many photos" do
+          photos = [Factory(:photo), Factory(:photo)] # Fake uploaded photo
+          post :create, :post => Factory.attributes_for(:drafted_post).
+            merge(:photo_ids => photos.map(&:id)). # Photos to be associated with the post
+            merge(:photos_attributes => photos.map{ |p| p.attributes.select{|a| %w(caption id display_order).include?(a)} }) # nested Photos attributes
+          assigns(:post).photo_ids.should eq photos.map(&:id)
+        end
       end
     end
   end
 
-#   describe "PUT update" do
-#     describe "with valid params" do
-#       it "updates the requested post" do
-#         Terryblr::Post.stub(:find).with("37") { mock_post }
-#         mock_post.should_receive(:update_attributes).with({'these' => 'params'})
-#         put :update, :id => "37", :post => {'these' => 'params'}
-#       end
-# 
-#       it "assigns the requested post as @post" do
-#         Terryblr::Post.stub(:find) { mock_post(:update_attributes => true) }
-#         put :update, :id => "1"
-#         assigns(:post).should be(mock_post)
-#       end
-# 
-#       it "redirects to the post" do
-#         Terryblr::Post.stub(:find) { mock_post(:update_attributes => true) }
-#         put :update, :id => "1"
-#         response.should redirect_to(admin_post_url(mock_post))
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns the post as @post" do
-#         Terryblr::Post.stub(:find) { mock_post(:update_attributes => false) }
-#         put :update, :id => "1"
-#         assigns(:post).should be(mock_post)
-#       end
-# 
-#       it "re-renders the 'edit' template" do
-#         Terryblr::Post.stub(:find) { mock_post(:update_attributes => false) }
-#         put :update, :id => "1"
-#         response.should render_template("edit")
-#       end
-#     end
-#   end
+  describe "PUT update" do
+    describe "with valid post params" do
+      it "assigns a updated post as @post" do
+        drafted = Factory(:drafted_post)
+        put :update, :id => drafted.id, :post => { :body => "Updated body" }
+        assigns(:post).valid?.should be true
+      end
+      
+      describe "with valid post params and photos" do
+        before do
+          published_post = Factory(:published_post)
+          published_post.photos << Factory(:photo) # Fake uploaded photo
+        end
+        
+        it "assigns an updated post as @post with a new photo" do
+        end
+        
+        it "assigns an updated post as @post with many new photos" do
+        end
+      end
+    end
+  end
+
 # 
 #   describe "DELETE destroy" do
 #     it "destroys the requested post" do

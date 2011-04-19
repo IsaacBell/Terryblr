@@ -8,7 +8,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   end
 
   load_and_authorize_resource :class => resource_class
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.info "AdminController: CanCan::AccessDenied #{exception.inspect}, admin?: #{current_user && !current_user.admin?}; #{current_user.inspect}"
     if current_user && !current_user.admin?
@@ -28,7 +28,20 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   layout 'admin'
 
   private
-  
+
+  # temporary fix for AR bug: https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/6723
+  def fix_rails_bug
+    keys = %w(post page) & params.keys
+    keys.map do |k|
+      params[k].merge!(:photos_attributes => params[k].delete(:photos_attributes)) if params[k].has_key? :photos_attributes
+    end
+  end
+
+  def resource_params
+    fix_rails_bug
+    params[resource_request_name] || params[resource_instance_name] || {}
+  end
+
   def current_site
     # Use session as key for 
     @current_site ||= if session[:site_name]
