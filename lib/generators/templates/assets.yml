@@ -34,6 +34,9 @@ javascripts:
     - public/javascripts/wymeditor/jquery.wymeditor.js
     - public/javascripts/swfupload/swfupload.js
     - public/javascripts/jquery.swfupload.js
+    - public/javascripts/jquery.tipsy.js
+    - public/javascripts/facebox.js
+    - public/javascripts/jquery.multipleselectbox.js
 
 stylesheets:
   public: 
@@ -43,6 +46,9 @@ stylesheets:
     - public/stylesheets/admin_grid.css
     - public/stylesheets/formtastic.css
     - public/stylesheets/jquery-ui.css
+    - public/stylesheets/multipleselectbox.css
+    - public/stylesheets/tipsy.css
+    - public/stylesheets/facebox.css
     - public/stylesheets/admin.css
   admin_edit:
   galleria:
