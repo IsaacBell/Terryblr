@@ -24,7 +24,7 @@ module Admin::Terryblr::DropboxHelper
   end
 
   def new_dropbox_session
-    Dropbox::Session.new(Terryblr::Settings.dropbox_app.key, Terryblr::Settings.dropbox_app.secret)
+    Dropbox::Session.new(Settings.dropbox_app.key, Settings.dropbox_app.secret)
   end
 
   def dropbox_authorize_link
