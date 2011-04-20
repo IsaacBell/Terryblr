@@ -11,6 +11,9 @@ common: &common
     blog: 
     email: 
     pass: 
+  dropbox_app:
+    key: 'zfva58fcjnx50me'
+    secret: 'xjj4wq3a8g6r0wg'
   vimeo:
     consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
     consumer_secret: fcfb4b9bb66e992b

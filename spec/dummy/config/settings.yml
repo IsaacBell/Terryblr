@@ -6,11 +6,14 @@ common: &common
     email: terryblr@gmail.com
     password: weloveterry69
     profile_id: 25211350
-  domain: localhost
+  domain: terryblr.rails
   tumblr:
     blog: 
     email: 
     pass: 
+  dropbox_app:
+    key: 'zfva58fcjnx50me'
+    secret: 'xjj4wq3a8g6r0wg'
   vimeo:
     consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
     consumer_secret: fcfb4b9bb66e992b

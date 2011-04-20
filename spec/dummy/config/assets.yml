@@ -35,6 +35,7 @@ javascripts:
     - public/javascripts/jquery.tipsy.js
     - public/javascripts/facebox.js
     - public/javascripts/jquery.multipleselectbox.js
+
 stylesheets:
   public: 
     - public/stylesheets/public_grid.css
@@ -50,4 +51,3 @@ stylesheets:
   admin_edit:
   galleria:
     - public/stylesheets/galleria.css
-
