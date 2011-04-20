@@ -1,17 +1,29 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
   
+  helper 'admin/terryblr/dropbox'
+  include Admin::Terryblr::DropboxHelper
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def create
-    
-    # From gist: https://gist.github.com/26082d2b56b00bd54dad
-    data = request.body
-    filename = params[:qqfile]
+    if params[:dropbox_path]
+      dropbox_session.mode = :dropbox
+      puts "Downloading from dropbox..."
+      start = Time.now
+      data = dropbox_session.download params[:dropbox_path]
+      puts "Downloaded in #{Time.now - start}..."
+      filename = File.basename params[:dropbox_path]
+      puts "Filename: #{filename}"
+    else
+      # Flash photo upload
+      # From gist: https://gist.github.com/26082d2b56b00bd54dad
+      data = request.body
+      filename = params[:qqfile]
+    end
     data.class.send(:define_method, "original_filename") do
       filename
-     end
+    end
     
-    @photo = end_of_association_chain.new(:image => data)
+    @photo = end_of_association_chain.new(:image => data, :image_file_name => filename)
 
     # Features belong to the photo and not the otherway
     if photoable && photoable.is_a?(Terryblr::Feature)
