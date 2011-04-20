@@ -1,0 +1,15 @@
+%ul.breadcrumbs
+  - path = ''
+  - for seg in @dropbox_path.split('/')[0..-2]
+    %li
+      %a{ :rel => path }= if seg.present? then seg else "/" end
+    - path += "/#{seg}"
+%hr
+%ul.selector
+  - for dir in @dirs
+    %li.directory{ :class => dir.icon}
+      %a.directory{ :rel => dir.path }= basename dir.path
+  - for img in @imgs
+    %li.selected
+      %img{:src => admin_dropbox_thumbnail_path(:path => img.path)}
+      %a.image{ :rel => img.path }= basename img.path

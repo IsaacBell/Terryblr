@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   match "/admin/search", :to => "terryblr/admin_home#search", :as => :admin_search
   match '/admin/analytics.(:format)', :to => "terryblr/admin_home#analytics", :as => :admin_analytics
   match '/admin/switch_site/:site', :to => "terryblr/admin_home#switch_site", :as => :admin_switch_site
+  get   '/admin/setup/', :to => "terryblr/admin_home#setup", :as => :terryblr_setup
+  post  '/admin/setup/', :to => "terryblr/admin_home#setup!", :as => :terryblr_do_setup
 
   namespace :admin do
     resources :posts, :controller => "terryblr/posts" do
@@ -54,6 +56,11 @@ Rails.application.routes.draw do
         get :admins
       end
     end
+
+    match  'dropbox/setup',    :to => "terryblr/dropbox#setup"
+    match  'dropbox/unlink',   :to => "terryblr/dropbox#unlink"
+    match  'dropbox/list',     :to => "terryblr/dropbox#list"
+    match  'dropbox/thumb',  :to => "terryblr/dropbox#thumb", :as => "dropbox_thumbnail"
 
     %w(page product user).each do |p|
       match "new/#{p}", :to => "terryblr/#{p.pluralize}#new"

@@ -38,6 +38,13 @@ en:
             one: 1 post
             other: "%{count} posts"
             zero: 0 post
+        setup:
+          email: email
+          firstname: first name
+          lastname: last name
+          password: password
+          password_confirmation: confirmation
+          create: create
         analytics:
           fb_page_likes: "Number of likes on Facebook"
           fb_page_total_likes: "Total of likes on Facebook"

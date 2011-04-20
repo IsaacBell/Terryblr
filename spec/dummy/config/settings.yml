@@ -63,7 +63,7 @@ common: &common
       groups: [tags, location]
       tags: []
       location: [blog, featured]
-      features: [homepage, blog, header, sidebar]
+      features: []
     features:
       groups: []
     pages:

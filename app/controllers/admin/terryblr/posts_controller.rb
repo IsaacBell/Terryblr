@@ -1,5 +1,6 @@
 class Admin::Terryblr::PostsController < Terryblr::AdminController
   before_filter :post_type, :only => [:new]
+  helper 'admin/terryblr/dropbox'
 
   def index
     show_as_dash
