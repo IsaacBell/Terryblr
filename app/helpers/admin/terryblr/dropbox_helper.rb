@@ -1,9 +1,7 @@
 module Admin::Terryblr::DropboxHelper
 
   def dropbox_session
-    puts "Un-memoized #dropbox_session"
     @dropbox_session ||= begin
-      puts "MEMOIZED #dropbox_session"
       previous = Dropbox::Session.deserialize(session[:dropbox_session]) if session[:dropbox_session]
       if previous && previous.authorized?
         previous
