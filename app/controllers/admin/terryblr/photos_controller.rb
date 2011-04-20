@@ -22,7 +22,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     data.class.send(:define_method, "original_filename") do
       filename
     end
-    
+
     @photo = end_of_association_chain.new(:image => data, :image_file_name => filename)
 
     # Features belong to the photo and not the otherway

@@ -18,7 +18,6 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   end
 
   def create
-    debugger
     super do |success, failure|
       success.html { redirect_to admin_pages_path }
     end
