@@ -7,6 +7,9 @@ common: &common
     password: weloveterry69
     profile_id: 25211350
   domain: terryblr.rails
+  dropbox_app:
+    key: 'zfva58fcjnx50me'
+    secret: 'xjj4wq3a8g6r0wg'
   tumblr:
     blog: 
     email: 
