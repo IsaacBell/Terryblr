@@ -57,6 +57,11 @@ Rails.application.routes.draw do
       end
     end
 
+    match  'dropbox/setup',    :to => "terryblr/dropbox#setup"
+    match  'dropbox/unlink',   :to => "terryblr/dropbox#unlink"
+    match  'dropbox/list',     :to => "terryblr/dropbox#list"
+    match  'dropbox/thumb',  :to => "terryblr/dropbox#thumb", :as => "dropbox_thumbnail"
+
     %w(page product user).each do |p|
       match "new/#{p}", :to => "terryblr/#{p.pluralize}#new"
     end
