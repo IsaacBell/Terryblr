@@ -9,7 +9,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       dropbox_session.mode = :dropbox
       puts "Downloading from dropbox..."
       start = Time.now
-      data = dropbox_session.download params[:dropbox_path]
+      data = StringIO.new dropbox_session.download(params[:dropbox_path])
       puts "Downloaded in #{Time.now - start}..."
       filename = File.basename params[:dropbox_path]
       puts "Filename: #{filename}"
