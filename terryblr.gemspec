@@ -52,6 +52,11 @@ Gem::Specification.new do |s|
   s.add_dependency "will_paginate", "3.0.pre2"
   s.add_dependency "yard"
 
+  # Async goodness !
+  s.add_dependency "rack-fiber_pool"
+  s.add_dependency "em-http-request"
+  s.add_dependency "em-net-http"
+
   s.add_development_dependency "bundler"
   s.add_development_dependency "ruby-debug19"
   s.add_development_dependency "rcov", ">= 0"

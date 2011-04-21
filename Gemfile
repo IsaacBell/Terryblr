@@ -12,4 +12,5 @@ group :development, :test do
   # gem 'capybara', :git => "https://github.com/jnicklas/capybara.git"
   gem 'capybara'
   gem 'awesome_print'
+  gem 'thin'
 end
