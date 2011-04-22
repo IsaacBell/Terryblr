@@ -23,7 +23,8 @@ class Admin::Terryblr::DropboxController < Terryblr::ApplicationController
     dropbox_session.mode = :dropbox
     ls = dropbox_session.list(@dropbox_path)
     @dirs = ls.select { |item| item.directory? }
-    @imgs = ls.select { |item| puts item.inspect; !item.directory? && item.mime_type =~ /image/ }
+    @imgs = ls.select { |item| !item.directory? && item.mime_type =~ /image/ }
+    @imgs = @imgs.delete_if { |item| ['image/x-icon', 'image/x-photoshop'].include? item.mime_type }
   end
 
   def thumb
