@@ -1,4 +1,4 @@
-#dropbox_browser{:style => "display:none;", :rel => "Dropbox import"}
+#dropbox_browser{:style => "min-height:420px; height:420px; display:none;", :rel => "Dropbox import"}
   %table
     %tr
       %td{ :height => "420", :width => '780', :style => 'background: white;'}
@@ -49,7 +49,8 @@
         };
         
         var loadDropboxPath = function(path) {
-          browser.html(loading_html);
+          var list = $('.dropbox_list', browser);
+          list.fadeOut();
           browser.load('/admin/dropbox/list?path=' + encodeURIComponent(path), null, function(responseText, textStatus, xhr){
             console.log('list?... :', textStatus, xhr);
             if(textStatus !== 'success') {
@@ -59,8 +60,13 @@
                 '<a class="directory" rel="/">get back to the root</a>.'
               ].join(''));
             } else {
+              var list = $('#dropbox_browser .dropbox_list');
+              list.animate({
+                opacity: 1
+              }, 200, 'easeOutQuad');
               var sel = $("#dropbox_browser .selector");
               sel.multipleSelectBox();
+              $(".breadCrumb").jBreadCrumb({easing: 'easeOutQuad'});
             }
           });
         };

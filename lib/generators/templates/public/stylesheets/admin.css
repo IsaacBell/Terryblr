@@ -1039,6 +1039,60 @@ form.formtastic fieldset ol li.post-states select {
   font-size:1.5em;
 }
 
+.photos-upload #dropbox_uploader {
+  cursor: Pointer;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
+
+.photos-upload #dropbox_uploader:hover {
+/*  outline: 1px solid navy;*/
+}
+
+#dropbox_browser .MultipleSelectBox {
+  border: none !important;
+}
+
+#dropbox_browser .breadCrumb {
+  width: 100%;
+}
+
+#dropbox_browser .MultipleSelectBox li.selected {
+  background-color: rgb(238, 238, 238);
+  border: 1px solid rgb(187, 187, 187);
+}
+
+#dropbox_browser .selector li {
+  line-height: 32px;
+}
+
+#dropbox_browser .selector li.directory {
+  padding-left: 40px;
+  background: url(/images/admin/dropbox_folder_gray_28.gif) 2px 2px no-repeat;
+}
+
+#dropbox_browser .breadCrumb ul li.first a {
+  background:url(../Images/IconDropbox.gif) no-repeat 0 0;
+}
+
+#dropbox_browser .breadCrumb ul li a {
+  cursor: Pointer;
+}
+
+#dropbox_browser .selector li img {
+  height: 32px;
+  float:left;
+  min-width: 32px;
+}
+#dropbox_browser .selector li a {
+  display: block;
+}
+
+#dropbox_browser .selector li a.image {
+  padding-left:40px;
+}
+
 .photos-upload .upload-btn {
   background: transparent url(/images/admin/upload_btn.png) 0 0 no-repeat;
   width:84px;
@@ -1070,7 +1124,7 @@ form.formtastic fieldset ol li.post-states select {
   color:#666;
   background:#f5f5f5;
   margin-top:5px;
-  margin-left:100px;
+/*  margin-left:100px;*/
   line-height:1.9em;
   -moz-border-radius: 3px; 
   -webkit-border-radius: 3px;
