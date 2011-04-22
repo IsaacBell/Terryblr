@@ -22,6 +22,7 @@ javascripts:
     - public/javascripts/galleria/src/plugins/galleria.history.js
   admin:
     - public/javascripts/jquery.js
+    - public/javascripts/jquery.easing.1.3.js
     - public/javascripts/jquery-ui.js
     - public/javascripts/wymeditor/jquery.wymeditor.js
     - public/javascripts/jquery.flash.js
@@ -35,6 +36,7 @@ javascripts:
     - public/javascripts/jquery.tipsy.js
     - public/javascripts/facebox.js
     - public/javascripts/jquery.multipleselectbox.js
+    - public/javascripts/jquery.jBreadCrumb.1.1.js
 
 stylesheets:
   public: 
@@ -47,6 +49,7 @@ stylesheets:
     - public/stylesheets/multipleselectbox.css
     - public/stylesheets/tipsy.css
     - public/stylesheets/facebox.css
+    - public/stylesheets/jBreadCrumb.css
     - public/stylesheets/admin.css
   admin_edit:
   galleria:
