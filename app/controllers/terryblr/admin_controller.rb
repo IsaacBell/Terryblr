@@ -29,10 +29,15 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   around_filter :cache, :only => [:analytics]
   skip_before_filter :verify_authenticity_token, :only => [:analytics]
   after_filter :set_last_modified
+  before_filter :set_resource_request_name
 
   layout 'admin'
 
   private
+
+  def set_resource_request_name
+    @resource_request_name = self.resources_configuration[:self][:request_name]
+  end
 
   # temporary fix for AR bug: https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/6723
   def fix_rails_bug

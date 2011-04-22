@@ -4,7 +4,6 @@ class Terryblr::ApplicationController < ActionController::Base
 
   before_filter :current_site
   before_filter :current_lang
-  before_filter :set_resource_request_name
 
   private
 
@@ -19,9 +18,6 @@ class Terryblr::ApplicationController < ActionController::Base
     @current_lang = I18n.locale = current_site.lang if I18n.available_locales.include?(current_site.lang)
   end
   
-  def set_resource_request_name
-    @resource_request_name = self.resources_configuration[:self][:request_name]
-  end
   
 
   def end_of_association_chain
