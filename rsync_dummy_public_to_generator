@@ -1,0 +1,1 @@
+rsync -ruv --human-readable --exclude-from public_diff_ignores $* spec/dummy/public lib/generators/templates
