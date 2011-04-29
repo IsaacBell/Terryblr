@@ -872,6 +872,7 @@ form.formtastic fieldset ol li.feature-photo-for-assoc {
 form.formtastic fieldset ol li.string input,
 form.formtastic fieldset ol li.text textarea,
 form.formtastic fieldset ol li.email input,
+form.formtastic fieldset ol li.url input,
 form.formtastic fieldset ol li.password input {
   width:100%;
   padding:2px;
