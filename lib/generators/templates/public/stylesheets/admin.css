@@ -1095,6 +1095,11 @@ form.formtastic fieldset ol li.post-states select {
   -webkit-border-radius: 3px;
   height:23px;
   overflow:hidden;
+  white-space:no-wrap;
+}
+
+.photos-upload .upload-progress .ui-progressbar-value {
+  background:#ddd;
 }
 
 .photos-upload .upload-progress span {
