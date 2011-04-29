@@ -5,7 +5,7 @@ gemspec
 
 gem "aws-s3",  :require => "aws/s3"
 gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"
-gem "dropbox", :git => "https://github.com/mathieuravaux/dropbox.git"
+gem "dropbox" #, :git => "https://github.com/mathieuravaux/dropbox.git"
 # gem "dropbox", :path => "../dropbox"
 
 group :development, :test do

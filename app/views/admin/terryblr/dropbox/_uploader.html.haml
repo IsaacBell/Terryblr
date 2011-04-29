@@ -4,10 +4,10 @@
       %td{ :height => "420", :width => '780', :style => 'background: white;'}
         %center
           = image_tag 'admin/dashboard-indicator.gif' 
-#dropbox_uploader
+#dropbox_uploader.upload-btn
   - if dropbox_session.authorized? then
-    %a{:rel => "facebox", :href => "#dropbox_browser"}
-      = image_tag 'admin/dropbox_icon.gif', :title => "Click to import from Dropbox"
+    %a{:rel => "facebox", :href => "#dropbox_browser", :title => "Click to import from Dropbox"}
+      Click to import from Dropbox
     :javascript
       $(function(){
 
@@ -19,10 +19,14 @@
           console.log('uploadImagesFromDropbox', JSON.stringify(image_paths));
           $('.inline-hints').hide();
           $('.upload-progress').show();
+          $('.upload-progress').progressbar()
           var nDone = 0, nTotal = image_paths.length;
+          
           var updateProgressMonitor = function(fileName) {
             $('.upload-progress span').text((1 + nDone) + ' / ' + nTotal + ' - Importing ' + fileName);
+            $('.upload-progress').progressbar('value',((nDone/nTotal)*100))
           };
+          
           var uploadFirstImage = function(image_paths) {
             if(!image_paths || !image_paths.length) {
               console.log("Finished uploading images.");
@@ -32,9 +36,9 @@
             }
             var image_path = image_paths.shift();
             updateProgressMonitor(image_path.split('/').pop());
-            $.post("/admin/photos.js?dropbox_path=" + encodeURIComponent(image_path), {}, function(data, textStatus, xhr) {
-              console.log('Pseudo-upload finished :');
-              console.log(data, textStatus, xhr);
+            $.post("/admin/photos.js?resource_type=post&post_type=photos&dropbox_path=" + encodeURIComponent(image_path), {}, function(data, textStatus, xhr) {
+              //console.log('Pseudo-upload finished :');
+              //console.log(data, textStatus, xhr);
               nDone += 1;
               if(textStatus == 'success') {
                 uploadFirstImage(image_paths);
@@ -100,7 +104,7 @@
           }
         });
         
-        $('#dropbox_uploader img').tipsy({gravity: 'w'}).click(function(e){
+        $('#dropbox_uploader a').tipsy({gravity: 'w'}).click(function(e){
           e.preventDefault();
           browser.dialog('open');
         });
@@ -117,16 +121,16 @@
 
         
         // debug:
-        setTimeout(function(){
-          $('#dropbox_uploader img').click()
-        }, 300); 
+        // setTimeout(function(){
+        //   $('#dropbox_uploader img').click()
+        // }, 300); 
       });
       
     
   - else
     - puts "Must authorize dropbox !"
-    = link_to dropbox_authorize_link, :target => '_self' do
-      = image_tag 'admin/dropbox_icon.gif', :title => "Connect with Dropbox"
+    = link_to "Connect with Dropbox", dropbox_authorize_link, :target => '_self', :title => "Connect with Dropbox"
+      
     :javascript
-      $('#dropbox_uploader img').tipsy({gravity: 'w'})
+      $('#dropbox_uploader a').tipsy({gravity: 'w'})
       

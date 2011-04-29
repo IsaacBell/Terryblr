@@ -1039,69 +1039,23 @@ form.formtastic fieldset ol li.post-states select {
   font-size:1.5em;
 }
 
-.photos-upload #dropbox_uploader {
-  cursor: Pointer;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-}
-
-.photos-upload #dropbox_uploader:hover {
-/*  outline: 1px solid navy;*/
-}
-
-#dropbox_browser .MultipleSelectBox {
-  border: none !important;
-}
-
-#dropbox_browser .breadCrumb {
-  width: 100%;
-}
-
-#dropbox_browser .MultipleSelectBox li.selected {
-  background-color: rgb(238, 238, 238);
-  border: 1px solid rgb(187, 187, 187);
-}
-
-#dropbox_browser .selector li {
-  line-height: 32px;
-}
-
-#dropbox_browser .selector li.directory {
-  padding-left: 40px;
-  background: url(/images/admin/dropbox_folder_gray_28.gif) 2px 2px no-repeat;
-}
-
-#dropbox_browser .breadCrumb ul li.first a {
-  background:url(../Images/IconDropbox.gif) no-repeat 0 0;
-}
-
-#dropbox_browser .breadCrumb ul li a {
-  cursor: Pointer;
-}
-
-#dropbox_browser .selector li img {
-  height: 32px;
-  float:left;
-  min-width: 32px;
-}
-#dropbox_browser .selector li a {
-  display: block;
-}
-
-#dropbox_browser .selector li a.image {
-  padding-left:40px;
-}
 
 .photos-upload .upload-btn {
   background: transparent url(/images/admin/upload_btn.png) 0 0 no-repeat;
   width:84px;
   height:24px;
-  float:left;
-  margin:5px;
-  cursor:hand;
+  display:inline-block;
+  margin:5px 0;
+  cursor:pointer;
+  vertical-align:middle;
 }
 
+#dropbox_uploader.upload-btn {
+  background-image: url(/images/admin/dropbox_btn.png);
+
+}
+
+.photos-upload .upload-btn .qq-upload-button,
 .photos-upload .upload-btn a {
   display:block;
   border:none;
@@ -1111,12 +1065,23 @@ form.formtastic fieldset ol li.post-states select {
   text-indent:-500px;
 }
 
-.photos-upload .upload-btn a:hover {
+.photos-upload .upload-btn:hover {
   background-position: 0 -24px;
 }
 
-.photos-upload .upload-btn a:active {
+.photos-upload .upload-btn:active {
   background-position: 0 -48px;
+}
+
+.photos-upload .or {
+  font-size:1.5em;
+  text-align:center;
+  font-style:italic;
+  font-weight:bold;
+  color:#ccc;
+  position:relative;
+  top:3px;
+  padding:0 0.5em;
 }
 
 .photos-upload .upload-progress {
@@ -1124,7 +1089,6 @@ form.formtastic fieldset ol li.post-states select {
   color:#666;
   background:#f5f5f5;
   margin-top:5px;
-/*  margin-left:100px;*/
   line-height:1.9em;
   -moz-border-radius: 3px; 
   -webkit-border-radius: 3px;
@@ -1135,6 +1099,108 @@ form.formtastic fieldset ol li.post-states select {
 .photos-upload .upload-progress span {
   position:absolute;
   margin-left:1em;
+  width:300px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:no-wrap;
+}
+
+.photos-upload .upload-progress .ui-progressbar-value {
+  background:#ddd;
+}
+
+.photos-upload .qq-upload-list {
+  display:none;
+}
+
+#dropbox_browser .MultipleSelectBox {
+  border: none !important;
+}
+
+#dropbox_browser .breadCrumb {
+  width: 100%;
+  padding:7px;
+}
+
+#dropbox_browser .breadCrumb li {
+  display:inline-block;
+}
+
+#dropbox_browser .breadCrumb li:after {
+  content:">";
+  color:#ccc;
+  padding:0 0.25em;
+}
+
+#dropbox_browser .breadCrumb li:last-child:after {
+  content:"";
+}
+
+#dropbox_browser .MultipleSelectBox li.selected {
+  background-color: #ddd;
+  border:none;
+  border-radius:7px;
+}
+
+#dropbox_browser .breadCrumb ul {
+  margin:0;
+  padding:0;
+}
+
+#dropbox_browser .selector li {
+  float:left;
+  width:72px;
+  height:85px;
+  overflow:hidden;
+  padding:7px;
+  margin:5px;
+  text-align:center;
+  border:none;
+}
+
+#dropbox_browser ul.selector {
+  clear:left;
+}
+
+#dropbox_browser .breadCrumb ul li:first-child a {
+  background:url(/images/admin/dropbox_icon.png) no-repeat 0 0;
+  display:inline-block;
+  width:16px;
+  height:16px;
+  text-indent:-999px;
+  overflow:hidden;
+  vertical-align:middle;
+}
+
+#dropbox_browser .breadCrumb ul li a {
+  cursor: pointer;
+}
+
+#dropbox_browser .selector li img {
+  display:block;
+  margin:0 auto;
+  width:72px;
+  height:72px;
+  background: transparent url(/images/admin/new_content_icons.png) -10px -10px no-repeat;
+  border:none;
+}
+
+#dropbox_browser .selector li.directory a {
+  background: transparent url(/images/admin/dropbox_folder.png) 50% 0 no-repeat;
+  padding-top: 70px;
+}
+
+#dropbox_browser .selector li a {
+  display: block;
+  width:100%;
+  white-space: nowrap;
+  overflow:hidde;
+  text-overflow:ellipsis;
+}
+
+#dropbox_browser .selector li a.image {
+  padding-left:0px;
+  
 }
 
 form.formtastic fieldset ol li.photos-upload,

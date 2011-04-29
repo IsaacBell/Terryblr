@@ -15,8 +15,8 @@ common: &common
     email: 
     pass: 
   dropbox_app:
-    key: 'zfva58fcjnx50me'
-    secret: 'xjj4wq3a8g6r0wg'
+    key: 'xgir9ezi28c9k4p'
+    secret: '32ai30bwx91wi3h'
   vimeo:
     consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
     consumer_secret: fcfb4b9bb66e992b
@@ -75,12 +75,12 @@ common: &common
     pages:
       groups: []
   photo_dimensions:
-    thumb: ["100x100#", :jpg]
-    small: ["156x156#", :jpg]
-    splash: ["920x460#", :jpg]
-    list: ["515x515>", :jpg]
-    medium: ["800x600>", :jpg]
-    full: ["2000x2000>", :jpg]
+    thumb: "100x100#"
+    small: "156x156#"
+    splash: "920x460#"
+    list: "515x515>"
+    medium: "800x600>"
+    full: "2000x2000>"
 
 development:
   <<: *common

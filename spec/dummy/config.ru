@@ -1,14 +1,11 @@
 # This file is used by Rack-based servers to start the application.
-
 require ::File.expand_path('../config/environment',  __FILE__)
 
-
-ENV['CURRENT_SERVER'] = Rails::Server.new.server.to_s
+ENV['CURRENT_SERVER'] = Rails::Server.new.server.to_s rescue ""
 ENV['ASYNC_SERVER?'] = 'true' if ENV['CURRENT_SERVER'] == 'Rack::Handler::Thin'
 
 if ENV['ASYNC_SERVER?']
   require 'rack/fiber_pool'
-
 
   if ENV['TRACE_FIBERS']
     Fiber.current.instance_variable_set :@name, 'root'

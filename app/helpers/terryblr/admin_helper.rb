@@ -34,11 +34,11 @@ module Terryblr::AdminHelper
           onSubmit: function(id, fileName){
             $('.#{css_parent_class} .#{css_upload}').progressbar()
             $('.#{css_parent_class} .#{css_upload}').show()
-            $('.#{css_parent_class} .upload-progress span').text('Uploading...')
+            $('.#{css_parent_class} .#{css_upload} span').text('Uploading...')
           },
           onProgress: function(id, fileName, loaded, total){
             $('.#{css_parent_class} .#{css_upload}').show()
-            $('.#{css_parent_class} .upload-progress span').text('Uploading file '+ fileName)
+            $('.#{css_parent_class} .#{css_upload} span').text('Uploading file '+ fileName)
             // console.log('bytes_complete: '+loaded)
             // console.log('total_bytes: '+total)
             // console.log('progress: '+(loaded/total))

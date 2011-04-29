@@ -9,6 +9,7 @@
       %li.photos-upload
         %label= ttt(:photos)
         = render :partial => 'admin/terryblr/dropbox/uploader'
+        %span.or or
         = multi_file_uploader(:url => admin_photos_path(:format => :js), :css_parent_class => "photos-upload")
         %p.inline-hints.clear= tt('.upload_hint')
       %li.photos-display-type
