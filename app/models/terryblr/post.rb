@@ -7,56 +7,31 @@ class Terryblr::Post < Terryblr::Base
   #
   # Constants
   #
-  @@post_types = %w(post photos video)
-  @@display_types = %w(photos gallery)
 
   #
   # Associatons
   #
+  has_many :parts, :as => :contentable, :order => "display_order", :class_name => "Terryblr::ContentPart", :dependent => :destroy
   has_many :features, :class_name => "Terryblr::Feature"
-  has_many :photos, :as => :photoable, :order => "display_order", :class_name => "Terryblr::Photo", :dependent => :destroy
-  has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
   belongs_to :site, :class_name => "Terryblr::Site"
   belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :fb_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "::Delayed::Job"
-  # has_many :likes, :as => :likeable, :class_name => "Terryblr::Like"
-  # has_many :comments, :as => :commentable, :class_name => "Terryblr::Comment"
-  # has_many :votes, :as => :votable, :class_name => "Terryblr::Vote"
 
   #
   # Behaviours
   #
 
   attr_accessor :url, :tw_me, :fb_me, :tumblr_me
-
-  #XXX acts_as_commentable
-  accepts_nested_attributes_for :photos, :allow_destroy => true
-  accepts_nested_attributes_for :videos, :allow_destroy => true, :reject_if => Proc.new{|v| v["url"].blank? }
+  accepts_nested_attributes_for :parts, :allow_destroy => true
 
   #
   # Validations
   #
-  validates_presence_of :post_type, :unless => :pending? 
   validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
   validates_length_of :social_msg, :within => 0..140, :if => :social_msg?
-  validates_inclusion_of :post_type, :in => @@post_types
-  validates_inclusion_of :display_type, :in => @@display_types
   validate :state_status
-
-  def state_status
-    # Validations depending on post-type
-    unless pending?
-      case state.to_sym
-      when :post
-        errors.add(:body, "cannot be empty") unless body?
-      when :gallery
-        errors.add(:photos, "cannot be empty") if photos.empty?
-      when :video
-        errors.add(:videos, "cannot be empty") if videos.empty?
-      end
-    end
-  end
+  validate :content_parts
 
   #
   # Scopes
@@ -90,10 +65,6 @@ class Terryblr::Post < Terryblr::Base
     group("posts.id").
     limit(6)
   }
-
-  @@post_types.each do |type|
-    scope type.pluralize, where(:post_type => type.to_s)
-  end
 
   #
   # Callbacks
@@ -166,14 +137,6 @@ class Terryblr::Post < Terryblr::Base
       p ? p.published_at.month : nil
     end
 
-    def post_types
-      @@post_types
-    end
-
-    def display_types
-      @@display_types
-    end
-    
     def base_class
       self
     end
@@ -193,14 +156,6 @@ class Terryblr::Post < Terryblr::Base
 
   def previous
     @_previous ||= self.class.previous(self)
-  end
-
-  def post_type
-    @_post_type ||= ActiveSupport::StringInquirer.new(read_attribute(:post_type)) unless read_attribute(:post_type).blank?
-  end
-
-  def display_type
-    @_display_type ||= ActiveSupport::StringInquirer.new(read_attribute(:display_type)) unless read_attribute(:display_type).blank?
   end
 
   def related_posts
@@ -254,6 +209,24 @@ class Terryblr::Post < Terryblr::Base
   end
   
   private
+
+  def state_status
+    # Validations depending on post-type
+    unless pending?
+      case state.to_sym
+      when :post
+        errors.add(:body, "cannot be empty") unless body?
+      when :gallery
+        errors.add(:photos, "cannot be empty") if photos.empty?
+      when :video
+        errors.add(:videos, "cannot be empty") if videos.empty?
+      end
+    end
+  end
+  
+  def content_parts
+    errors.add(:parts, "cannot be empty. Add some content!") if parts.empty?
+  end
 
   def do_publish(msg = nil)
     now = Time.zone.now

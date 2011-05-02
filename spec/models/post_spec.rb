@@ -5,17 +5,25 @@ describe Terryblr::Post do
     before do
       @post = Factory(:published_post)
     end
-    
-    it "should be valid and create a post" do
-      post = Terryblr::Post.new(:state => "pending", :post_type => "photos")
+
+    it "should be valid and create a post with parts" do
+      post = Terryblr::Post.new(:state => "pending")
+      post.valid?.should eql(false)
+      post.save.should eql(false)
+      post.errors.on(:parts).nil?.should eql(false)
+      
+      post.parts += Factory(:content_part)
       post.valid?.should eql(true)
       post.save.should eql(true)
+      
     end
 
     it "should not be valid with unknown state and post_type" do
-      post = Terryblr::Post.new(:state => "unknown", :post_type => "weird")
+      post = Terryblr::Post.new(:state => "unknown")
       post.valid?.should eql(false)
       post.save.should eql(false)
+      post.errors.on(:state).nil?.should eql(false)
+      post.errors.on(:parts).nil?.should eql(false)
     end
     
   end
