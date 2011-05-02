@@ -21,12 +21,12 @@ module Terryblr
       end
 
     end
-  
+
     # Fix broken paths from TinyMCE
     def fix_tiny_mce
       self.body = body.gsub(%r{src=\"(.*)/system/images/}, "src=\"/system/images/") if body?
     end
-  
+
     # Give a string identifying the model based on it's properties.
     # In order:
     # - _slug_ if it has a property *slug*

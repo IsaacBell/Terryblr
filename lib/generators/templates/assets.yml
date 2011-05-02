@@ -25,11 +25,12 @@ javascripts:
     - public/javascripts/jquery.easing.1.3.js
     - public/javascripts/jquery-ui.js
     - public/javascripts/wymeditor/jquery.wymeditor.js
-    - public/javascripts/jquery.flash.js
     - public/javascripts/jrails.js
     - public/javascripts/rails.js
     - public/javascripts/admin.js
   admin_edit:
+    # - public/javascripts/underscore-1.1.6.js
+    # - public/javascripts/backbone-0.3.3.js
     - public/javascripts/jtags.js
     - public/javascripts/wymeditor/jquery.wymeditor.js
     - public/javascripts/fileuploader.js

@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email       = ["bonjour@aimele88.com"]
   s.homepage    = "http://aimele88.com"
   s.summary     = "KISS Content Management System"
-  s.description = "Terryblr is an engine providing a CMS following a KISS principle"
+  s.description = "Terryblr is an engine providing a evented CMS following a KISS principle"
 
   s.required_rubygems_version = ">= 1.3.6"
 
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "acts-as-taggable-on"
   s.add_dependency "acts_as_commentable"
   s.add_dependency "aws-s3"
+  s.add_dependency "barista"
   s.add_dependency "bitly"
   s.add_dependency "bluecloth"
   s.add_dependency "cancan"

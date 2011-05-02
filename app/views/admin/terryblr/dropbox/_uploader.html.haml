@@ -10,11 +10,8 @@
       Click to import from Dropbox
     :javascript
       $(function(){
-
         var browser = $('#dropbox_browser');
         var loading_html = browser.html();
-        
-        
         var uploadImagesFromDropbox = function(image_paths) {
           console.log('uploadImagesFromDropbox', JSON.stringify(image_paths));
           $('.inline-hints').hide();
@@ -75,7 +72,10 @@
           });
         };
         
+<<<<<<< .merge_file_2bEorD
         
+=======
+>>>>>>> .merge_file_qKQPdu
         browser.dialog({
           title: browser.attr('rel'),
           autoOpen: false,
@@ -118,19 +118,14 @@
             loadDropboxPath(new_path);
           }
         });
-
         
         // debug:
         // setTimeout(function(){
         //   $('#dropbox_uploader img').click()
         // }, 300); 
       });
-      
-    
   - else
     - puts "Must authorize dropbox !"
     = link_to "Connect with Dropbox", dropbox_authorize_link, :target => '_self', :title => "Connect with Dropbox"
-      
     :javascript
       $('#dropbox_uploader a').tipsy({gravity: 'w'})
-      

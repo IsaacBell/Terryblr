@@ -1,8 +1,10 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
-  
+
   helper 'admin/terryblr/dropbox'
   include Admin::Terryblr::DropboxHelper
   skip_before_filter :verify_authenticity_token, :only => [:create]
+
+  respond_to :html, :js
 
   def create
     if params[:dropbox_path]

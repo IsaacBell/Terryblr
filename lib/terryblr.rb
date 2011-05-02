@@ -6,6 +6,7 @@ require 'will_paginate'
 require 'acts_as_commentable'
 require 'validates_email_format_of'
 require 'jammit'
+require 'barista'
 require "dropbox"
 
 require 'cancan'

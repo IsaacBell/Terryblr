@@ -37,7 +37,6 @@ task :cron => :environment do
 
   # Set priority on all the delayed-jobs create here
   Delayed::Job.update_all({:priority => dj_priority}, ["id in (?)", djs.map(&:id)])
-
 end
 
 namespace :terryblr do
@@ -47,7 +46,6 @@ namespace :terryblr do
   end
   
   namespace :import do
-    
     namespace :blogger do
       desc "Import published posts from blogger. Provide a FILE=path_to_exported_xml_file as a source."
       task :published => :environment do 
@@ -128,7 +126,6 @@ namespace :terryblr do
           link["href"].split("/").last.split(".").first.to_param
         end
       end
-
     end
 
     namespace :tumblr do
@@ -205,8 +202,7 @@ namespace :terryblr do
       end
 
       def get(params = {}, authenticate = false)
-        blog_uri = "http://www.terrysdiary.com/api/read"
-  #      blog_uri = "http://#{Settings.tumblr.blog}.tumblr.com/api/read"
+        blog_uri = "http://#{Settings.tumblr.blog}.tumblr.com/api/read"
 
         if authenticate
           params[:email] = "diary@terryrichardson.com"
@@ -322,7 +318,7 @@ namespace :terryblr do
         end
       end
 
-      private
+    private
 
       def import_regular(post, state = "published")
         photos = []
@@ -360,7 +356,6 @@ namespace :terryblr do
 
         # Create Post with photo
         Terryblr::Post.create!(options)
-
       end
 
       def import_video(post, state = "published")
@@ -408,8 +403,6 @@ namespace :terryblr do
         Terryblr::Post.create!(options)
       end
 
-
-
       def has_video(post)
         #does it have an iframe titled Youtube or Vimeo in its content?
         iframe_node = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text).at_css("iframe")
@@ -437,9 +430,6 @@ namespace :terryblr do
           #check if vimeo objects contain a "title" attribute structured similarly
         end
       end
-
     end
-
   end
-
 end

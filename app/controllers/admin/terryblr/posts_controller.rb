@@ -15,6 +15,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def edit
+    Rails.logger.debug { "resource: #{resource.inspect}" }
     super do |wants|
       wants.html { render :template => "admin/terryblr/posts/edit" }
     end
@@ -59,8 +60,8 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def post_type
     @post_type ||= begin
-      if params.has_key?(:type) && Terryblr::Post::post_types.include?(params[:type].downcase)
-        params[:type].downcase
+      if params.has_key?(:post_type) && Terryblr::Post::post_types.include?(params[:post_type].downcase)
+        params[:post_type].downcase
       else
         'post'
       end
@@ -90,7 +91,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       
       scope.order("#{col} desc, created_at desc")
       
-      if params[:state]=="drafted"
+      if params[:state] == "drafted"
         scope.all
       else
         scope.paginate(:page => (params[:page] || 1))

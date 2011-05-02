@@ -4,7 +4,7 @@
   
   #form_content{:class => "span-17"}
     %h2= ttt("#{params[:action].to_s}_feature").html_safe
-    = error_messages_for :object, :header_message => ttt(:validation_error_header, :model => resource.class.to_s.demodulize),  :message => ttt(:validation_error_message)
+    = error_messages_for :resource, :header_message => ttt(:validation_error_header, :model => resource.class.to_s.demodulize),  :message => ttt(:validation_error_message)
     = f.semantic_errors
     = f.inputs do
       = f.input :title, :input_html => { :class => "title" }

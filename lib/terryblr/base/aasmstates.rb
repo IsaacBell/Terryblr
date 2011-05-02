@@ -45,7 +45,6 @@ module Terryblr
             where("#{table_name}.state = 'published' and #{table_name}.published_at <= ?", Time.zone.now)
           }
 
-
           #
           # Callbacks
           #

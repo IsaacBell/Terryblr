@@ -22,7 +22,7 @@ module Terryblr::AdminHelper
       $(document).ready(function() {
         var uploader = new qq.FileUploader({
           element: $('##{dom_id}')[0],
-          action:  '#{url}',
+          action: '#{url}',
           allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
           minSizeLimit: 100,
           sizeLimit: #{10.megabytes},
@@ -51,9 +51,11 @@ module Terryblr::AdminHelper
             $('.#{css_parent_class} .#{css_upload}').hide()
             $('.#{css_parent_class} .upload-progress span').text('Canceled...')
           },
-          showMessage: function(message){ 
-            //alert(message); 
-            $('#flash').html(message).addClass('error flash').show()
+          showMessage: function(message){
+            $('.#{css_parent_class} .#{css_upload}').hide()
+            $('.#{css_parent_class} .upload-progress span').text('')
+            // message
+            // $('#flash').html(message).addClass('error flash').show()
           }
         })
       })
@@ -229,7 +231,6 @@ module Terryblr::AdminHelper
     }, :class => "preview") +
     content_tag(:iframe, "", :id => "#{obj}_preview", :class => "preview-pane", :src => "about:blank", :width => 1, :height => 1, :name => "#{obj}_preview")
   end
-  
 
   include Terryblr::Extendable
 end

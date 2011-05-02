@@ -2,7 +2,7 @@ module Post
   extend ActiveSupport::Concern
 
   included do
-    # puts "Dummy Post concern included !"
+    puts "Dummy Post concern included !"
   end
 
   module ClassMethods
@@ -14,5 +14,4 @@ module Post
   def greet
     "Hey you ! (from Post#greet)".tap { |msg| puts msg }
   end
-
 end
