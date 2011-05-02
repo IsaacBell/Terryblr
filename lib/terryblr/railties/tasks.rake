@@ -98,8 +98,4 @@ namespace :terryblr do
       ActiveRecord::Migration.copy( 'db/migrate', { 'terryblr' => Terryblr::Engine.new.paths['db/migrate'].first }, :on_skip => on_skip, :on_copy => on_copy)
     end
   end
-<<<<<<< .merge_file_lTLw8R
 end
-=======
-end
->>>>>>> .merge_file_70eTrQ
