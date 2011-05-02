@@ -15,7 +15,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def edit
-    Rails.logger.debug { "resource: #{resource.inspect}" }
     super do |wants|
       wants.html { render :template => "admin/terryblr/posts/edit" }
     end
