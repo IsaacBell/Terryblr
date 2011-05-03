@@ -37,7 +37,7 @@ class Terryblr::Post < Terryblr::Base
   #
   # Validations
   #
-  validates_presence_of :post_type, :unless => :pending? 
+  validates_presence_of :post_type, :unless => :pending?
   validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
   validates_length_of :social_msg, :within => 0..140, :if => :social_msg?
   validates_inclusion_of :post_type, :in => @@post_types

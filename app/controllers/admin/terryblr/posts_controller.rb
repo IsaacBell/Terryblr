@@ -21,7 +21,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def create
-    resource.post_type = post_type
     super do |success, failure|
       success.html { redirect_to admin_posts_path }
       failure.html { render :template => "admin/terryblr/posts/edit" }
@@ -59,8 +58,8 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def post_type
     @post_type ||= begin
-      if params.has_key?(:post_type) && Terryblr::Post::post_types.include?(params[:post_type].downcase)
-        params[:post_type].downcase
+      if params.has_key?(:type) && Terryblr::Post::post_types.include?(params[:type].downcase)
+        params[:type].downcase
       else
         'post'
       end

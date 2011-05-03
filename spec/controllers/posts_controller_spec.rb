@@ -40,18 +40,7 @@ describe Terryblr::PostsController do
   describe "POST /posts/preview" do
     it "shows a preview post" do
       # Send post to preview and make sure it renders with posted attributes
-      post_atts = {
-        :title => "Some cool new post",
-        :body => "<p>Some cool new post body text</p>",
-        :post_type => "post",
-        :state => "publish_now",
-        :published_at => 1.minute.ago,
-        :location_list=>["blog"],
-        :tag_list => ['test'],
-        :post_type => "post",
-        :tw_me => false,
-        :fb_me => true,
-      }
+      post_atts = Factory.attributes_for(:post_to_be_published_now)
       
       # Standard post
       post :preview, :post => post_atts
@@ -67,19 +56,50 @@ describe Terryblr::PostsController do
         end
       end
 
-      # Photos post
-      post :preview, :post => post_atts.merge({
-        :post_type => "photos",
-        :display_type => "photos"
-      })
-      response.should be_success
-
       # Video post
       post :preview, :post => post_atts.merge({
         :post_type => "video"
       })
 
       response.should be_success
+    end
+  end
+  
+  describe "POST /photos" do
+    it "creates a photos post" do
+      post_atts = Factory.attributes_for(:photos_post)
+      post :preview, :post => post_atts
+      response.should be_success
+      
+      post_atts.each_pair do |key, val|
+        case key
+        when :state
+          assigns(:resource).send(key).should eql('published')
+        when :published_at
+          assigns(:resource).send(key).to_s.should eql(val.to_s)
+        else
+          assigns(:resource).send(key).should eql(val)
+        end
+      end
+    end
+  end
+  
+  describe "POST /videos" do
+    it "creates a photos post" do
+      post_atts = Factory.attributes_for(:videos_post)
+      post :preview, :post => post_atts
+      response.should be_success
+      
+      post_atts.each_pair do |key, val|
+        case key
+        when :state
+          assigns(:resource).send(key).should eql('published')
+        when :published_at
+          assigns(:resource).send(key).to_s.should eql(val.to_s)
+        else
+          assigns(:resource).send(key).should eql(val)
+        end
+      end
     end
   end
 end
