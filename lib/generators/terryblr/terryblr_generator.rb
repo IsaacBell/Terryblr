@@ -27,7 +27,7 @@ module Terryblr
         generate('delayed_job')
         # generate('devise:install')
 
-        %w(videos photos orders posts pages likes comments messages features products line_items links votes tweets sessions sites).each do |f|
+        %w(videos photos orders posts pages likes comments messages features products line_items links votes tweets sessions sites content_parts).each do |f|
           src = "create_#{f}.rb"
           dst = "db/migrate/#{src}"
           migration_template(src, dst) rescue puts $!

@@ -54,28 +54,28 @@ describe Admin::Terryblr::PostsController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "assigns a newly created post as @post" do
-        post :create, :post => Factory.attributes_for(:drafted_post)
+
+      it "creates a newly created draft post as @post" do
+        params = Factory.attributes_for(:drafted_post)
+        params[:parts] = []
+        post :create, :post => params
         assigns(:post).valid?.should be true
       end
       
       describe "with valid photos params" do
-        it "assigns a newly created post as @post with a photo" do
-          photo = Factory(:photo) # Fake uploaded photo
-          params = Factory.attributes_for(:drafted_post).
-            merge(:photo_ids => [photo.id]). # Photo to be associated with the post
-            merge(:photos_attributes => [photo.attributes.select{|a| %w(caption id display_order).include?(a)}]) # nested Photos attributes
+
+        it "assigns a newly created post as @post with multiple content parts" do
+          
+          parts = [Factory(:content_part_text), Factory(:content_part_photos), Factory(:content_part_videos)]
+          params = Factory.attributes_for(:published_post, :published_at => 1.minute.ago).merge({
+            :parts => [],
+            :part_ids => parts.map(&:id), # Photo to be associated with the post
+            :parts_attributes => parts.map(&:attributes)  # nested Photos attributes
+          })
           post :create, :post => params
-          assigns(:post).photos.should eq [photo]
+          assigns(:post).parts.should eq parts
         end
 
-        it "assigns a newly created post as @post with many photos" do
-          photos = [Factory(:photo), Factory(:photo)] # Fake uploaded photo
-          post :create, :post => Factory.attributes_for(:drafted_post).
-            merge(:photo_ids => photos.map(&:id)). # Photos to be associated with the post
-            merge(:photos_attributes => photos.map{ |p| p.attributes.select{|a| %w(caption id display_order).include?(a)} }) # nested Photos attributes
-          assigns(:post).photo_ids.should eq photos.map(&:id)
-        end
       end
     end
   end
@@ -83,15 +83,19 @@ describe Admin::Terryblr::PostsController do
   describe "PUT update" do
     describe "with valid post params" do
       it "assigns a updated post as @post" do
+        new_body = "Updated body"
         drafted = Factory(:drafted_post)
-        put :update, :id => drafted.id, :post => { :body => "Updated body" }
+        drafted.parts.first.body = new_body
+        
+        put :update, :id => drafted.id, :post => { :part_ids => drafted.parts.map(&:id), :parts_attributes => drafted.parts.map(&:attributes) }
         assigns(:post).valid?.should be true
+        assigns(:post).parts.first.body.should eql(new_body)
       end
       
       describe "with valid post params and photos" do
         before do
           published_post = Factory(:published_post)
-          published_post.photos << Factory(:photo) # Fake uploaded photo
+          published_post.parts << Factory(:content_part_photos) # Fake uploaded photo
         end
         
         it "assigns an updated post as @post with a new photo" do

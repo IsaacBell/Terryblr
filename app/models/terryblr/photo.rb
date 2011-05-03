@@ -45,6 +45,11 @@ class Terryblr::Photo < Terryblr::Base
   # Class Methods
   #
   class << self
+    
+    def base_class
+      self
+    end
+
   end
 
   #
@@ -95,10 +100,6 @@ class Terryblr::Photo < Terryblr::Base
         }
       }
     end
-  end
-
-  def photoable_type=(sType)
-    super(sType.to_s.classify.constantize.base_class.to_s)
   end
 
   private

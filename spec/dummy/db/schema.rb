@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110404202437) do
+ActiveRecord::Schema.define(:version => 20110503105125) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(:version => 20110404202437) do
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "content_parts", :force => true do |t|
+    t.text     "body",             :default => ""
+    t.integer  "contentable_id"
+    t.string   "contentable_type"
+    t.string   "display_type"
+    t.string   "content_type"
+    t.integer  "display_order",    :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -309,20 +320,21 @@ ActiveRecord::Schema.define(:version => 20110404202437) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "videos", :force => true do |t|
-    t.integer  "post_id"
     t.string   "caption"
-    t.string   "url",           :limit => 3000
+    t.string   "url",            :limit => 3000
     t.string   "vimeo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "display_order",                 :default => 0
-    t.string   "embed",         :limit => 3000
+    t.integer  "display_order",                  :default => 0
+    t.string   "embed",          :limit => 3000
     t.integer  "width"
     t.integer  "height"
     t.string   "thumb_url"
+    t.integer  "videoable_id"
+    t.string   "videoable_type"
   end
 
-  add_index "videos", ["post_id"], :name => "index_videos_on_post_id"
+  add_index "videos", ["videoable_id"], :name => "index_videos_on_videoable_id"
 
   create_table "votes", :force => true do |t|
     t.string   "votable_type"

@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency "dynamic_form"
   s.add_dependency "formtastic"
   s.add_dependency "gattica"
+  s.add_dependency "oembed_links"
   s.add_dependency "grackle"
   s.add_dependency "haml"
   s.add_dependency "has_scope"

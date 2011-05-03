@@ -5,15 +5,15 @@ class Terryblr::ContentPart < Terryblr::Base
   #
   # Constants
   #
-  @@content_types = %w(text photos video)
+  @@content_types = %w(text photos videos)
   @@display_types = %w(photos gallery)
 
   #
   # Associatons
   #
-  belongs_to :contantable, :polymorphic => true, :touch => true
+  belongs_to :contentable, :polymorphic => true, :touch => true
   has_many :photos, :as => :photoable, :order => "display_order", :class_name => "Terryblr::Photo", :dependent => :destroy
-  has_many :videos, :order => "display_order", :dependent => :destroy, :class_name => "Terryblr::Video"
+  has_many :videos, :as => :videoable, :order => "display_order", :class_name => "Terryblr::Video", :dependent => :destroy
 
   #
   # Behaviours
@@ -30,7 +30,7 @@ class Terryblr::ContentPart < Terryblr::Base
   validates_inclusion_of :display_type, :in => @@display_types, :if => Proc.new {|c| c.content_type.photos? }
   validate :should_have_text,   :if => Proc.new {|c| c.content_type.text? }
   validate :should_have_photos, :if => Proc.new {|c| c.content_type.photos? }
-  validate :should_have_video,  :if => Proc.new {|c| c.content_type.video? }
+  validate :should_have_video,  :if => Proc.new {|c| c.content_type.videos? }
 
   #
   # Scopes
@@ -44,11 +44,7 @@ class Terryblr::ContentPart < Terryblr::Base
   # Callbacks
   #
   after_initialize :set_display_type
-
-  def set_display_type
-    self.display_type ||= @@display_types.first
-  end
-
+  before_create :add_to_queue
   before_save :fix_tiny_mce
 
   #
@@ -64,6 +60,10 @@ class Terryblr::ContentPart < Terryblr::Base
       @@display_types
     end
     
+    def base_class
+      self
+    end
+
   end
 
   #
@@ -83,18 +83,26 @@ class Terryblr::ContentPart < Terryblr::Base
 
   private
   
+  def add_to_queue
+    # Set the display order to be last
+    self.display_order = Terryblr::ContentPart.where(:contentable_id => self.contentable_id, :contentable_type => self.contentable_type).count
+  end
+
+  def set_display_type
+    self.display_type ||= @@display_types.first
+  end
+
   def should_have_text
-    
+    errors.add(:body, "should not be empty") unless body?
   end
 
   def should_have_photos
-    
+    errors.add(:photos, "should not be empty") if photos.empty?
   end
 
   def should_have_video
-    
+    errors.add(:videos, "should not be empty") if videos.empty?
   end
-  
 
   include Terryblr::Extendable
 end

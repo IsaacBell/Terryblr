@@ -1,6 +1,17 @@
-Factory.define :content_part, :class => Terryblr::ContentPart do |post|
-  post.content_type     "text"
-  post.body             "<p>I'm a simple body</p>"
-  post.display_type     ""
-  post.sequence(:display_order) { |n| n }
+Factory.define :content_part_text, :class => Terryblr::ContentPart do |part|
+  part.content_type     "text"
+  part.body             "<p>I'm a simple body</p>"
+  part.sequence(:display_order) { |n| n }
+end
+
+Factory.define :content_part_photos, :class => Terryblr::ContentPart do |part|
+  part.content_type     "photos"
+  part.photos {|p| [p.association(:photo)]}
+  part.sequence(:display_order) { |n| n }
+end
+
+Factory.define :content_part_videos, :class => Terryblr::ContentPart do |part|
+  part.content_type     "videos"
+  part.videos {|v| [v.association(:video)]}
+  part.sequence(:display_order) { |n| n }
 end

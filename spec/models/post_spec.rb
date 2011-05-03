@@ -3,16 +3,15 @@ require 'spec_helper'
 describe Terryblr::Post do
   describe "validation" do
     before do
-      @post = Factory(:published_post)
     end
 
     it "should be valid and create a post with parts" do
       post = Terryblr::Post.new(:state => "pending")
       post.valid?.should eql(false)
       post.save.should eql(false)
-      post.errors.on(:parts).nil?.should eql(false)
+      post.errors[:parts].nil?.should eql(false)
       
-      post.parts += Factory(:content_part)
+      post.parts << Factory(:content_part_text)
       post.valid?.should eql(true)
       post.save.should eql(true)
       
@@ -22,8 +21,15 @@ describe Terryblr::Post do
       post = Terryblr::Post.new(:state => "unknown")
       post.valid?.should eql(false)
       post.save.should eql(false)
-      post.errors.on(:state).nil?.should eql(false)
-      post.errors.on(:parts).nil?.should eql(false)
+      post.errors[:state].nil?.should eql(false)
+      post.errors[:parts].nil?.should eql(false)
+    end
+    
+    it "should create a post from content-part attributes" do
+      parts = [Factory(:content_part_text), Factory(:content_part_photos), Factory(:content_part_videos)]
+      post = Terryblr::Post.new(:title => "test post with parts", :state => "drafted", :part_ids => parts.map(&:id), :parts_attributes => parts.map(&:attributes))
+      post.valid?.should eql(true)
+      post.save.should eql(true)
     end
     
   end

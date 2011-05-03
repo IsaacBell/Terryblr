@@ -69,13 +69,8 @@ class Terryblr::Post < Terryblr::Base
   #
   # Callbacks
   #
-  after_initialize :set_display_type
   after_initialize :setup_social_network
   after_initialize :set_diary
-
-  def set_display_type
-    self.display_type ||= @@display_types.first
-  end
 
   def setup_social_network
     # Setup social network callback flags
@@ -225,7 +220,7 @@ class Terryblr::Post < Terryblr::Base
   end
   
   def content_parts
-    errors.add(:parts, "cannot be empty. Add some content!") if parts.empty?
+    errors.add(:parts, "cannot be empty. Add some content!") if parts.empty? and published?
   end
 
   def do_publish(msg = nil)

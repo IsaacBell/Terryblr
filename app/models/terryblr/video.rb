@@ -44,6 +44,8 @@ class Terryblr::Video < Terryblr::Base
           self.thumb_url = "http://i1.ytimg.com/vi/#{$1}/default.jpg"
         end
       else
+        require 'oembed_links'
+        OEmbed.register_yaml_file(File.join(Rails.root, 'config/oembed.yml'))
         OEmbed.transform(url) do |r, url|
           r.from?(:youtube) { |resp| 
             self.width     = resp["width"].to_i 
