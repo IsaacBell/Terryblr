@@ -1,8 +1,10 @@
 class Admin::Terryblr::PhotosController < Terryblr::AdminController
-  
+
   helper 'admin/terryblr/dropbox'
   include Admin::Terryblr::DropboxHelper
   skip_before_filter :verify_authenticity_token, :only => [:create]
+
+  respond_to :html, :js
 
   def create
     if params[:dropbox_path]
@@ -62,12 +64,8 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
   private
 
   def photoable
-    @photoable ||= if params[:post_id]
-      current_site.posts.find_by_slug(params[:post_id]) || current_site.posts.find_by_id(params[:post_id].to_i) || current_site.posts.new
-    elsif params[:product_id]
-      Terryblr::Product.find_by_slug(params[:product_id]) || Terryblr::Product.find_by_id(params[:product_id].to_i) || Terryblr::Product.new
-    elsif params[:page_id]
-      current_site.pages.find_by_slug(params[:page_id]) || current_site.pages.find_by_id(params[:page_id].to_i) || current_site.pages.new
+    @photoable ||= if params[:part_id]
+      Terryblr::ContentPart.find_by_id(params[:part_id].to_i) || Terryblr::ContentPart.new
     elsif params[:feature_id]
       current_site.features.find_by_id(params[:feature_id].to_i) || current_site.features.new
     end

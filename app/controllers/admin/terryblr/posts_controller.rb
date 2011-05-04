@@ -21,7 +21,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def create
-    resource.post_type = post_type
     super do |success, failure|
       success.html { redirect_to admin_posts_path }
       failure.html { render :template => "admin/terryblr/posts/edit" }
@@ -90,7 +89,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       
       scope.order("#{col} desc, created_at desc")
       
-      if params[:state]=="drafted"
+      if params[:state] == "drafted"
         scope.all
       else
         scope.paginate(:page => (params[:page] || 1))

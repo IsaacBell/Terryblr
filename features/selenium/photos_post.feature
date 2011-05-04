@@ -10,7 +10,6 @@ Feature: Add a photo gallery
   #     | non_admin@lovethe88.com  | normal     | user              | ******** |  false  |
   #     | non_admin2@lovethe88.com | normal     | user 2            | ******** |  false  |
   #     | deletable@lovethe88.com  | deletable  | user              | ******** |  true   |
-  
 
   @javascript
   @firebug

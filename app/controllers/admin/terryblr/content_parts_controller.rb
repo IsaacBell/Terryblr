@@ -14,11 +14,6 @@ class Admin::Terryblr::ContentPartsController < Terryblr::AdminController
 
   private
 
-  def post
-    @post ||= Terryblr::Post.find_by_id(params[:post_id]) || 
-              Terryblr::Post.new
-  end
-
   def collection
     @collection ||= post.parts.all
   end

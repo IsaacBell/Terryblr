@@ -6,12 +6,12 @@ module Admin::Terryblr::PostsHelper
       :message => ttt(:validation_error_message)
   end
 
-  def edit_videos_for_assoc(object)
+  def edit_videos_for_assoc(resource)
     list_id = "videos_list"
-    if object and object.respond_to?(:videos)
+    if resource and resource.respond_to?(:videos)
       content_tag(:div, :id => list_id, :class => "media-list") do
         content_tag(:ul, :id => "#{list_id}_ul") do
-          object.videos.map do |video|
+          resource.videos.map do |video|
             # Each video
             width = 186
             height = 124
@@ -22,8 +22,8 @@ module Admin::Terryblr::PostsHelper
               (embed ? "" : javascript_tag(%Q{
                 $('##{video.dom_id}').flash({ src: '#{video.embed_url}', width: #{width}, height: #{height} });
               })) +
-              text_area_tag("#{object.class.to_s.downcase}[videos_attributes][][caption]", video.caption) +
-              hidden_field_tag("#{object.class.to_s.downcase}[videos_attributes][][id]", video.id)
+              text_area_tag("#{resource.class.to_s.downcase}[videos_attributes][][caption]", video.caption) +
+              hidden_field_tag("#{resource.class.to_s.downcase}[videos_attributes][][id]", video.id)
             end
           end
         end +

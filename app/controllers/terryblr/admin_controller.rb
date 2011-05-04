@@ -32,7 +32,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
   before_filter :set_resource_request_name
 
   layout 'admin'
-
+  
   private
 
   def set_resource_request_name
@@ -63,6 +63,11 @@ class Terryblr::AdminController < Terryblr::ApplicationController
     end
     session[:site_name] = @current_site.name
     @current_site
+  end
+  
+  def post
+    @post ||= Terryblr::Post.find_by_id(params[:post_id]) || 
+              Terryblr::Post.new
   end
 
   def set_expires
