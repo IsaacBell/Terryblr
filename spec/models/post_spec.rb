@@ -5,24 +5,35 @@ describe Terryblr::Post do
     before do
     end
 
-    it "should be valid and create a post with parts" do
-      post = Terryblr::Post.new(:state => "pending")
-      post.valid?.should eql(false)
-      post.save.should eql(false)
-      post.errors[:parts].nil?.should eql(false)
-      
-      post.parts << Factory(:content_part_text)
+    it "should be valid and create a post without parts" do
+      post = Terryblr::Post.new(:state => "drafted")
+      # puts post.errors.full_messages.to_sentence unless post.valid?
       post.valid?.should eql(true)
       post.save.should eql(true)
-      
     end
 
-    it "should not be valid with unknown state and post_type" do
-      post = Terryblr::Post.new(:state => "unknown")
+    it "should be valid and create a post with parts" do
+      post = Terryblr::Post.new(:state => "published")
       post.valid?.should eql(false)
       post.save.should eql(false)
-      post.errors[:state].nil?.should eql(false)
       post.errors[:parts].nil?.should eql(false)
+      post.errors[:title].nil?.should eql(false)
+      
+      post.title = "My test post"
+      post.parts << Factory(:content_part_text)
+      # puts post.errors.full_messages.to_sentence unless post.valid?
+      post.valid?.should eql(true)
+      post.save.should eql(true)
+    end
+
+    it "should not allow invalid state" do
+      post = Terryblr::Post.new(:state => "unknown")
+      post.state.to_sym.should be :pending
+    end
+
+    it "should allow valid state" do
+      post = Terryblr::Post.new(:state => "drafted")
+      post.state.to_sym.should be :drafted
     end
     
     it "should create a post from content-part attributes" do

@@ -28,9 +28,9 @@ class Terryblr::Post < Terryblr::Base
   #
   # Validations
   #
-  validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
-  validates_length_of :social_msg, :within => 0..140, :if => :social_msg?
-  validate :state_status
+  validates :title, :presence => true, :if => :published?
+  validates :slug, :presence => { :message => "can't be blank. Did you set a title?" }, :if => :published?
+  validates :social_msg, :length => { :within => 0..140 }, :if => :social_msg?
   validate :content_parts
 
   #
@@ -205,20 +205,6 @@ class Terryblr::Post < Terryblr::Base
   
   private
 
-  def state_status
-    # Validations depending on post-type
-    unless pending?
-      case state.to_sym
-      when :post
-        errors.add(:body, "cannot be empty") unless body?
-      when :gallery
-        errors.add(:photos, "cannot be empty") if photos.empty?
-      when :video
-        errors.add(:videos, "cannot be empty") if videos.empty?
-      end
-    end
-  end
-  
   def content_parts
     errors.add(:parts, "cannot be empty. Add some content!") if parts.empty? and published?
   end

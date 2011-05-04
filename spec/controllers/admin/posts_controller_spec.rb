@@ -10,7 +10,7 @@ describe Admin::Terryblr::PostsController do
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     sign_in Factory.create(:user_admin)
   end
-
+  
   describe "GET index" do
     before do
       Factory(:drafted_post, :created_at => 1.month.ago)
@@ -18,17 +18,17 @@ describe Admin::Terryblr::PostsController do
       Factory(:published_post)
       Factory(:published_post)
     end
-
+  
     it "assigns all published posts as @posts" do
       get :index
       assigns(:posts).all? { |post| post.published?.should be true }
     end
-
+  
     describe "drafted posts" do
       before do
         get :index, :state => "drafted", :month => Date.today.month, :year => Date.today.year
       end
-
+  
       it "assigns only drafted posts as @posts" do
         assigns(:posts).empty?.should_not be true
         assigns(:posts).all? { |post| post.drafted?.should be true }
@@ -36,21 +36,22 @@ describe Admin::Terryblr::PostsController do
     end
   end
 
-#   describe "GET new" do
-#     it "assigns a new post as @post" do
-#       Terryblr::Post.stub(:new) { mock_post }
-#       get :new
-#       assigns(:post).should be(mock_post)
-#     end
-#   end
-# 
-#   describe "GET edit" do
-#     it "assigns the requested post as @post" do
-#       Terryblr::Post.stub(:find).with("37") { mock_post }
-#       get :edit, :id => "37"
-#       assigns(:post).should be(mock_post)
-#     end
-#   end
+  describe "GET new" do
+    it "assigns a new post as @post" do
+      get :new, :type => 'photos'
+      response.should be_success
+      assigns(:post).class.should be Terryblr::Post
+    end
+  end
+
+  describe "GET edit" do
+    it "assigns the requested post as @post" do
+      post = Factory(:published_post)
+      get :edit, :id => post.id
+      response.should be_success
+      assigns(:post).should eql post
+    end
+  end
 
   describe "POST create" do
     describe "with valid params" do
@@ -66,14 +67,25 @@ describe Admin::Terryblr::PostsController do
 
         it "assigns a newly created post as @post with multiple content parts" do
           
-          parts = [Factory(:content_part_text), Factory(:content_part_photos), Factory(:content_part_videos)]
-          params = Factory.attributes_for(:published_post, :published_at => 1.minute.ago).merge({
-            :parts => [],
-            :part_ids => parts.map(&:id), # Photo to be associated with the post
-            :parts_attributes => parts.map(&:attributes)  # nested Photos attributes
+          photo = Factory(:photo)
+          video = Factory(:video)
+          parts = []
+          parts << Factory.attributes_for(:content_part_text).symbolize_keys
+          parts << Factory.attributes_for(:content_part_photos).symbolize_keys.update(:photo_ids => [photo.id], :photos => [], :photos_attributes => [photo.attributes.symbolize_keys])
+          parts << Factory.attributes_for(:content_part_videos).symbolize_keys.update(:video_ids => [video.id], :videos => [], :videos_attributes => [video.attributes.symbolize_keys])
+
+          params = Factory.attributes_for(:published_post, :published_at => 1.minute.ago).symbolize_keys
+          params.delete(:parts)
+          params.update({
+            :part_ids => [],
+            :parts_attributes => parts  # nested Photos attributes
           })
           post :create, :post => params
-          assigns(:post).parts.should eq parts
+
+          # puts assigns(:post).errors.full_messages.to_sentence unless assigns(:post).valid?
+          # puts assigns(:post).parts.map{|p|p.errors.full_messages.to_sentence}.join('; ') unless assigns(:post).valid?
+          response.should be_redirect
+          response.should redirect_to(admin_posts_url)
         end
 
       end
@@ -106,19 +118,12 @@ describe Admin::Terryblr::PostsController do
       end
     end
   end
-
-# 
-#   describe "DELETE destroy" do
-#     it "destroys the requested post" do
-#       Terryblr::Post.stub(:find).with("37") { mock_post }
-#       mock_post.should_receive(:destroy)
-#       delete :destroy, :id => "37"
-#     end
-# 
-#     it "redirects to the posts list" do
-#       Terryblr::Post.stub(:find) { mock_post }
-#       delete :destroy, :id => "1"
-#       response.should redirect_to(admin_posts_url)
-#     end
-#   end
+  
+  describe "DELETE destroy" do
+    it "redirects to the posts list" do
+      post = Factory(:published_post)
+      delete :destroy, :id => post.id
+      response.should redirect_to(admin_posts_url)
+    end
+  end
 end

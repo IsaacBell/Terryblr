@@ -11,6 +11,16 @@ class Admin::Terryblr::ContentPartsController < Terryblr::AdminController
       render :nothing => true, :status => :error
     end
   end
+  
+  def destroy
+    super do |wants|
+      wants.html { head :ok }
+      wants.xml  { head :ok }
+      wants.json { head :ok }
+      wants.js
+    end
+  end
+  
 
   private
 

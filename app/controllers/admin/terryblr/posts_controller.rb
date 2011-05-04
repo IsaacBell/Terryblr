@@ -1,5 +1,4 @@
 class Admin::Terryblr::PostsController < Terryblr::AdminController
-  before_filter :post_type, :only => [:new]
   helper 'admin/terryblr/dropbox'
 
   def index
@@ -7,11 +6,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     super do |wants|
       wants.html { render :template => "admin/terryblr/posts/index" }
     end
-  end
-
-  def new
-    resource.post_type = post_type
-    super
   end
 
   def edit
@@ -54,16 +48,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
 
   def show_as_dash
     @show_as_dash ||= true
-  end
-
-  def post_type
-    @post_type ||= begin
-      if params.has_key?(:type) && Terryblr::Post::post_types.include?(params[:type].downcase)
-        params[:type].downcase
-      else
-        'post'
-      end
-    end
   end
 
   def resource

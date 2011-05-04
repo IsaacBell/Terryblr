@@ -11,4 +11,6 @@ group :development, :test do
   gem 'capybara'
   gem 'awesome_print'
   gem 'thin'
+  gem 'growl'
+  gem 'ruby-growl'
 end
