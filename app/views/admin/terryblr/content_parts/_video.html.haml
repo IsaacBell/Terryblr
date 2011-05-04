@@ -1,0 +1,15 @@
+/ %li.video-upload
+/   %label Terryblr::Video Upload
+/   =multi_file_uploader(:url => admin_post_videos_path(resource, :format => :js), :css_parent_class => "video-upload", :file_types => "*.mov;*.avi;*.mpg;*.3gp;*.m4v;")
+/   %p.inline-hints.clear Upload films from your computer
+/ %li.video-or
+/   %span or
+%li.string.optional.video-url
+  %label{:for => "post_videos_attributes__url"} #{ttt :'.video_url'}
+  = text_field_tag "video_url"
+  = link_to ttt(:'.save'), admin_videos_path(:format => "json"), :submit => "video_url", :after => "$('.video-url input').val(null)", :id => "save_video_btn", :remote => true
+  %p.inline-hints #{tt :'.paste_in_a_URL_to_a_vimeo_or_youtube_video'}
+%li.video-list
+  = edit_videos_for_assoc(resource)
+  %p.inline-hints.clear #{ttt :'.reorder_and_caption_videos'}
+
