@@ -28,10 +28,6 @@ class Terryblr::Post < Terryblr::Base
   #
   # Validations
   #
-<<<<<<< HEAD
-=======
-  validates_presence_of :post_type, :unless => :pending?
->>>>>>> master
   validates_presence_of :slug, :unless => :pending?, :message => "can't be blank. Did you set a title?"
   validates_length_of :social_msg, :within => 0..140, :if => :social_msg?
   validate :state_status
