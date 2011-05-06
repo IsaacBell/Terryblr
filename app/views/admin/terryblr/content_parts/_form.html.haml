@@ -1,0 +1,8 @@
+- post ||= Terryblr::Post.new
+- part ||= resource
+- f = Formtastic::SemanticFormHelper.builder.new(:post, post, self, {}, nil)
+= f.inputs :for => [:parts, part] do |fp|
+  = fp.input :id, :as => :hidden unless part.new_record?
+  = fp.input :content_type, :as => :hidden
+  = fp.input :display_order, :as => :hidden
+  = render :partial => "admin/terryblr/content_parts/#{part.content_type}", :locals => {:f => fp}

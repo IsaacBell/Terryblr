@@ -29,10 +29,10 @@ Rails.application.routes.draw do
         collection do
           post :reorder
         end
-        resources :videos, :controller => "terryblr/videos"
-        resources :photos, :controller => "terryblr/photos"
       end
     end
+    resources :videos, :controller => "terryblr/videos"
+    resources :photos, :controller => "terryblr/photos"
     resources :features, :controller => "terryblr/features" do
       collection do
         get  :filter

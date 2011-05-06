@@ -6,9 +6,9 @@
   %p.inline-hints.clear= tt('.upload_hint')
 %li.photos-display-type
   %label= ttt('.gallery_display')
-  - Terryblr::Post.display_types.each do |dt|
+  - Terryblr::ContentPart.display_types.each do |dt|
     %span{:class => "#{dt} #{'selected' if resource.display_type==dt}"}
-      = radio_button :post, :display_type, dt, :title => dt.humanize.titleize
+      = radio_button_tag "post[parts_attributes][0][display_type]", dt, :title => dt.humanize.titleize
       = image_tag "admin/photos-display-type-#{dt}.png", :alt => dt.humanize.titleize
       = dt.humanize.titleize
   %p.inline-hints.clear= ttt(:".show_photos_as_a_slideshow_gallery_or_stacked_above_each_other")

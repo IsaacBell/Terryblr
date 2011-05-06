@@ -78,6 +78,8 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
     @tweets = Terryblr::Tweet.analytics(@since)
     @tweet_exposure = Terryblr::Tweet.exposure(@since)
     @tweet_reach = Terryblr::Tweet.reach(@since)
+    
+    
   end
 
   def search

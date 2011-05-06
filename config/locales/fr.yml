@@ -113,11 +113,14 @@ fr:
             message: message
             published_on: "Publié le"
             tags: tags
+        content_parts:
+          text:
+            add_inline_photo: + Ajouter une photo
           photos:
             gallery_display: affichage de la gallerie
             show_photos_as_a_slideshow_gallery_or_stacked_above_each_other: "Montrer les photos avec un diaporama ou superposées les unes sur les autres."
             upload_hint: "Uploadez des photos, puis ré-ordonnez et nommez-les"
-          video:
+          videos:
             paste_in_a_URL_to_a_vimeo_or_youtube_video: "Coller une URL de vidéo vimeo ou youtube"
             reorder_and_caption_videos: "Réorganiser et renommer les vidéos"
             video_url: "URL de la vidéo"

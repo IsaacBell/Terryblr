@@ -142,14 +142,13 @@ module Terryblr::AdminHelper
 
   def post_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :thumb)
     param_name = (object.is_a?(String) ? object : object.class.to_s).demodulize.downcase
-    attr_name  = 'photos_attributes]['
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
       link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
       image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
-      text_area_tag("#{param_name}[#{attr_name}][caption]", photo.caption) +
-      hidden_field_tag("#{param_name}[photo_ids][]", photo.id) +
-      hidden_field_tag("#{param_name}[#{attr_name}][id]", photo.id) +
-      hidden_field_tag("#{param_name}[#{attr_name}][display_order]", photo.display_order)
+      hidden_field_tag("post[parts_attributes][0][photo_ids][]", photo.id) +
+      text_area_tag("post[parts_attributes][0][photos_attributes][][caption]", photo.caption) +
+      hidden_field_tag("post[parts_attributes][0][photos_attributes][][id]", photo.id) +
+      hidden_field_tag("post[parts_attributes][0][photos_attributes][][display_order]", photo.display_order)
     end
   end
 
@@ -225,7 +224,8 @@ module Terryblr::AdminHelper
             hide().
             appendTo($('#body'));
           form.find('.wym_box').remove();
-          form.find('.rich_text textarea').val(jQuery.wymeditors(0).html());
+          if (jQuery.wymeditors(0))
+            form.find('.rich_text textarea').val(jQuery.wymeditors(0).html());
           form.submit().remove();
         } })
     }, :class => "preview") +

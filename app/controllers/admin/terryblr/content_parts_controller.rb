@@ -1,4 +1,15 @@
 class Admin::Terryblr::ContentPartsController < Terryblr::AdminController
+  helper 'admin/terryblr/dropbox'
+  helper 'admin/terryblr/posts'
+
+  def new
+    if Terryblr::ContentPart.content_types.include?(params[:content_type])
+      resource.content_type = params[:content_type]
+    end
+    super do |wants|
+      wants.js
+    end
+  end
 
   def reorder
     if params[:parts_list].is_a?(Array)

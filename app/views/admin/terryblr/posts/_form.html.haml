@@ -4,16 +4,17 @@
     %h2= ttt("new_post").html_safe
     = error_messages_for_post
     = f.semantic_errors
-    = f.inputs do
+    - f.inputs do
       = f.input :post_type, :as => :hidden
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
-      %li#content_parts_container
-        %ul
-          - if resource.parts.empty?
-            %li.empty-message= ttt("add_content_parts").html_safe
-          - resource.parts.each do |part|
-            %li= render :partial => 'admin/terryblr/content_parts/#{part.content_type}', :locals => {:f => f, :part => part }
-
+    #content_parts_container
+      - if resource.parts.empty?
+        .empty-message= ttt("add_content_parts").html_safe
+      - else
+        - resource.parts.each do |part|
+          = render :partial => "admin/terryblr/content_parts/form", :locals => {:post => resource, :part => part}
+      = sortable_element("#content_parts_container fieldset", :axis => false, :update => "function() { $('#content_parts_container input[id$=display_order]').each(function(i, el){ el.value = i }) }")
+        
     = render :partial => 'admin/terryblr/posts/form_buttons', :locals => {:f => f}
         
   = render :partial => 'admin/terryblr/posts/form_sidebar', :locals => {:f => f}

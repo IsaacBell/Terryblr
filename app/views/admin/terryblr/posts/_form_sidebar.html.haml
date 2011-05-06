@@ -14,7 +14,7 @@
       %label= ttt("content_parts_drops")
       %ul#content_parts_drops_list
         - Terryblr::ContentPart.content_types.each do |ct|
-          %li.content_parts_drop{:id => "#{ct}_content_part", :'data-remote-path' => new_admin_post_content_part_path(resource, :content_type => ct, :format => :js)}
+          %li.content_parts_drop{:id => "#{ct}_content_part", :'data-remote-path' => new_admin_post_content_part_path(resource.new_record? ? '-' : resource.id, :content_type => ct, :format => :js)}
             %span= ct.humanize
     
     / Tags
