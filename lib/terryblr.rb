@@ -43,6 +43,7 @@ require "paperclip"
 require "dynamic_form"
 require "gattica"
 require "delayed_job"
+require 'mini_fb'
 
 [ 'terryblr/configuration',
   'terryblr/extendable',

@@ -46,40 +46,49 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
       raise CanCan::AccessDenied
     end
     @show_as_dash = true
-    index!
-  end
-
-  def analytics
-    @since = 1.month.ago.to_date
-    # Visitors
-    gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
-    @reports = {
-      :visitors => {
-        :dimensions => %w(day),
-        :metrics => %w(visits)
-      },
-      :top_referrers => {
-        :dimensions => %w(source),
-        :metrics => %w(visits),
-        :sort => %w(-visits)
-      },
-      :top_landing_pages => {
-        :dimensions => %w(landingPagePath),
-        :metrics => %w(uniquePageviews),
-        :sort => %w(-uniquePageviews)
-      }
-    }
-    @reports.each do |k, v|
-      v[:results] = gs.get(v.update({ :start_date => @since.to_s, :end_date => Date.today.to_s}))
-    end
+    @reports = google_analytics_reports
 
     # Twitter mentions
     # Group by the date of the tweet
-    @tweets = Terryblr::Tweet.analytics(@since)
+    @since = 1.month.ago.to_date
     @tweet_exposure = Terryblr::Tweet.exposure(@since)
     @tweet_reach = Terryblr::Tweet.reach(@since)
-    
-    
+  end
+
+  def analytics_data
+    # TODO: parameterize the dates
+    @since = 1.month.ago.beginning_of_day.to_date
+    @until = Date.today
+    @report_name = report_name = params[:report].to_sym
+
+    case @report_name
+    when *google_analytics_reports.keys
+      @report = google_analytics_reports[@report_name].update({ :start_date => @since.to_s, :end_date => @until.to_s})
+      cache_key = "analytics_data:#{@report_name}:#{@since}"
+      cached = Rails.cache.fetch(cache_key,  :expires_in => 30.minute) do
+        fetched = with_profiling "getting report #{report_name.inspect} from Google analytics" do
+          gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
+          gs.get(@report)
+        end
+        Marshal.dump fetched
+      end
+      @report[:results] = Marshal.restore StringIO.new cached
+    when :tweets
+      @tweets = Terryblr::Tweet.analytics(@since)
+    when :fb_page_views
+      # Facebook insights API
+      if Settings.facebook && Settings.facebook.page_token && Settings.facebook.page_id
+        @fb_page_views = fb.get(Settings.facebook.page_id, :type => 'insights/page_views/day', :params => {:since => @since})
+      end
+    when :fb_page_likes
+      # Facebook insights API
+      if Settings.facebook && Settings.facebook.page_token && Settings.facebook.page_id
+        @fb_page_likes = fb.get(Settings.facebook.page_id, :type => 'insights/page_like_adds/day', :params => {:since => @since})
+      end
+    else
+      raise RuntimeError.new "UnknownReport: #{@report_name.inspect}"
+    end
+    render "_#{@report_name}_analytics_tbody", :layout => nil
   end
 
   def search
@@ -96,7 +105,7 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
     }
     respond_to do |wants|
       wants.html {
-       render :action => "terryblr/admin_home/search"
+       render :template => "_terryblr/admin_home/search"
       }
     end
   end
@@ -137,6 +146,40 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   def setup_only_once!
     raise "Terryblr is already set up !" if terryblr_setup?
   end
+
+  def google_analytics_reports
+    # Visitors
+    {
+      :visitors => {
+        :dimensions => %w(day),
+        :metrics => %w(visits)
+      },
+      :top_referrers => {
+        :dimensions => %w(source),
+        :metrics => %w(visits),
+        :sort => %w(-visits)
+      },
+      :top_landing_pages => {
+        :dimensions => %w(landingPagePath),
+        :metrics => %w(uniquePageviews),
+        :sort => %w(-uniquePageviews)
+      }
+    }
+  end
+
+  def with_profiling activity
+    puts Rails.logger.info "#{activity.capitalize}..."
+    prof_start = Time.now.to_f
+    res = yield
+    res.tap {
+      puts Rails.logger.info "Done #{activity} in #{Time.now.to_f - prof_start} seconds."
+    }
+  end
+  
+  def fb
+    @fb ||= MiniFB::OAuthSession.new(Settings.facebook.page_token)
+  end
+  
 
   include Terryblr::Extendable
 end
