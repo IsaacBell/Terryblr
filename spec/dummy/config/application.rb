@@ -1,3 +1,5 @@
+puts ">> application.rb"
+puts "Booting Rails..."
 require File.expand_path('../boot', __FILE__)
 
 require "active_model/railtie"
@@ -6,8 +8,11 @@ require "action_controller/railtie"
 require "action_view/railtie"
 require "action_mailer/railtie"
 
+puts "Setting up Bundler..."
 Bundler.setup
+puts "Requiring Terryblr..."
 require "terryblr"
+puts "Terryblr loaded."
 
 module Dummy
   class Application < Rails::Application
@@ -43,3 +48,5 @@ module Dummy
     config.filter_parameters += [:password]
   end
 end
+
+puts "<< application.rb"
