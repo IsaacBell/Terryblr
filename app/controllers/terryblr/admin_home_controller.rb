@@ -79,7 +79,7 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
     when :fb_page_views
       # Facebook insights API
       if Settings.facebook && Settings.facebook.page_token && Settings.facebook.page_id
-        @fb_page_likes = fb.get(Settings.facebook.page_id, :type => 'insights/page_like_adds/day', :params => {:since => @since})
+        @fb_page_views = fb.get(Settings.facebook.page_id, :type => 'insights/page_views/day', :params => {:since => @since})
       end
     when :fb_page_likes
       # Facebook insights API
