@@ -78,6 +78,13 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
     @tweets = Terryblr::Tweet.analytics(@since)
     @tweet_exposure = Terryblr::Tweet.exposure(@since)
     @tweet_reach = Terryblr::Tweet.reach(@since)
+    
+    # Facebook insights API
+    if Settings.facebook && Settings.facebook.page_token && Settings.facebook.page_id
+      @fb = MiniFB::OAuthSession.new(Settings.facebook.page_token)
+      @fb_page_views = @fb.get(Settings.facebook.page_id, :type => 'insights/page_views/day', :params => {:since => @since})
+      @fb_page_likes = @fb.get(Settings.facebook.page_id, :type => 'insights/page_like_adds/day', :params => {:since => @since})
+    end
   end
 
   def search

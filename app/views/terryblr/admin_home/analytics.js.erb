@@ -1,2 +1,7 @@
+try {
 $("#dashboard").html("<%= escape_javascript(render(:partial => 'analytics')) %>");
 if(typeof(displayAnalyticsGraph)=='function') { displayAnalyticsGraph(); }
+} catch (err) {
+console.log(err.description)
+console.debug(err)
+}

@@ -46,10 +46,10 @@ en:
           password_confirmation: confirmation
           create: create
         analytics:
-          fb_page_likes: "Number of likes on Facebook"
-          fb_page_total_likes: "Total of likes on Facebook"
-          fb_page_total_views: "Total of page views on Facebook"
-          fb_page_views: "Number of page views on Facebook"
+          fb_page_likes: "Number of Facebook likes"
+          fb_page_total_likes: "Facebook likes"
+          fb_page_total_views: "Facebook page views"
+          fb_page_views: "Number of Facebook page views"
           top_landing_pages: top landing pages
           top_referrers: top referrers
           tweet_exposure: tweet exposure
