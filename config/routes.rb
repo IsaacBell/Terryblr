@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   match "/admin", :to => "terryblr/admin_home#index", :as => "admin"
   match "/admin/search", :to => "terryblr/admin_home#search", :as => :admin_search
   match '/admin/analytics.(:format)', :to => "terryblr/admin_home#analytics", :as => :admin_analytics
+  match '/admin/analytics_data/:report', :to => "terryblr/admin_home#analytics_data", :as => :admin_analytics_data
   match '/admin/switch_site/:site', :to => "terryblr/admin_home#switch_site", :as => :admin_switch_site
   get   '/admin/setup/', :to => "terryblr/admin_home#setup", :as => :terryblr_setup
   post  '/admin/setup/', :to => "terryblr/admin_home#setup!", :as => :terryblr_do_setup

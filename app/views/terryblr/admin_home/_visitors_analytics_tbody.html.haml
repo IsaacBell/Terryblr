@@ -1,11 +1,10 @@
-- rep        = @reports[rep_title.to_sym]
-- data       = rep[:results]
-- dimensions = rep[:dimensions]
-- metrics    = rep[:metrics]
-- range      = (rep[:start_date].to_date .. rep[:end_date].to_date).to_a
+- data       = @report[:results]
+- dimensions = @report[:dimensions]
+- metrics    = @report[:metrics]
+- range      = (@report[:start_date].to_date .. @report[:end_date].to_date).to_a
+/ Terryblr::Order visitors by date
 %tbody{:units => 'visit'}
   - range.each do |date|
-    / Terryblr::Order visitors by date
     - point = data.points.detect{|p|p.dimensions.first.values.first.to_i == date.mday}
     - next unless point
     %tr

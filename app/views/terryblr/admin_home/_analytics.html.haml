@@ -1,4 +1,28 @@
+:css
+  .loading_overlay {
+    border: 1px dotted green
+    text-align: center;
+  }
+
+- content_for :head do
+  :javascript
+    function loadAnalyticsAsync(table_id, render_graph) {
+      var table = $("#" + table_id);
+      var url = table.attr('rel');
+      console.log("loading ", table_id, "with URL", url);
+      $.get(url, {}, function(data, status, xhr){
+        $('.loading_overlay', table.parent('.chart')).hide();
+        console.log("Received response:", url, status, table);
+        table.append(data);
+        console.log("render_graph:", render_graph)
+        if(render_graph) {
+          drawTimeSeries(table);
+        }
+      });
+    }
+
 - %w(visitors tweets fb_page_views fb_page_likes).each do |rep_title|
+  - report_id = rep_title + "_data"
   - if rep_title=='tweets'
     .chart{:class => 'tweet-reach'}
       %h3 
@@ -24,21 +48,29 @@
     .clear
 
   .chart{:class => rep_title}
-    %h3= ttc(".#{rep_title}")
+    %h3= ttt(".#{rep_title}")
+    %div.loading.loading_overlay
+      %br
+      %center #{image_tag("admin/dashboard-indicator.gif")}
     .graph_canvas{:id => "#{rep_title}_graph"}
-    %table.graph_data{:id => "#{rep_title}_data"}
+    %table.graph_data{:id => report_id, :rel => admin_analytics_data_path(:report => rep_title)}
       %thead
         %tr
           %th= ttt(:value)
           %th #
-      = render :partial => "terryblr/admin_home/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}
+      - content_for :head do
+        :javascript
+          $(function(){ loadAnalyticsAsync("#{report_id}", true); })
 
 - %w(top_referrers top_landing_pages).each do |rep_title|
+  - report_id = rep_title + "_data"
   .chart{:class => rep_title}
-    %h3= ttt :".#{rep_title}"
-    %table{:id => "#{rep_title}_data"}
+    %h3= ttt(".#{rep_title}")
+    %table{:id => report_id, :rel => admin_analytics_data_path(:report => rep_title)}
       %thead
         %tr
           %th= ttt(:value)
           %th #
-      = render :partial => "terryblr/admin_home/#{rep_title}_analytics_tbody", :locals => {:rep_title => rep_title}
+    - content_for :head do
+      :javascript
+        $(function(){ loadAnalyticsAsync("#{report_id}", false); })

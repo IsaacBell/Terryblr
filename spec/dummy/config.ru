@@ -1,11 +1,16 @@
 # This file is used by Rack-based servers to start the application.
+puts ">> config.ru"
+
+puts "Requiring envitonment.rb..."
 require ::File.expand_path('../config/environment',  __FILE__)
+puts "Envitonment.rb loaded..."
 
-ENV['CURRENT_SERVER'] = Rails::Server.new.server.to_s rescue ""
-ENV['ASYNC_SERVER?'] = 'true' if ENV['CURRENT_SERVER'] == 'Rack::Handler::Thin'
 
-if ENV['ASYNC_SERVER?']
+if defined? Thin
+  puts "Thin detected."
   require 'rack/fiber_pool'
+  puts "Removing Rack::Lock from the middleware list"
+  Dummy::Application.config.middleware.delete Rack::Lock
 
   if ENV['TRACE_FIBERS']
     Fiber.current.instance_variable_set :@name, 'root'
@@ -38,11 +43,16 @@ if ENV['ASYNC_SERVER?']
   require "em-http"
   require "em-net-http"
 
+  use Rack::CommonLogger
+  use Rack::ShowExceptions
   use Rack::FiberPool
 
 else
   puts "\n\nHey awesome, take me for a ride in asynchronous land ! \n\tbundle exec rails s thin\n\n\n"
 end
 
+puts "Rails Middleware stack: #{Dummy::Application.config.middleware.inspect}"
 
+puts "Applicaiton Run !"
 run Dummy::Application
+puts "<< config.ru"
