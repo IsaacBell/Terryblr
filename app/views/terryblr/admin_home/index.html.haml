@@ -28,5 +28,4 @@
 = render :partial => "terryblr/admin/content_nav"
 
 #dashboard
-  %p.loading #{image_tag("admin/dashboard-indicator.gif")} Loading Analytics...
-  = javascript_tag "$.get('#{admin_analytics_path(:format => "js")}')"
+  = render(:partial => 'analytics')
