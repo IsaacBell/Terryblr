@@ -16,17 +16,17 @@ class CreateContentParts < ActiveRecord::Migration
     remove_column :videos, :post_id
     
     # Migrate posts bodies to content-parts
-    Terryblr::Post.post.all.where("body is not null").each do |p|
+    Terryblr::Post.all.where("post_type = 'post' AND body is not null").each do |p|
       p.parts.create(:content_type => 'text', :body => p.body)
     end
 
     # Migrate posts bodies to content-parts
-    Terryblr::Post.photos.all.each do |p|
+    Terryblr::Post.all.where("post_type = 'photos'").each do |p|
       p.parts.create(:content_type => 'photos', :photos => p.photos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
 
-    Terryblr::Post.videos.all.each do |p|
+    Terryblr::Post.where("post_type = 'videos'").all.each do |p|
       p.parts.create(:content_type => 'videos', :photos => p.videos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
