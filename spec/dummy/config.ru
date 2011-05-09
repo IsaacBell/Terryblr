@@ -51,8 +51,6 @@ else
   puts "\n\nHey awesome, take me for a ride in asynchronous land ! \n\tbundle exec rails s thin\n\n\n"
 end
 
-puts "Rails Middleware stack: #{Dummy::Application.config.middleware.inspect}"
-
 puts "Applicaiton Run !"
 run Dummy::Application
 puts "<< config.ru"
