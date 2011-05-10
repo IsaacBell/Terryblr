@@ -660,8 +660,61 @@ ul.archives a span {
   cursor:move;
 }
 
-#content_parts_container.droppable-active {
-  background:#eee;
+#content_parts_container {
+  border-radius: 5px;
+  border:1px solid transparent;
+  margin-bottom:1em;
+  position:relative;
+  left:-1px;
+  top:-1px;
+}
+
+#content_parts_container.droppable-active,
+#content_parts_container.loading {
+  background:#f5f5f5;
+  border-color:#ccc;
+}
+
+#content_part_loading {
+  background: transparent url(/images/admin/large_loading.gif) 0 0 no-repeat;
+  width:160px;
+  text-align:left;
+  text-indent:45px;
+  font-size:2em;
+  font-weight:bold;
+  color:#ccc;
+  margin:0 auto 1em auto;
+  display:none;
+}
+
+#content_parts_container.loading #content_part_loading {
+  display:block;
+}
+
+#content_parts_container .part-container {
+}
+
+#content_parts_container .part-drag-handle,
+#content_parts_container .part-delete-btn {
+  float:right;
+  margin:0;
+  width:18px;
+  height:18px;
+  margin-top:-18px;
+  position:relative;
+  top:20px;
+  left:-20px;
+  display:none;
+}
+
+#content_parts_container .part-drag-handle {
+  cursor:move;
+  left:-40px;
+}
+
+#content_parts_container fieldset:hover .part-drag-handle,
+#content_parts_container fieldset:hover .part-delete-btn {
+  display:block;
 }
 
 /*
@@ -822,7 +875,7 @@ form.formtastic .contributor-posts li.machine_tag a {
  *
  */
 
-#form_content fieldset {
+form.formtastic fieldset {
   margin-left:10px;
   width:100%;
 }
@@ -942,6 +995,7 @@ form.formtastic fieldset ol li.date-picker input[type=text] {
   padding: 5px 5px 10px 5px;
   cursor:test;
   border:1px solid #bbb;
+  background: url("/images/admin/input_bg.gif") repeat-x scroll 0 0 #FFFFFF;
 }
 
 .jq_tags_editor input[type="text"] {
@@ -1061,6 +1115,11 @@ form.formtastic fieldset ol li.post-states select {
   font-size:1.5em;
 }
 
+.upload-container {
+  display:inline-block;
+  vertical-align:top;
+  width:60%;
+}
 
 .photos-upload .upload-btn {
   background: transparent url(/images/admin/upload_btn.png) 0 0 no-repeat;
@@ -1115,8 +1174,9 @@ form.formtastic fieldset ol li.post-states select {
   -moz-border-radius: 3px; 
   -webkit-border-radius: 3px;
   height:23px;
+  width:100%;
   overflow:hidden;
-  white-space:no-wrap;
+  white-space:nowrap;
 }
 
 .photos-upload .upload-progress .ui-progressbar-value {
@@ -1125,9 +1185,11 @@ form.formtastic fieldset ol li.post-states select {
 
 .photos-upload .upload-progress span {
   position:absolute;
-  margin-left:1em;
-  width:300px;
-  overflow:hidden;
+  display:block;
+  margin-left:10px;
+  width:180px;
+  overflow:hidden; 
+  white-space:nowrap; 
   text-overflow:ellipsis;
 }
 
@@ -1412,21 +1474,6 @@ form.formtastic fieldset ol li.add-inline-photo img {
   cusror:pointer;
 }
 
-.on-off {
-  width:70px;
-}
-
-.on-off label.iPhoneCheckLabelOn span,
-.on-off label.iPhoneCheckLabelOff span {
-  color:#fff;
-  font-weight:bold;
-  line-height:1.3em;
-}
-
-.on-off label.iPhoneCheckLabelOff span {
-  color:#888;
-}
-
 form.formtastic fieldset ol li.video-upload,
 form.formtastic fieldset ol li.video-url {
   width:40%;
@@ -1447,8 +1494,8 @@ form.formtastic fieldset ol li.video-or {
 }
 
 form.formtastic fieldset.buttons {
-  width:95%;
   padding:0;
+  width:97.5%;
 }
 
 form.formtastic fieldset.buttons li {
