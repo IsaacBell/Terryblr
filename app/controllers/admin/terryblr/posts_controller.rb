@@ -7,6 +7,14 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
       wants.html { render :template => "admin/terryblr/posts/index" }
     end
   end
+  
+  def new
+    if Terryblr::ContentPart.content_types.include?(params[:type])
+      resource.parts.build(:content_type => params[:type])
+      puts "===== Added part to new post!!"
+    end
+    super
+  end
 
   def edit
     super do |wants|

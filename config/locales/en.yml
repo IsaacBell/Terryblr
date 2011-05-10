@@ -175,6 +175,7 @@ en:
     pages: pages
     photos: photos
     post: post
+    text: text
     preview: preview
     save: save
     state: state
@@ -183,6 +184,7 @@ en:
     users: users
     value: value
     video: video
+    videos: videos
     view: view
     validation_error_header: "Uh oh. We found some problems with your %{model}..."
     validation_error_message: "Please review the following fields:"

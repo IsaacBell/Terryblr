@@ -824,6 +824,7 @@ form.formtastic .contributor-posts li.machine_tag a {
 
 #form_content fieldset {
   margin-left:10px;
+  width:100%;
 }
 
 form .sidebar fieldset {
@@ -1321,13 +1322,13 @@ form.formtastic fieldset ol li.video-url a:active {
   text-align:center;
 }
 
-#photos_list.media-list ul li {
+.photos-list.media-list ul li {
   display:block;
   height:175px;
   width:113px;
 }
 
-#photos_list.media-list ul li:nth-child(5n+1) {
+.photos-list.media-list ul li:nth-child(5n+1) {
   clear:left;
 }
 
@@ -1369,7 +1370,7 @@ form.formtastic fieldset ol li.video-url a:active {
 }
 
 #videos_list li,
-#photos_list li {
+.photos-list li {
   width:auto;
 }
 

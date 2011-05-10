@@ -12,23 +12,30 @@ module Admin::Terryblr::PostsHelper
       content_tag(:div, :id => list_id, :class => "media-list") do
         content_tag(:ul, :id => "#{list_id}_ul") do
           resource.videos.map do |video|
-            # Each video
-            width = 186
-            height = 124
-            embed = video.embedable?
-            content_tag(:li, :id => video.dom_id(list_id)) do
-              link_to(image_tag("admin/remove.png"), admin_video_path(video, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
-              content_tag(:div, (embed ? video.embed(:width => width, :height => height) : video.url), :id => video.dom_id) +
-              (embed ? "" : javascript_tag(%Q{
-                $('##{video.dom_id}').flash({ src: '#{video.embed_url}', width: #{width}, height: #{height} });
-              })) +
-              text_area_tag("#{resource.class.to_s.downcase}[videos_attributes][][caption]", video.caption) +
-              hidden_field_tag("#{resource.class.to_s.downcase}[videos_attributes][][id]", video.id)
-            end
-          end
+            video_for_assoc(video, list_id)
+          end.join.html_safe
         end +
         sortable_element("#{list_id}_ul", :axis => "x")
       end
+    end
+  end
+  
+  def video_for_assoc(video, list_id)
+    # Each video
+    width = 186
+    height = 124
+    embed = video.embedable?
+    content_tag(:li, :id => video.dom_id(list_id)) do
+      hidden_field_tag("post[parts_attributes][0][video_ids][]", video.id) +
+      if video.new_record?
+        link_to_function image_tag("admin/remove.png"), "$('##{video.dom_id(list_id)}').fadeOut(function(){ $(this).remove() })"
+      else
+        link_to(image_tag("admin/remove.png"), admin_video_path(video, :format => :js), :remote => true, :'data-method' => :delete, :confirm => "Are you sure?")
+      end + 
+      content_tag(:div, video.embed(:width => width, :height => height).html_safe, :id => video.dom_id) +
+      text_area_tag("post[parts_attributes][0][videos_attributes][][caption]", video.caption) +
+      hidden_field_tag("post[parts_attributes][0][videos_attributes][][id]", video.id)
+
     end
   end
 

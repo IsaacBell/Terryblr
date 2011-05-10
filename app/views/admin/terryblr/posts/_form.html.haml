@@ -9,12 +9,43 @@
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
     #content_parts_container
       - if resource.parts.empty?
-        .empty-message= ttt("add_content_parts").html_safe
+        .part-container
+          .empty-message= ttt("add_content_parts").html_safe
       - else
         - resource.parts.each do |part|
           = render :partial => "admin/terryblr/content_parts/form", :locals => {:post => resource, :part => part}
-      = sortable_element("#content_parts_container fieldset", :axis => false, :update => "function() { $('#content_parts_container input[id$=display_order]').each(function(i, el){ el.value = i }) }")
-        
+      .clear
+      #content_part_loading Loading...
+    - content_for :head do
+      :javascript
+        $(function(){ 
+          // Sortable list
+          $("#content_parts_container").sortable({
+            placeholder: "ui-state-highlight",
+            axis: 'y',
+            opacity: 0.8,
+            revert: true,
+            items: '> .part-container',
+            update: function(event, ui) {
+              $(this).find('li.hidden input[id$=display_order]').each(function(i, el){ el.value = i }) 
+              fixRailsEmbeddedFormHashOrder($(this))
+            }
+          });
+          
+          // Droppable
+          var container = $('#content_parts_container')
+          container.droppable({
+            accept: "#content_parts_drops_list > li",
+            activeClass: "droppable-active",
+            drop: function( event, ui ) {
+              container.addClass('loading')
+              $.get($(ui.draggable).attr('data-remote-path'))
+                .complete(function() {
+                  container.removeClass('loading')
+                })
+            }
+          }); 
+        })
     = render :partial => 'admin/terryblr/posts/form_buttons', :locals => {:f => f}
         
   = render :partial => 'admin/terryblr/posts/form_sidebar', :locals => {:f => f}

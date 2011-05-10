@@ -1,3 +1,4 @@
+- part ||= resource
 %li.photos-upload
   %label= ttt(:photos)
   = render :partial => 'admin/terryblr/dropbox/uploader'
@@ -13,4 +14,4 @@
       = dt.humanize.titleize
   %p.inline-hints.clear= ttt(:".show_photos_as_a_slideshow_gallery_or_stacked_above_each_other")
 %li.clear
-  = edit_photos_for_assoc(resource)
+  = edit_photos_for_assoc(part)

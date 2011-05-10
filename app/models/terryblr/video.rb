@@ -8,7 +8,7 @@ class Terryblr::Video < Terryblr::Base
   #
   # Associatons
   #
-  belongs_to :post, :touch => true
+  belongs_to :part, :touch => true, :class_name => "Terryblr::ContentPart"
 
   #
   # Validations

@@ -21,7 +21,7 @@ class Terryblr::ContentPart < Terryblr::Base
 
   #XXX acts_as_commentable
   accepts_nested_attributes_for :photos, :allow_destroy => true
-  accepts_nested_attributes_for :videos, :allow_destroy => true, :reject_if => Proc.new{|v| v["url"].blank? }
+  accepts_nested_attributes_for :videos, :allow_destroy => true
 
   #
   # Validations
@@ -85,7 +85,7 @@ class Terryblr::ContentPart < Terryblr::Base
   
   def add_to_queue
     # Set the display order to be last
-    self.display_order = Terryblr::ContentPart.where(:contentable_id => self.contentable_id, :contentable_type => self.contentable_type).count
+    self.display_order ||= Terryblr::ContentPart.where(:contentable_id => self.contentable_id, :contentable_type => self.contentable_type).count
   end
 
   def set_display_type

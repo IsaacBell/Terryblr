@@ -1,1 +1,7 @@
-$("#videos_list").html("#{escape_javascript(edit_videos_for_assoc(@post))}")
+try {
+$("#videos_list_ul").append("#{escape_javascript(video_for_assoc(@video, 'videos_list'))}")
+fixRailsEmbeddedFormHashOrder($('#content_parts_container'))
+} catch (err) {
+console.log("Error: "+err.description)
+console.debug(err)
+}

@@ -51,7 +51,8 @@
 		} else {
 			method = element.attr('data-method');
 			url = element.attr('href');
-			data = null;
+			data = (element.attr('data-submit')) ? $(element.attr('data-submit')).serializeArray() : null;
+			
 		}
 
 		$.ajax({

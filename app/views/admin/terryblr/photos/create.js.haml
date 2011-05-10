@@ -1,3 +1,4 @@
+try {
 $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn()
 - parent_resource_name = params[:resource_type]
 - if resource.valid?
@@ -10,3 +11,8 @@ $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn(
     - list_id = "photos_list"
     $("##{list_id}_ul").append("#{escape_javascript(photo_for_assoc(resource, parent_resource_name, list_id))}")
     $('##{list_id}').sortable('refresh')
+  fixRailsEmbeddedFormHashOrder($('#content_parts_container'))
+} catch (err) {
+console.log("Error: "+err.description)
+console.debug(err)
+}

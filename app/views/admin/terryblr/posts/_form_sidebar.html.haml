@@ -16,7 +16,14 @@
         - Terryblr::ContentPart.content_types.each do |ct|
           %li.content_parts_drop{:id => "#{ct}_content_part", :'data-remote-path' => new_admin_post_content_part_path(resource.new_record? ? '-' : resource.id, :content_type => ct, :format => :js)}
             %span= ct.humanize
-    
+      - content_for :head do
+        :javascript
+          $(function(){ $('#content_parts_drops_list li').draggable({
+            revert: "invalid",
+            cursor: "move",
+            helper: "clone"
+          }); })
+
     / Tags
     - if defined?(Settings.tags.posts.groups)
       - (Settings.tags.posts.groups - %w(tags)).each do |group|
@@ -49,7 +56,7 @@
         %li.machine_tag
           - if resource.twitter_id?
             = link_to(ttc('.crossposted_twitter'), "http://twitter.com/#{Settings.twitter.login}/status/#{resource.twitter_id}")
-          - elsif resource.tw_delayed_job_id?
+          - elsif resource.tw_delayed_job
             %span 
               #{ttc('.crosspost_queued_twitter')}
               %br
@@ -60,7 +67,7 @@
         %li.machine_tag
           - if resource.facebook_id?
             = link_to(ttc('.crossposted_facebook'), "http://facebook.com/pages/#{Settings.app_name.parameterize}/#{Settings.facebook.page_id}")
-          - elsif resource.fb_delayed_job_id?
+          - elsif resource.fb_delayed_job
             %span
               #{ttc('.crosspost_queued_facebook')}
               %br

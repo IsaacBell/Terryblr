@@ -1,3 +1,9 @@
 $("#flash_messages").html("#{escape_javascript(flash_messages)}").hide().fadeIn()
 var content_parts_container = $("#content_parts_container")
-content_parts_container.append("#{escape_javascript(render(:partial => 'form'))}")
+content_parts_container.find('.part-container').last().after("#{escape_javascript(render(:partial => 'form'))}")
+- case resource.content_type.to_sym
+  - when :text
+    createRichTextArea(content_parts_container.find('.rich-text textarea'))
+  - else
+fixRailsEmbeddedFormHashOrder(container)
+content_parts_container.sortable('refresh')

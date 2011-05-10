@@ -165,6 +165,25 @@ class Terryblr::Post < Terryblr::Base
     @related_posts += Terryblr::Post.live.all(:conditions => ["posts.id not in (?)", @related_posts.map(&:id)+[id]], :limit => max - @related_posts.size) if @related_posts.size < max rescue []
     @related_posts
   end
+  
+  # Return and 
+  def thumbnail(size = :thumb)
+    # Find the first thumbnail image
+    url = nil
+    parts.each do |p|
+      url = if p.content_type.photos? and !p.photos.empty?
+        p.photos.first.image.url(size)
+      elsif p.content_type.videos? and !p.videos.empty?
+        p.videos.first.thumb_url
+      end
+
+      break unless url.nil?
+    end
+    
+    url || "/images/missing_thumb.png"
+
+  end
+  
 
   def update_twitter_id(twitter_id)
     self.twitter_id = twitter_id

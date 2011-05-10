@@ -3,13 +3,13 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
   helper "admin/terryblr/posts"
 
   def create
-    resource = if params.key?(:Filedata)
+    @video = resource = if params.key?(:Filedata)
       end_of_association_chain.new(:upload => params[:Filedata], :part => part)
     elsif params.key?(:video_url)
       end_of_association_chain.new(:url => params[:video_url], :part => part)
     end
     
-    if resource.save
+    if @video.save
       respond_to do |wants|
         wants.js
         wants.html { render :status => :ok }
@@ -31,18 +31,18 @@ class Admin::Terryblr::VideosController < Terryblr::AdminController
       render :nothing => true, :status => :error
     end
   end
+  
+  def destroy
+    super do |wants|
+      wants.js
+    end
+  end
+  
 
   private
 
-  def post
-    @post ||= current_site.posts.find_by_slug(params[:post_id]) || 
-              current_site.posts.find_by_id(params[:post_id]) || 
-              current_site.posts.build
-  end
-
   def part
-    @part ||= post.find_by_id(params[:part_id]) || 
-              post.parts.build
+    @part ||= Terryblr::ContentPart.find_by_id(params[:part_id])
   end
 
   def resource

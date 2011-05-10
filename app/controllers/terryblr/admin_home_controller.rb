@@ -5,9 +5,9 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
 
   after_filter :set_last_modified
   before_filter :set_date, :only => [:index, :filter]
-  before_filter :set_expires, :only => [:analytics]
-  skip_before_filter :verify_authenticity_token, :only => [:analytics]
-  around_filter :cache, :only => [:analytics]
+  before_filter :set_expires, :only => [:analytics_data]
+  skip_before_filter :verify_authenticity_token, :only => [:analytics_data]
+  around_filter :cache, :only => [:analytics_data]
 
   before_filter :ensure_terryblr_setup, :only => [:index, :search]
   before_filter :setup_only_once!, :only => [:setup, :setup!]

@@ -8,20 +8,22 @@ module Terryblr::AdminHelper
 
     url = opts[:url]
     css_parent_class = opts[:css_parent_class]
-    @uploader_counter ||= 0
-    css_class = "swfupload-control"
+    css_class = "upload-btn"
     css_upload = "upload-progress"
-    dom_id = "multi_file_uploader_#{@uploader_counter+=1}"
-    content_tag(:div, :class => "#{css_class} upload-btn", :id => dom_id) do
-      content_tag(:noscript, "Please enable JavaScript to use file uploader.")
-    end +
-    content_tag(:div, :class => css_upload, :style => "display:none") do
-      content_tag(:span, "Uploading...")
+    dom_id = "multi_file_uploader_#{Time.now.to_f.to_s.parameterize('_')}"
+    
+    content_tag(:div, :id => dom_id, :class => "upload-container") do
+      content_tag(:div, :class => "#{css_class}") do
+        content_tag(:noscript, "Please enable JavaScript to use file uploader.")
+      end +
+      content_tag(:div, :class => css_upload, :style => "display:none") do
+        content_tag(:span, "Uploading...")
+      end
     end +
     javascript_tag(%Q{
-      $(document).ready(function() {
-        var uploader = new qq.FileUploader({
-          element: $('##{dom_id}')[0],
+      $(function() {
+        new qq.FileUploader({
+          element: $('##{dom_id} .#{css_class}')[0],
           action: '#{url}',
           allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
           minSizeLimit: 100,
@@ -32,28 +34,28 @@ module Terryblr::AdminHelper
           },
           debug: #{Rails.env.development?},
           onSubmit: function(id, fileName){
-            $('.#{css_parent_class} .#{css_upload}').progressbar()
-            $('.#{css_parent_class} .#{css_upload}').show()
-            $('.#{css_parent_class} .#{css_upload} span').text('Uploading...')
+            $('##{dom_id} .#{css_upload}').progressbar()
+            $('##{dom_id} .#{css_upload}').show()
+            $('##{dom_id} .#{css_upload} span').text('Uploading...')
           },
           onProgress: function(id, fileName, loaded, total){
-            $('.#{css_parent_class} .#{css_upload}').show()
-            $('.#{css_parent_class} .#{css_upload} span').text('Uploading file '+ fileName)
+            $('##{dom_id} .#{css_upload}').show()
+            $('##{dom_id} .#{css_upload} span').text('Uploading file '+ fileName)
             // console.log('bytes_complete: '+loaded)
             // console.log('total_bytes: '+total)
             // console.log('progress: '+(loaded/total))
-            $('.#{css_parent_class} .#{css_upload}').progressbar('value',((loaded/total)*100))
+            $('##{dom_id} .#{css_upload}').progressbar('value',((loaded/total)*100))
           },
           onComplete: function(id, fileName, responseJSON){
-            $('.#{css_parent_class} .upload-progress span').text('Awaiting response...')
+            $('##{dom_id} .#{css_upload}').hide()
+            $('##{dom_id} .upload-progress span').text('Awaiting response...')
           },
           onCancel: function(id, fileName){
-            $('.#{css_parent_class} .#{css_upload}').hide()
-            $('.#{css_parent_class} .upload-progress span').text('Canceled...')
+            $('##{dom_id} .#{css_upload}').hide()
+            $('##{dom_id} .upload-progress span').text('Canceled...')
           },
           showMessage: function(message){
-            $('.#{css_parent_class} .#{css_upload}').hide()
-            $('.#{css_parent_class} .upload-progress span').text('')
+            $('##{dom_id} .upload-progress span').text('')
             // message
             // $('#flash').html(message).addClass('error flash').show()
           }
@@ -118,9 +120,9 @@ module Terryblr::AdminHelper
   end
 
   def edit_photos_for_assoc(object)
-    list_id = "photos_list"
-    if object and object.respond_to?(:photos)
-      content_tag(:div, :id => list_id, :class => "media-list") do
+    if object and object.respond_to?(:photos) and object.respond_to?(:dom_id)
+      list_id = object.dom_id("photos_list")
+      content_tag(:div, :id => list_id, :class => "media-list photos-list") do
         content_tag(:ul, :id => "#{list_id}_ul") do
           object.photos.map do |photo|
             # Each photo
