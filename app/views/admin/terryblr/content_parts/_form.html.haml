@@ -5,7 +5,7 @@
   = f.inputs :for => [:parts, part] do |fp|
     %li.part-delete-btn
       - unless part.new_record?
-        = link_to image_tag("admin/remove.png"), admin_post_content_part_path(post, part, :format => 'js'), :remote => true, :'data-method' => :delete
+        = link_to image_tag("admin/remove.png"), admin_post_part_path(post, part, :format => 'js'), :remote => true, :'data-method' => :delete
       - else
         = link_to_function image_tag("admin/remove.png"), "$(this).parents('.part-container').fadeOut(function(){ $(this).remove() })"
     %li.part-drag-handle

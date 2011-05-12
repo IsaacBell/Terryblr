@@ -1,5 +1,6 @@
+- list_id = params[:list_id] || "videos_list"
 try {
-$("#videos_list_ul").append("#{escape_javascript(video_for_assoc(@video, 'videos_list'))}")
+$("##{list_id}").append("#{escape_javascript(video_for_assoc(@video, list_id))}")
 fixRailsEmbeddedFormHashOrder($('#content_parts_container'))
 } catch (err) {
 console.log("Error: "+err.description)

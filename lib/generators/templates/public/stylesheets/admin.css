@@ -717,6 +717,21 @@ ul.archives a span {
   display:block;
 }
 
+#content_parts_container .ui-state-highlight {
+  height:15px;
+  line-height:15px;
+  border-width:2px;
+  border-radius:15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  text-align:center;
+  
+}
+
+#content_parts_container .ui-state-highlight:after {
+  content: '- Drop here -';
+}
+
 /*
  * Orders
  *

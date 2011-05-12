@@ -26,10 +26,12 @@ Rails.application.routes.draw do
         get  :filter
         post :filter
       end
-      resources :content_parts, :only => [:index, :new, :create, :destroy], :controller => "terryblr/content_parts" do
+      resources :parts, :only => [:index, :new, :create, :destroy], :controller => "terryblr/content_parts" do
         collection do
           post :reorder
         end
+        resources :videos, :controller => "terryblr/videos"
+        resources :photos, :controller => "terryblr/photos"
       end
     end
     resources :videos, :controller => "terryblr/videos"

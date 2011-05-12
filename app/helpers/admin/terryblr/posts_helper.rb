@@ -6,16 +6,15 @@ module Admin::Terryblr::PostsHelper
       :message => ttt(:validation_error_message)
   end
 
-  def edit_videos_for_assoc(resource)
-    list_id = "videos_list"
+  def edit_videos_for_assoc(resource, list_id = "videos_list")
     if resource and resource.respond_to?(:videos)
-      content_tag(:div, :id => list_id, :class => "media-list") do
-        content_tag(:ul, :id => "#{list_id}_ul") do
+      content_tag(:div, :id => "#{list_id}_container", :class => "videos-list media-list") do
+        content_tag(:ul, :id => list_id) do
           resource.videos.map do |video|
             video_for_assoc(video, list_id)
           end.join.html_safe
         end +
-        sortable_element("#{list_id}_ul", :axis => "x")
+        sortable_element(list_id, :axis => "x")
       end
     end
   end

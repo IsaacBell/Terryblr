@@ -1,5 +1,25 @@
 #form_sidebar{:class => "sidebar span-6 last"}
   = f.inputs do
+
+    / Content Parts
+    %li#content_parts_drops
+      %label= ttt("content_parts_drops")
+      %ul#content_parts_drops_list
+        - Terryblr::ContentPart.content_types.each do |ct|
+          %li.content_parts_drop{:id => "content_part_#{ct}", :'data-remote-path' => new_admin_post_part_path(resource.new_record? ? '-' : resource.id, :content_type => ct, :format => :js)}
+            %span= ct.humanize
+            .draggable-sshot{:style => 'display:none'}= image_tag("admin/content_part_#{ct}.png")
+      %p.inline-hints= ttt(:drag_drop_contant_parts_hint)
+      - content_for :head do
+        :javascript
+          $(function(){ $('#content_parts_drops_list li').draggable({
+            revert: "invalid",
+            cursor: "move",
+            helper: function(event, ui) {
+              return $(this).find('.draggable-sshot').clone().show();
+            },
+          }); })
+
     = f.input :state, :as => "hidden", :wrapper_html => { :class => "post-hidden" }
     - selected = (resource.pending? || resource.published?) ? (resource.published_at? ? :published_at : :publish_now) : resource.state.to_sym
 
@@ -9,21 +29,6 @@
     = f.input :state, :as => "select", :collection => resource.states_for_select, :selected => selected, :include_blank => false, :wrapper_html => { :class => "post-states" }
     = f.input :published_at, :label => label, :as => "string", :wrapper_html => { :class => "date-picker", :style => "display:#{selected==:published_at ? 'block' : 'none'}"}
     
-    / Content Parts
-    %li#content_parts_drops
-      %label= ttt("content_parts_drops")
-      %ul#content_parts_drops_list
-        - Terryblr::ContentPart.content_types.each do |ct|
-          %li.content_parts_drop{:id => "#{ct}_content_part", :'data-remote-path' => new_admin_post_content_part_path(resource.new_record? ? '-' : resource.id, :content_type => ct, :format => :js)}
-            %span= ct.humanize
-      - content_for :head do
-        :javascript
-          $(function(){ $('#content_parts_drops_list li').draggable({
-            revert: "invalid",
-            cursor: "move",
-            helper: "clone"
-          }); })
-
     / Tags
     - if defined?(Settings.tags.posts.groups)
       - (Settings.tags.posts.groups - %w(tags)).each do |group|

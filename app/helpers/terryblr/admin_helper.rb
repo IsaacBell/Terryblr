@@ -3,14 +3,15 @@ module Terryblr::AdminHelper
   def multi_file_uploader(opts = {})
     opts.reverse_merge!({
       :file_upload_limit => 50,
-      :file_queue_limit => 0
+      :file_queue_limit => 0,
+      :dom_id => "multi_file_uploader_#{Time.now.to_f.to_s.parameterize('_')}"
     })
 
     url = opts[:url]
     css_parent_class = opts[:css_parent_class]
+    dom_id = opts[:dom_id]
     css_class = "upload-btn"
     css_upload = "upload-progress"
-    dom_id = "multi_file_uploader_#{Time.now.to_f.to_s.parameterize('_')}"
     
     content_tag(:div, :id => dom_id, :class => "upload-container") do
       content_tag(:div, :class => "#{css_class}") do
@@ -47,6 +48,7 @@ module Terryblr::AdminHelper
             $('##{dom_id} .#{css_upload}').progressbar('value',((loaded/total)*100))
           },
           onComplete: function(id, fileName, responseJSON){
+            // console.log('responseJSON: '+responseJSON)
             $('##{dom_id} .#{css_upload}').hide()
             $('##{dom_id} .upload-progress span').text('Awaiting response...')
           },
@@ -119,11 +121,11 @@ module Terryblr::AdminHelper
     ")  
   end
 
-  def edit_photos_for_assoc(object)
+  def edit_photos_for_assoc(object, list_id = nil)
     if object and object.respond_to?(:photos) and object.respond_to?(:dom_id)
-      list_id = object.dom_id("photos_list")
-      content_tag(:div, :id => list_id, :class => "media-list photos-list") do
-        content_tag(:ul, :id => "#{list_id}_ul") do
+      list_id ||= object.dom_id("photos_list")
+      content_tag(:div, :id => "#{list_id}_container", :class => "media-list photos-list") do
+        content_tag(:ul, :id => list_id) do
           object.photos.map do |photo|
             # Each photo
             photo_for_assoc(photo, object.class.to_s.downcase, list_id)
@@ -145,7 +147,7 @@ module Terryblr::AdminHelper
   def post_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :thumb)
     param_name = (object.is_a?(String) ? object : object.class.to_s).demodulize.downcase
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
-      link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
+      link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js, :list_id => list_id), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
       image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
       hidden_field_tag("post[parts_attributes][0][photo_ids][]", photo.id) +
       text_area_tag("post[parts_attributes][0][photos_attributes][][caption]", photo.caption) +
@@ -168,10 +170,10 @@ module Terryblr::AdminHelper
   end
 
   def edit_photos_sortable(list_id = "photos_list")
-    sortable_element("##{list_id}_ul", 
+    sortable_element("##{list_id}", 
       # :url => reorder_admin_photos_path(:format => :js), 
       :axis => false,
-      :update => "function() { $('##{list_id}_ul input[id$=display_order]').each(function(i, el){ el.value = i }) }"
+      :update => "function() { $('##{list_id} input[id$=display_order]').each(function(i, el){ el.value = i }) }"
     )
   end
 

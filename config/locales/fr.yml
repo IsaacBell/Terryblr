@@ -179,3 +179,6 @@ fr:
     view: voir
     validation_error_header: "Uh oh. We found some problems with your %{model}..."
     validation_error_message: "Please review the following fields:"
+    loading_content_part: Telechargement du part contenu...
+    drop_content_part: Drop part here
+    drag_drop_contant_parts_hint: Drag and drop onto the post to add new content parts

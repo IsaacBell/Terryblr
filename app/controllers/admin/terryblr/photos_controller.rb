@@ -64,10 +64,12 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
   private
 
   def photoable
-    @photoable ||= if params[:part_id]
-      Terryblr::ContentPart.find_by_id(params[:part_id].to_i) || Terryblr::ContentPart.new
+    @photoable ||= if params[:content_part_id] || params[:part_id]
+      Terryblr::ContentPart.find_by_id((params[:content_part_id] || params[:part_id]).to_i) || 
+      Terryblr::ContentPart.new(:content_type => 'photos', :photos => [resource])
     elsif params[:feature_id]
-      current_site.features.find_by_id(params[:feature_id].to_i) || current_site.features.new
+      current_site.features.find_by_id(params[:feature_id].to_i) || 
+      current_site.features.new
     end
   end
 

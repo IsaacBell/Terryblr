@@ -1,9 +1,11 @@
 - part ||= resource
+- part_uid ||= part.new_record? ? part.object_id : part.id
+- photos_list_id  = "photos_list_#{part_uid}"
 %li.photos-upload
   %label= ttt(:photos)
   = render :partial => 'admin/terryblr/dropbox/uploader'
   %span.or or
-  = multi_file_uploader(:url => admin_photos_path(:format => :js), :css_parent_class => "photos-upload")
+  = multi_file_uploader(:url => admin_post_part_photos_path(:post_id => (part.contentable_id || '-'), :part_id => (part.id || '-'), :format => :js, :list_id => photos_list_id), :css_parent_class => "photos-upload", :dom_id => "multi_file_uploader_#{part_uid}")
   %p.inline-hints.clear= tt('.upload_hint')
 %li.photos-display-type
   %label= ttt('.gallery_display')
@@ -13,5 +15,6 @@
       = image_tag "admin/photos-display-type-#{dt}.png", :alt => dt.humanize.titleize
       = dt.humanize.titleize
   %p.inline-hints.clear= ttt(:".show_photos_as_a_slideshow_gallery_or_stacked_above_each_other")
-%li.clear
-  = edit_photos_for_assoc(part)
+%li.clear.photos-list
+  = edit_photos_for_assoc(part, photos_list_id)
+
