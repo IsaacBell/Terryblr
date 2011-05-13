@@ -53,7 +53,6 @@
           = text_area :post, "tag_list", :class => "tag-picker"
 
     = f.input :slug, :label => ttt(:'.custom_url'), :as => "underline", :prefix => "/posts/", :hint => ttt(:'.leave_blank_to_create_automatically_from_the_title'), :wrapper_html => { :class => "underlined-input" }
-    = f.input :post_type, :as => "hidden"
 
     %li.social-callbacks
       %label= ttt('.cross_posting')

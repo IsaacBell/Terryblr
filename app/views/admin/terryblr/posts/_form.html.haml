@@ -5,7 +5,6 @@
     = error_messages_for_post
     = f.semantic_errors
     - f.inputs do
-      = f.input :post_type, :as => :hidden
       = f.input :title, :label => ttt(:title), :input_html => { :class => "title" }
     #content_parts_container
       #content_part_drop= ttt(:drop_content_part)
