@@ -52,7 +52,7 @@ module Terryblr::ApplicationHelper
 
   def page_description
     return "" if page_object.nil?
-    truncate_words(strip_tags(page_object.body.to_s), :length => 20, :omission => "...")
+    truncate_words(strip_tags(page_object.body), :length => 20, :omission => "...")
   end
 
   def page_object
@@ -72,52 +72,6 @@ module Terryblr::ApplicationHelper
     end
   end
 
-  def photos_post_body(resource)
-    obj_type = resource.class.to_s.downcase.split('::').last
-
-    # Rejection cases
-    return unless %w(post product page).include?(obj_type.to_s)
-    return if resource.photos.empty?
-    
-    detail_path = send("#{obj_type}_path", resource.to_param, resource.slug)
-    image_size = :list # Is this needed? -> detail_page? ? :medium : :list
-    thumb_panes = detail_page? ? 6 : 4
-    thumb_photos = resource.photos[(detail_page? ? 0 : 1)..(detail_page? ? resource.photos.count : thumb_panes+1)]
-    is_gallery = (resource.respond_to?(:display_type) and resource.display_type? and resource.display_type.gallery?)
-
-    content_tag(:div, :class => "photos-slideshow") do
-      content_tag(:div, :class => (detail_page? && is_gallery) ? "slideshow" : "stacked-photos") do
-        photos = detail_page? ? resource.photos : [resource.photos.first]
-        photos.map do |f|
-          display = (f==resource.photos.first || !is_gallery) ? "block" : "none"
-          dom_id = f.dom_id
-          # Make link
-          content_tag(:div, :id => dom_id, :class => "slide", :style => "display:#{display}") do
-            s = f.size(image_size) rescue {}
-            link_to(image_tag(f.image.url(image_size), :size => [s[:width], s[:height]].join('x')), send("#{obj_type}_path", resource.to_param, resource.slug, :anchor => dom_id), :name => dom_id) +
-            content_tag(:p, (f.caption? ? f.caption : " "), :class => "photo-caption")
-          end
-        end.join.html_safe
-      end +
-      
-      # Only show thumbs on details page
-      if thumb_photos.size > 1 && (!detail_page? || is_gallery)
-        content_tag(:div, :class => "slideshow-controls") do
-          content_tag(:ul, :class => "slideshow-controls-container #{'carousel' if detail_page? && thumb_photos.size > thumb_panes}") do
-            thumb_photos.map do |p|
-              content_tag(:li) do 
-                link_to(image_tag(p.image.url(:thumb), :size => "95x95"), send("#{obj_type}_path", resource, resource.slug, :anchor => p.dom_id), :class => (p==thumb_photos.last ? "last" : ""))
-              end
-            end.join.html_safe
-          end
-        end
-      end.to_s
-
-    end +
-    content_tag(:div, "", :class => "clear") +
-    post_body(resource).html_safe
-  end
-
   #
   # Common
   #
@@ -128,7 +82,7 @@ module Terryblr::ApplicationHelper
         content_tag :div, :id => "flash-#{type.to_s}", :class => "flash #{type.to_s}" do
           content_tag :span, message_for_item(flash[type], flash["#{type}_item".to_sym]).html_safe
         end
-      end.join("\n").html_safe
+      end.join.html_safe
     end
   end
 

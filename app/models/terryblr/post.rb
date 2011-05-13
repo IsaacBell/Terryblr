@@ -165,7 +165,12 @@ class Terryblr::Post < Terryblr::Base
     @related_posts
   end
   
-  # Return and 
+  # Return the first found text
+  def body
+    (part = parts.where(:content_type => :text).detect{|p| p.body? }) ? part.body : ""
+  end
+
+  # Return the first found photo
   def thumbnail(size = :thumb)
     # Find the first thumbnail image
     url = nil
