@@ -14,7 +14,7 @@
  */
 
 body {
-  background: #000 url(/images/admin/background.png) 0 0 repeat-x;
+  background: #0A0B0C url(/images/admin/background.png) 0 0 repeat-x;
 }
 
 a {
@@ -315,7 +315,7 @@ tfoot td {
   background-position: -83px -8px;
 }
 
-#content_nav li.video a {
+#content_nav li.videos a {
   background-position: -158px -8px;
 }
 
@@ -343,8 +343,12 @@ tfoot td {
   background-position: -415px -8px;
 }
 
-#content_nav li.pages a {
+#content_nav li.text a {
   background-position: -492px -8px;
+}
+
+#content_nav li.pages a {
+  background-position: -10px -8px;
 }
 
 #content_nav li:last-child {
@@ -648,11 +652,6 @@ ul.archives a span {
   height:200px;
 }
 
-#content_parts_drops_list span {
-  padding-left:40px;
-  line-height:40px;
-}
-
 #content_parts_drops_list li,
 #content_parts_drops_list span {
   float:none !important;
@@ -660,38 +659,71 @@ ul.archives a span {
   cursor:move;
 }
 
+#content_parts_drops_list span {
+  margin: 5px 2px;
+  padding-left:40px;
+  line-height:34px;
+  background: transparent url('/images/admin/content_part_icons.png') 0 0 no-repeat;
+}
+
+#content_part_photos span {
+  background-position: 0 -32px;
+}
+
+#content_part_videos span {
+  background-position: 0 -64px;
+}
+
+#content_parts_drops_list .draggable-sshot {
+  opacity:0.6;
+}
+
 #content_parts_container {
+}
+
+#content_part_loading,
+#content_part_drop {
   border-radius: 5px;
-  border:1px solid transparent;
-  margin-bottom:1em;
-  position:relative;
-  left:-1px;
-  top:-1px;
-}
-
-#content_parts_container.droppable-active,
-#content_parts_container.loading {
-  background:#f5f5f5;
-  border-color:#ccc;
-}
-
-#content_part_loading {
-  background: transparent url(/images/admin/large_loading.gif) 0 0 no-repeat;
-  width:160px;
-  text-align:left;
+  background: #f5f5f5 url(/images/admin/large_loading.gif) 28% 50% no-repeat;
+  border: 3px solid #ccc;
+  width:auto;
+  text-align:center;
   text-indent:45px;
+  line-height:3em;
   font-size:2em;
   font-weight:bold;
-  color:#ccc;
+  color:#686868;
   margin:0 auto 1em auto;
   display:none;
+  text-shadow: 0 1px 0 #fff;
 }
 
+#content_part_drop {
+  background-image: url('/images/admin/content_part_drop_target.png');
+  background-position:33% 50%;
+}
+
+#content_parts_container.droppable-active #content_part_drop,
 #content_parts_container.loading #content_part_loading {
   display:block;
 }
 
 #content_parts_container .part-container {
+  background:#fff;
+  border-radius:7px;
+}
+
+#content_parts_container .part-container.ui-sortable-helper {
+  border: 3px solid #aaa;
+  background:#f5f5f5;
+  position:relative;
+  left-3px;
+  top:-3px;
+}
+
+#content_parts_container.droppable-active .part-container,
+#content_parts_container.loading .part-container {
+  background:none;
 }
 
 #content_parts_container .part-drag-handle,
@@ -718,18 +750,14 @@ ul.archives a span {
 }
 
 #content_parts_container .ui-state-highlight {
-  height:15px;
-  line-height:15px;
+  height:5px;
+  line-height:5px;
   border-width:2px;
-  border-radius:15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
+  border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
   text-align:center;
   
-}
-
-#content_parts_container .ui-state-highlight:after {
-  content: '- Drop here -';
 }
 
 /*
@@ -991,12 +1019,8 @@ form.formtastic fieldset ol li p.inline-hints {
   margin-left:0;
 }
 
-form.formtastic fieldset ol li.date-picker {
-  background: transparent url(/images/admin/calendar.png) 100% 95% no-repeat;
-}
-
 form.formtastic fieldset ol li.date-picker input[type=text] {
-  width:100%;
+  width:92%;
   background: #fff url(/images/admin/calendar.png) 4px 2px no-repeat;
   text-indent:20px;
 }
@@ -1389,7 +1413,7 @@ form.formtastic fieldset ol li.video-url a:active {
   float:left;
   width:auto;
   margin:5px;
-  padding:0;
+  padding:5px;
   border:1px solid #ccc;
   color:#666;
   background:#f5f5f5;
@@ -1403,6 +1427,7 @@ form.formtastic fieldset ol li.video-url a:active {
   display:block;
   height:175px;
   width:113px;
+  padding: 0 5px;
 }
 
 .photos-list.media-list ul li:nth-child(5n+1) {
@@ -1441,13 +1466,13 @@ form.formtastic fieldset ol li.video-url a:active {
   padding-left: 5px;
 }
 
-#videos_list li textarea {
+form.formtastic .videos-list li textarea {
   margin-top:5px;
   width:180px;
 }
 
-#videos_list li,
-.photos-list li {
+form.formtastic .videos-list li,
+form.formtastic .photos-list li {
   width:auto;
 }
 
