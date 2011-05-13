@@ -89,7 +89,6 @@ class Terryblr::Post < Terryblr::Base
     end
   end
 
-  before_save :fix_tiny_mce
   before_save :push_publication
   before_save :push_to_social
 

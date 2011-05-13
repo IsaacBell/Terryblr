@@ -39,6 +39,7 @@
           // Droppable
           container.droppable({
             accept: "#content_parts_drops_list > li",
+            tolerance: 'pointer',
             activeClass: "droppable-active",
             drop: function( event, ui ) {
               container.addClass('loading')

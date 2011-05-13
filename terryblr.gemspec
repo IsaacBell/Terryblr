@@ -79,7 +79,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "spork"
   s.add_development_dependency "awesome_print"
   s.add_development_dependency "wirble"
-  s.add_development_dependency "capybara-firebug"
+  # s.add_development_dependency "capybara-firebug"
   if RUBY_PLATFORM =~ /darwin/i
     s.add_development_dependency "rb-fsevent"
   end
