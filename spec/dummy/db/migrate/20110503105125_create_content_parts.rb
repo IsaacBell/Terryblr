@@ -26,7 +26,7 @@ class CreateContentParts < ActiveRecord::Migration
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
 
-    Terryblr::Post.where("post_type = 'videos'").all.each do |p|
+    Terryblr::Post.all.where("post_type = 'videos'").each do |p|
       p.parts.create(:content_type => 'videos', :photos => p.videos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
