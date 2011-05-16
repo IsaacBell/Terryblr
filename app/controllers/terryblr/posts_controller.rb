@@ -25,9 +25,7 @@ class Terryblr::PostsController < Terryblr::PublicController
     @resource.slug = 'preview' unless resource.slug?
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
-      wants.html {
-        render :template => "terryblr/posts/show"
-      }
+      wants.html { render :template => "terryblr/posts/show" }
     end
   end
 

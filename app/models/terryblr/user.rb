@@ -26,6 +26,8 @@ class Terryblr::User < Terryblr::Base
   has_many :cart_items, :class_name => "LineItem", :conditions => "order_id is null"
   has_many :orders
   has_many :likes
+  has_many :posts, :class_name => "Terryblr::Post", :through => :author_id
+  has_many :pages, :class_name => "Terryblr::Page", :through => :author_id
   
   #
   # Behvaiours

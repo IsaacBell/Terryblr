@@ -17,6 +17,8 @@ class Terryblr::Post < Terryblr::Base
   belongs_to :tw_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :fb_delayed_job, :class_name => "::Delayed::Job"
   belongs_to :tumblr_delayed_job, :class_name => "::Delayed::Job"
+  belongs_to :author, :class_name => "Terryblr::User"
+  belongs_to :last_editor, :class_name => "Terryblr::User"
 
   #
   # Behaviours

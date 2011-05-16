@@ -12,6 +12,8 @@ class Terryblr::Page < Terryblr::Base
   # Associatons
   #
   belongs_to :site, :class_name => "Terryblr::Site"
+  belongs_to :author, :class_name => "Terryblr::User"
+  belongs_to :last_editor, :class_name => "Terryblr::User"
   has_many :photos, :as => :photoable, :order => "display_order", :class_name => "Terryblr::Photo"
   has_many :messages, :as => :messagable, :class_name => "Terryblr::Message"
 

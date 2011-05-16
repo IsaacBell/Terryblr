@@ -18,12 +18,15 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   end
 
   def create
+    resource.author = current_user
+    resource.last_editor = current_user
     super do |success, failure|
       success.html { redirect_to admin_pages_path }
     end
   end
 
   def update
+    resource.last_editor = current_user
     super do |success, failure|
       success.html { redirect_to admin_pages_path }
     end

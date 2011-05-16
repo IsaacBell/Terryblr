@@ -27,8 +27,12 @@ module Terryblr
         generate('delayed_job')
         # generate('devise:install') # Run 'rails g devise:install' instead!
 
-        %w(videos photos orders posts pages likes comments messages features products line_items links votes tweets sessions sites content_parts).each do |f|
-          src = "create_#{f}.rb"
+        %w(create_videos create_photos create_orders create_posts 
+           create_pages create_likes create_comments create_messages 
+           create_features create_products create_line_items create_links 
+           create_votes create_tweets create_sessions create_sites 
+           create_content_parts add_userid_to_resources).each do |f|
+          src = "#{f}.rb"
           dst = "db/migrate/#{src}"
           migration_template(src, dst) rescue puts $!
         end

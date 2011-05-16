@@ -23,6 +23,8 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def create
+    resource.author = current_user
+    resource.last_editor = current_user
     super do |success, failure|
       success.html { redirect_to admin_posts_path }
       failure.html { render :template => "admin/terryblr/posts/edit" }
@@ -30,6 +32,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   end
 
   def update
+    resource.last_editor = current_user
     super do |success, failure|
       success.html {
         if params[:post] and params[:post][:state] == "publish_now"
