@@ -15,6 +15,7 @@ javascripts:
     - public/javascripts/jquery.cookie.js
     - public/javascripts/swfobject.js
     - public/javascripts/rails.js
+    - public/javascripts/public_base.js
     - public/javascripts/public.js
   galleria:
     - public/javascripts/galleria/src/galleria.js
@@ -25,6 +26,7 @@ javascripts:
     - public/javascripts/jquery-ui.js
     - public/javascripts/wymeditor/jquery.wymeditor.js
     - public/javascripts/rails.js
+    - public/javascripts/admin_base.js
     - public/javascripts/admin.js
   admin_edit:
     # - public/javascripts/underscore-1.1.6.js
@@ -40,6 +42,7 @@ javascripts:
 stylesheets:
   public: 
     - public/stylesheets/public_grid.css
+    - public/stylesheets/public_base.css
     - public/stylesheets/public.css
   admin:
     - public/stylesheets/admin_grid.css
@@ -49,6 +52,7 @@ stylesheets:
     - public/stylesheets/tipsy.css
     - public/stylesheets/facebox.css
     - public/stylesheets/jBreadCrumb.css
+    - public/stylesheets/admin_base.css
     - public/stylesheets/admin.css
   admin_edit:
   galleria:

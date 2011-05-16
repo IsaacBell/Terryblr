@@ -56,6 +56,9 @@ module Terryblr
       private
       
       def copy_dir_contents(source_dir, target_dir)
+        
+        ignore_if_exists = %w(public.js admin.js public.css admin.css)
+        
         base_dir = File.join(File.dirname(__FILE__), '../templates', source_dir)
         raise "Base dir not found: #{base_dir}" unless Dir.exists?(base_dir)
         Dir.new(base_dir).each do |file|
@@ -64,6 +67,9 @@ module Terryblr
           base_path = File.join(base_dir, file)
           source_path = File.join(source_dir, file)
           target_path = File.join(target_dir, file)
+          
+          # Skip files in ignore list if they exists
+          next if ignore_if_exists.include?(File.basename(file)) and File.exists?(target_path)
           
           if File.directory?(base_path)
             # Recurse into dir

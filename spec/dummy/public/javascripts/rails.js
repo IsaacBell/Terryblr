@@ -46,13 +46,12 @@
 			var button = element.data('ujs:submit-button');
 			if (button) {
 				data.push(button);
-				element.data('ujs:submit-button', null);
+  			data = (element.attr('data-submit')) ? $(element.attr('data-submit')).serializeArray() : null;
 			}
 		} else {
 			method = element.attr('data-method');
 			url = element.attr('href');
-			data = (element.attr('data-submit')) ? $(element.attr('data-submit')).serializeArray() : null;
-			
+			data = null;
 		}
 
 		$.ajax({
