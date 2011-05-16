@@ -88,7 +88,7 @@ module Terryblr::PostsHelper
       # Details and list sizes are different
       width = 630
       height = ((width.to_f/video.width) * video.height).to_i
-      content_tag(:div, video.embed(:width => width, :height => height), :id => video.dom_id, :class => "post-video")
+      content_tag(:div, video.embed(:width => width, :height => height).html_safe, :id => video.dom_id, :class => "post-video")
     end.join.html_safe
   end
 
