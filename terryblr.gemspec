@@ -53,6 +53,7 @@ Gem::Specification.new do |s|
   s.add_dependency "validates_email_format_of"
   s.add_dependency "will_paginate", "3.0.pre2"
   s.add_dependency "yard"
+  s.add_dependency "memcache-client"
 
   # Async goodness !
   s.add_dependency "rack-fiber_pool"
