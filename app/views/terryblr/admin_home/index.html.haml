@@ -25,6 +25,32 @@
       = link_to ttt(:'.x_drafts', :count => Terryblr::Post.drafted.count), admin_posts_path(:state => "drafted")
     %li.divider
 
+  %ul#stats_period_selector
+    %form
+      - periods = [["This month", (Date.today - 1.month).to_s]]
+      - 1.upto 12 do |n|
+        - this_year = Date.today.year
+        - date = (Date.today - n.months).beginning_of_month
+        - periods << if date.year == this_year
+          - [date.strftime("%B"), date.to_s]
+        - else
+          - [date.strftime("Last %B"), date.to_s]
+      / = image_submit_tag "before.png", :title => "&larr;", :class => "stats_period_before"
+      %li
+        Statistics for
+        = select_tag "month", options_for_select(periods)
+
+      / = image_submit_tag "before.png", :title => "&rarr;", :class => "stats_period_after", :style => "display:none"
+      :javascript
+        $(function(){
+          $("#stats_period_selector select").change(function(){
+            window.stats_browsed_date = $(this).val();
+            console.log("navigating to ", this, stats_browsed_date);
+            $('.graph_canvas circle').hide(function(){ });
+            refreshAnalytics();
+          });
+        })
+
 = render :partial => "terryblr/admin/content_nav"
 
 #dashboard

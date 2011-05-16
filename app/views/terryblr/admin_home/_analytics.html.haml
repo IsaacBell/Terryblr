@@ -6,15 +6,27 @@
 
 - content_for :head do
   :javascript
+    var stats_browsed_date = "#{(Date.today - 1.month).to_s}";
+    function toRubyDate(date) { return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'); }
+
+    analytic_widgets = []
+    function refreshAnalytics() {
+      for(var i=0, ii = analytic_widgets.length; i < ii; i++) {
+        loadAnalyticsAsync.apply(window, analytic_widgets[i]);
+      }
+    }
+
     function loadAnalyticsAsync(table_id, render_graph) {
       var table = $("#" + table_id);
-      var url = table.attr('rel');
+      var url = table.attr('rel') + "?since=" + stats_browsed_date;
       console.log("loading ", table_id, "with URL", url);
       $.get(url, {}, function(data, status, xhr){
         $('.loading_overlay', table.parent('.chart')).hide();
         console.log("Received response:", url, status, table);
+        console.log("table !:", table);
+        $('tbody', table).remove();
         table.append(data);
-        console.log("render_graph:", render_graph)
+        console.log("render_graph:", render_graph);
         if(render_graph) {
           drawTimeSeries(table);
         }
@@ -60,7 +72,8 @@
           %th #
       - content_for :head do
         :javascript
-          $(function(){ loadAnalyticsAsync("#{report_id}", true); })
+          // $(function(){ loadAnalyticsAsync("#{report_id}", true); })
+          window.analytic_widgets.push(["#{report_id}", true]);
 
 - %w(top_referrers top_landing_pages).each do |rep_title|
   - report_id = rep_title + "_data"
@@ -73,4 +86,8 @@
           %th #
     - content_for :head do
       :javascript
-        $(function(){ loadAnalyticsAsync("#{report_id}", false); })
+        // $(function(){ loadAnalyticsAsync("#{report_id}", false); })
+        window.analytic_widgets.push(["#{report_id}", false]);
+
+:javascript
+  $(refreshAnalytics);

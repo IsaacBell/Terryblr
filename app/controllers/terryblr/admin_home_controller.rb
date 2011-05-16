@@ -57,33 +57,44 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
 
   def analytics_data
     # TODO: parameterize the dates
-    @since = 1.month.ago.beginning_of_day.to_date
-    @until = Date.today
+    if params[:since]
+      @since = Date.parse(params[:since]).beginning_of_day.to_date
+    else
+      @since = 1.month.ago.beginning_of_day.to_date
+    end
+
+    @until = @since.end_of_month.beginning_of_day.to_date
+    @until = Date.today if @until > Date.today
+
+    puts "From #{@since.to_s} to #{@until.to_s}"
+
     @report_name = report_name = params[:report].to_sym
 
     case @report_name
     when *google_analytics_reports.keys
       @report = google_analytics_reports[@report_name].update({ :start_date => @since.to_s, :end_date => @until.to_s})
-      cache_key = "analytics_data:#{@report_name}:#{@since}"
-      cached = Rails.cache.fetch(cache_key,  :expires_in => 30.minute) do
-        fetched = with_profiling "getting report #{report_name.inspect} from Google analytics" do
-          gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
-          gs.get(@report)
-        end
-        Marshal.dump fetched
+
+      @report[:results] = fetch_with_caching(30.minutes) do
+        gs = Gattica.new({:email => Settings.ganalytics.email, :password => Settings.ganalytics.password, :profile_id => Settings.ganalytics.profile_id})
+        gs.get(@report)
       end
-      @report[:results] = Marshal.restore StringIO.new cached
     when :tweets
       @tweets = Terryblr::Tweet.analytics(@since)
     when :fb_page_views
       # Facebook insights API
       if Settings.facebook && Settings.facebook.page_token && Settings.facebook.page_id
-        @fb_page_views = fb.get(Settings.facebook.page_id, :type => 'insights/page_views/day', :params => {:since => @since})
+        # @fb_page_views = fb.get(Settings.facebook.page_id, :type => 'insights/page_views/day', :params => {:since => @since})
+        @fb_page_views = fetch_with_caching(5.minutes) do
+          fb.get(Settings.facebook.page_id, :type => 'insights/page_views/day', :params => {:since => @since})
+        end
       end
     when :fb_page_likes
       # Facebook insights API
       if Settings.facebook && Settings.facebook.page_token && Settings.facebook.page_id
-        @fb_page_likes = fb.get(Settings.facebook.page_id, :type => 'insights/page_like_adds/day', :params => {:since => @since})
+        # @fb_page_likes = fb.get(Settings.facebook.page_id, :type => 'insights/page_like_adds/day', :params => {:since => @since})
+        @fb_page_likes = fetch_with_caching(5.minutes) do
+          fb.get(Settings.facebook.page_id, :type => 'insights/page_like_adds/day', :params => {:since => @since})
+        end
       end
     else
       raise RuntimeError.new "UnknownReport: #{@report_name.inspect}"
@@ -148,7 +159,6 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   end
 
   def google_analytics_reports
-    # Visitors
     {
       :visitors => {
         :dimensions => %w(day),
@@ -177,9 +187,19 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   end
   
   def fb
+    MiniFB.disable_logging
     @fb ||= MiniFB::OAuthSession.new(Settings.facebook.page_token)
   end
   
+  def fetch_with_caching(duration, &block)
+    report_name = @report_name
+    cache_key = "analytics_data:#{@report_name}:#{@since}"
+    cached = Rails.cache.fetch(cache_key,  :expires_in => duration) do
+      fetched = with_profiling "getting report #{report_name.inspect}", &block
+      Marshal.dump fetched
+    end
+    Marshal.restore StringIO.new cached
+  end
 
   include Terryblr::Extendable
 end
