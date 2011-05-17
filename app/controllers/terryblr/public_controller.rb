@@ -3,6 +3,8 @@ class Terryblr::PublicController < Terryblr::ApplicationController
   unloadable
   inherit_resources
 
+  analytical :modules => Settings.analytics_backends, :use_session_store => true
+
   # caches_page # for making static sites
   around_filter :cache
   
