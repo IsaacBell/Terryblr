@@ -12,7 +12,7 @@ cols_hash = class_obj.columns_hash
 <table id="<%= record_name.pluralize %>_list_<%= records.object_id %>" class="remote_sort_table sort_table <%= record_name.pluralize %>_table" cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-    <% 
+    <%
     list_cols.each do |col|
       next if cols_hash[col] and cols_hash[col].primary
       next if ignore_cols.include?(col)

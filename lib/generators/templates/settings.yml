@@ -10,14 +10,14 @@ common: &common
     password: weloveterry69
     profile_id: 25211350
   domain: terryblr.rails
-  dropbox_app:
-    key: 'zfva58fcjnx50me'
-    secret: 'xjj4wq3a8g6r0wg'
+  disqus:
+    key: mg9C49wg7VGSBCzckZv799lweuyepzki7jWKcRo9bbP4ELiovmAvGZDnYnEKUuNz
+    secret: wMbpkchik8EWmYOTW7Jr2jVDd1BHiipTpenlolINRlc8EaRYpJDX1vGWHLoWLCJC
   tumblr:
     blog: 
     email: 
     pass: 
-  dropbox_app:
+  dropbox:
     key: 'zfva58fcjnx50me'
     secret: 'xjj4wq3a8g6r0wg'
   vimeo:

@@ -22,7 +22,7 @@ module Admin::Terryblr::DropboxHelper
   end
 
   def new_dropbox_session
-    Dropbox::Session.new(Settings.dropbox_app.key, Settings.dropbox_app.secret)
+    Dropbox::Session.new(Settings.dropbox.key, Settings.dropbox.secret)
   end
 
   def dropbox_authorize_link
@@ -32,5 +32,6 @@ module Admin::Terryblr::DropboxHelper
   def basename(path)
     path.sub(@dropbox_path, '').sub(/^\//, '')
   end
+
   include Terryblr::Extendable
 end

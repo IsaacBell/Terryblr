@@ -42,6 +42,7 @@ if defined? Thin
 
   require "em-http"
   require "em-net-http"
+  require "em-synchrony"
 
   use Rack::CommonLogger
   use Rack::ShowExceptions

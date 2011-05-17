@@ -1,21 +1,58 @@
+require 'disqussion'
 class Admin::Terryblr::CommentsController < Terryblr::AdminController
 
+  def index
+    super
+  end
+  
+  def update_many
+    posts = Disqussion::Posts.new
+    case params[:comment_action]
+    when 'approve'
+      posts.approve params[:comment_ids] if params[:comment_ids]
+    when 'mark-spam'
+      posts.spam params[:comment_ids] if params[:comment_ids]
+    end if params[:comment_action]
+    redirect_to admin_comments_path
+  end
+  
+  def delete_many
+    Disqussion::Posts.new.remove params[:comment_ids] if params[:comment_ids]
+    redirect_to admin_comments_path
+  end
+  
   private
-
+  
+  # Query options are passed this way:
+  # from:username
+  # email:joe@bar.com
+  # ip:127.0.0.1
+  # thread:29372
+  def extract_options
+    options = {}
+    options[:query] = params[:query] if params.has_key?(:query) && %w(from email ip thread).include?(params[:query].split(':').first)
+    options[:include] = params[:filter] if params.has_key? :filter
+    options
+  end
+  
   def collection
-    scope = end_of_association_chain
-    
-    unless params[:search].blank?
-      @query = params[:search].strip
-      scope = scope.comment_like(@query)
+    @collection ||= begin
+      posts = Disqussion::Forums.new.listPosts("yvanrodic", extract_options).response
+      unless Rails.env.test?
+        f = Fiber.current
+        # Launch up to 10 requests in parallel
+        EM::Iterator.new(posts, 10).map(proc{ |comment, iter|
+          Fiber.new {
+            comment.thread = Disqussion::Threads.new.details(comment.thread).response
+            iter.return(comment.thread)
+          }.resume
+        }, proc{ |responses|
+          f.resume
+        })
+        Fiber.yield
+      end
+      posts
     end
-    
-    unless params[:post_id].blank?
-      scope = scope.commentable_type('Terryblr::Post').commentable_id(params[:post_id])
-    end
-    
-    # TODO: check if acts_as_commentable's comments_ordered_by_submitted would fit here
-    @comments ||= scope.all(:order => "created_at desc").paginate(:page => params[:page])
   end
 
   include Terryblr::Extendable

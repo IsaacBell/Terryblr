@@ -17,8 +17,6 @@ class Terryblr::ApplicationController < ActionController::Base
   def current_lang
     @current_lang = I18n.locale = current_site.lang if I18n.available_locales.include?(current_site.lang)
   end
-  
-  
 
   def end_of_association_chain
     assoc_name = params[:controller].split('/').last.strip.to_sym

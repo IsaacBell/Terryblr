@@ -66,9 +66,12 @@ end
 #   feel free to delete them.
 #
 
+def fixture_file(filename)
+  return '' if filename == ''
+  file_path = File.expand_path(File.dirname(__FILE__) + '/fixtures/' + filename)
+  File.read(file_path)
+end
 
-
-
-# Configure Rails Envinronment
+# Configure Rails Environment
 
 # Load factories

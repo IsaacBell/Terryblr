@@ -2,8 +2,9 @@ require "rails"
 
 module Terryblr
   class Engine < Rails::Engine
-    paths['db/migrate']    = 'db/migrate'
-    # paths['terryblr/base'] = 'terryblr/base'
+    paths['app/coffeescripts']  = 'app/coffeescripts'
+    paths['db/migrate']         = 'db/migrate'
+    # paths['terryblr/base']    = 'terryblr/base'
 
     # Since the database can't be set up when running the generators,
     # we move the models path to autoload instead of eager_load.
@@ -14,6 +15,7 @@ module Terryblr
     
     config.gem 'devise'
     config.gem 'cancan'
+    config.gem 'barista'
 
     # Force routes to be loaded if we are doing any eager load.
     config.before_eager_load { |app| app.reload_routes! }

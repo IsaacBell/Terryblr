@@ -12,7 +12,8 @@ gem "analytical", :git => "git://github.com/mathieuravaux/analytical.git"
 gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"
 gem "em-http-request", :git => "git://github.com/mathieuravaux/em-http-request.git"
 gem "em-net-http", :git => "git://github.com/mathieuravaux/em-net-http.git"
-# gem "disqussion", :path => "../disqussion"
+gem "em-synchrony", :git => "git://github.com/igrigorik/em-synchrony.git"
+gem "disqussion", :path => "../disqussion"
 
 group :development, :test do
   gem 'capybara'
