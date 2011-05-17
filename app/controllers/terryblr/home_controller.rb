@@ -3,9 +3,20 @@ class Terryblr::HomeController < Terryblr::PublicController
   helper 'terryblr/posts'
 
   caches_page :robots
-  before_filter :collection, :only => [:index, :sitemap]
+  before_filter :collection, :only => [:index, :sitemap, :feeds]
 
   def search
+  end
+  
+  def feeds
+    respond_to do |wants|
+      wants.rss {
+        render :template => "terryblr/posts/index"
+      }
+      wants.atom {
+        render :template => "terryblr/posts/index"
+      }
+    end
   end
 
   def sitemap
@@ -45,7 +56,7 @@ class Terryblr::HomeController < Terryblr::PublicController
     @collection ||= case action_name
       when 'sitemap'
         live_posts.limit(500).order("updated_at desc")
-      when 'index'
+      when 'index', 'feeds'
         live_posts.paginate :page => params[:page]
       else
         []

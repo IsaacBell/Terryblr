@@ -6,6 +6,7 @@
     = facebook_meta_tags
     = csrf_meta_tag
     = raw analytical.head_prepend_javascript
+    = auto_discovery_link_tag :rss, feeds_path(:format => "rss")
     = include_javascripts :public
     = include_stylesheets :public
     = yield :head

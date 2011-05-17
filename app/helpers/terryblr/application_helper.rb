@@ -61,17 +61,6 @@ module Terryblr::ApplicationHelper
     page_object
   end
 
-  def detail_page?
-    return true if %w(atom rss application/atom+xml application/rss+xml).include?(request.format.to_s)
-    
-    case controller.controller_name.to_sym
-    when :contributors
-      false
-    else
-      %w(show feeds).include?(controller.action_name)
-    end
-  end
-
   #
   # Common
   #

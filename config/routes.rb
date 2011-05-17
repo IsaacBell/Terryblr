@@ -90,6 +90,9 @@ Rails.application.routes.draw do
     end
   end
   match "/posts/:id/:slug", :to => "terryblr/posts#show", :as => "post"
+
+  # RSS Feeds
+  match "/feeds(.:format)", :to => "terryblr/home#feeds", :as => "feeds"
   
   # Search
   match "/search", :to => "terryblr/home#search", :as => "search"
