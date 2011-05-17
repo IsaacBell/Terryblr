@@ -1,16 +1,39 @@
 require 'spec_helper'
 
 describe Terryblr::PostsController do
+  
+  before do
+    @post = Factory(:post, :published_at => 1.hour.ago, :site => Terryblr::Site.default)
+  end
+  
   describe "GET /posts" do
+    it "should GET the index" do
+      get :index
+      response.should be_success
+    end
   end
 
   describe "GET /posts/show" do
+    it "should GET the post" do
+      get :show, :id => @post.id, :slug => @post.slug
+      response.should be_success
+    end
   end
 
   describe "GET /posts/tagged" do
+    it "should GET the post" do
+      tag = 'party'
+      @post.tag_list = [tag]
+      get :tagged, :tag => tag
+      response.should be_success
+    end
   end
 
   describe "GET /posts/archive" do
+    it "should GET the archives" do
+      get :archives
+      response.should be_success
+    end
   end
 
   describe "GET /posts/next,previous" do
@@ -48,6 +71,7 @@ describe Terryblr::PostsController do
       # Standard post
       post :preview, :post => post_atts
       response.should be_success
+      
       post_atts.each_pair do |key, val|
         case key
         when :id

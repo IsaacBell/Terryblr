@@ -168,8 +168,6 @@ ActiveRecord::Schema.define(:version => 20110517123027) do
     t.integer  "position",       :default => 0
     t.integer  "post_id"
     t.integer  "site_id"
-    t.integer  "author_id"
-    t.integer  "last_editor_id"
   end
 
   add_index "pages", ["comments_count"], :name => "index_pages_on_comments_count"
@@ -196,7 +194,9 @@ ActiveRecord::Schema.define(:version => 20110517123027) do
   end
 
   create_table "posts", :force => true do |t|
+    t.string   "post_type"
     t.string   "title"
+    t.text     "body"
     t.string   "slug"
     t.datetime "published_at"
     t.string   "state"
@@ -217,8 +217,6 @@ ActiveRecord::Schema.define(:version => 20110517123027) do
     t.string   "linkable_type"
     t.string   "import_url"
     t.integer  "site_id"
-    t.integer  "author_id"
-    t.integer  "last_editor_id"
   end
 
   add_index "posts", ["comments_count"], :name => "index_posts_on_comments_count"

@@ -5,7 +5,7 @@ class Admin::Terryblr::ProductsController < Terryblr::AdminController
     resource.save!
     resource.state = :published
     super do |wants|
-      wants.html { render :action => "edit" }
+      wants.html { render "edit" }
     end
   end
 

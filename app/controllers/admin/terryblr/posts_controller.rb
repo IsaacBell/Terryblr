@@ -11,7 +11,6 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
   def new
     if Terryblr::ContentPart.content_types.include?(params[:type])
       resource.parts.build(:content_type => params[:type])
-      puts "===== Added part to new post!!"
     end
     super
   end

@@ -32,15 +32,15 @@ class Terryblr::PostsController < Terryblr::PublicController
   def archives
     @page_title = 'Archives'
     respond_to do |wants|
-      wants.html { render :action => "terryblr/posts/archives" }
-      wants.js   { render :action => "terryblr/posts/archives" }
+      wants.html { render "terryblr/posts/archives" }
+      wants.js   { render "terryblr/posts/archives" }
     end
   end
 
   def tagged
     @page_title = "Posts tagged #{params[:tag]}"
     respond_to do |wants|
-      wants.html { render :action => "terryblr/posts/tagged" }
+      wants.html { render "terryblr/posts/tagged" }
       wants.js
     end
   end
@@ -102,7 +102,7 @@ class Terryblr::PostsController < Terryblr::PublicController
       else
         []
       end
-      paginate(
+      end_of_association_chain.paginate(
         :page => params[:page],
         :conditions => conditions,
         :order => "#{col} desc, created_at desc")
