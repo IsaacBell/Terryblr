@@ -1,4 +1,5 @@
 class Terryblr::PostsController < Terryblr::PublicController
+
   before_filter :date, :only => [:index]
   before_filter :resource, :only => [:gallery_params, :show, :next, :previous]
   before_filter :featured_pics, :only => [:show]
