@@ -68,7 +68,7 @@ module Terryblr::ApplicationHelper
     when :contributors
       false
     else
-      (controller.action_name=='show')
+      %w(show feeds).include?(controller.action_name)
     end
   end
 
