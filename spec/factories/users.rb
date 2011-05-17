@@ -9,5 +9,17 @@ end
 Factory.define :user_admin, :parent => :user, :class => Terryblr::User do |user|
   user.first_name            "Admin"
   user.last_name             "Tester"
-  user.admin                 true
+  user.role                  "admin"
+end
+
+Factory.define :user_editor, :parent => :user, :class => Terryblr::User do |user|
+  user.first_name            "Admin"
+  user.last_name             "Tester"
+  user.role                  "editor"
+end
+
+Factory.define :user_redactor, :parent => :user, :class => Terryblr::User do |user|
+  user.first_name            "Admin"
+  user.last_name             "Tester"
+  user.role                  "redactor"
 end
