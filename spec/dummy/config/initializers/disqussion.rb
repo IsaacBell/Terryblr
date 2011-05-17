@@ -1,3 +1,4 @@
+require "eventmachine"
 require 'disqussion'
 
 Disqussion.configure do |config|
