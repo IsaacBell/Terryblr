@@ -127,15 +127,17 @@ fr:
             save: sauver
         users:
           form:
+            admin: admin
+            editor: "éditeur"
             email: "e-mail"
             firstname: "prénom"
             lastname: "nom de famille"
             password: "mot de passe"
             password_confirmation: "confirmer le mot de passe"
+            redactor: "rédacteur"
         sessions:
           new:
             please_login: "Veuillez vous identifier"
-    admin: admin
     archives: archives
     are_you_absolutely_sure: "Êtes vous sûr?"
     back: retour
@@ -147,7 +149,6 @@ fr:
     edit_post: "édition d'un billet"
     edit_photos: "éditer les photos"
     edit_video: "éditer la video"
-    editor: "éditeur"
     update_page: "mettre à jour la page"
     update_post: "mettre à jour le post"
     update_photos: "mettre à jour les photos"
@@ -170,7 +171,6 @@ fr:
     post: billet
     text: texte
     preview: voir
-    redactor: "rédacteur"
     role: "rôle"
     save: enregistrer
     state: status

@@ -134,15 +134,17 @@ en:
             save: save
         users: 
           form:
+            admin: admin
+            editor: editor
             email: email
             firstname: first name
             lastname: last name
             password: password
             password_confirmation: password confirmation
+            redactor: redactor
         sessions:
           new:
             please_login: Please login
-    admin: admin
     archives: archives
     are_you_sure: Are you absolutely sure?
     back: back
@@ -154,7 +156,6 @@ en:
     edit_photos: edit photos
     edit_post: edit post
     edit_video: edit video
-    editor: editor
     update_page: edit page
     update_post: edit post
     update_photos: edit photos
@@ -179,7 +180,6 @@ en:
     post: post
     text: text
     preview: preview
-    redactor: redactor
     role: role
     save: save
     state: state
