@@ -47,7 +47,7 @@ class CreateContentParts < ActiveRecord::Migration
     add_column :posts, :body, :text
     add_column :posts, :post_type, :string
     # Migrate content-parts to posts body and post_type
-    Terryblr::ContentPart.all.where("contentable_id is not null").each do |p|
+    Terryblr::ContentPart.where("contentable_id is not null").each do |p|
       next if p.contentable.nil?
       post = p.contentable
       case p.content_type.to_sym
