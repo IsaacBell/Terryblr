@@ -142,6 +142,7 @@ en:
         sessions:
           new:
             please_login: Please login
+    admin: admin
     archives: archives
     are_you_sure: Are you absolutely sure?
     back: back
@@ -150,9 +151,10 @@ en:
     delete: delete
     edit: edit
     edit_page: edit page
-    edit_post: edit post
     edit_photos: edit photos
+    edit_post: edit post
     edit_video: edit video
+    editor: editor
     update_page: edit page
     update_post: edit post
     update_photos: edit photos
@@ -177,6 +179,8 @@ en:
     post: post
     text: text
     preview: preview
+    redactor: redactor
+    role: role
     save: save
     state: state
     title: title

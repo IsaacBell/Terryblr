@@ -7,6 +7,14 @@ class Terryblr::Ability
     user ||= Terryblr::User.new
     if user.admin?
       can :manage, :all
+    elsif user.role == :editor
+      can :read, :all
+      can :create, Terryblr::User
+      can :manage, Terryblr::Post
+    elsif user.role == :redactor
+      can :read, :all
+      can :create, Terryblr::User
+      can :create, Terryblr::Post
     end
   end
 

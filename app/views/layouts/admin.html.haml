@@ -18,7 +18,7 @@
             %ul
               %li.nav-dashboard= link_to_unless_current ttt(:'.dashboard'), admin_path
               %li.nav-archives= link_to_unless_current ttt(:'.archives'), admin_posts_path
-              %li.nav-users= link_to_unless_current ttt(:'.users'), admins_admin_users_path
+              %li.nav-users= link_to_unless_current ttt(:'.users'), admin_users_path
               %li.nav-logout= link_to_unless_current ttt(:'.logout'), destroy_user_session_path
 
               %li.nav-search

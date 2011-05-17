@@ -135,6 +135,7 @@ fr:
         sessions:
           new:
             please_login: "Veuillez vous identifier"
+    admin: admin
     archives: archives
     are_you_absolutely_sure: "Êtes vous sûr?"
     back: retour
@@ -146,6 +147,7 @@ fr:
     edit_post: "édition d'un billet"
     edit_photos: "éditer les photos"
     edit_video: "éditer la video"
+    editor: "éditeur"
     update_page: "mettre à jour la page"
     update_post: "mettre à jour le post"
     update_photos: "mettre à jour les photos"
@@ -168,6 +170,8 @@ fr:
     post: billet
     text: texte
     preview: voir
+    redactor: "rédacteur"
+    role: "rôle"
     save: enregistrer
     state: status
     title: titre

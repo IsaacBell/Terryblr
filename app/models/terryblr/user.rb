@@ -11,7 +11,7 @@ class Terryblr::User < Terryblr::Base
   end
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role
   
   
   #
@@ -32,7 +32,7 @@ class Terryblr::User < Terryblr::Base
   #
   # Behvaiours
   #
-  attr_accessible :first_name, :last_name, :admin
+  attr_accessible :first_name, :last_name
   # attr_accessible :twitter_token, :twitter_secret, :profile_pic_url, :fb_session_key
   
   #
@@ -51,18 +51,28 @@ class Terryblr::User < Terryblr::Base
   #
   # Scopes
   #
-  scope :admins, lambda { where(:admin => true) }
+  scope :admins, lambda { where(:role => :admin) }
   
   #
   # Class Methods
   #
   class << self
     def build_admin props
-      self.new (props || {}).merge :admin => true
+      self.new (props || {}).merge :role => :admin
     end
 
     def can_destroy_admin?
       admins.count > 1
+    end
+
+    # Sort by descending order of ability
+    def roles
+      [:admin, :editor, :redactor]
+    end
+
+    def available_roles(user)
+      idx = roles.find_index(user.role.to_sym)
+      idx == nil ? [] : roles[idx..-1]
     end
   end
 
@@ -73,6 +83,14 @@ class Terryblr::User < Terryblr::Base
 
   def destroyable?
     !admin? || self.class.admins.count > 1
+  end
+
+  def admin?
+    role && role.to_sym == :admin
+  end
+
+  def role
+    @role ||= (self.attributes['role'] && self.attributes['role'].to_sym)
   end
 
   #
