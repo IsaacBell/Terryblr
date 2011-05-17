@@ -55,11 +55,13 @@ Gem::Specification.new do |s|
   s.add_dependency "yard"
   s.add_dependency "memcache-client"
   s.add_dependency "analytical"
+  s.add_dependency "yajl-ruby"
 
   # Async goodness !
   s.add_dependency "rack-fiber_pool"
   s.add_dependency "em-http-request"
   s.add_dependency "em-net-http"
+  s.add_dependency "em-synchrony"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "ruby-debug19"
@@ -87,6 +89,8 @@ Gem::Specification.new do |s|
   end
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "guard-livereload"
-
+  s.add_development_dependency "hashie"
+  s.add_development_dependency "rash"
+  
   s.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"] + ["LICENSE", "README.rdoc"]
 end

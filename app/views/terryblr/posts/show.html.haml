@@ -2,6 +2,10 @@
   =render :partial => "list", :locals => { :collection => [resource] }
 
 .clear
+
+= raw disqus_thread
+
+.clear
   
 #page_nav
   = link_to tt(".arrow_previous"), previous_post_path(resource), :class => "left" if resource.previous

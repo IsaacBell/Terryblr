@@ -1,8 +1,23 @@
-= render :partial => 'admin/common/archive_sidebar'
+= render :partial => 'sidebar'
 
 = render :partial => 'admin/common/search_form'
 
 %h2 #{ttt :'.comments'}
 
 .clear
-= render :partial => 'admin/common/list_table', :locals => { :records => collection, :class_obj => Comment, :list_cols => %w(author comment created_at), :action_cols => %w() }
+
+- @collection.each do |comment|
+  = render :partial => 'line', :locals => { :comment => comment}
+
+.actions
+  - form_tag '/admin/comments/update_many', :method => :put do
+    = hidden_field_tag "comment_action", "approve"
+    %input#approve-selected{:type => "button", :value => ttc(".approve")}
+  - form_tag '/admin/comments/update_many', :method => :put do
+    = hidden_field_tag "comment_action", "mark-spam"
+    %input#mark-as-spam-selected{:type => "button", :value => ttc(".mark as spam")}
+  - form_tag '/admin/comments/delete_many', :method => :delete do
+    %input#delete-selected{:type => "button", :value => ttc(".delete")}
+
+- content_for :js do
+  = coffeescript_include_tag 'comments'

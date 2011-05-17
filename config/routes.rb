@@ -44,7 +44,10 @@ Rails.application.routes.draw do
       end
       resource :photos, :controller => "terryblr/photos"
     end
-    resources :comments
+    resources :comments, :controller => "terryblr/comments" do
+      put :update_many, :on => :collection
+      delete :delete_many, :on => :collection
+    end
     resources :videos, :only => [:index, :destroy], :controller => "terryblr/videos" do
       post :reorder, :on => :collection
     end

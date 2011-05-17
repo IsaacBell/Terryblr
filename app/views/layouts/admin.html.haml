@@ -57,3 +57,6 @@
         .clear
 
       #footer
+    / Yield js if there is any
+    - if content_for?(:js)
+      = yield :js

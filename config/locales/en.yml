@@ -62,7 +62,17 @@ en:
           site_changed: "Site changed to %{current_site}!"
 
     admin:
+      common: 
+        search_form:
+          reset: reset
+
       terryblr: 
+        comments: 
+          index:
+            comments: comments
+            approve: approve
+            'mark as spam': mark as spam
+            delete: delete
         features: 
           index: 
             drafted: Drafted

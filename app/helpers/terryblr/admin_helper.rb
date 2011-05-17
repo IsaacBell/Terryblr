@@ -235,6 +235,10 @@ module Terryblr::AdminHelper
     }, :class => "preview") +
     content_tag(:iframe, "", :id => "#{obj}_preview", :class => "preview-pane", :src => "about:blank", :width => 1, :height => 1, :name => "#{obj}_preview")
   end
+  
+  def seconds_from_now(datetime)
+    Time.now.to_i - Time.at(datetime.to_i).to_i
+  end
 
   include Terryblr::Extendable
 end
