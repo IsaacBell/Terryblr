@@ -56,6 +56,7 @@ Gem::Specification.new do |s|
   s.add_dependency "memcache-client"
   s.add_dependency "analytical"
   s.add_dependency "yajl-ruby"
+  s.add_dependency "disqussion"
 
   # Async goodness !
   s.add_dependency "rack-fiber_pool"
