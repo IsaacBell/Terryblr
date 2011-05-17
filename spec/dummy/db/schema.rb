@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110503105125) do
+ActiveRecord::Schema.define(:version => 20110517123027) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -299,8 +299,8 @@ ActiveRecord::Schema.define(:version => 20110503105125) do
   add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "",    :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "email",                               :default => "", :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -311,30 +311,48 @@ ActiveRecord::Schema.define(:version => 20110503105125) do
     t.string   "last_sign_in_ip"
     t.string   "first_name"
     t.string   "last_name"
-    t.boolean  "admin",                               :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
+  create_table "versions", :force => true do |t|
+    t.integer  "versioned_id"
+    t.string   "versioned_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "user_name"
+    t.text     "modifications"
+    t.integer  "number"
+    t.integer  "reverted_from"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
+  add_index "versions", ["number"], :name => "index_versions_on_number"
+  add_index "versions", ["tag"], :name => "index_versions_on_tag"
+  add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
+  add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
+  add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
+
   create_table "videos", :force => true do |t|
     t.string   "caption"
-    t.string   "url",            :limit => 3000
+    t.string   "url",             :limit => 3000
     t.string   "vimeo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "display_order",                  :default => 0
-    t.string   "embed",          :limit => 3000
+    t.integer  "display_order",                   :default => 0
+    t.string   "embed",           :limit => 3000
     t.integer  "width"
     t.integer  "height"
     t.string   "thumb_url"
-    t.integer  "videoable_id"
-    t.string   "videoable_type"
+    t.integer  "content_part_id"
   end
-
-  add_index "videos", ["videoable_id"], :name => "index_videos_on_videoable_id"
 
   create_table "votes", :force => true do |t|
     t.string   "votable_type"

@@ -127,11 +127,14 @@ fr:
             save: sauver
         users:
           form:
+            admin: admin
+            editor: "éditeur"
             email: "e-mail"
             firstname: "prénom"
             lastname: "nom de famille"
             password: "mot de passe"
             password_confirmation: "confirmer le mot de passe"
+            redactor: "rédacteur"
         sessions:
           new:
             please_login: "Veuillez vous identifier"
@@ -168,6 +171,7 @@ fr:
     post: billet
     text: texte
     preview: voir
+    role: "rôle"
     save: enregistrer
     state: status
     title: titre

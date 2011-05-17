@@ -1,6 +1,7 @@
 class Terryblr::PagesController < Terryblr::PublicController
 
   def show
+    track_resource_analytics
     @page_title = resource.title
     super
   end

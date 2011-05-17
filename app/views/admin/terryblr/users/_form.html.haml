@@ -4,6 +4,9 @@
   = form.input :email, :label => ttt(:'.email'), :wrapper_html => { :class => "clear" }
   = form.input :password, :label => ttt(:'.password') 
   = form.input :password_confirmation, :label => ttt(:'.password_confirmation')
+  = form.input :role, :label => ttt(:role), :as => :select, :include_blank => false, 
+    :collection => Terryblr::User.available_roles(current_user).map {|r| [ttc(:".#{r}"), r]},
+    :selected => resource.new_record? ? current_user.role : resource.role
 
 = form.buttons do
   = form.commit_button ttt(:save)

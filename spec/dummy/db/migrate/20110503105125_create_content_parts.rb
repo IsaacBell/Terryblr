@@ -16,17 +16,17 @@ class CreateContentParts < ActiveRecord::Migration
     remove_column :videos, :post_id
     
     # Migrate posts bodies to content-parts
-    Terryblr::Post.all.where("post_type = 'post' AND body is not null").each do |p|
+    Terryblr::Post.where("post_type = 'post' AND body is not null").each do |p|
       p.parts.create(:content_type => 'text', :body => p.body)
     end
 
     # Migrate posts bodies to content-parts
-    Terryblr::Post.all.where("post_type = 'photos'").each do |p|
+    Terryblr::Post.where("post_type = 'photos'").each do |p|
       p.parts.create(:content_type => 'photos', :photos => p.photos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
 
-    Terryblr::Post.all.where("post_type = 'videos'").each do |p|
+    Terryblr::Post.where("post_type = 'videos'").each do |p|
       p.parts.create(:content_type => 'videos', :photos => p.videos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
@@ -45,7 +45,7 @@ class CreateContentParts < ActiveRecord::Migration
     add_column :posts, :body, :text
     add_column :posts, :post_type, :string
     # Migrate content-parts to posts body and post_type
-    Terryblr::ContentPart.all.where("contentable_id is not null").each do |p|
+    Terryblr::ContentPart.where("contentable_id is not null").each do |p|
       next if p.contentable.nil?
       post = p.contentable
       case p.content_type.to_sym

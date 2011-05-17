@@ -8,6 +8,7 @@ require 'validates_email_format_of'
 require 'jammit'
 require 'barista'
 require "dropbox"
+require 'analytical'
 
 require 'cancan'
 # TODO: pull request in CanCan

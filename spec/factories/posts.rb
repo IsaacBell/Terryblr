@@ -5,7 +5,8 @@ Factory.define :post, :class => Terryblr::Post do |post|
   post.site_id          Terryblr::Site.default.id
   post.parts {|p| [p.association(:content_part_text)]}
   post.location_list    ["blog"]
-  post.tag_list         ['test']
+  post.tag_list         ['test_tag', 'other_tag']
+  post.author           { |author| author.association :user}
   post.tw_me            false
   post.fb_me            true
 end

@@ -134,11 +134,14 @@ en:
             save: save
         users: 
           form:
+            admin: admin
+            editor: editor
             email: email
             firstname: first name
             lastname: last name
             password: password
             password_confirmation: password confirmation
+            redactor: redactor
         sessions:
           new:
             please_login: Please login
@@ -150,8 +153,8 @@ en:
     delete: delete
     edit: edit
     edit_page: edit page
-    edit_post: edit post
     edit_photos: edit photos
+    edit_post: edit post
     edit_video: edit video
     update_page: edit page
     update_post: edit post
@@ -177,6 +180,7 @@ en:
     post: post
     text: text
     preview: preview
+    role: role
     save: save
     state: state
     title: title
