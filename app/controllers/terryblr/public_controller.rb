@@ -28,4 +28,14 @@ class Terryblr::PublicController < Terryblr::ApplicationController
       end
     end
   end
+
+  protected
+
+  def track_resource_analytics
+    resource.tag_list.each { |tag|
+      analytical.custom_event 'Tag', 'view', tag
+    }
+    analytical.custom_event 'Author', 'view', resource.author.email
+  end
+
 end

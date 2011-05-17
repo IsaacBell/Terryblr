@@ -13,6 +13,8 @@ class Terryblr::PostsController < Terryblr::PublicController
 
   def show
     @page_title = resource.title rescue nil
+    track_resource_analytics
+
     super do |wants|
       wants.xml   { render "terryblr/common/slideshow" }
     end
