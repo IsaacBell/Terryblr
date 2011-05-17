@@ -1,4 +1,4 @@
-module Post
+module PostOverrides
   extend ActiveSupport::Concern
 
   included do
