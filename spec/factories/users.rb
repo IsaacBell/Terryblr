@@ -13,13 +13,13 @@ Factory.define :user_admin, :parent => :user, :class => Terryblr::User do |user|
 end
 
 Factory.define :user_editor, :parent => :user, :class => Terryblr::User do |user|
-  user.first_name            "Admin"
+  user.first_name            "Editor"
   user.last_name             "Tester"
   user.role                  "editor"
 end
 
 Factory.define :user_redactor, :parent => :user, :class => Terryblr::User do |user|
-  user.first_name            "Admin"
+  user.first_name            "Redactor"
   user.last_name             "Tester"
   user.role                  "redactor"
 end
