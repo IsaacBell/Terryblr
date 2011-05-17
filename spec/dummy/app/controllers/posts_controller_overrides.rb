@@ -1,4 +1,4 @@
-module PostsController
+module PostsControllerOverrides
   extend ActiveSupport::Concern
 
   def greet
