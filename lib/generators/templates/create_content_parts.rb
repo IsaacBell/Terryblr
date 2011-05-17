@@ -13,24 +13,26 @@ class CreateContentParts < ActiveRecord::Migration
     add_column :videos, :content_part_id, :integer
     # Migrate old videos to new content-parts
     # ...
-    remove_column :videos, :post_id
     
     # Migrate posts bodies to content-parts
-    Terryblr::Post.all.where("post_type = 'post' AND body is not null").each do |p|
+    Terryblr::Post.where("post_type = 'post' AND body is not null").all.each do |p|
       p.parts.create(:content_type => 'text', :body => p.body)
     end
 
     # Migrate posts bodies to content-parts
-    Terryblr::Post.all.where("post_type = 'photos'").each do |p|
-      p.parts.create(:content_type => 'photos', :photos => p.photos) 
+    Terryblr::Post.where("post_type = 'photos'").all.each do |p|
+      photos = Terryblr::Photo.where({:photoable_id => p.id, :photoable_type => 'Terryblr::Post'}).all
+      p.parts.create(:content_type => 'photos', :photos => photos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
 
-    Terryblr::Post.all.where("post_type = 'videos'").each do |p|
-      p.parts.create(:content_type => 'videos', :photos => p.videos) 
+    Terryblr::Post.where("post_type = 'videos'").all.each do |p|
+      videos = Terryblr::Video.where({:post_id => p.id}).all
+      p.parts.create(:content_type => 'videos', :videos => p.videos) 
       p.parts.create(:content_type => 'text', :body => p.body) if p.body?
     end
 
+    remove_column :videos, :post_id
     remove_column :posts, :body
     remove_column :posts, :post_type
 
