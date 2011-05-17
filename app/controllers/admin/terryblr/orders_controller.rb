@@ -10,7 +10,7 @@ class Admin::Terryblr::OrdersController < Terryblr::AdminController
 
   def filter
     respond_to do |wants|
-      wants.html { render :action => "index" }
+      wants.html { render "index" }
     end
   end
 

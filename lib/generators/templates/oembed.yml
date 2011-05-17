@@ -15,6 +15,9 @@
     - "http://www.youtube.com/watch?v=*"
     - "http://www.youtube.com/embed/*"
     - "http://www.youtu.be/*"
+    - "http://youtube.com/watch?v=*"
+    - "http://youtube.com/embed/*"
+    - "http://youtu.be/*"
 
 :oohembed:
   :format: "json"

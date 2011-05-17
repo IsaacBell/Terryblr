@@ -9,13 +9,13 @@ class Admin::Terryblr::UsersController < Terryblr::AdminController
   def create
     super do |success, failure|
       success.html { redirect_to edit_admin_user_path(resource), :notice => t('devise.registrations.signed_up') }
-      failure.html { render :action => :new }
+      failure.html { render 'new' }
     end
   end
 
   def admins
     @users = end_of_association_chain.admins.all.paginate(:page => params[:page])
-    render :action => "index"
+    render "index"
   end
 
   private

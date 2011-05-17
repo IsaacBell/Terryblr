@@ -31,6 +31,7 @@ describe Terryblr::AdminHomeController do
       @site_blog.lang.should eql(:fr)
       get :index
       response.should be_success
+      
       assigns(:current_site).should eql(@site_blog)
       assigns(:current_lang).should eql(:fr)
       
