@@ -31,7 +31,7 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
   end
   def setup!
     @user = Terryblr::User.new params[:user]
-    @user.admin = true
+    @user.role = :admin
     if @user.save
       sign_in @user
       redirect_to :admin
