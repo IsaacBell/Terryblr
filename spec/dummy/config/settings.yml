@@ -1,6 +1,9 @@
 common: &common
   app_name: Terryblr
   admin_email: 
+  analytics_backends:
+    - console
+    - google
   ganalytics:
     code: UA-XXXXXXX-XX
     email: terryblr@gmail.com

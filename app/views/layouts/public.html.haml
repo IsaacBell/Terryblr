@@ -5,10 +5,13 @@
     %title #{Settings.app_name}#{": #{@page_title}" if @page_title}
     = facebook_meta_tags
     = csrf_meta_tag
+    = raw analytical.head_prepend_javascript
     = include_javascripts :public
     = include_stylesheets :public
     = yield :head
+    = raw analytical.head_append_javascript
   %body
+    = raw analytical.body_prepend_javascript
     .container
       #header
         #search_form
@@ -32,13 +35,4 @@
 
       #footer
 
-      / Google analytics
-      %script{ :type => "text/javascript" }
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '#{Settings.ganalytics.code}']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-        })();
+    = raw analytical.body_append_javascript

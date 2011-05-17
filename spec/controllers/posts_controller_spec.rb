@@ -18,6 +18,16 @@ describe Terryblr::PostsController do
       get :show, :id => @post.id, :slug => @post.slug
       response.should be_success
     end
+
+    it "should log the post view, with author and tag data, to google analytics" do
+      @post = Factory(:published_post)
+      @analytical = mock("analytical")
+      controller.stub!(:analytical).and_return(@analytical)
+      @analytical.should_receive(:custom_event).with('Tag', 'view', 'test_tag')
+      @analytical.should_receive(:custom_event).with('Tag', 'view', 'other_tag')
+      @analytical.should_receive(:custom_event).with('Author', 'view', @post.author.email)
+      get :show, :id => @post.id
+    end
   end
 
   describe "GET /posts/tagged" do

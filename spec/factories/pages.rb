@@ -7,6 +7,8 @@ Factory.define :page, :class => Terryblr::Page do |page|
   page.sequence(:position)  { |n| n }
   page.post_id              nil
   page.site_id              Terryblr::Site.default.id
+  page.tag_list             ['a_tag', 'another_tag']
+  page.author               { |author| author.association :user}
 end
 
 Factory.define :pending_page, :parent => :page, :class => Terryblr::Page do |page|

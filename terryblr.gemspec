@@ -54,6 +54,7 @@ Gem::Specification.new do |s|
   s.add_dependency "will_paginate", "3.0.pre2"
   s.add_dependency "yard"
   s.add_dependency "memcache-client"
+  s.add_dependency "analytical"
 
   # Async goodness !
   s.add_dependency "rack-fiber_pool"
