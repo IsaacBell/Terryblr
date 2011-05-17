@@ -4,11 +4,12 @@ source "http://rubygems.org"
 gemspec
 
 gem "aws-s3",  :require => "aws/s3"
-gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"
 gem "dropbox"
 gem "eventmachine", ">=  1.0.0.beta.1"
 gem "thin"
 
+gem "analytical", :git => "git://github.com/mathieuravaux/analytical.git"
+gem "gattica", :git => "http://github.com/mathieuravaux/gattica.git"
 gem "em-http-request", :git => "git://github.com/mathieuravaux/em-http-request.git"
 gem "em-net-http", :git => "git://github.com/mathieuravaux/em-net-http.git"
 # gem "disqussion", :path => "../disqussion"
