@@ -13,6 +13,7 @@ common: &common
   disqus:
     key: mg9C49wg7VGSBCzckZv799lweuyepzki7jWKcRo9bbP4ELiovmAvGZDnYnEKUuNz
     secret: wMbpkchik8EWmYOTW7Jr2jVDd1BHiipTpenlolINRlc8EaRYpJDX1vGWHLoWLCJC
+    forum: the88
   tumblr:
     blog: 
     email: 

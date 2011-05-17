@@ -2176,4 +2176,24 @@ margin: 0 2px;
  *
  */
 
+#footer {
+  margin-bottom:2em;
+}
 
+#projects_list { 
+  cursor: move;
+}
+
+#projects_list a {
+  position: relative;
+}
+
+.photos-count {
+  background:#000000 none repeat scroll 0 0;
+  color:#FFFFFF;
+  font-weight:bold;
+  line-height:1.2em;
+  padding:1px;
+  position: absolute;
+  bottom: 0;
+}

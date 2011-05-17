@@ -37,7 +37,7 @@ class Admin::Terryblr::CommentsController < Terryblr::AdminController
   
   def collection
     @collection ||= begin
-      posts = Disqussion::Forums.new.listPosts("yvanrodic", extract_options).response
+      posts = Disqussion::Forums.new.listPosts(Settings.disqus.forum, extract_options).response
       unless Rails.env.test?
         f = Fiber.current
         # Launch up to 10 requests in parallel
