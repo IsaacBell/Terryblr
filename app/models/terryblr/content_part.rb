@@ -13,7 +13,7 @@ class Terryblr::ContentPart < Terryblr::Base
   #
   belongs_to :contentable, :polymorphic => true, :touch => true
   has_many :photos, :as => :photoable, :order => "display_order", :class_name => "Terryblr::Photo", :dependent => :destroy
-  has_many :videos, :order => "display_order", :class_name => "Terryblr::Video", :dependent => :destroy
+  has_many :videos, :as => :videoable, :order => "display_order", :class_name => "Terryblr::Video", :dependent => :destroy
 
   #
   # Behaviours
