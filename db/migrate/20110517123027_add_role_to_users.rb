@@ -10,10 +10,7 @@ class AddRoleToUsers < ActiveRecord::Migration
 
   def self.down
     add_column :users, :admin, :boolean, :default => false
-    Terryblr::User.where(:role => :admin).each do |user| 
-      user.admin = true
-      user.save
-    end
+    Terryblr::User.where(:role => :admin).each {|user| user.update_attributes!(:admin => true)}
     remove_column :users, :role
   end
 end
