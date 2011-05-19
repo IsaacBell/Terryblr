@@ -32,7 +32,7 @@ javascripts:
   admin_edit:
     # - public/javascripts/backbone-0.3.3.js
     - public/javascripts/jtags.js
-    - public/javascripts/wymeditor/jquery.wymeditor.js
+    - public/javascripts/wymeditor/jquery.wymeditor*.js
     - public/javascripts/fileuploader.js
     - public/javascripts/jquery.tipsy.js
     - public/javascripts/facebox.js
