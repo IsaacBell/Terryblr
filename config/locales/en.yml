@@ -151,7 +151,7 @@ en:
             lastname: last name
             password: password
             password_confirmation: password confirmation
-            redactor: redactor
+            writer: writer
         sessions:
           new:
             please_login: Please login
@@ -160,6 +160,7 @@ en:
     back: back
     body: body
     cancel: cancel
+    comments: comments
     delete: delete
     edit: edit
     edit_page: edit page

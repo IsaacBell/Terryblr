@@ -9,13 +9,13 @@ class Terryblr::Ability
       can :manage, :all
     elsif user.role == :editor
       can :read, :all
-      can :create, Terryblr::User
       can :manage, Terryblr::Post
       can :manage, Terryblr::Page
-    elsif user.role == :redactor
+    elsif user.role == :writer
       can :read, :all
-      can :create, Terryblr::User
-      can :manage, Terryblr::Page
+      can :create, Terryblr::Page
+      can :create, Terryblr::Post
+      can :manage, Terryblr::Page, :author => user
       can :manage, Terryblr::Post, :author => user
     end
   end
