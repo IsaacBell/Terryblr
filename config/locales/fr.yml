@@ -55,7 +55,17 @@ fr:
           site_changed: "site changé au %{current_site}!"
 
     admin:
+      common:
+        search_form:
+          reset: reset
+
       terryblr:
+        comments:
+          index:
+            comments: commentaires
+            approve: approuver
+            'mark as spam': marquer comme spam
+            delete: supprimer
         features:
           index:
             drafted: brouillons
@@ -143,6 +153,7 @@ fr:
     back: retour
     body: contenu
     cancel: annuler
+    comments: commentaires
     delete: supprimer
     edit: éditer
     edit_page: "éditer la page"

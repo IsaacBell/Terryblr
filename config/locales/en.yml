@@ -160,6 +160,7 @@ en:
     back: back
     body: body
     cancel: cancel
+    comments: comments
     delete: delete
     edit: edit
     edit_page: edit page
