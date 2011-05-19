@@ -144,7 +144,7 @@ fr:
             lastname: "nom de famille"
             password: "mot de passe"
             password_confirmation: "confirmer le mot de passe"
-            redactor: "rédacteur"
+            writer: "rédacteur"
         sessions:
           new:
             please_login: "Veuillez vous identifier"

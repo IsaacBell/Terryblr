@@ -67,7 +67,7 @@ class Terryblr::User < Terryblr::Base
 
     # Sort by descending order of ability
     def roles
-      [:admin, :editor, :redactor]
+      [:admin, :editor, :writer]
     end
 
     def available_roles(user)

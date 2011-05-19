@@ -18,8 +18,8 @@ Factory.define :user_editor, :parent => :user, :class => Terryblr::User do |user
   user.role                  "editor"
 end
 
-Factory.define :user_redactor, :parent => :user, :class => Terryblr::User do |user|
-  user.first_name            "Redactor"
+Factory.define :user_writer, :parent => :user, :class => Terryblr::User do |user|
+  user.first_name            "Writer"
   user.last_name             "Tester"
-  user.role                  "redactor"
+  user.role                  "writer"
 end
