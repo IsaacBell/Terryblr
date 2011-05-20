@@ -36,24 +36,8 @@ class Admin::Terryblr::CommentsController < Terryblr::AdminController
   end
   
   def collection
-    @collection ||= begin
-      posts = Disqussion::Forums.new.listPosts(Settings.disqus.forum, extract_options).response
-      unless Rails.env.test?
-        f = Fiber.current
-        # Launch up to 10 requests in parallel
-        EM::Iterator.new(posts, 10).map(proc{ |comment, iter|
-          Fiber.new {
-            comment.thread = Disqussion::Threads.new.details(comment.thread).response
-            iter.return(comment.thread)
-          }.resume
-        }, proc{ |responses|
-          f.resume
-        })
-        Fiber.yield
-      end
-      posts
-    end
+    @collection ||= Disqussion::Forums.new.listPosts(Settings.disqus.forum, extract_options).response
   end
-
+  
   include Terryblr::Extendable
 end
