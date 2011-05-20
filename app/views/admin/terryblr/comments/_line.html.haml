@@ -9,8 +9,8 @@
       %p
         %span.comment-name
           = comment.author.name
-          = "(#{comment.author.email})" unless comment.author.email.empty?
-          \:
+          %span
+            = "(#{comment.author.email}):" unless comment.author.email.empty?
         %span.comment-body= comment.raw_message
     .comment-time
       = distance_of_time_in_words seconds_from_now(Time.parse(comment.createdAt))
@@ -24,11 +24,10 @@
       .comment-name
         = link_to comment.author.name, comment.author.url, :class => "profile-launcher", "data-profile-username" => comment.author.username, :target => "_blank"
         %span
-          = "(#{comment.author.email})" unless comment.author.email.empty?
-        %small
-          = link_to comment.ipAddress, "?query=ip:#{comment.ipAddress}"
-          \.
-          = link_to comment.author.url, comment.author.url, :target => "_blank"
+          != "(#{mail_to(comment.author.email)})" unless comment.author.email.empty?
+        / %small
+        /   = link_to "#{comment.ipAddress}.", "?query=ip:#{comment.ipAddress}"
+        /   = link_to comment.author.url, comment.author.url, :target => "_blank"
     .comment-time
       = distance_of_time_in_words seconds_from_now(Time.parse(comment.createdAt))
     .clear

@@ -1,39 +1,39 @@
 - content_for :sidebar do
   #filters.panel-wrapper
     .panel
-      %h2= tt "Showing"
+      %h2= tt ".showing"
       = form_tag '', :method => :get, :id => "filter-list" do
         %label#filter-approved{:for => "show_approved"}
-          = tt "Approved"
+          = tt ".approved"
           / Filter's default to "approved"
           - if !params.has_key?(:filter) || params.has_key?(:filter) && params[:filter].include?("approved")
             %input#show_approved{:checked => "checked", :type => "checkbox", :name => "filter[]", :value => "approved"}/
           - else
             %input#show_approved{:type => "checkbox", :name => "filter[]", :value => "approved"}/
         %label#filter-unapproved{:for => "show_unapproved"}
-          = tt "Unapproved"
+          = tt ".unapproved"
           - if params.has_key?(:filter) && params[:filter].include?("unapproved")
             %input#show_unapproved{:checked => "checked", :type => "checkbox", :name => "filter[]", :value => "unapproved"}/
           - else
             %input#show_unapproved{:type => "checkbox", :name => "filter[]", :value => "unapproved"}/
         %label#filter-flagged{:for => "show_flagged"}
-          = tt "Flagged"
+          = tt ".flagged"
           - if params.has_key?(:filter) && params[:filter].include?("flagged")
             %input#show_flagged{:checked => "checked", :type => "checkbox", :name => "filter[]", :value => "flagged"}/
           - else
             %input#show_flagged{:type => "checkbox", :name => "filter[]", :value => "flagged"}/
         %label#filter-spam.hidden{:for => "show_spam"}
-          = tt "Spam"
+          = tt ".spam"
           - if params.has_key?(:filter) && params[:filter].include?("spam")
             %input#show_spam{:checked => "checked", :type => "checkbox", :type => "checkbox", :name => "filter[]", :value => "spam"}/
           - else
             %input#show_spam{:type => "checkbox", :type => "checkbox", :name => "filter[]", :value => "spam"}/
         %label#filter-deleted.hidden{:for => "show_deleted"}
-          = tt "Deleted"
+          = tt ".deleted"
           - if params.has_key?(:filter) && params[:filter].include?("deleted")
             %input#show_spam{:checked => "checked", :type => "checkbox", :type => "checkbox", :name => "filter[]", :value => "deleted"}/
           - else
             %input#show_spam{:type => "checkbox", :type => "checkbox", :name => "filter[]", :value => "deleted"}/
         %label#filter-button.hidden{:for => "submit_button", :style => "display:none"}
-          = tt "Submit"
+          = tt ".submit"
           %input#submit_button{:type => "submit"}
