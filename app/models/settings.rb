@@ -1,4 +1,4 @@
-# Provides access to every configuration options stored in _config/settings.yml_
+# Provides access to configuration options stored in _config/settings.yml_
 class Settings < Settingslogic
   source "#{Rails.root}/config/settings.yml"
   namespace Rails.env

@@ -4,12 +4,14 @@ module Terryblr
 
   # 
   # Provides a general cache system for the application
-  #
+  # Caching. Override in controller if need specific behaviour
+  # 
   module CacheSystem
     protected
-
-    #
-    # Caching. Override in controller if need specific behaviour
+    
+    # 
+    # Use as an around filter for requests that are to be cached. The entire response is stored in the cache-storage.
+    # _cache_key_ is used to determine the key to cache the content. Caching is only used on GET requests which respons with a success code and when _perform_caching_ is enabled.
     #
     def cache
       # Only cache request if it's a get and caching is active.

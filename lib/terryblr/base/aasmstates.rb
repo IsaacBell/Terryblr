@@ -1,5 +1,9 @@
 module Terryblr
   class Base < ActiveRecord::Base
+    
+    #
+    # Common class responsible for the management of Terryblr model states. The focus is on managing the states between creation and publication of content.
+    #
     module AasmStates
       def self.included(recipient)
         recipient.class_eval do
@@ -49,6 +53,8 @@ module Terryblr
           # Callbacks
           #
           after_initialize :set_initial_state
+          
+          # Make sure that the state of all objects are set after initialization
           def set_initial_state
             # Touch the state attribute and if missing reload
             self.state rescue self.reload
@@ -65,6 +71,7 @@ module Terryblr
           # Methods
           #
           
+          # Create a list if states used in a HTML select drop-down
           def states_for_select
             [
               [I18n.t(:publish_now,  :scope => [:model, :states]).capitalize, :publish_now],
@@ -74,6 +81,8 @@ module Terryblr
             ]
           end
 
+          # Set state.
+          # If the value is 'published' then update the published_at attribute to now
           def state=(value)
             case value.to_s.to_sym
             when :publish_now
@@ -86,18 +95,20 @@ module Terryblr
             end
           end
 
+          # Has this object been published? Is it live?
           def live?
             self.published? and self.published_at? and self.published_at < Time.zone.now
           end
 
+          # Is this object schedule to be published on a date?
           def publish_on_date?
             self.published? and self.published_at?
           end
 
           private
 
+          # Override this in local models
           def do_publish
-            # Override this in local models
           end
         end
       end

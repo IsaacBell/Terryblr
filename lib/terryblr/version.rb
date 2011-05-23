@@ -1,4 +1,4 @@
+# Version string of the Terryblr engine
 module Terryblr
-  # Version string of the Terryblr engine
-  VERSION = "0.0.1".freeze
+  VERSION = "2.0.0".freeze
 end

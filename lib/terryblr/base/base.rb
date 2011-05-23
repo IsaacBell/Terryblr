@@ -1,6 +1,6 @@
 module Terryblr
   
-  # Base class inherited by every models in Terryblr
+  # Base class inherited by every model in Terryblr
   class Base < ActiveRecord::Base
 
     #
@@ -41,6 +41,9 @@ module Terryblr
       id.to_s
     end
 
+    # Give a DOM friendly ID for an object. This is used extensively with UI Javascript behaviours.
+    # @param [Prefix] prefix the id with a custom name. Defaults to the objects model name.
+    # @return [String] the dom id
     def dom_id(prefix=nil)
       display_id = new_record? ? "new" : id
       prefix ||= self.class.name.demodulize

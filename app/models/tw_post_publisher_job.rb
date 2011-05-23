@@ -1,10 +1,14 @@
-# require 'bitly'
-
+# Class to aid in the publishing of posts to Twitter. 
+# This is typically used with Delayed Job in a background process
+# Eg:
+#  Delayed::Job.enqueue(TwCommentPublisherJob.new(post.id, url))
 # 
-# Delayed::Job.enqueue(TwCommentPublisherJob.new(post.id, url))
+# It requires that there is a 'twitter' section in your settings.yml config file
 # 
 TwPostPublisherJob = Struct.new(:post_id)
 class TwPostPublisherJob
+
+  return false unless Settings.has_key?('twitter')
 
   require 'yaml'
   require 'twitter' unless defined? Twitter
@@ -12,6 +16,9 @@ class TwPostPublisherJob
   include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain
 
+  # Executes the job. This authorizes the client with Twitter using settings.yml configuration
+  # It will update the post object with the posts twitter_id on success
+  # @return [Int] the twitter id of the newly created post
   def perform
 
     # Find objects

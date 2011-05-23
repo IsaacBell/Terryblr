@@ -1,5 +1,9 @@
 module Terryblr
   class Base < ActiveRecord::Base
+    
+    #
+    # Module providing common tagging functionality. Uses the _acts_as_taggable_ mixin.
+    #
     module Taggable
       def self.included(recipient)
         recipient.class_eval do

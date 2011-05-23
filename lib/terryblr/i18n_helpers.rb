@@ -2,7 +2,8 @@ require 'unicode_utils'
 
 module Terryblr
 
-  # Implement a series of helpers to translate Terryblr
+  # Implement a series of helpers to translate Terryblr. 
+  # These are injected into ActionView::Helpers::TranslationHelper
   module I18nHelpers
 
     def self.included(recipient)

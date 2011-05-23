@@ -1,8 +1,14 @@
+# Class to aid in the publishing of posts to Facebook. 
+# This is typically used with Delayed Job in a background process
+# Eg:
+#  Delayed::Job.enqueue(TumblrPostPublisherJob.new(post.id))
 # 
-# Delayed::Job.enqueue(FbPostPublisherJob.new(post.id, url))
+# It requires that there is a 'tumblr' section in your settings.yml config file
 # 
 FbPostPublisherJob = Struct.new(:post_id)
 class FbPostPublisherJob
+
+  return false unless Settings.has_key?('facebook')
 
   require 'uri'
   require 'yaml'
@@ -11,6 +17,9 @@ class FbPostPublisherJob
   include Rails.application.routes.url_helpers
   default_url_options[:host] = Settings.domain
   
+  # Executes the job. This authorizes the client with Facebook using settings.yml configuration
+  # It will update the post object with the posts facebook_id on success
+  # @return [Int] the tumblr id of the newly created post
   def perform
     post = Terryblr::Post.find post_id
     
@@ -21,11 +30,12 @@ class FbPostPublisherJob
     msg  = !post.social_msg.blank? ? post.social_msg : post.title.truncate(140)
     body = post.body.gsub(%r{</?[^>]+?>}, '').gsub(/&nbsp;/,' ').truncate(420)
     default_img_path = "#{root_url}images/fb_share.png"
-    img_url = if post.post_type.video? && !post.videos.empty?
-      post.videos.first.thumb_url rescue default_img_path
+    part = parts.first
+    img_url = if part.content_type.video? && !part.videos.empty?
+      part.videos.first.thumb_url rescue default_img_path
     else
       uri = URI.parse(url)
-      !post.photos.empty? ? "#{uri.scheme}://#{uri.host}#{post.photos.first.image.url(:thumb)}" : default_img_path
+      !part.photos.empty? ? "#{uri.scheme}://#{uri.host}#{part.photos.first.image.url(:thumb)}" : default_img_path
     end
 
     resp = facebook.post("/me/feed", {
