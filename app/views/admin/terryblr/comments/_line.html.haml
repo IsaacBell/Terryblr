@@ -9,8 +9,8 @@
       %p
         %span.comment-name
           = comment.author.name
-          = "(#{comment.author.email})" unless comment.author.email.empty?
-          \:
+          %span
+            = "(#{comment.author.email}):" unless comment.author.email.empty?
         %span.comment-body= comment.raw_message
     .comment-time
       = distance_of_time_in_words seconds_from_now(Time.parse(comment.createdAt))
@@ -24,11 +24,10 @@
       .comment-name
         = link_to comment.author.name, comment.author.url, :class => "profile-launcher", "data-profile-username" => comment.author.username, :target => "_blank"
         %span
-          = "(#{comment.author.email})" unless comment.author.email.empty?
-        %small
-          = link_to comment.ipAddress, "?query=ip:#{comment.ipAddress}"
-          \.
-          = link_to comment.author.url, comment.author.url, :target => "_blank"
+          != "(#{mail_to(comment.author.email)})" unless comment.author.email.empty?
+        / %small
+        /   = link_to "#{comment.ipAddress}.", "?query=ip:#{comment.ipAddress}"
+        /   = link_to comment.author.url, comment.author.url, :target => "_blank"
     .comment-time
       = distance_of_time_in_words seconds_from_now(Time.parse(comment.createdAt))
     .clear
@@ -39,40 +38,36 @@
         %p= comment.raw_message
     .media
     .comment-meta.clearfix
-      %span.thread_link
-        = tt "Posted on"
-        = link_to(comment.thread.title, "#{comment.thread.link}#comment-#{comment.id}", :target => "_blank")
+      / %span.thread_link
+      /   = tt "Posted on"
+      /   = link_to(comment.thread.title, "#{comment.thread.link}#comment-#{comment.id}", :target => "_blank")
       %span.thread_filter
-        = link_to tt("Show comments only from this thread"), "?query=thread:#{comment.thread.id}"
+        = link_to tt(".show comments only from this thread"), "?query=thread:#{comment.thread}"
   / hidden by default, shown by javascript when expanded.
   .comment-footer
     .comment-actions-left
-      = tt "This comment is"
-      %span.txt-approved= comment.isApproved ? tt('Approved') : tt('Not yet approved')
+      = tt ".this comment is"
+      %span.txt-approved= comment.isApproved ? tt('.approved') : tt('.not yet approved')
       %a.add-userlist.blacklist{:href => "#", :style => "display: none; "}
-        = tt "Add commenter to"
-        %strong
-          Blacklist
+        = tt ".add commenter to", :list => content_tag(:strong, "Blacklist")
       %a.add-userlist.whitelist{:href => "#", :style => "display: none; "}
-        = tt "Add commenter to"
-        %strong 
-          Whitelist
+        = tt ".add commenter to", :list => content_tag(:strong, "Whitelist")
     .comment-actions-right
       .button.small.find_all.dropdown
-        = tt("Find")
+        = tt(".find")
         %ul
           %li
-            = link_to tt("All comments from %s" % comment.author.name), "?query=from:#{comment.author.username}"
+            = link_to tt(".all comments from", :author => comment.author.name), "?query=from:#{comment.author.username}"
           %li
-            = link_to tt("All comments from %s" % comment.author.email), "?query=email:#{comment.author.email}"
+            = link_to tt(".all comments from", :author => comment.author.email), "?query=email:#{comment.author.email}"
           %li
-            = link_to tt("All comments from %s" % comment.ipAddress), "?query=ip:#{comment.ipAddress}"
+            = link_to tt(".all comments from", :author => comment.ipAddress), "?query=ip:#{comment.ipAddress}"
           %li
-            = link_to tt("All comments from this thread"), "?query=thread:#{comment.thread.id}"
-      %button.button.small.context= tt("Context")
-      %button.button.small.approve{:style => "display:none;"}= tt("Approve")
-      %button.button.small.mark_spam= tt("Mark Spam")
-      %button.button.small.delete= tt("Delete")
-      %button.button.small.reply= tt("Reply")
-      %button.button.small.edit= tt("Edit")
+            = link_to tt(".all comments from this thread"), "?query=thread:#{comment.thread}"
+      %button.button.small.context= tt(".context")
+      %button.button.small.approve{:style => "display:none;"}= tt(".approve")
+      %button.button.small.mark_spam= tt(".mark spam")
+      %button.button.small.delete= tt(".delete")
+      %button.button.small.reply= tt(".reply")
+      %button.button.small.edit= tt(".edit")
     .clear

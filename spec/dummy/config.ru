@@ -1,10 +1,8 @@
 # This file is used by Rack-based servers to start the application.
 puts ">> config.ru"
 
-puts "Requiring envitonment.rb..."
+puts "Requiring environment.rb..."
 require ::File.expand_path('../config/environment',  __FILE__)
-puts "Envitonment.rb loaded..."
-
 
 if defined? Thin
   puts "Thin detected."
@@ -52,6 +50,6 @@ else
   puts "\n\nHey awesome, take me for a ride in asynchronous land ! \n\tbundle exec rails s thin\n\n\n"
 end
 
-puts "Applicaiton Run !"
+puts "Run Dummy::Application"
 run Dummy::Application
 puts "<< config.ru"
