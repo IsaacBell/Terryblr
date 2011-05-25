@@ -29,14 +29,18 @@ class Admin::Terryblr::CommentsController < Terryblr::AdminController
   # ip:127.0.0.1
   # thread:29372
   def extract_options
-    options = {}
-    options[:query] = params[:query] if params.has_key?(:query) && %w(from email ip thread).include?(params[:query].split(':').first)
-    options[:include] = params[:filter] if params.has_key? :filter
-    options
+    @options ||= begin
+      opts = {}
+      opts[:query]   = params[:query]  if params.has_key?(:query) && %w(from email ip thread).include?(params[:query].split(':').first)
+      opts[:include] = params[:filter] if params.has_key?(:filter)
+      opts[:cursor]  = params[:cursor] if params.has_key?(:cursor)
+      opts[:limit]   = params[:limit]  if params.has_key?(:limit)
+      opts
+    end
   end
   
   def collection
-    @collection ||= Disqussion::Forums.new.listPosts(Settings.disqus.forum, extract_options).response
+    @collection ||= Disqussion::Forums.new.listPosts(Settings.disqus.forum, extract_options)
   end
   
   include Terryblr::Extendable

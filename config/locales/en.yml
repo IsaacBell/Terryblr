@@ -78,8 +78,8 @@ en:
             'show comments only from this thread': show comments only from this thread
             'this comment is': this comment is
             'add commenter to': "add commenter to %{list}"
-            'all comments from': "all comments from %{author}"
-            'all comments from this thread': all comments from this thread
+            'all comments from': "all comments from"
+            'this thread': this thread
             approved: approved
             approve: approve
             context: context
