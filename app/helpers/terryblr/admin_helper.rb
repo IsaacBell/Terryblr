@@ -223,7 +223,8 @@ module Terryblr::AdminHelper
           var form = $('form##{obj}_edit').
             clone().
             attr('id','#{obj}_preview_form').
-            attr('action','#{send("preview_#{obj}_path")}').
+            attr('action','#{send("preview_#{obj}_path", resource)}').
+            attr('method','post').
             attr('target','#{obj}_preview').
             hide().
             appendTo($('#body'));

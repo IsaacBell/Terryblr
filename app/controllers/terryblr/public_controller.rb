@@ -34,8 +34,9 @@ class Terryblr::PublicController < Terryblr::ApplicationController
   def track_resource_analytics
     resource.tag_list.each { |tag|
       analytical.custom_event 'Tag', 'view', tag
-    }
-    analytical.custom_event 'Author', 'view', resource.author.email
+    } if resource.respond_to?(:tag_list)
+
+    analytical.custom_event 'Author', 'view', resource.author.email if resource.respond_to?(:author) && resource.author
   end
 
 end

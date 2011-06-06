@@ -80,6 +80,7 @@ describe Admin::Terryblr::PostsController do
             :part_ids => [],
             :parts_attributes => parts  # nested Photos attributes
           })
+
           post :create, :post => params
 
           # puts assigns(:post).errors.full_messages.to_sentence unless assigns(:post).valid?

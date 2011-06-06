@@ -107,7 +107,7 @@ describe Terryblr::PostsController do
     it "previews an existing post" do
       # Send post to preview and make sure it renders with posted attributes
       post_atts = Factory(:post_to_be_published_now).attributes.symbolize_keys
-      
+
       # Standard post
       post :preview, :post => post_atts
       response.should be_success
