@@ -37,12 +37,6 @@
       .content-wrapper
         %p= comment.raw_message
     .media
-    .comment-meta.clearfix
-      / %span.thread_link
-      /   = tt "Posted on"
-      /   = link_to(comment.thread.title, "#{comment.thread.link}#comment-#{comment.id}", :target => "_blank")
-      %span.thread_filter
-        = link_to tt(".show comments only from this thread"), "?query=thread:#{comment.thread}"
   / hidden by default, shown by javascript when expanded.
   .comment-footer
     .comment-actions-left
@@ -52,22 +46,16 @@
         = tt ".add commenter to", :list => content_tag(:strong, "Blacklist")
       %a.add-userlist.whitelist{:href => "#", :style => "display: none; "}
         = tt ".add commenter to", :list => content_tag(:strong, "Whitelist")
-    .comment-actions-right
-      .button.small.find_all.dropdown
-        = tt(".find")
-        %ul
-          %li
-            = link_to tt(".all comments from", :author => comment.author.name), "?query=from:#{comment.author.username}"
-          %li
-            = link_to tt(".all comments from", :author => comment.author.email), "?query=email:#{comment.author.email}"
-          %li
-            = link_to tt(".all comments from", :author => comment.ipAddress), "?query=ip:#{comment.ipAddress}"
-          %li
-            = link_to tt(".all comments from this thread"), "?query=thread:#{comment.thread}"
-      %button.button.small.context= tt(".context")
-      %button.button.small.approve{:style => "display:none;"}= tt(".approve")
-      %button.button.small.mark_spam= tt(".mark spam")
-      %button.button.small.delete= tt(".delete")
-      %button.button.small.reply= tt(".reply")
-      %button.button.small.edit= tt(".edit")
+    .clear
+    .comment-actions-left
+      = tt(".all comments from")
+      %ul.inline-list{:style => "display:block"}
+        %li
+          = link_to comment.author.name, "?query=from:#{comment.author.username}"
+        %li
+          = link_to comment.author.email, "?query=email:#{comment.author.email}"
+        %li
+          = link_to comment.ipAddress, "?query=ip:#{comment.ipAddress}"
+        %li
+          = link_to tt(".this thread"), "?query=thread:#{comment.thread}"
     .clear

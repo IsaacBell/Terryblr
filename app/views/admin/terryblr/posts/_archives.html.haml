@@ -12,8 +12,8 @@
   - if state!='drafted'
     - if controller.action_name!="search" and !params[:month].blank?
       - prev_date = @date - 1.month
-      .previous= link_to "Previous", drafted_admin_posts_path(:state => state, :month => prev_date.month, :year => prev_date.year)
+      .previous= link_to tt("Previous"), drafted_admin_posts_path(:state => state, :month => prev_date.month, :year => prev_date.year)
       - next_date = @date + 1.month
-      .next= link_to "Next", drafted_admin_posts_path(:state => state, :month => next_date.month, :year => next_date.year)
+      .next= link_to tt("Next"), drafted_admin_posts_path(:state => state, :month => next_date.month, :year => next_date.year)
     - elsif collection.size == collection.per_page
-      .more= link_to "More", url_for(params.merge(:page => collection.current_page+1, :format => "js")), :remote => true, :method => :get, "data-type" => "script"
+      .more= link_to tt("More"), url_for(params.merge(:page => collection.current_page+1, :format => "js")), :remote => true, :method => :get, "data-type" => "script"

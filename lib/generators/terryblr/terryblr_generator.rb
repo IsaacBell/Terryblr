@@ -49,6 +49,8 @@ module Terryblr
         copy_file 'delayed_job.rb', 'config/initializers/delayed_job.rb'
         copy_file 'formtastic_config.rb', 'config/initializers/formtastic_config.rb'
         copy_file 'disqussion.rb', 'config/initializers/disqussion.rb'
+        copy_file 'em-net-http_override.rb', 'config/initializers/em-net-http_override.rb'
+        
         # copy_file 'session_store.rb', 'config/initializers/session_store.rb'
         # Static assets
         copy_dir_contents 'public', 'public'
