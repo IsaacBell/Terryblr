@@ -3,7 +3,7 @@
 %ul.archives
   - collection.each do |p|
     %li{ :id => p.dom_id }
-      -link_to(post_path(p, p.slug), :style => p.photos.empty? ? "" : "background-image:url(#{p.photos.first.image.url(:thumb)})") do
+      -link_to(post_path(p, p.slug), :style => p.thumbnail.nil? ? "" : "background-image:url(#{p.thumbnail})") do
         %div.date-overlay=p.published_at.to_s(:month_and_day_ordinal)
         %span=p.title? ? p.title : strip_tags(p.body)
         

@@ -34,11 +34,10 @@ module Terryblr::ApplicationHelper
         tag(:meta, :property => "og:image", :content => v.thumb_url)
       end
     else
-      unless page_object.photos.empty?
-        p = page_object.photos.first
-        tag(:link, :rel => "image_src", :href => p.image.url(:thumb), :title => title) + "\n" +
+      if page_object.thumbnail
+        tag(:link, :rel => "image_src", :href => page_object.thumbnail, :title => title) + "\n" +
         tag(:meta, :name => "medium", :content => "image") + "\n" +
-        tag(:meta, :property => "og:image", :content => p.image.url(:thumb)) + "\n"
+        tag(:meta, :property => "og:image", :content => page_object.thumbnail) + "\n"
       end
     end
     str.html_safe

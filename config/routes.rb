@@ -84,16 +84,16 @@ Rails.application.routes.draw do
   # Posts (be carefull, order matters!)
   match "/posts/tagged/:tag", :to => "terryblr/posts#tagged", :as => "tagged_posts"
   match "/posts/archives", :to => "terryblr/posts#archives", :as => "archive_posts"
+  match "/posts/:id/preview", :to => "terryblr/posts#preview", :as => "preview_post", :via => "post"
   resources :posts, :only => [:index], :controller => "terryblr/posts" do
     member do
       get  :gallery_params
       get  :next
       get  :previous
-      post :preview
     end
   end
   match "/posts/:id/:slug", :to => "terryblr/posts#show", :as => "post", :via => "get"
-
+  
   # RSS Feeds
   match "/feeds(.:format)", :to => "terryblr/home#feeds", :as => "feeds"
   

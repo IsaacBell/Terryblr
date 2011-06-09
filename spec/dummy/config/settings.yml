@@ -1,6 +1,7 @@
 common: &common
   app_name: Terryblr
   admin_email: 
+  session_key: '_dummy_web_app_session'
   analytics_backends:
     - console
     - google
