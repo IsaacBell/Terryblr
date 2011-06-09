@@ -22,10 +22,10 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def preview
-    @resource = end_of_association_chain.new(params[:post])
-    @resource.id ||= 0
-    @resource.published_at = 1.minute.ago
-    @resource.slug = 'preview' unless resource.slug?
+    @post = end_of_association_chain.new(params[:post])
+    @post.id ||= 0
+    @post.published_at = 1.minute.ago
+    @post.slug = 'preview' unless @post.slug?
     @body_classes = "posts-show" # So that CSS will think it's the details page
     respond_to do |wants|
       wants.html { render :template => "terryblr/posts/show" }

@@ -79,13 +79,14 @@ common: &common
       groups: []
     pages:
       groups: []
+  photo_conv_options: "-density 70"
   photo_dimensions:
-    thumb: ["100x100#", :jpg]
-    small: ["156x156#", :jpg]
-    splash: ["920x460#", :jpg]
-    list: ["515x515>", :jpg]
-    medium: ["800x600>", :jpg]
-    full: ["2000x2000>", :jpg]
+    thumb: "100x100#"
+    small: "156x156#"
+    splash: "920x460#"
+    list: "515x515>"
+    medium: "800x600>"
+    full: "2000x2000>"
 
 development:
   <<: *common

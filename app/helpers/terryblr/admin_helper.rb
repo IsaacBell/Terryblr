@@ -220,10 +220,10 @@ module Terryblr::AdminHelper
         height:500, 
         open: function() {
           $(this).css('width',960)
-          var form = $('form##{obj}_edit').
+          var form = $('form##{obj}_edit, form##{obj}_new').
             clone().
             attr('id','#{obj}_preview_form').
-            attr('action','#{send("preview_#{obj}_path", resource)}').
+            attr('action','#{send("preview_#{obj}_path")}').
             attr('method','post').
             attr('target','#{obj}_preview').
             hide().

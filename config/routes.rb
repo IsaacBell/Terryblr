@@ -84,7 +84,7 @@ Rails.application.routes.draw do
   # Posts (be carefull, order matters!)
   match "/posts/tagged/:tag", :to => "terryblr/posts#tagged", :as => "tagged_posts"
   match "/posts/archives", :to => "terryblr/posts#archives", :as => "archive_posts"
-  match "/posts/:id/preview", :to => "terryblr/posts#preview", :as => "preview_post", :via => "post"
+  match "/posts/preview", :to => "terryblr/posts#preview", :as => "preview_post", :via => "post"
   resources :posts, :only => [:index], :controller => "terryblr/posts" do
     member do
       get  :gallery_params
