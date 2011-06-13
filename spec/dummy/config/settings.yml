@@ -83,9 +83,9 @@ common: &common
   photo_dimensions:
     thumb: "100x100#"
     small: "156x156#"
-    splash: "920x460#"
-    list: "515x515>"
-    medium: "800x600>"
+    splash: "940x380#"
+    list: "670x120#"
+    medium: "670x670>"
     full: "2000x2000>"
 
 development:

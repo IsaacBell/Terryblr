@@ -7,10 +7,32 @@ describe Terryblr::PostsController do
   end
   
   describe "GET /posts" do
+    
+    render_views
+    
     it "should GET the index" do
       get :index
       response.should be_success
     end
+
+    it "should GET the index as RSS feed" do
+      get :index, format: :rss
+      response.should be_success
+      doc = Hpricot(response.body)
+      doc.at('rss channel item').nil?.should eql(false)
+      doc.at('rss channel item > title').nil?.should eql(false)
+      doc.at('rss channel item > description').nil?.should eql(false)
+    end
+
+    it "should GET the index as ATOM feed" do
+      get :index, format: :atom
+      response.should be_success
+      doc = Hpricot(response.body)
+      doc.at('feed entry').nil?.should eql(false)
+      doc.at('feed entry > title').nil?.should eql(false)
+      doc.at('feed entry > content').nil?.should eql(false)
+    end
+
   end
 
   describe "GET /posts/show" do
