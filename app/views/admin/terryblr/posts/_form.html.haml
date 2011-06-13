@@ -1,5 +1,4 @@
 = semantic_form_for resource, :url => (resource.new_record? ? admin_posts_path : admin_post_path(resource.id)), :as => "post", :multipart => true do |f|
-  
   #form_content{:class => "span-17"}
     %h2= ttt("new_post").html_safe
     = error_messages_for_post

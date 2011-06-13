@@ -149,6 +149,7 @@ en:
             crosspost_queued_twitter: In Twitter post queue
             crosspost_queued_facebook: In Facebook post queue
             custom_url: custom URL
+            tags_help: "Split tags with a comma (',')"
             leave_blank_to_create_automatically_from_the_title: Leave blank to create automatically from the title
             message: message
             published_on: published on
