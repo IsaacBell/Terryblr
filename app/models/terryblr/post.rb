@@ -235,12 +235,7 @@ class Terryblr::Post < Terryblr::Base
   end
 
   def do_publish(msg = nil)
-    now = Time.zone.now
-
-    unless published_at?
-      self.published_at = now
-      save
-    end
+    self.published_at = Time.zone.now if published_at.nil?
   end
 
   def social_cross_posts
