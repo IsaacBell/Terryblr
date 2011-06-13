@@ -20,4 +20,5 @@ group :development, :test do
   gem 'thin'
   gem 'growl'
   gem 'ruby-growl'
+  gem 'hpricot'
 end
