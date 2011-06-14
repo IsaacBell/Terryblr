@@ -21,6 +21,7 @@ end
 
 Factory.define :published_post, :parent => :post, :class => Terryblr::Post do |post|
   post.state            "published"
+  post.published_at 1.day.ago
 end
 
 Factory.define :post_to_be_published_now, :parent => :post, :class => Terryblr::Post do |post|

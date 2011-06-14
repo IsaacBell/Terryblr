@@ -21,4 +21,5 @@ end
 
 Factory.define :published_page, :parent => :page, :class => Terryblr::Page do |page|
   page.state                "published"
+  page.published_at 1.day.ago
 end

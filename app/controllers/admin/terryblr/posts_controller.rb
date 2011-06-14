@@ -65,7 +65,11 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     @post ||= end_of_association_chain.find_by_slug(params[:id]) || 
               end_of_association_chain.find_by_id(params[:id])
   end
-
+  
+  def end_of_association_chain
+    current_site.posts
+  end
+  
   def collection
     @posts ||= begin
       scope = end_of_association_chain.scoped

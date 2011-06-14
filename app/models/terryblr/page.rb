@@ -27,6 +27,7 @@ class Terryblr::Page < Terryblr::Base
   #
   # Validations
   #
+  validate :site_id, :presence => true
   validates_presence_of :title, :body, :slug, :unless => :pending? 
   validate :slug, :uniqueness => true, :if => :slug?, :scope => :site_id
 
@@ -58,6 +59,15 @@ class Terryblr::Page < Terryblr::Base
   #
   # Instance Methods
   #
+  
+  def thumbnail(size = :thumb)
+    # Find the first thumbnail image
+    url = nil
+    url = photos.first.image.url(size) unless photos.empty?
+    url || "/images/missing_thumb.png"
+  end
+  
+  
   def children
     @children ||= self.class.find_all_by_parent_id(id)
   end

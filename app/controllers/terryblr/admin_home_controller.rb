@@ -107,16 +107,22 @@ class Terryblr::AdminHomeController < Terryblr::ApplicationController
 
     @query = params[:search].to_s.strip
     like_q = "%#{@query}%".downcase
-    conds  = ["LOWER(state) like ? or LOWER(body) like ? or LOWER(title) like ?", like_q, like_q, like_q]
+    conds  = ["LOWER(state) like ? or LOWER(title) like ?", like_q, like_q]
     tag    = Terryblr::Tag.find_by_name(@query)
-    joins  = nil
+    content_part_ids = Terryblr::ContentPart.where("contentable_type = 'Terryblr::Post' and LOWER(body) like ?", like_q).all.map(&:contentable_id)
+
     @results = {
-      :posts    => end_of_association_chain.where(conds).paginate(:page => 1),
-      :pages    => current_site.pages.where(conds).paginate(:page => 1)
+      :posts    =>  current_site.posts.
+                    where("LOWER(state) like ? or LOWER(title) like ? or id in (?)", like_q, like_q, content_part_ids).
+                    paginate(:page => 1),
+
+      :pages    =>  current_site.pages.
+                    where("LOWER(state) like ? or LOWER(body) like ? or LOWER(title) like ?", like_q, like_q, like_q).
+                    paginate(:page => 1)
     }
     respond_to do |wants|
       wants.html {
-       render :template => "_terryblr/admin_home/search"
+       render :template => "terryblr/admin_home/search"
       }
     end
   end

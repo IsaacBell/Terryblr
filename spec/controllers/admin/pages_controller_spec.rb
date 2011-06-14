@@ -7,16 +7,18 @@ require 'spec_helper'
 describe Admin::Terryblr::PagesController do
 
   before(:each) do
+    @site_www = Terryblr::Site.default
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     sign_in Factory.create(:user_admin)
   end
 
   describe "GET index" do
     before do
-      Factory(:drafted_page, :created_at => 1.month.ago)
-      Factory(:drafted_page)
-      Factory(:published_page)
-      Factory(:published_page)
+      @pages = []
+      @pages << Factory.create(:drafted_page, :created_at => 1.month.ago, :site => @site_www)
+      @pages << Factory.create(:drafted_page, :site => @site_www)
+      @pages << Factory.create(:published_page, :site => @site_www)
+      @pages << Factory.create(:published_page, :site => @site_www)
     end
 
     it "assigns all published pages as @pages" do
@@ -46,7 +48,7 @@ describe Admin::Terryblr::PagesController do
   
   describe "GET edit" do
     it "assigns the requested page as @page" do
-      page = Factory(:published_page)
+      page = Factory.create(:published_page, :site => @site_www)
       get :edit, :id => page.id
       response.should be_success
       assigns(:page).should eql page

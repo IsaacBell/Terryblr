@@ -191,9 +191,11 @@ en:
     edit_page: edit page
     edit_photos: edit photos
     edit_post: edit post
+    edit_feature: edit feature
     edit_video: edit video
     update_page: edit page
     update_post: edit post
+    update_feature: edit feature
     update_photos: edit photos
     update_video: edit video
     email: email

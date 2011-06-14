@@ -69,7 +69,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def end_of_association_chain
-    Terryblr::Post.live
+    current_site.posts.live
   end
 
   def resource

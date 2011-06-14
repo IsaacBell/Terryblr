@@ -7,16 +7,17 @@ require 'spec_helper'
 describe Admin::Terryblr::PostsController do
 
   before(:each) do
+    @site_www = Terryblr::Site.default
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     sign_in Factory.create(:user_admin)
   end
   
   describe "GET index" do
     before do
-      Factory(:drafted_post, :created_at => 1.month.ago)
-      Factory(:drafted_post)
-      Factory(:published_post)
-      Factory(:published_post)
+      Factory.create(:drafted_post, :created_at => 1.month.ago, :site => @site_www)
+      Factory.create(:drafted_post, :site => @site_www)
+      Factory.create(:published_post, :site => @site_www)
+      Factory.create(:published_post, :site => @site_www)
     end
   
     it "assigns all published posts as @posts" do
@@ -46,7 +47,7 @@ describe Admin::Terryblr::PostsController do
   
   describe "GET edit" do
     it "assigns the requested post as @post" do
-      post = Factory(:published_post)
+      post = Factory.create(:published_post, :site => @site_www)
       get :edit, :id => post.id
       response.should be_success
       assigns(:post).should eql post
@@ -67,8 +68,8 @@ describe Admin::Terryblr::PostsController do
   
         it "assigns a newly created post as @post with multiple content parts" do
           
-          photo = Factory(:photo)
-          video = Factory(:video)
+          photo = Factory.create(:photo)
+          video = Factory.create(:video)
           parts = []
           parts << Factory.attributes_for(:content_part_text).symbolize_keys
           parts << Factory.attributes_for(:content_part_photos).symbolize_keys.update(:photo_ids => [photo.id], :photos => [], :photos_attributes => [photo.attributes.symbolize_keys])
@@ -100,7 +101,7 @@ describe Admin::Terryblr::PostsController do
       it "assigns a updated post as @post" do
         new_body = "Updated body"
         published_at = "14/05/2011"
-        drafted = Factory(:drafted_post)
+        drafted = Factory.create(:drafted_post, :site => @site_www)
         drafted.parts.first.body = new_body
         
         put :update, :id => drafted.id, :post => { 
@@ -121,7 +122,7 @@ describe Admin::Terryblr::PostsController do
       
       describe "with valid post params and photos" do
         before do
-          published_post = Factory(:published_post)
+          published_post = Factory.create(:published_post, :site => @site_www)
           published_post.parts << Factory(:content_part_photos) # Fake uploaded photo
         end
         
@@ -136,7 +137,7 @@ describe Admin::Terryblr::PostsController do
   
   describe "DELETE destroy" do
     it "redirects to the posts list" do
-      post = Factory(:published_post)
+      post = Factory.create(:published_post, :site => @site_www)
       delete :destroy, :id => post.id
       response.should redirect_to(admin_posts_url)
     end

@@ -50,6 +50,10 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
       end_of_association_chain.roots.by_state(params[:state] || 'published').order(order)
     end
   end
+  
+  def end_of_association_chain
+    current_site.pages
+  end
 
   include Terryblr::Extendable
 end

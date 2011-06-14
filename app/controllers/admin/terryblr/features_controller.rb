@@ -49,6 +49,11 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   end
 
   private
+  
+  def end_of_association_chain
+    current_site.features.live
+  end
+  
 
   include Terryblr::Extendable
 end

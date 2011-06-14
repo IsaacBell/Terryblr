@@ -20,6 +20,10 @@ class Terryblr::PagesController < Terryblr::PublicController
   end
   
   private
+  
+  def end_of_association_chain
+    current_site.pages.live
+  end
 
   def resource
     @page ||= end_of_association_chain.find_by_slug(params[:page_slug]) || 

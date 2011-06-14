@@ -42,7 +42,7 @@ describe Terryblr::PostsController do
     end
 
     it "should log the post view, with author and tag data, to google analytics" do
-      @post = Factory(:published_post)
+      @post = Factory.create(:published_post, :site => Terryblr::Site.default)
       @analytical = mock("analytical")
       controller.stub!(:analytical).and_return(@analytical)
       @analytical.should_receive(:custom_event).with('Tag', 'view', 'test_tag')
@@ -73,7 +73,7 @@ describe Terryblr::PostsController do
       Terryblr::Post.delete_all
       @posts = []
       3.times do |i|
-        @posts << Factory(:post, :published_at => i.hours.ago, :site => Terryblr::Site.default)
+        @posts << Factory.create(:post, :published_at => i.hours.ago, :site => Terryblr::Site.default)
       end
     end
 

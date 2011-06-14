@@ -2,20 +2,18 @@ require 'spec_helper'
 
 describe Terryblr::AdminHomeController do
   
+  before(:each) do
+    @user = Factory(:user_admin)
+    @site_www = Terryblr::Site.default
+    @site_blog = Factory(:site, :lang => :fr)
+    @post_www = Factory(:post, :site => @site_www)
+    @post_blog = Factory(:post, :site => @site_blog)
+    sign_in @user
+  end
+  
   describe "POST /admin/switch_site" do
     
-    before do
-      @user = Factory(:user_admin)
-      @site_www = Terryblr::Site.default
-      @site_blog = Factory(:site, :lang => :fr)
-      @post_www = Factory(:post, :site => @site_www)
-      @post_blog = Factory(:post, :site => @site_blog)
-    end
-    
     it "switches current site" do
-
-      sign_in @user
-
       # Go to admin archives with default site
       @site_www.lang.should eql(:en)
       get :index
@@ -36,6 +34,16 @@ describe Terryblr::AdminHomeController do
       assigns(:current_lang).should eql(:fr)
       
     end
+    
+  end
+  
+  describe "GET /admin/search" do
+    
+    it "returns search results" do
+      get :search, :search => @post_www.title.split(/\s+/)[1]
+      response.should be_success
+    end
+    
   end
   
 end

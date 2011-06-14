@@ -30,6 +30,7 @@ class Terryblr::Post < Terryblr::Base
   #
   # Validations
   #
+  validate :site_id, :presence => true
   validates :title, :presence => true, :if => :published?
   validates :slug, :presence => { :message => "can't be blank. Did you set a title?" }, :if => :published?
   validates :social_msg, :length => { :within => 0..140 }, :if => :social_msg?

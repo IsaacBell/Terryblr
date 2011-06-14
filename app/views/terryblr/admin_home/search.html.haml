@@ -8,4 +8,4 @@
     - if records.empty?
       %p #{ttt(:'.no_results_found').html_safe}
     - else
-      = render :partial => 'admin/terryblr/posts/archives', :locals => { :records => records }
+      = render :partial => 'admin/terryblr/posts/archives', :locals => { :collection => records }
