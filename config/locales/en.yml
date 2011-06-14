@@ -80,6 +80,7 @@ en:
             'add commenter to': "add commenter to %{list}"
             'all comments from': "all comments from"
             'this thread': this thread
+            see_also: See other comments from
             approved: approved
             approve: approve
             context: context
@@ -88,7 +89,7 @@ en:
             edit: edit
             find: find
           sidebar:
-            showing: showing
+            filter: filter
             approved: approved
             unapproved: unapproved
             flagged: flagged

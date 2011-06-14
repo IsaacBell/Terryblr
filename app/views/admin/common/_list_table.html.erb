@@ -9,7 +9,7 @@ nosort_cols ||= []
 list_cols ||= class_obj.column_names
 cols_hash = class_obj.columns_hash
 %>
-<table id="<%= record_name.pluralize %>_list_<%= records.object_id %>" class="remote_sort_table sort_table <%= record_name.pluralize %>_table" cellspacing="0" cellpadding="0">
+<table id="<%= record_name.pluralize.parameterize('_') %>_list_<%= records.object_id %>" class="remote_sort_table sort_table <%= record_name.pluralize.parameterize('_') %>_table" cellspacing="0" cellpadding="0">
   <thead>
     <tr>
     <%

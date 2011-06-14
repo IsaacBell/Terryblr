@@ -5,6 +5,7 @@ class Admin::Terryblr::PostsController < Terryblr::AdminController
     show_as_dash
     super do |wants|
       wants.html { render :template => "admin/terryblr/posts/index" }
+      wants.js
     end
   end
   

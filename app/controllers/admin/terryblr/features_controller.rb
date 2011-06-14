@@ -4,9 +4,9 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def index
     @show_as_dash = true
-    collection = {}
+    @collection = {}
     Settings.tags.posts.features.map do |tag|
-      collection[tag] = end_of_association_chain.live.tagged_with(tag)
+      @collection[tag] = end_of_association_chain.live.tagged_with(tag)
     end
   end
 
@@ -20,6 +20,12 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   def show
     super do |wants|
       wants.html { redirect_to edit_admin_feature_path(resource) }
+    end
+  end
+  
+  def create
+    super do |wants|
+      wants.html { redirect_to admin_features_path }
     end
   end
 

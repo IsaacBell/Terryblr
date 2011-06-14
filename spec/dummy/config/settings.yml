@@ -74,12 +74,12 @@ common: &common
       groups: [tags, location]
       tags: []
       location: [blog, featured]
-      features: []
+      features: [home, blog]
     features:
-      groups: []
+      groups: [home, blog]
     pages:
       groups: []
-  photo_conv_options: "-density 70"
+  photo_conv_options: "-density 70 -quality 70"
   photo_dimensions:
     thumb: "100x100#"
     small: "156x156#"

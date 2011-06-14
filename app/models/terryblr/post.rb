@@ -187,7 +187,6 @@ class Terryblr::Post < Terryblr::Base
     end
     
     url || "/images/missing_thumb.png"
-
   end
   
 

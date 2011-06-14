@@ -53,18 +53,25 @@ class Terryblr::Feature < Terryblr::Base
   #
   # Instance Methods
   #
+  
+  def thumbnail(size = :thumb)
+    # Find the first thumbnail image
+    post_id? ? post.thumbnail : "/images/missing_thumb.png"
+  end
 
   def photo
     if post_id?
-      post.photos.first
+      part = post.parts.detect{|p|p.content_type && p.content_type.photos?}
+      part ? part.photos.first : nil
     elsif photo_id?
       @photo ||= Terryblr::Photo.find(photo_id)
     end
   end
   
   def video
-    if post_id? and video = post.videos.first
-      video
+    if post_id?
+      part = post.parts.detect{|p|p.content_type && p.content_type.videos?}
+      part ? part.videos.first : nil
     end
   end
 

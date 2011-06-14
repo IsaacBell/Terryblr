@@ -3,7 +3,10 @@ class Admin::Terryblr::PagesController < Terryblr::AdminController
   def index
     @list_cols = %w(page state)
     @action_cols = %w(add_child)
-    super
+    super do |wants|
+      wants.html
+      wants.js
+    end
   end
 
   def show

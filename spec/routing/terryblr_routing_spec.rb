@@ -43,5 +43,21 @@ describe 'Terryblr::Admin' do
   it 'should switch admin site' do
     { :get => '/admin/switch_site/www' }.should route_to(:controller => 'terryblr/admin_home', :action => 'switch_site', :site => 'www')
   end
+
+  it 'should display posts' do
+    { :get => '/admin/posts' }.should route_to(:controller => 'admin/terryblr/posts', :action => 'index')
+  end
+
+  it 'should display new photos post' do
+    { :get => '/admin/new/photos' }.should route_to(:controller => 'admin/terryblr/posts', :action => 'new', :type => "photos")
+  end
+
+  it 'should display pages' do
+    { :get => '/admin/pages' }.should route_to(:controller => 'admin/terryblr/pages', :action => 'index')
+  end
+
+  it 'should display new page' do
+    { :get => '/admin/pages/new' }.should route_to(:controller => 'admin/terryblr/pages', :action => 'new')
+  end
   
 end

@@ -84,7 +84,7 @@ Rails.application.routes.draw do
   # Posts (be carefull, order matters!)
   match "/posts/tagged/:tag", :to => "terryblr/posts#tagged", :as => "tagged_posts"
   match "/posts/archives", :to => "terryblr/posts#archives", :as => "archive_posts"
-  match "/posts/preview", :to => "terryblr/posts#preview", :as => "preview_post", :via => "post"
+  # match "/posts/preview", :to => "terryblr/posts#preview", :as => "preview_post", :via => "post"
   resources :posts, :only => [:index], :controller => "terryblr/posts" do
     member do
       get  :gallery_params
@@ -111,7 +111,7 @@ Rails.application.routes.draw do
   match "/404", :to => "terryblr/home#not_found", :as => "not_found"
 
   # Pages (MUST be last)
-  match "/pages/:id/preview", :to => "terryblr/pages#preview", :as => "preview_page", :via => "post"
+  # match "/pages/:id/preview", :to => "terryblr/pages#preview", :as => "preview_page", :via => "post"
   match "/:page_slug", :to => "terryblr/pages#show", :as => "page"
 
 end

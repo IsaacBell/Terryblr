@@ -35,4 +35,23 @@ describe Admin::Terryblr::PagesController do
       end
     end
   end
+
+  describe "GET new" do
+    it "assigns a new page as @page" do
+      get :new
+      response.should be_success
+      assigns(:page).class.should be Terryblr::Page
+    end
+  end
+  
+  describe "GET edit" do
+    it "assigns the requested page as @page" do
+      page = Factory(:published_page)
+      get :edit, :id => page.id
+      response.should be_success
+      assigns(:page).should eql page
+    end
+  end
+
+
 end

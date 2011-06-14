@@ -148,7 +148,7 @@ module Terryblr::AdminHelper
     param_name = (object.is_a?(String) ? object : object.class.to_s).demodulize.downcase
     content_tag(:li, :id => photo.dom_id(list_id), :class => "post-photo-for-assoc") do
       link_to(image_tag("admin/remove.png"), admin_photo_path(photo, :format => :js, :list_id => list_id), :remote => true, :method => :delete, :confirm => "Are you absolutely sure?") +
-      image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
+      image_tag(photo.image.url(thumb_size), :class => "photo-thumb", :size => photo.size(thumb_size).values.join('x')) + 
       hidden_field_tag("post[parts_attributes][0][photo_ids][]", photo.id) +
       text_area_tag("post[parts_attributes][0][photos_attributes][][caption]", photo.caption) +
       hidden_field_tag("post[parts_attributes][0][photos_attributes][][id]", photo.id) +
@@ -162,7 +162,7 @@ module Terryblr::AdminHelper
     content_tag(:li, :id => (photo ? photo.dom_id(list_id) : nil), :class => "feature-photo-for-assoc") do
       # Do full photo delete if used just by feature, otherwise remove from feature
       if photo
-        image_tag(photo.image.url(thumb_size), :class => "photo-thumb") + 
+        image_tag(photo.image.url(thumb_size), :class => "photo-thumb", :size => photo.size(thumb_size).values.join('x')) + 
         hidden_field_tag("#{object.class.to_s.downcase}[#{attr_name}][id]", photo.id) +
         hidden_field_tag("#{object.class.to_s.downcase}[#{attr_name}][display_order]", photo.display_order)
       end
