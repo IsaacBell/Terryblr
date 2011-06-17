@@ -29,11 +29,11 @@ Factory.define :post_to_be_published_now, :parent => :post, :class => Terryblr::
 end
 
 Factory.define :photos_post, :class => Terryblr::Post do |post|
-  post.post_type        "photos"
   post.sequence(:title) { |n| "Factory photos post #{n}" }
+  post.parts {|p| [p.association(:content_part_photos)]}
 end
 
 Factory.define :videos_post, :class => Terryblr::Post do |post|
-  post.post_type        "videos"
   post.sequence(:title) { |n| "Factory videos post #{n}" }
+  post.parts {|p| [p.association(:content_part_videos)]}
 end

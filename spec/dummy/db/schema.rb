@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110517163733) do
+ActiveRecord::Schema.define(:version => 20110617101343) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -196,9 +196,7 @@ ActiveRecord::Schema.define(:version => 20110517163733) do
   end
 
   create_table "posts", :force => true do |t|
-    t.string   "post_type"
     t.string   "title"
-    t.text     "body"
     t.string   "slug"
     t.datetime "published_at"
     t.string   "state"
@@ -325,20 +323,17 @@ ActiveRecord::Schema.define(:version => 20110517163733) do
 
   create_table "videos", :force => true do |t|
     t.string   "caption"
-    t.string   "url",            :limit => 3000
+    t.string   "url",             :limit => 3000
     t.string   "vimeo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "display_order",                  :default => 0
-    t.string   "embed",          :limit => 3000
+    t.integer  "display_order",                   :default => 0
+    t.string   "embed",           :limit => 3000
     t.integer  "width"
     t.integer  "height"
     t.string   "thumb_url"
-    t.integer  "videoable_id"
-    t.string   "videoable_type"
+    t.integer  "content_part_id"
   end
-
-  add_index "videos", ["videoable_id"], :name => "index_videos_on_videoable_id"
 
   create_table "votes", :force => true do |t|
     t.string   "votable_type"
