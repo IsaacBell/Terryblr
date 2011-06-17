@@ -13,7 +13,7 @@ class Terryblr::ContentPart < Terryblr::Base
   #
   belongs_to :contentable, :polymorphic => true, :touch => true
   has_many :photos, :as => :photoable, :order => "display_order", :class_name => "Terryblr::Photo", :dependent => :destroy
-  has_many :videos, :as => :videoable, :order => "display_order", :class_name => "Terryblr::Video", :dependent => :destroy
+  has_many :videos, :order => "display_order", :class_name => "Terryblr::Video", :dependent => :destroy
 
   #
   # Behaviours
@@ -28,7 +28,7 @@ class Terryblr::ContentPart < Terryblr::Base
   #
   validates_inclusion_of :content_type, :in => @@content_types
   validates_inclusion_of :display_type, :in => @@display_types, :if => Proc.new {|c| c.content_type? && c.content_type.photos? }
-  validate :should_have_text,   :if => Proc.new {|c| c.content_type? && c.content_type.text? }
+  validate :should_have_text,   :if => Proc.new {|c| c.content_type? && c.content_type.text?   }
   validate :should_have_photos, :if => Proc.new {|c| c.content_type? && c.content_type.photos? }
   validate :should_have_video,  :if => Proc.new {|c| c.content_type? && c.content_type.videos? }
 

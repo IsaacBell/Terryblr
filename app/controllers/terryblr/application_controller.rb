@@ -1,4 +1,4 @@
-class Terryblr::ApplicationController < ActionController::Base
+class Terryblr::ApplicationController < ApplicationController
   include Terryblr::CacheSystem
   helper 'terryblr/application'
 

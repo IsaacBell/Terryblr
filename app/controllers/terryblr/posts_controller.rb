@@ -80,6 +80,7 @@ class Terryblr::PostsController < Terryblr::PublicController
   end
 
   def collection
+    @per_page ||= 5 
     @posts ||= case self.action_name
     when 'index'
       if !params[:search].blank?
@@ -88,14 +89,14 @@ class Terryblr::PostsController < Terryblr::PublicController
         q = "%#{@query}%"
         end_of_association_chain.all(
           :conditions => ["title like ? or body like ?", q, q]
-        ).paginate(:page => params[:page])
+        ).paginate(:page => params[:page], :per_page => @per_page)
       else
         # Normal post listing
-        end_of_association_chain.paginate(:page => params[:page])
+        end_of_association_chain.paginate(:page => params[:page], :per_page => @per_page)
       end
 
     when 'tagged'
-      end_of_association_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page])
+      end_of_association_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page], :per_page => @per_page)
 
     when 'archives'
       col = :published_at
@@ -107,6 +108,7 @@ class Terryblr::PostsController < Terryblr::PublicController
       end
       end_of_association_chain.paginate(
         :page => params[:page],
+        :per_page => @per_page,
         :conditions => conditions,
         :order => "#{col} desc, created_at desc")
     else
