@@ -5,7 +5,7 @@ gemspec
 
 gem "aws-s3",  :require => "aws/s3"
 gem "dropbox"
-gem "eventmachine", ">= 1.0.0.beta.1"
+gem "eventmachine", ">= 1.0.0.beta.3"
 gem "thin"
 
 gem "analytical", :git => "git://github.com/mathieuravaux/analytical.git"
