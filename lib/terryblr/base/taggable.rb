@@ -11,7 +11,9 @@ module Terryblr
           if recipient.table_exists?
             acts_as_taggable
 
-            Settings.load! # Needed for dev env when reloading class caches
+            if Rails.env.development?
+              Settings.load! # Needed for dev env when reloading class caches
+            end
             
             if defined?(Settings.tags[self.table_name]) && defined?(Settings.tags[self.table_name]['groups'])
               acts_as_taggable_on Settings.tags[self.table_name]['groups']

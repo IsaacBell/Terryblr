@@ -3,7 +3,7 @@ require_relative '../spec_helper.rb'
 describe "Photos" do
 
   before do
-    @post = Factory(:photos_post)
+    @post = Factory.create(:photos_post)
   end
   
   @selenium

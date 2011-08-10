@@ -17,7 +17,7 @@ class Terryblr::Photo < Terryblr::Base
     :path => Settings.s3_enabled? ? ":attachment/:id/:style/:basename.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
     :s3_credentials => (Settings.s3.symbolize_keys rescue nil),
     :bucket => [Settings.app_name, Rails.env].join('-').parameterize.to_s,
-    :log_command => Rails.env.development?
+    :log_command => !Rails.env.production?
 
   #
   # Callbacks
@@ -32,7 +32,8 @@ class Terryblr::Photo < Terryblr::Base
   #
   # Validations
   #
-  validates_presence_of :image_file_name, :unless => :url? 
+  validates_attachment_presence :image
+  validates_attachment_size :image, :less_than => 3.megabytes
   validates_presence_of :url, :unless => :image_file_name?
   validates :url, :presence => true, :url => true, :if => :url?
 

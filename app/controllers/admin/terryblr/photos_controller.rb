@@ -17,8 +17,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
       puts "Filename: #{filename}"
     else
       # Flash photo upload
-      # From gist: https://gist.github.com/26082d2b56b00bd54dad
-      data = request.body
+      data = StringIO.new request.body.read
       filename = params[:qqfile]
     end
     data.class.send(:define_method, "original_filename") do

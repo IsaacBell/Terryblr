@@ -987,6 +987,10 @@ form.formtastic fieldset {
   width:100%;
 }
 
+#form_sidebar fieldset.inputs {
+  width: 230px;
+}
+
 form .sidebar fieldset {
   margin-left:20px;
 }
@@ -1311,16 +1315,6 @@ form.formtastic fieldset ol li.post-states select {
 
 #dropbox_browser .breadCrumb li {
   display:inline-block;
-}
-
-#dropbox_browser .breadCrumb li:after {
-  content:">";
-  color:#ccc;
-  padding:0 0.25em;
-}
-
-#dropbox_browser .breadCrumb li:last-child:after {
-  content:"";
 }
 
 #dropbox_browser .MultipleSelectBox li.selected {

@@ -30,7 +30,7 @@ class FbPostPublisherJob
     msg  = !post.social_msg.blank? ? post.social_msg : post.title.truncate(140)
     body = post.body.gsub(%r{</?[^>]+?>}, '').gsub(/&nbsp;/,' ').truncate(420)
     default_img_path = "#{root_url}images/fb_share.png"
-    part = parts.first
+    part = post.parts.first
     img_url = if part.content_type.video? && !part.videos.empty?
       part.videos.first.thumb_url rescue default_img_path
     else
@@ -43,7 +43,7 @@ class FbPostPublisherJob
       :name => "#{Settings.app_name} - #{post.title.truncate(420)}",
       :from => Settings.facebook.page_id, # Post as the page
       :link => url,
-      :source => (post.post_type.video? && !post.videos.empty?) ? post.videos.first.url : img_url,
+      :source => (!post.first_video.nil?) ? post.first_video.url : img_url,
       :caption => body, 
       :description => Settings.app_name,
       :picture => img_url,
@@ -52,7 +52,10 @@ class FbPostPublisherJob
 
     # needs checking vs. returned facebook json object
     if resp.keys.include?('id')
-      post.update_facebook_id(resp["id"])
+      ids = resp["id"].split('_')
+      fbid = ids[0]
+      story_fbid = ids[1]
+      post.update_facebook_id(fbid.to_i)
     end
 
   end
