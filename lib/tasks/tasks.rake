@@ -76,7 +76,7 @@ namespace :terryblr do
         # Create Post with photo unless already exists.
         if Terryblr::Post.find_by_import_url(url).nil?
           photos = []
-          image_urls[0..(Rails.env.development? ? 9 : image_urls.size)].each do |url| # limit the images to be imported
+          image_urls[0..image_urls.size].each do |url| # limit the images to be imported
           # image_urls.each do |url|
             photo = Terryblr::Photo.create(:url => url)
             if photo.valid?
@@ -303,13 +303,7 @@ namespace :terryblr do
             puts feed_url
             blog_page = Nokogiri::XML(open(feed_url))
             blog_page.css("item").each do |e|
-              if has_video(e)
-                import_video(e)
-              elsif has_photos(e)
-                import_photo(e)
-              else
-                import_regular(e)
-              end
+              import(e)
             end
           rescue => detail
             print detail.backtrace.join("\n")
@@ -320,13 +314,13 @@ namespace :terryblr do
 
     private
 
-      def import_regular(post, state = "published")
+      def import(post, state = "published")
         photos = []
-        structured_post_content = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text)
+        content = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text)
 
         #Download/Reinsert Images
-        if (structured_post_content.css('img').count > 0)
-          structured_post_content.css('img').each do |i|
+        if content.css('img').at
+          content.css('img').each do |i|
             #create photo from a href link source
             original_image_url = i.parent.attribute("href") ? i.parent.attribute("href").value : i.attribute("src").value
             photo = Terryblr::Photo.create!(:url => original_image_url)
@@ -342,84 +336,32 @@ namespace :terryblr do
             photos << photo
           end
         end
-
-        options = {
+        
+        parts_attributes = [{
+          :content_type => "text", 
+          :body => content.to_s
+        }]
+        
+        url = video_url(content)
+        parts_attributes.unshift({
+          :content_type => "videos", 
+          :videos => [Terrybr::Video.create(:url => url)]
+        }) unless url.blank?
+        
+        parts_attributes.unshift({
+          :content_type => "photos", 
+          :photos => photos
+        }) unless photos.empty?
+        
+        # Create Post with photo
+        Terryblr::Post.create!({
           :slug => post.at_css("link").text.split("/").last,
-          :body => structured_post_content.to_s,
+          :parts_attributes => parts_attributes,
           :title => post.at_css("title").text,
           :tag_list => post.css("category").map(&:text).join(", "), 
           :state => state,
-          :post_type => "post",
-          :photos => photos,
           :published_at => post.at_css("pubDate").text
-        }
-
-        # Create Post with photo
-        Terryblr::Post.create!(options)
-      end
-
-      def import_video(post, state = "published")
-        photos = []
-
-        structured_post_content = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text)
-        vid_url = video_url(structured_post_content)
-        #Delete native embed
-        structured_post_content.at_css("iframe").remove
-        #Create video for Terryblr embed
-        video = Terryblr::Video.create!(:url => vid_url)
-
-        #Download/Reinsert Images
-        if (structured_post_content.css('img').count > 0)
-          structured_post_content.css('img').each do |i|
-            #create photo from a href link source
-            original_image_url = i.parent.attribute("href").value
-            photo = Terryblr::Photo.create!(:url => original_image_url)
-
-            #fetch new image urls (thumb and original)
-            new_link_url = photo.image.url
-            new_image_url = photo.image.url(:medium)
-
-            #modify body to reflect new links
-            i.parent.attribute("href").value = new_link_url
-            i.attribute("src").value = new_image_url
-
-            photos << photo
-          end
-        end
-
-        options = {
-          :slug => post.at_css("link").text.split("/").last,
-          :body => structured_post_content.to_s,
-          :title => post.at_css("title").text,
-          :tag_list => post.css("category").map(&:text).join(", "), 
-          :state => state,
-          :post_type => "video",
-          :photos => photos,
-          :videos => [video],
-          :published_at => post.at_css("pubDate").text
-        }
-
-        # Create Post with photo
-        Terryblr::Post.create!(options)
-      end
-
-      def has_video(post)
-        #does it have an iframe titled Youtube or Vimeo in its content?
-        iframe_node = Nokogiri::HTML.parse(post.xpath('.//content:encoded').text).at_css("iframe")
-        if iframe_node
-          if iframe_node.attribute("title").value =~ /YouTube/
-            video_url = iframe_node.attribute("src").value
-            return true
-          #elsif vimeo..
-            #check if vimeo objects contain a "title" attribute structured similarly
-          end
-        else
-          return false
-        end
-      end
-
-      def has_photos(post)
-        return false #for now
+        })
       end
 
       def video_url(content)
@@ -428,7 +370,11 @@ namespace :terryblr do
           return video_url = iframe_node.attribute("src").value.split("/").last.insert(0, "http://www.youtube.com/watch?v=")
         #elsif vimeo..
           #check if vimeo objects contain a "title" attribute structured similarly
+        else
+          return nil
         end
+      rescue Exception => exc
+        puts "Error getting video: '#{exc}'"
       end
     end
   end

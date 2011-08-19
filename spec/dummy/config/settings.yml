@@ -60,7 +60,7 @@ common: &common
     # oauth.access_token.secret -> use below
     app_user_token: 142716515-p3qcuaGq6xLdtSNySr0aI7WCAujpdGMsmpv6NcpO
     app_user_secret: WNcvqsoh83XsoDRTlRHPgAMbuekCPpcvbrZ0o4A4jj8
-    search_for: terryblr OR "The 88" OR "Le 88"
+    search_for: PPS OR "Preplay Sport" OR PPS_Football OR @PPS_Football
   vimeo:
     consumer_key: b54e1791dc294c6ead7cf6f4c7fa9d23
     consumer_secret: fcfb4b9bb66e992b

@@ -21,4 +21,5 @@ group :development, :test do
   gem 'growl'
   gem 'ruby-growl'
   gem 'hpricot'
+  gem 'guard'
 end
