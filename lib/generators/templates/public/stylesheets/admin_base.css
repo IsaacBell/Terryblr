@@ -1042,16 +1042,6 @@ form.formtastic fieldset ol li label {
   width:50%;
 }
 
-form.formtastic fieldset ol li.half,
-form.formtastic fieldset ol li.feature-photo-for-assoc {
-  width:44% !important;
-  margin-right:6%;
-}
-
-form.formtastic fieldset ol li.feature-photo-for-assoc {
-  float:right;
-}
-
 form.formtastic fieldset ol li.string input,
 form.formtastic fieldset ol li.text textarea,
 form.formtastic fieldset ol li.email input,

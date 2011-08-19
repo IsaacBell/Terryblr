@@ -9,7 +9,7 @@
       = f.input :title, :input_html => { :class => "title" }
       %li.photos-upload
         %label #{ttt :'.photo'}
-        = multi_file_uploader(:url => admin_feature_photo_path((@feature.new_record? ? '-' : @feature), :format => :js), :css_parent_class => "photos-upload")
+        = multi_file_uploader(:url => admin_feature_photo_path((@feature.new_record? ? '-' : @feature), :format => :js), :css_parent_class => "photos-upload", :resource_type => "feature")
         .clear
       %li.photos-choose
         %label #{ttt :'.existing_post'}

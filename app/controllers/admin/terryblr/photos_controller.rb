@@ -37,7 +37,7 @@ class Admin::Terryblr::PhotosController < Terryblr::AdminController
     else
       @photo.photoable = photoable
     end
-
+    
     super do |success, failure|
       success.json { render @photo.to_json }
       success.js   { render :template => "admin/terryblr/photos/create.js.haml", :layout => false, :status => :ok }

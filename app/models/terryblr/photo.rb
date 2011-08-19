@@ -11,15 +11,6 @@ class Terryblr::Photo < Terryblr::Base
 
   # Regen thumbs with rake paperclip:refresh CLASS=Terryblr::Photo or .reprocess!
   has_attached_file :image,
-<<<<<<< HEAD
-    :styles => Settings.photo_dimensions.dup.symbolize_keys,
-    :storage => Settings.s3_enabled? ? :s3 : :filesystem,
-    :convert_options => { :all=> Settings.photo_conv_options || "-density 72 " },
-    :path => Settings.s3_enabled? ? ":attachment/:id/:style/:basename.:extension" : ":rails_root/public/system/:attachment/:id/:style/:basename.:extension",
-    :s3_credentials => (Settings.s3.symbolize_keys rescue nil),
-    :bucket => [Settings.app_name, Rails.env].join('-').parameterize.to_s,
-    :log_command => !Rails.env.production?
-=======
     :styles           => Settings.photo_dimensions.dup.symbolize_keys,
     :storage          => Settings.s3_enabled? ? :s3 : :filesystem,
     :convert_options  => { 
@@ -29,7 +20,6 @@ class Terryblr::Photo < Terryblr::Base
     :s3_credentials   => (Settings.s3.symbolize_keys rescue nil),
     :bucket           => [Settings.app_name, Rails.env].join('-').parameterize.to_s,
     :log_command      => Rails.env.development?
->>>>>>> 573032b1ab72a3135a58231b52b256777190414d
 
   #
   # Callbacks
@@ -40,7 +30,16 @@ class Terryblr::Photo < Terryblr::Base
   #
   belongs_to :photoable, :polymorphic => true, :touch => true
   has_many :features, :class_name => "Terryblr::Feature"
-
+  
+  # using :dependent => :nullify just did not worked on the has_many :features association
+  # so we make this to make each features clean and valid
+  before_destroy :clean_features
+  def clean_features
+    features.each do |f|
+      f.photo = nil
+      f.save
+    end
+  end
   #
   # Validations
   #
