@@ -78,9 +78,9 @@ class Terryblr::Post < Terryblr::Base
   def setup_social_network
     # Setup social network callback flags
     begin
-      self.tw_me      ||= (pending? or tw_delayed_job_id?) unless twitter_id?
-      self.fb_me      ||= (pending? or fb_delayed_job_id?) unless facebook_id?
-      self.tumblr_me  ||= (pending? or tumblr_delayed_job_id?) unless tumblr_id?
+      self.tw_me      ||= ((Settings.default_cross_post_to?(:twitter)  && pending?) or tw_delayed_job_id?) unless twitter_id?
+      self.fb_me      ||= ((Settings.default_cross_post_to?(:facebook) && pending?) or fb_delayed_job_id?) unless facebook_id?
+      self.tumblr_me  ||= ((Settings.default_cross_post_to?(:tumblr)   && pending?) or tumblr_delayed_job_id?) unless tumblr_id?
     rescue
     end
   end
@@ -93,7 +93,7 @@ class Terryblr::Post < Terryblr::Base
   end
 
   before_save :push_publication
-  before_save :push_to_social
+  after_save :push_to_social
 
   def push_publication
     # If have just been saved as published then do do_publish to post to twitter/fb etc
@@ -168,25 +168,30 @@ class Terryblr::Post < Terryblr::Base
     @related_posts
   end
   
-  # Return the first found text
-  def body
+  # Return the first found text/video/photo
+  def first_body
     (part = parts.where(:content_type => :text).detect{|p| p.body? }) ? part.body : ""
   end
+  alias_method :body, :first_body
+  
+  def first_photo
+    (part = parts.where(:content_type => :photos).detect{|p| !p.photos.first.nil? }) ? part.photos.first : nil
+  end
+  alias_method :photo, :first_photo
 
+  def first_video
+    (part = parts.where(:content_type => :videos).detect{|p| !p.videos.first.nil? }) ? part.videos.first : nil
+  end
+  alias_method :video, :first_video
+  
   # Return the first found photo
   def thumbnail(size = :thumb)
     # Find the first thumbnail image
-    url = nil
-    parts.each do |p|
-      url = if p.content_type.photos? and !p.photos.empty?
-        p.photos.first.image.url(size)
-      elsif p.content_type.videos? and !p.videos.empty?
-        p.videos.first.thumb_url
-      end
-
-      break unless url.nil?
+    url = if first_photo
+      first_photo.image.url(size)
+    elsif first_video
+      first_video.thumb_url
     end
-    
     url || "/images/missing_thumb.png"
   end
   
@@ -207,7 +212,7 @@ class Terryblr::Post < Terryblr::Base
   end
 
   def post_types
-    self.class.post_types
+    @post_types ||= parts.map {|part| part.content_type}
   end
 
   def slug=(value)

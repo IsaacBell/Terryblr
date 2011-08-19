@@ -11,6 +11,7 @@ class TwPostPublisherJob
   return false unless Settings.has_key?('twitter')
 
   require 'yaml'
+  require 'bitly' unless defined? Bitly
   require 'twitter' unless defined? Twitter
 
   include Rails.application.routes.url_helpers
@@ -28,8 +29,12 @@ class TwPostPublisherJob
     return if post.twitter_id?
 
     # Auth user 
-    oauth = Twitter::OAuth.new(Settings.twitter.consumer_key, Settings.twitter.consumer_secret)
-    oauth.authorize_from_access(Settings.twitter.app_user_token, Settings.twitter.app_user_secret)
+    Twitter.configure do |config|
+      config.consumer_key = Settings.twitter.consumer_key
+      config.consumer_secret = Settings.twitter.consumer_secret
+      config.oauth_token = Settings.twitter.app_user_token
+      config.oauth_token_secret = Settings.twitter.app_user_secret
+    end
 
     # Shorten URL - take this out for now as not clear enough
     bitly = Bitly.new(Settings.bitly.login, Settings.bitly.key)
@@ -41,8 +46,7 @@ class TwPostPublisherJob
     msg = "New Post! #{body} #{short_url}"
 
     # Tweet!
-    client = Twitter::Base.new(oauth)
-    tweet = client.update(msg)
+    tweet = Twitter.update(msg)
     post.update_twitter_id(tweet.id)
   end
 

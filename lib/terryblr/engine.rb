@@ -20,6 +20,11 @@ module Terryblr
     # Force routes to be loaded if we are doing any eager load.
     config.before_eager_load { |app| app.reload_routes! }
 
+    initializer :load_overrides do
+      filename = File.expand_path('config/initializers/overrides', Rails.root)
+      require filename
+    end
+
     rake_tasks do
       load 'terryblr/railties/tasks.rake'
     end

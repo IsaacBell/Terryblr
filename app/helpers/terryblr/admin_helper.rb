@@ -4,7 +4,8 @@ module Terryblr::AdminHelper
     opts.reverse_merge!({
       :file_upload_limit => 50,
       :file_queue_limit => 0,
-      :dom_id => "multi_file_uploader_#{Time.now.to_f.to_s.parameterize('_')}"
+      :dom_id => "multi_file_uploader_#{Time.now.to_f.to_s.parameterize('_')}",
+      :resource_type => "post"
     })
 
     url = opts[:url]
@@ -30,7 +31,7 @@ module Terryblr::AdminHelper
           minSizeLimit: 100,
           sizeLimit: #{10.megabytes},
           params: {
-            resource_type: 'post',
+            resource_type: '#{opts[:resource_type]}',
             post_type: 'photos'
           },
           debug: #{Rails.env.development?},
@@ -137,7 +138,7 @@ module Terryblr::AdminHelper
   end
 
   def photo_for_assoc(photo, object, list_id = "photos_list")
-    if defined?(Terryblr::Feature) and object=='feature'
+    if defined?(Terryblr::Feature) and object.is_a?(Terryblr::Feature)
       feature_photo_for_assoc(photo, object, list_id)
     else
       post_photo_for_assoc(photo, object, list_id)
@@ -156,7 +157,7 @@ module Terryblr::AdminHelper
     end
   end
 
-  def feature_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :list)
+  def feature_photo_for_assoc(photo, object, list_id = "photos_list", thumb_size = :thumb)
     attr_name  = 'photo_attributes'
     
     content_tag(:li, :id => (photo ? photo.dom_id(list_id) : nil), :class => "feature-photo-for-assoc") do

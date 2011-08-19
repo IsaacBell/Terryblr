@@ -12,8 +12,8 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
 
   def new
     # Create feature!
-    resource = end_of_association_chain.new(:state => "pending", :published_at => nil)
-    resource.save!
+    @feature = end_of_association_chain.new(:state => "pending", :published_at => nil)
+    @feature.save!
     super
   end
 
@@ -51,7 +51,11 @@ class Admin::Terryblr::FeaturesController < Terryblr::AdminController
   private
   
   def end_of_association_chain
-    current_site.features.live
+    current_site.features
+  end
+  
+  def recource
+    @feature ||= super
   end
   
 

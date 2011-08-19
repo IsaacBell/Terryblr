@@ -987,6 +987,10 @@ form.formtastic fieldset {
   width:100%;
 }
 
+#form_sidebar fieldset.inputs {
+  width: 230px;
+}
+
 form .sidebar fieldset {
   margin-left:20px;
 }
@@ -1036,16 +1040,6 @@ form.formtastic fieldset ol li label {
   font-size:1.25em;
   color:#666;
   width:50%;
-}
-
-form.formtastic fieldset ol li.half,
-form.formtastic fieldset ol li.feature-photo-for-assoc {
-  width:44% !important;
-  margin-right:6%;
-}
-
-form.formtastic fieldset ol li.feature-photo-for-assoc {
-  float:right;
 }
 
 form.formtastic fieldset ol li.string input,

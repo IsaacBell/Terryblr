@@ -95,8 +95,7 @@ class Terryblr::PostsController < Terryblr::PublicController
       end
 
     when 'tagged'
-      end_of_association_chain.select("DISTINCT posts.id, posts.*").tagged_with(params[:tag]).paginate(:page => params[:page])
-
+      end_of_association_chain.tagged_with(params[:tag]).select("DISTINCT posts.id, posts.*").paginate(:page => params[:page])
     when 'archives'
       col = :published_at
       conditions = if params[:month] and params[:year]

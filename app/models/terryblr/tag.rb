@@ -13,8 +13,9 @@ class Terryblr::Tag < ActsAsTaggableOn::Tag
   #
 
   #
-  # Scopes
+  # Callbacks
   #
+
 
   #
   # Class Methods
