@@ -47,18 +47,15 @@ class Terryblr::Video < Terryblr::Base
         require 'oembed_links'
         OEmbed.register_yaml_file(File.join(Rails.root, 'config/oembed.yml'))
         OEmbed.transform(url) do |r, url|
-          r.from?(:youtube) { |resp| 
+          r.from?(:youtube) { |resp|
             self.width     = resp["width"].to_i 
             self.height    = resp["height"].to_i 
             self.thumb_url = resp["thumbnail_url"]
             self.embed     = resp["html"]
             # Extract URL from embed html
-            begin
-              param = Hpricot(resp["html"]).at("param[@name=movie]")
-              self.url = param.attributes['value']
-            rescue Exception => exp
-              logger.error { "Unable to extract YouTube URL from embed HTML: #{exc}" }
-            end
+            # self.url = if param = Hpricot(resp["html"]).at("param[@name=movie]")
+            #   param.attributes['value']
+            # end
           }
           r.from?(:vimeo) { |resp| 
             self.vimeo_id  = resp["video_id"] 

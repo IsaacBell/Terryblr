@@ -49,7 +49,7 @@ class Terryblr::AdminController < Terryblr::ApplicationController
 
   def resource_params
     fix_rails_bug
-    params[resource_request_name] || params[resource_instance_name] || {}
+    super
   end
 
   def current_site
